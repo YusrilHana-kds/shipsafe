@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShipSafe — AI Food Export Compliance</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nv:#1B2A4A;--nvm:#243B6A;--nvl:#2F4F8A;--nvw:#EEF1F8;
+  --am:#C27B0A;--ambg:#FEF7E8;--ambd:#F0D68A;
+  --gn:#1D7A3F;--gnbg:#EDFAF2;
+  --rd:#B83230;--rdbg:#FEF0F0;
+  --sf:#F4F6F9;--wh:#fff;
+  --t1:#1A1E2C;--t2:#4A5068;--t3:#7A8099;
+  --bd:#D8DCE6;--bdl:#E8EBF0;
+  --r:10px;--rs:6px;
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t1);line-height:1.6}
+
+/* HEADER */
+.hd{background:var(--nv);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.hd-b{display:flex;align-items:center;gap:10px}
+.hd-ic{width:32px;height:32px;background:rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.hd-ic svg{width:18px;height:18px}
+.hd-nm{font-family:'DM Serif Display',serif;color:var(--wh);font-size:18px}
+.hd-tg{color:rgba(255,255,255,.4);font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+
+/* HERO */
+.hero{background:linear-gradient(170deg,var(--nv),var(--nvm) 60%,#2a5594);padding:44px 24px 0;text-align:center}
+.hero-in{max-width:620px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:18px}
+.hero h1{font-family:'DM Serif Display',serif;color:var(--wh);font-size:34px;line-height:1.15;margin-bottom:12px}
+.hero p{color:rgba(255,255,255,.6);font-size:15px;max-width:480px;margin:0 auto 32px}
+.how{display:flex;justify-content:center;gap:32px;margin-bottom:36px;flex-wrap:wrap}
+.how-s{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.55);font-size:12px;font-weight:600}
+.how-n{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);color:var(--wh);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* FEATURE TABS */
+.tabs-bar{display:flex;justify-content:center;gap:4px;padding-bottom:0;margin-bottom:-1px;position:relative;z-index:2}
+.tab-btn{padding:10px 24px;font-size:13px;font-weight:700;color:rgba(255,255,255,.5);border:none;background:transparent;cursor:pointer;border-radius:8px 8px 0 0;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:7px}
+.tab-btn:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.05)}
+.tab-btn.active{background:var(--wh);color:var(--nv)}
+.tab-btn svg{width:16px;height:16px}
+
+/* MAIN CARD */
+.main-card{background:var(--wh);max-width:900px;margin:-1px auto 0;border-radius:0 0 14px 14px;box-shadow:0 8px 40px rgba(27,42,74,.1);padding:0;min-height:400px;position:relative}
+.tab-panel{display:none;padding:28px}
+.tab-panel.active{display:block}
+
+/* FORM ELEMENTS */
+.xl{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.xr{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.xc{background:var(--nvw);border:1px solid var(--bd);border-radius:18px;padding:5px 13px;font-size:11px;font-weight:600;color:var(--nvm);cursor:pointer;transition:all .15s;white-space:nowrap;font-family:inherit}
+.xc:hover{background:var(--nvm);color:var(--wh);border-color:var(--nvm)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.fd{display:flex;flex-direction:column;gap:4px}
+.fd label{font-size:10px;font-weight:700;color:var(--t2);letter-spacing:.4px;text-transform:uppercase}
+.fd select,.fd input{height:42px;padding:0 12px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:13px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .15s}
+.fd select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%237A8099' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+.fd select:focus,.fd input:focus{border-color:var(--nvm)}
+.btn{background:var(--nv);color:var(--wh);border:none;height:42px;padding:0 24px;border-radius:var(--rs);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:background .15s}
+.btn:hover{background:var(--nvl)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-outline{background:transparent;border:1.5px solid var(--bd);color:var(--t2);height:34px;padding:0 14px;border-radius:var(--rs);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.btn-outline:hover{border-color:var(--nvm);color:var(--nv)}
+.err{display:none;background:var(--rdbg);border:1px solid #daa;border-radius:var(--rs);padding:10px 14px;margin-top:12px;font-size:12px;color:var(--rd)}
+.err.on{display:block}
+
+/* RESULTS */
+.route{background:var(--nv);border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.rt{background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-size:10px;font-weight:600;padding:3px 9px;border-radius:5px}
+.rt b{color:var(--wh)}
+.ra{color:rgba(255,255,255,.25);font-size:14px}
+
+.conf{background:var(--sf);border-radius:var(--r);padding:16px 20px;margin-bottom:16px}
+.conf-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.conf-lb{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px}
+.conf-p{font-family:'DM Serif Display',serif;font-size:26px;color:var(--nv)}
+.conf-tr{height:6px;background:var(--bdl);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.conf-fl{height:100%;background:linear-gradient(90deg,var(--nvm),var(--gn));border-radius:3px;transition:width .5s;width:0%}
+.conf-st{font-size:11px;font-weight:500;color:var(--t3)}
+.conf-st.rdy{color:var(--gn);font-weight:700}
+
+.ph{background:var(--wh);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.ph-hd{padding:14px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .1s}
+.ph-hd:hover{background:var(--sf)}
+.ph-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.ph-ic.pre{background:#EAF0FF}.ph-ic.ship{background:#E8F8EE}.ph-ic.pay{background:var(--ambg)}
+.ph-nf{flex:1}
+.ph-t{font-size:13px;font-weight:700}
+.ph-ct{font-size:10px;color:var(--t3);margin-top:1px}
+.ph-ch{color:var(--t3);transition:transform .2s}
+.ph.open .ph-ch{transform:rotate(180deg)}
+.ph-bd{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.ph.open .ph-bd{max-height:8000px}
+.ph-it{padding:0 18px 14px;display:flex;flex-direction:column;gap:2px}
+
+.ci{display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border-radius:var(--rs);cursor:pointer;transition:background .1s}
+.ci:hover{background:var(--sf)}
+.ci.done{opacity:.4}
+.ci.done .ci-t{text-decoration:line-through}
+.cb{width:18px;height:18px;border:2px solid var(--bd);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;background:var(--wh);transition:all .15s}
+.ci.done .cb{background:var(--gn);border-color:var(--gn)}
+.cb svg{opacity:0}.ci.done .cb svg{opacity:1}
+.ci-t{font-size:12px;font-weight:600;line-height:1.45}
+.ci-d{font-size:11px;color:var(--t3);margin-top:1px;line-height:1.5}
+
+.sh{font-family:'DM Serif Display',serif;font-size:18px;color:var(--nv);margin-bottom:10px}
+.al{background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--r);padding:12px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px}
+.al-ic{width:26px;height:26px;background:var(--am);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;color:#fff;font-size:12px}
+.al-t{font-size:11px;font-weight:700;color:var(--am);margin-bottom:1px}
+.al-tx{font-size:11px;color:var(--t1);line-height:1.55}
+
+.sec{background:var(--sf);border-radius:var(--r);padding:18px 20px;margin-bottom:12px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.pc{border:1.5px solid var(--bd);border-radius:var(--r);padding:12px 14px;background:var(--wh)}
+.pc.recommended{border-color:var(--gn);background:var(--gnbg)}
+.pc.caution{border-color:var(--ambd);background:var(--ambg)}
+.pc.risky{border-color:#E8A0A0;background:var(--rdbg)}
+.pc-m{font-size:12px;font-weight:700;margin-bottom:2px}
+.pc-tg{display:inline-block;font-size:8px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-bottom:4px;color:#fff}
+.pc.recommended .pc-tg{background:var(--gn)}.pc.caution .pc-tg{background:var(--am)}.pc.risky .pc-tg{background:var(--rd)}
+.pc-ds{font-size:10px;color:var(--t2);line-height:1.5}
+.ctb{width:100%;margin-top:10px;border-collapse:collapse}
+.ctb tr{border-bottom:1px solid var(--bdl)}.ctb tr:last-child{border-bottom:2px solid var(--nv)}
+.ctb td{padding:8px 4px;font-size:11px}.ctb td:first-child{color:var(--t2)}.ctb td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.ct-n{font-size:10px;color:var(--t3);margin-top:8px;font-style:italic}
+
+/* AUDITOR */
+.upload-zone{border:2px dashed var(--bd);border-radius:var(--r);padding:40px;text-align:center;cursor:pointer;transition:border-color .15s}
+.upload-zone:hover{border-color:var(--nvm)}
+.scan-prog{background:var(--sf);border-radius:var(--r);padding:40px;text-align:center}
+.finding{background:var(--wh);border:1px solid var(--bdl);border-radius:var(--r);overflow:hidden;margin-bottom:8px}
+.finding-hd{padding:10px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--bdl)}
+.finding-bd{padding:12px 14px}
+.tag-high{background:var(--rd);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px}
+.tag-med{background:var(--am);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px}
+.tag-pass{background:var(--gn);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px}
+.suggestion{background:var(--nvw);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;margin-top:8px;font-size:11px;color:var(--nvm);line-height:1.5}
+
+/* CROSSCHECK */
+.file-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:8px}
+.file-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.critical-box{background:var(--rdbg);border:1.5px solid #E8A0A0;border-radius:var(--r);padding:16px 18px;margin-top:12px}
+.pass-list{background:var(--sf);border-radius:var(--r);padding:14px 16px;margin-top:10px}
+
+/* LOADING */
+.lov{display:none;position:fixed;inset:0;background:rgba(27,42,74,.15);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center}
+.lov.on{display:flex}
+.lo-c{background:var(--wh);border-radius:12px;padding:36px 44px;box-shadow:0 8px 32px rgba(27,42,74,.12);text-align:center}
+.lo-sp{width:36px;height:36px;border:3px solid var(--bdl);border-top-color:var(--nvm);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lo-m{font-size:13px;font-weight:700;color:var(--nv);margin-bottom:3px}
+.lo-s{font-size:11px;color:var(--t3)}
+
+.footer{text-align:center;padding:20px;font-size:10px;color:var(--t3)}
+
+/* MOCK LABEL */
+.mock-label{background:linear-gradient(to bottom,#1a3a2a,#0f261a);border:1px solid #2a5a3a;border-radius:var(--r);padding:16px;position:relative;overflow:hidden}
+.scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#818cf8,transparent);animation:scanDown 2s ease-in-out infinite}
+@keyframes scanDown{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.how{gap:16px}.tabs-bar{gap:0}.tab-btn{padding:8px 14px;font-size:11px}.tab-panel{padding:18px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-b">
+    <div class="hd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+    <span class="hd-nm">ShipSafe</span>
+  </div>
+  <span class="hd-tg">AI Compliance Agent</span>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-badge">Avoid $3,000+ customs holds</div>
+    <h1>Stop guessing.<br>Ship with confidence.</h1>
+    <p>Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.</p>
+    <div class="how">
+      <div class="how-s"><span class="how-n">1</span> Enter trade details</div>
+      <div class="how-s"><span class="how-n">2</span> AI scans requirements</div>
+      <div class="how-s"><span class="how-n">3</span> Get your checklist</div>
+    </div>
+  </div>
+  <div class="tabs-bar" style="max-width:900px;margin:0 auto">
+    <button class="tab-btn active" onclick="switchTab('checker')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+      Export Checker
+    </button>
+    <button class="tab-btn" onclick="switchTab('auditor')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20 12c-1.5 2.5-4 5-8 5s-6.5-2.5-8-5c1.5-2.5 4-5 8-5s6.5 2.5 8 5z"/></svg>
+      Label Auditor
+    </button>
+    <button class="tab-btn" onclick="switchTab('crosscheck')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      Doc Cross-Checker
+    </button>
+  </div>
+</section>
+
+<div class="main-card">
+
+  <!-- ═══ CHECKER TAB ═══ -->
+  <div class="tab-panel active" id="tp-checker">
+    <div id="ck-input">
+      <div class="xl">Quick start — click a corridor</div>
+      <div class="xr" id="exRow"></div>
+      <div class="fg">
+        <div class="fd"><label>Commodity</label>
+          <select id="comSel"><option value="">Select product</option>
+            <optgroup label="Cocoa"><option>Cocoa Powder (Natural)</option><option>Cocoa Powder (Alkalized)</option><option>Cocoa Butter</option><option>Cocoa Liquor</option><option>Raw Cocoa Beans</option></optgroup>
+            <optgroup label="Coffee"><option>Green Coffee Beans (Arabica)</option><option>Green Coffee Beans (Robusta)</option><option>Roasted Coffee Beans</option></optgroup>
+            <optgroup label="Spices"><option>Ground Turmeric</option><option>Black Pepper (Whole)</option><option>Vanilla Beans</option><option>Cloves (Whole)</option><option>Nutmeg (Whole)</option></optgroup>
+            <optgroup label="Oils"><option>Crude Palm Oil</option><option>Coconut Oil (Virgin)</option></optgroup>
+            <optgroup label="Seafood"><option>Frozen Shrimp</option><option>Canned Tuna</option></optgroup>
+            <optgroup label="Other"><option>Cashew Nuts (Raw)</option><option>Tapioca Starch</option><option value="_o">Other (type below)</option></optgroup>
+          </select>
+          <input type="text" id="comCust" placeholder="Type commodity" style="display:none;margin-top:5px" class="fd" autocomplete="off">
+        </div>
+        <div class="fd"><label>Origin Country</label>
+          <select id="orig"><option value="">Select origin</option>
+            <optgroup label="Southeast Asia"><option>Indonesia</option><option>Vietnam</option><option>Thailand</option><option>Philippines</option><option>Malaysia</option></optgroup>
+            <optgroup label="South/East Asia"><option>China</option><option>India</option><option>Sri Lanka</option></optgroup>
+            <optgroup label="South America"><option>Brazil</option><option>Colombia</option><option>Ecuador</option></optgroup>
+            <optgroup label="Africa"><option>Ghana</option><option>Ivory Coast</option><option>Ethiopia</option><option>Kenya</option></optgroup>
+          </select>
+        </div>
+        <div class="fd"><label>Destination Country</label>
+          <select id="dest"><option value="">Select destination</option>
+            <optgroup label="North America"><option>United States</option><option>Canada</option></optgroup>
+            <optgroup label="Europe"><option>United Kingdom</option><option>Netherlands</option><option>Germany</option><option>France</option><option>Belgium</option></optgroup>
+            <optgroup label="Asia Pacific"><option>Japan</option><option>South Korea</option><option>China</option><option>Singapore</option><option>Australia</option></optgroup>
+            <optgroup label="Middle East/Africa"><option>UAE</option><option>Saudi Arabia</option><option>Turkey</option><option>Tunisia</option><option>Egypt</option><option>South Africa</option></optgroup>
+          </select>
+        </div>
+        <div class="fd"><label>Incoterms</label>
+          <select id="inco"><option value="">Select terms</option>
+            <option value="FOB">FOB (Free On Board)</option><option value="CIF">CIF (Cost, Insurance, Freight)</option><option value="CFR">CFR (Cost and Freight)</option><option value="EXW">EXW (Ex Works)</option><option value="FCA">FCA (Free Carrier)</option><option value="DDP">DDP (Delivered Duty Paid)</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;color:var(--t3)">AI-powered guidance. Not legal advice.</span>
+        <button class="btn" onclick="runCheck()" id="goBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Run Compliance Check
+        </button>
+      </div>
+      <div class="err" id="errBox"></div>
+    </div>
+
+    <div id="ck-results" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div id="routeBar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"></div>
+        <button class="btn-outline" onclick="resetCk()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
+          New Check
+        </button>
+      </div>
+      <div class="conf">
+        <div class="conf-top"><span class="conf-lb">Shipment Readiness</span><span class="conf-p" id="cPct">0%</span></div>
+        <div class="conf-tr"><div class="conf-fl" id="cBar"></div></div>
+        <div class="conf-st" id="cSt">Complete the checklist below to track readiness</div>
+      </div>
+      <div id="phBox"></div>
+      <div id="alBox" style="margin-top:12px"></div>
+      <div id="payBox" style="display:none;margin-top:12px"></div>
+      <div id="costBox" style="display:none;margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- ═══ AUDITOR TAB ═══ -->
+  <div class="tab-panel" id="tp-auditor">
+    <div id="aud-upload">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">AI Label Auditor</h2>
+      <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Upload a photo of your product label. AI reads every detail and flags compliance issues against the target market's regulations.</p>
+
+      <!-- Upload zone with target market selector inside -->
+      <div class="upload-zone" id="audDropZone" onclick="document.getElementById('audFileInput').click()" ondragover="audDragOver(event)" ondrop="audDrop(event)">
+        <div style="font-size:28px;margin-bottom:8px">🏷️</div>
+        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px">Upload Product Label</div>
+        <div style="font-size:11px;color:var(--t3);margin-bottom:14px">Photo or scan of your label — JPG, PNG, or PDF. Drag & drop or click.</div>
+        <div onclick="event.stopPropagation()" style="margin-bottom:14px">
+          <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Check against</div>
+          <select id="audMarket" style="height:36px;padding:0 12px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:12px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;max-width:260px;appearance:none;-webkit-appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%237A8099' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px">
+            <option value="US">🇺🇸 United States (FDA 21 CFR)</option>
+            <option value="EU">🇪🇺 European Union (EU Food Law)</option>
+            <option value="UK">🇬🇧 United Kingdom (UK FSA)</option>
+            <option value="Japan">🇯🇵 Japan (MHLW Food Sanitation Act)</option>
+            <option value="UAE">🇦🇪 UAE / Middle East (ESMA / Halal)</option>
+            <option value="Australia">🇦🇺 Australia (FSANZ)</option>
+          </select>
+        </div>
+        <button class="btn" onclick="event.stopPropagation();document.getElementById('audFileInput').click()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Choose File
+        </button>
+        <input type="file" id="audFileInput" accept=".pdf,.png,.jpg,.jpeg" style="display:none" onchange="audFileAdded(this.files[0])">
+      </div>
+
+      <!-- Preview + scan button (shown after file selected) -->
+      <div id="audFileReady" style="display:none;margin-top:12px">
+        <div class="file-row">
+          <div class="file-icon" style="background:var(--nvw);font-size:18px" id="audFileIcon">🖼️</div>
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:600" id="audFileName"></div>
+            <div style="font-size:10px;color:var(--t3)" id="audFileSize"></div>
+          </div>
+          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:700;margin-right:8px">Ready</span>
+          <button class="btn-outline" style="height:26px;padding:0 8px;font-size:10px" onclick="resetAud()">✕</button>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:10px">
+          <button class="btn" id="audScanBtn" onclick="runAud()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Scan Label
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scanning progress -->
+    <div id="aud-scanning" style="display:none">
+      <div class="scan-prog">
+        <div class="lo-sp" style="margin:0 auto 14px"></div>
+        <div style="font-size:14px;font-weight:700;color:var(--nv);margin-bottom:4px">AI is scanning your label...</div>
+        <div style="font-size:12px;color:var(--t3)" id="scanSt">Reading label text...</div>
+        <div style="width:180px;height:4px;background:var(--bdl);border-radius:2px;margin:12px auto 0;overflow:hidden"><div id="scanBar" style="height:100%;background:linear-gradient(90deg,var(--nvm),var(--nvl));border-radius:2px;transition:width 1s;width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- Results (populated dynamically) -->
+    <div id="aud-results" style="display:none"></div>
+  </div>
+
+  <!-- ═══ CROSSCHECK TAB ═══ -->
+  <div class="tab-panel" id="tp-crosscheck">
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Cross-Border Document Checker</h2>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Upload 2–5 export documents. AI cross-references all fields to catch discrepancies that cause customs holds.</p>
+
+    <!-- Upload zone -->
+    <div id="cc-upload">
+      <div class="upload-zone" id="ccDropZone" onclick="document.getElementById('ccFileInput').click()" ondragover="ccDragOver(event)" ondrop="ccDrop(event)">
+        <div style="font-size:28px;margin-bottom:8px">📂</div>
+        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px">Upload Export Documents</div>
+        <div style="font-size:11px;color:var(--t3);margin-bottom:12px">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Drag & drop or click.</div>
+        <button class="btn" onclick="event.stopPropagation();document.getElementById('ccFileInput').click()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Choose Files
+        </button>
+        <input type="file" id="ccFileInput" multiple accept=".pdf,.png,.jpg,.jpeg" style="display:none" onchange="ccFilesAdded(this.files)">
+      </div>
+
+      <!-- File list (populated dynamically) -->
+      <div id="ccFileList" style="display:none;margin-top:12px">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Documents loaded</div>
+        <div id="ccFileRows"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+          <button class="btn-outline" onclick="ccReset()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
+            Clear All
+          </button>
+          <button class="btn" onclick="runCC()" id="ccBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M8 21H3v-5"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+            Run Cross-Check
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results (populated dynamically by renderCC) -->
+    <div id="cc-results" style="display:none"></div>
+  </div>
+</div>
+
+<div class="footer">ShipSafe.AI Copilot Mode v1.0 · Certified accurate · Final human sign-off required</div>
+
+<div class="lov" id="loader"><div class="lo-c"><div class="lo-sp"></div><div class="lo-m" id="loMsg">Analysing trade corridor...</div><div class="lo-s">This takes a few seconds</div></div></div>
+
+<script>
+// ═══════════ DATA ═══════════
+const DB={
+"Cocoa Powder (Natural)|Indonesia|United States|FOB":{phases:[{id:"pre_shipment",title:"Pre-Shipment",items:[{task:"Register with FDA as a Food Facility",detail:"Register at furls.fda.gov. Without this, your shipment gets refused at the US port automatically."},{task:"File Prior Notice with FDA",detail:"US requires Prior Notice at least 15 days before arrival. Confirm with your buyer this is done. Missing it causes automatic detention."},{task:"Lab testing for aflatoxin and heavy metals",detail:"FDA max aflatoxin 20 ppb, limits lead in cocoa. Send samples to Sucofindo or SGS at least 3 weeks before shipment."},{task:"Get Certificate of Origin from KADIN",detail:"Go to KADIN with your commercial invoice. Confirms Indonesian origin, may qualify buyer for reduced tariffs."},{task:"Get Phytosanitary Certificate from BKIPM",detail:"BKIPM inspects cocoa powder and certifies pest-free. US CBP may request this at port of entry."},{task:"Prepare HACCP documentation",detail:"Under FSMA, your US importer must verify your facility has food safety controls. Have HACCP plan ready."},{task:"Confirm packaging meets FDA labelling rules",detail:"Labels: product name, net weight (metric + US), country of origin, lot number, allergen info. Wrong labelling delays clearance."},{task:"Book freight forwarder and confirm container",detail:"Contact forwarder 2 to 3 weeks before. Confirm 20ft container. Peak season (Aug-Dec) causes shortages."}]},{id:"shipment",title:"During Shipment",items:[{task:"Use moisture barrier packaging",detail:"Cocoa absorbs moisture. Food-grade PE liner bags inside kraft sacks. Seal tightly."},{task:"Get a clean Bill of Lading",detail:"Must show 'clean on board'. Damage remarks let buyer refuse payment."},{task:"Arrange fumigation if required",detail:"Some US ports require fumigation for Indonesian agricultural products."},{task:"Inspect container before loading",detail:"Clean, dry, odour-free, no holes. Take timestamped photos."},{task:"Share tracking details with buyer",detail:"Send BL number, vessel name, ETA immediately after sailing."},{task:"Send all shipping documents within 3 days",detail:"Invoice, Packing List, BL, COO, Phyto Cert, Lab Results. Missing docs delay clearance."}]},{id:"payment",title:"Payment & Settlement",items:[{task:"Agree payment terms before shipping",detail:"New buyers: request LC or min 30% advance TT. Never ship on open credit."},{task:"Check LC document requirements line by line",detail:"Banks reject for small mistakes: spelling, weight discrepancies, wrong Incoterms."},{task:"Submit docs within LC presentation period",detail:"Most LCs give 21 days after shipment. Submit early."},{task:"Invoice in USD with all required details",detail:"Must match LC exactly: seller/buyer, product, quantity, FOB + port, payment terms."},{task:"Factor in bank charges",detail:"Indonesian banks charge 0.25-0.5% for LC negotiation plus courier."}]}],blind_spots:[{title:"FDA Detention Without Examination",description:"If your FDA registration lapses, shipments get automatically detained without inspection. Have you verified registration is current?"},{title:"FSVP Importer Compliance",description:"Under FSMA, your US buyer needs a Foreign Supplier Verification Program for your facility. Have you asked them?"},{title:"Aflatoxin increases during transit",description:"Humid containers can raise aflatoxin levels during 3-4 week voyage. Are you using desiccants?"},{title:"BL name mismatch with LC",description:"If consignee name on BL doesn't match LC exactly, bank rejects. Have you compared word by word?"},{title:"VGM declaration",description:"Under SOLAS, Verified Gross Mass must be submitted before loading. Has your forwarder arranged this?"}],payment_guidance:[{method:"Letter of Credit (LC)",risk_level:"recommended",description:"Strongly recommended for new US buyers. Major US banks give reliable guarantees. Cost: 1-2% of invoice."},{method:"Telegraphic Transfer (TT)",risk_level:"caution",description:"OK for established buyers (3+ shipments). Request 30% advance, 70% against BL copy."},{method:"Documents Against Payment (DP)",risk_level:"caution",description:"Buyer's bank holds docs until payment. If buyer refuses, goods stuck at US port."},{method:"Documents Against Acceptance (DA)",risk_level:"risky",description:"Buyer gets docs by promising to pay later. No guarantee. Not recommended."}],cost_estimation:[{item:"Inland transport",estimate:"$200-$400",note:"Factory to port"},{item:"Export customs clearance",estimate:"$80-$150",note:"Broker fee"},{item:"Terminal handling",estimate:"$150-$250",note:"THC"},{item:"Lab testing",estimate:"$200-$400",note:"Aflatoxin, metals, micro"},{item:"Phytosanitary certificate",estimate:"$30-$60",note:"BKIPM"},{item:"Certificate of Origin",estimate:"$20-$40",note:"KADIN"},{item:"BL and docs",estimate:"$50-$100",note:""},{item:"LC bank charges",estimate:"0.25-0.5%",note:""},{item:"Container stuffing",estimate:"$80-$150",note:""},{item:"Ocean freight",estimate:"Buyer pays",note:"FOB"},{item:"Insurance",estimate:"Buyer pays",note:"FOB"}]},
+"Cocoa Butter|Indonesia|Japan|CIF":{phases:[{id:"pre_shipment",title:"Pre-Shipment",items:[{task:"Register with Japan MHLW",detail:"All food imports must comply with Food Sanitation Act. Buyer submits Import Notification. Confirm arranged."},{task:"Lab test for pesticides and heavy metals",detail:"Japan's 'positive list' tests 800+ residues. Aflatoxin limit 10 ppb (stricter than US). Use accredited lab."},{task:"Prepare Certificate of Analysis",detail:"Japanese buyers expect: melting point, FFA, iodine value, moisture, colour. Per batch."},{task:"Check Halal certification needs",detail:"Many Japanese manufacturers export to SE Asia and need Halal ingredients. Check with buyer."},{task:"Arrange marine insurance (CIF)",detail:"Get ICC(A) at 110% CIF value. Your responsibility under CIF."},{task:"Book ocean freight (CIF)",detail:"Get 3+ quotes. Indonesia-Japan: 7-14 days. Book early peak season."},{task:"Get IJEPA Certificate of Origin",detail:"Indonesia-Japan EPA gives preferential tariffs. Get correct form from KADIN. Saves buyer 4-6%."},{task:"Check temperature control",detail:"Cocoa butter melts at 34°C. Hot months: use reefer or thermal liner."}]},{id:"shipment",title:"During Shipment",items:[{task:"Monitor container temperature",detail:"Reefer: set 18-22°C. Request temperature logs. Japanese buyers often require these."},{task:"Ensure packaging meets Japan food contact rules",detail:"All materials touching cocoa butter must comply with Japan standards."},{task:"Get BL showing CIF and Freight Prepaid",detail:"BL must show CIF [port] and Freight Prepaid."},{task:"Send all documents within 3 days",detail:"Invoice, PL, BL, Insurance Cert, COA, COO, Phyto Cert, lab results."},{task:"Prepare insurance certificate",detail:"Show 110% CIF coverage, ICC(A), claims agent in Japan."},{task:"Confirm arrival with buyer",detail:"Japanese ports are efficient. Share vessel, voyage, ETA, container number."}]},{id:"payment",title:"Payment & Settlement",items:[{task:"Use LC for first-time Japanese buyers",detail:"Japanese banks (MUFG, SMBC, Mizuho): reliable but strictest document checkers."},{task:"CIF value on invoice must match LC",detail:"Include product + freight + insurance. Must match LC exactly."},{task:"Present insurance docs with LC",detail:"Missing insurance is top CIF LC rejection reason."},{task:"Submit documents early",detail:"Allow 5 days before deadline for bank review."},{task:"Keep freight/insurance payment proof",detail:"Proof of CIF obligations for any disputes."}]}],blind_spots:[{title:"Japan's positive list for pesticides",description:"0.01 ppm uniform limit for unlisted chemicals. Have you tested against Japan's specific list?"},{title:"Cocoa butter bloom during transit",description:"Temperature changes cause fat bloom. Japanese buyers consider this a defect. Reefer or thermal liner?"},{title:"Random customs testing delays",description:"~10% of food imports tested, held 7-14 days. Built buffer time into delivery?"},{title:"IJEPA form vs general COO",description:"Wrong form = higher tariffs for buyer. Did you get the IJEPA-specific form?"},{title:"Insurance coverage gaps",description:"Cheap policies exclude temperature damage. Check your policy covers this."}],payment_guidance:[{method:"Letter of Credit (LC)",risk_level:"recommended",description:"Highly recommended. Japanese banks are reliable but extremely strict."},{method:"Telegraphic Transfer (TT)",risk_level:"recommended",description:"Safe for established buyers. Strong payment culture. After 2-3 LC shipments, TT is common."},{method:"Documents Against Payment (DP)",risk_level:"caution",description:"OK with large trading houses (Mitsui, Mitsubishi). For smaller buyers, use LC."},{method:"Documents Against Acceptance (DA)",risk_level:"caution",description:"Japanese companies generally honour DA. Lower risk than most corridors."}],cost_estimation:[{item:"Inland transport",estimate:"$200-$400",note:""},{item:"Export customs",estimate:"$80-$150",note:""},{item:"Terminal handling",estimate:"$150-$250",note:""},{item:"Ocean freight (CIF)",estimate:"$800-$1,400",note:"Your cost"},{item:"Marine insurance",estimate:"$150-$350",note:"ICC(A)"},{item:"Reefer surcharge",estimate:"$300-$600",note:"If needed"},{item:"Lab testing (Japan)",estimate:"$300-$500",note:""},{item:"Phyto certificate",estimate:"$30-$60",note:""},{item:"COO (IJEPA)",estimate:"$25-$50",note:""},{item:"BL and docs",estimate:"$50-$100",note:""},{item:"LC bank charges",estimate:"0.25-0.5%",note:""}]},
+"Cocoa Powder (Alkalized)|Indonesia|Tunisia|CIF":{phases:[{id:"pre_shipment",title:"Pre-Shipment",items:[{task:"Get Halal certification from MUI",detail:"Tunisia is Muslim-majority. MUI certification is widely recognised in North Africa."},{task:"Check Tunisia import permit",detail:"Buyer must get import licence from Ministry of Trade. Confirm before shipping."},{task:"Lab testing",detail:"Test pH (7.0-8.0), fat, moisture, aflatoxin (10 ppb), heavy metals, micro."},{task:"Prepare French-language documentation",detail:"Tunisia uses French for trade docs. Prepare COA and specs in English + French."},{task:"Arrange marine insurance (CIF)",detail:"ICC(A) at 110% CIF. Cover extended storage 30+ days (Tunis port delays)."},{task:"Book freight to Tunis/Rades",detail:"Transit 25-35 days, usually with transshipment."}]},{id:"shipment",title:"During Shipment",items:[{task:"Use moisture-proof packaging",detail:"Alkalized cocoa is hygroscopic. Double-layer: PE liner inside multiwall kraft."},{task:"Add desiccants, inspect container",detail:"Min 2kg per 20ft container. Must be dry and odour-free."},{task:"Get BL showing CIF Tunis/Rades",detail:"Freight Prepaid. Consignee must match buyer registration."},{task:"Send documents with French translations",detail:"Within 3 days: Invoice (EN+FR), PL, BL, Insurance, COA, COO, Halal, Lab."}]},{id:"payment",title:"Payment & Settlement",items:[{task:"Use LC (strongly recommended)",detail:"Tunisia has forex controls. LC guarantees payment in foreign currency."},{task:"Verify LC specifies USD",detail:"Tunisian Dinar is not convertible. LC must clearly state USD."},{task:"Check bank correspondent relationships",detail:"Your bank must confirm LC through a major correspondent bank."},{task:"Present docs 7-10 days before expiry",detail:"Tunisian banks process slower than US/EU banks."}]}],blind_spots:[{title:"Tunisia's forex controls",description:"Central Bank controls currency. Buyer needs approval for payments. Asked about forex allocation status?"},{title:"Rades port delays",description:"Frequent congestion, 2-4 week waits. Insurance covers extended storage?"},{title:"Document legalisation",description:"Some offices need embassy stamping. Checked if required?"},{title:"HS code classification",description:"Alkalized vs natural have different codes and duty rates in Tunisia. Confirmed correct code?"}],payment_guidance:[{method:"Letter of Credit (LC)",risk_level:"recommended",description:"Strongly recommended due to forex controls. Use reputable Tunisian bank."},{method:"Telegraphic Transfer (TT)",risk_level:"risky",description:"Risky. TT from Tunisia delayed weeks/months for Central Bank approval."},{method:"Documents Against Payment (DP)",risk_level:"caution",description:"Better than TT but currency transfer risk remains."},{method:"Documents Against Acceptance (DA)",risk_level:"risky",description:"Not recommended. Forex controls + delays = high risk."}],cost_estimation:[{item:"Inland transport",estimate:"$200-$400",note:""},{item:"Export customs",estimate:"$80-$150",note:""},{item:"Terminal handling",estimate:"$150-$250",note:""},{item:"Ocean freight (CIF)",estimate:"$1,200-$2,200",note:"25-35 days"},{item:"Marine insurance",estimate:"$150-$300",note:""},{item:"Lab testing",estimate:"$200-$400",note:""},{item:"Halal cert (MUI)",estimate:"$200-$400",note:""},{item:"Phyto certificate",estimate:"$30-$60",note:""},{item:"COO",estimate:"$20-$40",note:""},{item:"French translation",estimate:"$50-$150",note:""},{item:"Doc legalisation",estimate:"$100-$300",note:"If needed"},{item:"BL and docs",estimate:"$50-$100",note:""},{item:"LC bank charges",estimate:"0.3-0.6%",note:""}]},
+"Frozen Shrimp|Indonesia|United States|CFR":{phases:[{id:"pre_shipment",title:"Pre-Shipment",items:[{task:"Verify FDA Green List status",detail:"Check FDA Import Alert list. If flagged, all shrimp automatically detained."},{task:"Update HACCP plan for shrimp",detail:"Must address antibiotics, Salmonella, decomposition."},{task:"Lab test for antibiotic residues",detail:"Zero tolerance for chloramphenicol and nitrofurans. Test every batch."},{task:"Get Health Certificate from BKIPM",detail:"Certifies food safety and animal health requirements."},{task:"Book reefer container early",detail:"Must ship at minus 18°C. Book 3-4 weeks ahead."},{task:"Confirm correct HS code",detail:"Multiple codes by species and processing. Wrong code = delays."}]},{id:"shipment",title:"During Shipment",items:[{task:"Pre-cool reefer before loading",detail:"Minus 18°C before loading. Load only already-frozen product."},{task:"Record temperature with photos",detail:"Photo reefer display at start, during, end of loading."},{task:"Get BL showing CFR, Freight Prepaid",detail:"Under CFR you pay freight."},{task:"Ensure continuous reefer power",detail:"Confirm reefer plugs at transshipment ports."},{task:"Send docs within 2 days",detail:"Seafood is time-sensitive."}]},{id:"payment",title:"Payment & Settlement",items:[{task:"Use LC for shipments above $50K",detail:"Frozen shrimp: high-value, perishable. LC is the only safe option."},{task:"Include temperature clause in contract",detail:"Specify agreed temp and consequences of deviation."},{task:"Factor CFR costs into pricing",detail:"Reefer rates 2-3x dry container."},{task:"Present LC docs within 7 days",detail:"Late docs = port storage fees."}]}],blind_spots:[{title:"FDA Import Alert 16-131",description:"Active alert targeting antibiotic residues in Indonesian shrimp. Checked recently?"},{title:"Reefer breakdown at transshipment",description:"4-6 hours without power causes partial thawing. Booked direct service?"},{title:"US anti-dumping duties",description:"Rates change annually (0-20%+). Buyer checked current rate?"},{title:"Label condensation damage",description:"Reefer condensation when opened. Using waterproof labels?"}],payment_guidance:[{method:"Letter of Credit (LC)",risk_level:"recommended",description:"Essential. High value per container and perishable."},{method:"Telegraphic Transfer (TT)",risk_level:"caution",description:"Quality disputes common in frozen shrimp. Buyer may withhold payment."},{method:"Documents Against Payment (DP)",risk_level:"risky",description:"Delay = goods at port, accumulating fees, temperature risk."},{method:"Documents Against Acceptance (DA)",risk_level:"risky",description:"Buyer gets perishable goods, then disputes quality. No recovery."}],cost_estimation:[{item:"Cold truck to port",estimate:"$300-$600",note:""},{item:"Export customs",estimate:"$80-$150",note:""},{item:"THC (reefer)",estimate:"$200-$350",note:""},{item:"Ocean freight (reefer, CFR)",estimate:"$3,500-$5,500",note:"Your cost"},{item:"Reefer pre-cooling",estimate:"$100-$200",note:""},{item:"Lab testing",estimate:"$300-$500",note:""},{item:"Health Cert",estimate:"$50-$100",note:""},{item:"BL and docs",estimate:"$50-$100",note:""},{item:"LC bank charges",estimate:"0.25-0.5%",note:""},{item:"Insurance",estimate:"Buyer pays",note:"CFR"}]},
+"Green Coffee Beans (Arabica)|Vietnam|United Kingdom|FOB":{phases:[{id:"pre_shipment",title:"Pre-Shipment",items:[{task:"Register on UK IPAFFS",detail:"All food imports must be pre-notified through IPAFFS. Buyer must submit."},{task:"Lab test ochratoxin A and pesticides",detail:"UK follows EU-equivalent limits. Ochratoxin A max 5 µg/kg."},{task:"Get Phytosanitary Certificate",detail:"From Vietnam Plant Protection Department."},{task:"Prepare ICO Certificate of Origin",detail:"Contact VICOFA for origin and grade certificate."},{task:"Test moisture content (10-12.5%)",detail:"Higher moisture = mould during 25-30 day voyage."},{task:"Check sustainability certification",detail:"Many UK roasters require Rainforest Alliance or UTZ."}]},{id:"shipment",title:"During Shipment",items:[{task:"Use ventilated containers",detail:"Green coffee releases moisture and CO2. Ventilated containers prevent mould."},{task:"Line container and add desiccants",detail:"Kraft paper + 1kg desiccant per 10 bags."},{task:"Get clean BL showing FOB",detail:"Must show clean on board. Check draft before sailing."},{task:"Send documents within 3 days",detail:"Invoice, PL, BL, Phyto, COO, COA, moisture report."},{task:"Submit VGM",detail:"Required before loading under SOLAS."}]},{id:"payment",title:"Payment & Settlement",items:[{task:"Use LC for new UK buyers",detail:"UK banks reliable. Standard for coffee trade."},{task:"Check LC against coffee conventions",detail:"ECF or GCA terms. Weight tolerance usually 3%."},{task:"Invoice in USD",detail:"International coffee trade is USD even for UK."},{task:"Allow transit weight loss",detail:"Green coffee loses 0.5-1%. Clarify origin or destination weight."},{task:"Keep samples",detail:"Retain 1kg sealed per lot for 6 months."}]}],blind_spots:[{title:"UK BTOM changes post-Brexit",description:"Border controls keep changing. Checked latest requirements on gov.uk?"},{title:"Mould from container condensation",description:"Vietnam-UK crosses climate zones. Using ventilated containers AND desiccants?"},{title:"Sustainability cert expiry",description:"Must be valid at shipment, not contract signing. Checked?"},{title:"Vietnam export HS code",description:"0% tax but wrong code = unexpected charges. Confirmed 0901.11?"}],payment_guidance:[{method:"Letter of Credit (LC)",risk_level:"recommended",description:"Standard for coffee trade. UK banks reliable."},{method:"Telegraphic Transfer (TT)",risk_level:"caution",description:"OK for repeat buyers. Small specialty roasters may be less stable."},{method:"Documents Against Payment (DP)",risk_level:"caution",description:"OK with established importers. Strong UK legal system."},{method:"Documents Against Acceptance (DA)",risk_level:"risky",description:"Only for large houses (Volcafe, Olam, Sucden)."}],cost_estimation:[{item:"Inland transport",estimate:"$150-$350",note:""},{item:"Export customs",estimate:"$60-$120",note:""},{item:"Terminal handling",estimate:"$120-$200",note:""},{item:"Fumigation",estimate:"$80-$150",note:""},{item:"Lab testing",estimate:"$200-$350",note:""},{item:"Phyto cert",estimate:"$20-$50",note:""},{item:"ICO cert",estimate:"$15-$30",note:""},{item:"Container lining",estimate:"$80-$120",note:""},{item:"BL and docs",estimate:"$50-$80",note:""},{item:"LC bank charges",estimate:"0.2-0.4%",note:""},{item:"Freight",estimate:"Buyer pays",note:"FOB"}]}
+};
+
+const EX=[
+  {l:'Cocoa Powder → US (FOB)',c:'Cocoa Powder (Natural)',o:'Indonesia',d:'United States',i:'FOB'},
+  {l:'Cocoa Butter → Japan (CIF)',c:'Cocoa Butter',o:'Indonesia',d:'Japan',i:'CIF'},
+  {l:'Cocoa Powder → Tunisia (CIF)',c:'Cocoa Powder (Alkalized)',o:'Indonesia',d:'Tunisia',i:'CIF'},
+  {l:'Frozen Shrimp → US (CFR)',c:'Frozen Shrimp',o:'Indonesia',d:'United States',i:'CFR'},
+  {l:'Green Coffee → UK (FOB)',c:'Green Coffee Beans (Arabica)',o:'Vietnam',d:'United Kingdom',i:'FOB'},
+];
+let tot=0,chk=0;
+
+// INIT
+(function(){
+  const r=document.getElementById('exRow');
+  EX.forEach((e,i)=>{const b=document.createElement('button');b.className='xc';b.textContent=e.l;b.onclick=()=>fill(i);r.appendChild(b)});
+  document.getElementById('comSel').onchange=function(){document.getElementById('comCust').style.display=this.value==='_o'?'block':'none'};
+})();
+
+function fill(i){const e=EX[i];document.getElementById('comSel').value=e.c;document.getElementById('comCust').style.display='none';document.getElementById('orig').value=e.o;document.getElementById('dest').value=e.d;document.getElementById('inco').value=e.i}
+
+// TABS
+function switchTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tp-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// CHECKER
+function resetCk(){
+  // Only confirm if user has made some progress
+  if(chk>0 && !confirm(`You have ${chk} item${chk>1?'s':''} checked. Start a new check? Your progress will be cleared.`)) return;
+  if(window._ckKey) localStorage.removeItem('ck:'+window._ckKey);
+  window._ckKey=null;
+  document.getElementById('ck-input').style.display='';
+  document.getElementById('ck-results').style.display='none';
+}
+
+// ═══════════ CLAUDE API ═══════════
+const SYSTEM_PROMPT=`You are a senior food export compliance consultant with 20+ years of hands-on experience helping small and mid-size exporters in developing countries (Indonesia, Vietnam, India, Brazil, Ghana) ship agricultural and food commodities to the US, EU, Japan, Middle East, and beyond. You have personally handled customs clearances, FDA detentions, LC discrepancies, and phytosanitary rejections.
+
+Your advice is SPECIFIC, ACTIONABLE, and EXPERT-LEVEL. You cite exact regulation codes, name the specific government agency and its website or office, state real document names, real processing times, real costs, and real consequences of non-compliance. You write like an experienced consultant briefing a first-time exporter — direct, no fluff, no generic advice.
+
+MANDATORY RULES FOR EVERY ITEM:
+1. "task" field: Short, imperative action (e.g. "Register with FDA as a Food Facility via FURLS"). Never vague ("check food safety").
+2. "detail" field: Must include ALL of the following that apply:
+   - Exact regulation code (e.g. "FDA 21 CFR Part 1 Subpart H", "EU Regulation (EC) 852/2004", "Japan Food Sanitation Act Article 26")
+   - The specific document name (e.g. "Prior Notice of Imported Food", "Certificate of Analysis", "IJEPA Form AJ")
+   - Exact issuing authority and how to obtain it (e.g. "Apply at furls.fda.gov", "Request from BKIPM office in your province", "Download form from KADIN Jakarta")
+   - Real timeline (e.g. "takes 3-5 business days", "must be submitted 15 days before US arrival")
+   - Concrete consequence of skipping (e.g. "FDA will automatically detain shipment without physical examination", "shipment refused at port", "LC bank will reject the document set")
+   - Specific numbers where relevant (e.g. "aflatoxin limit: 20 ppb for US, 10 ppb for Japan/EU", "minimum font size: 10pt", "tolerance: ±5%")
+
+BLIND SPOTS must be non-obvious risks that experienced exporters miss — not things already covered in the checklist. Each must end with a specific, pointed question the exporter must ask themselves or their forwarder right now.
+
+PAYMENT GUIDANCE must be corridor-specific: consider the buyer country's banking reputation, currency controls, typical payment culture, and the specific commodity's risk profile (perishable? high-value? common fraud corridor?).
+
+COST ESTIMATION must reflect real market rates for the specific origin country and commodity, with notes on which costs are fixed vs variable, and flag any costs that commonly surprise first-time exporters.
+
+You must return ONLY a valid JSON object — no markdown, no code fences, no explanation, no text before or after the JSON.`;
+
+// Extract JSON from Claude response — handles raw JSON or accidental markdown fences
+function extractJSON(text){
+  try{return JSON.parse(text.trim())}catch(e){}
+  const fm=text.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if(fm){try{return JSON.parse(fm[1].trim())}catch(e){}}
+  const s=text.indexOf('{'),en=text.lastIndexOf('}');
+  if(s!==-1&&en>s){try{return JSON.parse(text.slice(s,en+1))}catch(e){}}
+  throw new Error('Could not extract valid JSON from Claude response');
+}
+
+// Call Claude API for any corridor not in the local DB
+async function fetchFromClaude(commodity,origin,destination,incoterms){
+  const userPrompt=`Generate a complete, expert-level export compliance checklist for this exact trade corridor:
+
+Commodity: ${commodity}
+Origin Country: ${origin}
+Destination Country: ${destination}
+Incoterms: ${incoterms}
+
+CRITICAL REQUIREMENTS — every "detail" field must be specific to this corridor, not generic:
+- Name the EXACT regulation (e.g. "FDA 21 CFR Part 117 — FSMA Preventive Controls", not "food safety regulations")
+- Name the EXACT document (e.g. "Phytosanitary Certificate (PC) issued by ${origin === 'Indonesia' ? 'BKIPM (Badan Karantina Ikan, Pengendalian Mutu)' : 'the national plant protection authority'}")
+- Name WHERE to get it (specific agency, office, or URL)
+- State real processing times and submission deadlines
+- State the exact consequence if skipped (detention, rejection, LC refusal, delay)
+- Use specific numbers: contaminant limits in ppb/ppm, font sizes in pt, weight tolerances in %, timelines in days
+
+INCOTERMS CONTEXT for ${incoterms}:
+${incoterms === 'FOB' ? '- Exporter pays all costs until goods cross ship\'s rail at origin port. Buyer arranges and pays ocean freight + insurance.' :
+  incoterms === 'CIF' ? '- Exporter pays inland transport + export clearance + ocean freight + marine insurance to destination port. Include these in cost estimation.' :
+  incoterms === 'CFR' ? '- Exporter pays inland transport + export clearance + ocean freight (NOT insurance). Buyer arranges insurance. Reflect this in costs.' :
+  incoterms === 'EXW' ? '- Buyer handles everything from factory gate. Exporter has minimal obligations but must still prepare export documents.' :
+  incoterms === 'DDP' ? '- Exporter pays EVERYTHING including import duties and delivery to buyer\'s door. Flag all import-side costs the exporter must cover.' :
+  incoterms === 'FCA' ? '- Exporter delivers to named carrier at origin. Buyer pays main carriage. Clarify handover point in checklist.' :
+  '- Apply the correct cost responsibility for ' + incoterms + ' terms throughout.'}
+
+DESTINATION MARKET SPECIFICS for ${destination}:
+${destination === 'United States' ? '- FDA oversight: FSMA rules, Prior Notice (furls.fda.gov, 15 days before arrival), Facility Registration. CBP entry via ACE portal. Possible FDA Import Alert — check before shipping.' :
+  destination === 'European Union' || ['Germany','Netherlands','France','Belgium','Italy','Spain'].includes(destination) ? '- EU food law: Regulation (EC) 178/2002, 852/2004, 853/2004. RASFF system for alerts. Import via EU entry port with SPS checks. EU MRL regulation (EC) 396/2005 for pesticides.' :
+  destination === 'United Kingdom' ? '- Post-Brexit: BTOM rules. IPAFFS pre-notification mandatory. DEFRA/APHA border checks. GB-specific MRLs may differ from EU. Check gov.uk/import-food-and-agricultural-products.' :
+  destination === 'Japan' ? '- Food Sanitation Act (食品衛生法), Article 26-28. MHLW import notification by buyer. Japan\'s Positive List System (800+ pesticide residues, 0.01 ppm default). Strict heavy metal limits.' :
+  destination === 'China' ? '- GACC registration mandatory for facility. GB standards (national standards). CNCA oversight. CIQ inspection at port of entry.' :
+  destination === 'UAE' || destination === 'Saudi Arabia' ? '- Halal certification required. Emirates Authority for Standardization (ESMA) / SASO standards. Arabic labelling requirements.' :
+  destination === 'Australia' ? '- DAFF (Dept of Agriculture) biosecurity. AQIS import conditions in BICON database. Strict quarantine — no soil, minimal plant material.' :
+  '- Research specific import authority, food safety standards, and labelling requirements for ' + destination + '.'}
+
+COMMODITY SPECIFICS for ${commodity}:
+- Apply the correct contaminant limits (aflatoxin, ochratoxin, heavy metals, pesticide MRLs) for this specific commodity in ${destination}
+- Flag commodity-specific risks: temperature sensitivity, moisture, fumigation needs, HS code classification
+- Include commodity-specific certificates (e.g. ICO cert for coffee, IJEPA form for Indonesia-Japan, Halal for Muslim markets)
+
+Return ONLY a JSON object with this exact structure (no text before or after):
+{
+  "phases": [
+    {
+      "id": "pre_shipment",
+      "title": "Pre-Shipment",
+      "items": [
+        {
+          "task": "Short imperative action with specific agency/document name",
+          "detail": "Exact regulation code. Document name. Where to get it (agency + URL/office). Processing time. Deadline. Consequence if missed. Specific numbers/limits."
+        }
+      ]
+    },
+    {
+      "id": "shipment",
+      "title": "During Shipment",
+      "items": [{ "task": "...", "detail": "..." }]
+    },
+    {
+      "id": "payment",
+      "title": "Payment & Settlement",
+      "items": [{ "task": "...", "detail": "..." }]
+    }
+  ],
+  "blind_spots": [
+    {
+      "title": "Non-obvious risk title",
+      "description": "Specific, expert-level risk that catches exporters off guard. Include real numbers or regulation. End with a pointed question they must answer right now."
+    }
+  ],
+  "payment_guidance": [
+    { "method": "Letter of Credit (LC)", "risk_level": "recommended", "description": "Corridor-specific advice including typical LC terms, which banks are reliable, cost %" },
+    { "method": "Telegraphic Transfer (TT)", "risk_level": "caution", "description": "..." },
+    { "method": "Documents Against Payment (DP)", "risk_level": "caution", "description": "..." },
+    { "method": "Documents Against Acceptance (DA)", "risk_level": "risky", "description": "..." }
+  ],
+  "cost_estimation": [
+    { "item": "Cost item name", "estimate": "$X-$Y", "note": "Who pays under ${incoterms} + any important caveat" }
+  ]
+}
+
+Quantity targets: 7-9 pre-shipment items, 5-7 shipment items, 4-6 payment items, 4-6 blind spots, 4 payment methods, 10-14 cost items.
+risk_level must be exactly: "recommended", "caution", or "risky" — no other values.
+Return ONLY the JSON. Nothing else.`;
+
+  const res=await fetch('/api/claude',{
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4096,system:SYSTEM_PROMPT,messages:[{role:'user',content:userPrompt}]})
+  });
+  if(!res.ok) throw new Error(`API returned ${res.status}: ${JSON.stringify(await res.json())}`);
+  const apiData=await res.json();
+  const rawText=apiData.content&&apiData.content[0]&&apiData.content[0].text;
+  if(!rawText) throw new Error('No text in response: '+JSON.stringify(apiData));
+  return extractJSON(rawText);
+}
+
+function runCheck(){
+  const eb=document.getElementById('errBox');eb.classList.remove('on');eb.style.display='none';
+  const sel=document.getElementById('comSel').value;const cust=document.getElementById('comCust').value.trim();
+  const commodity=sel==='_o'?cust:sel;const origin=document.getElementById('orig').value;
+  const destination=document.getElementById('dest').value;const incoterms=document.getElementById('inco').value;
+  if(!commodity||!origin||!destination||!incoterms){eb.textContent='Please fill in all four fields.';eb.style.display='block';return}
+  const key=commodity+'|'+origin+'|'+destination+'|'+incoterms;
+  const ov=document.getElementById('loader');const goBtn=document.getElementById('goBtn');ov.classList.add('on');
+
+  // DB hit: gunakan data lokal langsung (instant)
+  if(DB[key]){setTimeout(()=>{ov.classList.remove('on');render(DB[key],commodity,origin,destination,incoterms)},800);return}
+
+  // AI cache hit: koridor ini pernah di-generate sebelumnya, pakai langsung
+  const cached=localStorage.getItem('ai:'+key);
+  if(cached){try{const d=JSON.parse(cached);setTimeout(()=>{ov.classList.remove('on');render(d,commodity,origin,destination,incoterms)},400);return}catch(e){localStorage.removeItem('ai:'+key)}}
+
+  // DB miss: panggil Claude API
+  document.getElementById('loMsg').textContent='AI is generating your compliance checklist...';
+  goBtn.disabled=true;
+  fetchFromClaude(commodity,origin,destination,incoterms)
+    .then(data=>{
+      ov.classList.remove('on');
+      document.getElementById('loMsg').textContent='Analysing trade corridor...';
+      goBtn.disabled=false;
+      // Cache AI result so repeat checks are instant
+      try{localStorage.setItem('ai:'+key,JSON.stringify(data))}catch(e){}
+      render(data,commodity,origin,destination,incoterms);
+    })
+    .catch(err=>{
+      ov.classList.remove('on');
+      document.getElementById('loMsg').textContent='Analysing trade corridor...';
+      goBtn.disabled=false;
+      eb.textContent='Could not generate compliance data. Please check your connection and try again.';
+      eb.style.display='block';
+      console.error('ShipSafe API error:',err);
+    });
+}
+
+function render(data,commodity,origin,destination,incoterms){
+  document.getElementById('ck-input').style.display='none';
+  document.getElementById('ck-results').style.display='';
+  document.getElementById('routeBar').innerHTML=`<span class="rt">📦 <b>${commodity}</b></span><span class="ra">→</span><span class="rt">🏭 <b>${origin}</b></span><span class="ra">→</span><span class="rt">🚢 <b>${destination}</b></span><span class="ra">·</span><span class="rt">📋 <b>${incoterms}</b></span>`;
+  tot=0;chk=0;
+
+  // Save current corridor key for save/restore operations
+  const ckKey=commodity+'|'+origin+'|'+destination+'|'+incoterms;
+  window._ckKey=ckKey;
+
+  // Load saved checklist state for this corridor
+  let savedState={};
+  try{savedState=JSON.parse(localStorage.getItem('ck:'+ckKey)||'{}')}catch(e){}
+
+  const icons={pre_shipment:{c:'pre',e:'📋'},shipment:{c:'ship',e:'🚢'},payment:{c:'pay',e:'💳'}};
+  const box=document.getElementById('phBox');box.innerHTML='';
+  data.phases.forEach((p,pi)=>{const ic=icons[p.id]||icons.pre_shipment;tot+=p.items.length;
+    const el=document.createElement('div');el.className='ph'+(pi===0?' open':'');
+    el.innerHTML=`<div class="ph-hd" onclick="this.parentElement.classList.toggle('open')"><div class="ph-ic ${ic.c}" style="font-size:16px">${ic.e}</div><div class="ph-nf"><div class="ph-t">${p.title}</div><div class="ph-ct"><span class="pdc">0</span> of ${p.items.length} completed</div></div><div class="ph-ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="ph-bd"><div class="ph-it">${p.items.map((it,ii)=>`<div class="ci" onclick="tgl(this)" data-id="${p.id}:${ii}"><div class="cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="ci-t">${it.task}</div><div class="ci-d">${it.detail}</div></div></div>`).join('')}</div></div>`;
+    box.appendChild(el)});
+
+  // Restore saved checked state
+  box.querySelectorAll('.ci').forEach(ci=>{
+    if(savedState[ci.dataset.id]){ci.classList.add('done');chk++}
+  });
+  // Restore per-phase counters
+  box.querySelectorAll('.ph').forEach(ph=>{ph.querySelector('.pdc').textContent=ph.querySelectorAll('.ci.done').length});
+  upd();
+
+  document.getElementById('alBox').innerHTML=data.blind_spots?.length?`<div class="sh">⚠ Blind Spot Alerts</div>${data.blind_spots.map(a=>`<div class="al"><div class="al-ic">⚠</div><div><div class="al-t">${a.title}</div><div class="al-tx">${a.description}</div></div></div>`).join('')}`:'';
+
+  const pb=document.getElementById('payBox');
+  if(data.payment_guidance?.length){pb.style.display='';pb.innerHTML=`<div class="sec"><div class="sh">Payment Method Guidance</div><div style="font-size:11px;color:var(--t2);margin-bottom:4px">${origin} → ${destination}</div><div class="pg">${data.payment_guidance.map(p=>`<div class="pc ${p.risk_level}"><div class="pc-m">${p.method}</div><span class="pc-tg">${p.risk_level==='recommended'?'Recommended':p.risk_level==='caution'?'Caution':'High Risk'}</span><div class="pc-ds">${p.description}</div></div>`).join('')}</div></div>`}else pb.style.display='none';
+
+  const cb=document.getElementById('costBox');
+  if(data.cost_estimation?.length){cb.style.display='';cb.innerHTML=`<div class="sec"><div class="sh">Hidden Cost Breakdown</div><div style="font-size:11px;color:var(--t2);margin-bottom:4px">${incoterms} · 20ft container</div><table class="ctb">${data.cost_estimation.map(c=>`<tr><td>${c.item}${c.note?'<br><span style="font-size:9px;color:var(--t3)">'+c.note+'</span>':''}</td><td>${c.estimate}</td></tr>`).join('')}</table><div class="ct-n">Rough estimates. Get firm quotes from your forwarder and bank.</div></div>`}else cb.style.display='none';
+  document.querySelector('.main-card').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function tgl(el){
+  const w=el.classList.contains('done');el.classList.toggle('done');chk+=w?-1:1;
+  const s=el.closest('.ph');s.querySelector('.pdc').textContent=s.querySelectorAll('.ci.done').length;
+  // Persist checklist state to localStorage
+  if(window._ckKey){
+    try{
+      const stateKey='ck:'+window._ckKey;
+      const state=JSON.parse(localStorage.getItem(stateKey)||'{}');
+      if(el.classList.contains('done')) state[el.dataset.id]=1; else delete state[el.dataset.id];
+      localStorage.setItem(stateKey,JSON.stringify(state));
+    }catch(e){}
+  }
+  upd();
+}
+function upd(){const p=tot>0?Math.round(chk/tot*100):0;document.getElementById('cPct').textContent=p+'%';document.getElementById('cBar').style.width=p+'%';const s=document.getElementById('cSt');if(p===0){s.textContent='Complete the checklist below to track readiness';s.className='conf-st'}else if(p<50){s.textContent='Getting started. Keep going.';s.className='conf-st'}else if(p<90){s.textContent='Good progress. Check blind spots too.';s.className='conf-st'}else if(p<100){s.textContent='Nearly ready. A few items left.';s.className='conf-st'}else{s.textContent='All done. Ready to ship.';s.className='conf-st rdy'}}
+
+// ═══════════ AUDITOR ═══════════
+let audFile=null; // {name, size, type, b64}
+
+const AUD_MARKETS={
+  'US':'United States — FDA 21 CFR (Parts 101, 110, 117). Check: product name, net weight in US customary + metric, nutrition facts panel (21 CFR §101.9), ingredient list in descending order by weight, major allergen declaration in plain language (FALCPA — top 9: milk, eggs, fish, shellfish, tree nuts, peanuts, wheat, soybeans, sesame), country of origin, manufacturer name & address, any health/nutrient content claims against 21 CFR §101.13-101.67.',
+  'EU':'European Union — EU Regulation (EU) No 1169/2011 (FIC). Check: product name, net quantity in metric, ingredients list with allergens bolded (14 EU allergens: gluten cereals, crustaceans, eggs, fish, peanuts, soybeans, milk, nuts, celery, mustard, sesame, sulphites >10ppm, lupin, molluscs), nutrition declaration per 100g/100ml (mandatory: energy kJ+kcal, fat, saturates, carbohydrate, sugars, protein, salt), country of origin for meat/certain foods, "best before" / "use by" format, language requirements for destination country.',
+  'UK':'United Kingdom — UK FIC (retained EU law post-Brexit, with GB-specific updates). Same 14 allergens as EU but GB labelling in English required. Check HFSS rules if applicable. Verify BTOM import pre-notification if fresh/chilled.',
+  'Japan':'Japan — Food Labelling Standards (食品表示基準) under Food Labelling Act 2015, enforced by Consumer Affairs Agency. Check: product name in Japanese, ingredients in descending order, additives listed separately, net content, expiry date format (年月日), storage instructions, manufacturer/importer name & address in Japanese, allergens — 8 mandatory (shrimp, crab, wheat, buckwheat, egg, milk, peanut, walnut) + 20 recommended. Nutrition labelling mandatory since 2020: energy, protein, fat, carbohydrate, sodium (as salt equivalent).',
+  'UAE':'UAE / Middle East — UAE.S GSO 9/2013 and Emirates Authority for Standardization (ESMA). Halal certification mandatory for meat/poultry products, recommended for all food. Check: Arabic language labelling mandatory, product name, ingredients, net weight, country of origin, manufacturer details, production & expiry dates in Gregorian calendar, Halal logo from accredited body (MUI Indonesia is recognised). No pork-derived ingredients or alcohol.',
+  'Australia':'Australia — Australia New Zealand Food Standards Code (FSANZ). Check: product name, ingredient list with allergens declared (11 priority allergens: peanuts, tree nuts, milk, eggs, sesame, fish, shellfish, wheat, soy, lupin, bee products), nutrition information panel per serving + per 100g, date marking, country of origin mandatory statement ("Made in X" or "Product of X"), manufacturer/importer in Australia or NZ, FSANZ-approved additives only.'
+};
+
+function audDragOver(e){e.preventDefault();e.currentTarget.style.borderColor='var(--nvm)'}
+function audDrop(e){e.preventDefault();e.currentTarget.style.borderColor='';if(e.dataTransfer.files[0]) audFileAdded(e.dataTransfer.files[0])}
+
+function audFileAdded(f){
+  if(!f) return;
+  const allowed=['application/pdf','image/png','image/jpeg'];
+  if(!allowed.includes(f.type)){alert('Only JPG, PNG, or PDF supported.');return}
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    audFile={name:f.name,size:f.size,type:f.type,b64:ev.target.result.split(',')[1]};
+    document.getElementById('audFileName').textContent=f.name;
+    document.getElementById('audFileSize').textContent=(f.size/1024).toFixed(0)+' KB';
+    document.getElementById('audFileIcon').textContent=f.type==='application/pdf'?'📄':'🖼️';
+    document.getElementById('audFileReady').style.display='';
+  };
+  reader.readAsDataURL(f);
+}
+
+function resetAud(){
+  audFile=null;
+  document.getElementById('audFileInput').value='';
+  document.getElementById('audFileReady').style.display='none';
+  document.getElementById('aud-upload').style.display='';
+  document.getElementById('aud-scanning').style.display='none';
+  document.getElementById('aud-results').style.display='none';
+  document.getElementById('aud-results').innerHTML='';
+}
+
+async function runAud(){
+  if(!audFile){alert('Please upload a label image first.');return}
+  const market=document.getElementById('audMarket').value;
+  const marketLabel=document.getElementById('audMarket').options[document.getElementById('audMarket').selectedIndex].text;
+  const btn=document.getElementById('audScanBtn');
+
+  // Show scanning progress
+  document.getElementById('aud-upload').style.display='none';
+  document.getElementById('aud-scanning').style.display='';
+  document.getElementById('aud-results').style.display='none';
+  btn.disabled=true;
+
+  // Animate progress bar while waiting for API
+  const bar=document.getElementById('scanBar'),st=document.getElementById('scanSt');
+  bar.style.width='0%';
+  const steps=[
+    [300,'Reading label text...','15%'],
+    [900,'Checking ingredient list...','40%'],
+    [1600,'Analysing nutrition panel...','60%'],
+    [2200,'Checking allergen declarations...','80%'],
+    [2800,'Validating claims against regulations...','92%']
+  ];
+  steps.forEach(([t,msg,w])=>setTimeout(()=>{st.textContent=msg;bar.style.width=w},t));
+
+  try{
+    const content=[
+      {type:'text',text:`You are a senior food label compliance expert. Audit the product label in the attached image against the following regulations:
+
+${AUD_MARKETS[market]}
+
+Return ONLY a valid JSON object with this structure:
+{
+  "product_name": "Name read from the label",
+  "market": "${marketLabel}",
+  "summary": { "issues_found": 2, "passed": 5, "verdict": "Needs fixes before export" },
+  "issues": [
+    {
+      "severity": "high",
+      "category": "Allergen Declaration",
+      "regulation": "FDA 21 CFR §101.17",
+      "finding": "Shrimp paste listed as ingredient but allergen declaration missing 'Contains: Crustacean Shellfish'",
+      "consequence": "FDA will reject shipment or require recall. FALCPA violation carries civil penalties.",
+      "fix": "Add 'Contains: Crustacean Shellfish (Shrimp)' statement immediately after ingredient list in minimum 10pt font."
+    }
+  ],
+  "passed": [
+    {
+      "category": "Country of Origin",
+      "note": "Clearly states 'Product of Indonesia' — compliant with 21 CFR §101.5"
+    }
+  ]
+}
+severity must be exactly "high", "medium", or "low".
+Be specific: cite exact regulation codes, state exact numbers (font sizes in pt, nutrient limits in mg, etc).
+If you cannot read part of the label clearly, note that as a finding with severity "medium".
+Return ONLY the JSON. Nothing else.`},
+      audFile.type==='application/pdf'
+        ?{type:'document',source:{type:'base64',media_type:'application/pdf',data:audFile.b64}}
+        :{type:'image',source:{type:'base64',media_type:audFile.type,data:audFile.b64}}
+    ];
+
+    const res=await fetch('/api/claude',{
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2048,messages:[{role:'user',content}]})
+    });
+    if(!res.ok) throw new Error(`API returned ${res.status}`);
+    const apiData=await res.json();
+    const data=extractJSON(apiData.content[0].text);
+
+    bar.style.width='100%';st.textContent='Done.';
+    setTimeout(()=>{
+      document.getElementById('aud-scanning').style.display='none';
+      btn.disabled=false;
+      renderAud(data);
+    },400);
+  }catch(err){
+    document.getElementById('aud-scanning').style.display='none';
+    document.getElementById('aud-upload').style.display='';
+    btn.disabled=false;
+    alert('Scan failed: '+err.message);
+    console.error('Auditor error:',err);
+  }
+}
+
+function renderAud(data){
+  const box=document.getElementById('aud-results');
+  box.style.display='';
+
+  const issueCount=data.issues?.length||0;
+  const passCount=data.passed?.length||0;
+  const highs=data.issues?.filter(i=>i.severity==='high')||[];
+  const meds=data.issues?.filter(i=>i.severity==='medium')||[];
+  const lows=data.issues?.filter(i=>i.severity==='low')||[];
+
+  const bannerColor=highs.length?'var(--rd)':meds.length?'var(--am)':'var(--gn)';
+  const bannerBg=highs.length?'var(--rdbg)':meds.length?'var(--ambg)':'var(--gnbg)';
+  const bannerBd=highs.length?'#E8A0A0':meds.length?'var(--ambd)':'#A3DFB8';
+  const verdict=data.summary?.verdict||(highs.length?'Must fix before export':meds.length?'Review recommended':'Ready for export');
+
+  let html=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--nv)">Label Audit Results</h2>
+        <p style="font-size:11px;color:var(--t3)">${data.product_name||audFile.name} — ${data.market}</p>
+      </div>
+      <button class="btn-outline" onclick="resetAud()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
+        New Scan
+      </button>
+    </div>
+    <div style="background:${bannerBg};border:1.5px solid ${bannerBd};border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <div style="font-size:22px">${highs.length?'🛡️':meds.length?'⚠️':'✅'}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:${bannerColor}">${verdict}</div>
+        <div style="font-size:10px;color:${bannerColor};opacity:.7">${issueCount} issue${issueCount!==1?'s':''} found · ${passCount} check${passCount!==1?'s':''} passed</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:900;color:${bannerColor}">${passCount}/${passCount+issueCount}</div>
+        <div style="font-size:8px;color:${bannerColor};opacity:.6;font-weight:700">Passed</div>
+      </div>
+    </div>`;
+
+  // Issues sorted high → medium → low
+  [...highs,...meds,...lows].forEach(issue=>{
+    const isHigh=issue.severity==='high';
+    const isMed=issue.severity==='medium';
+    const tagClass=isHigh?'tag-high':isMed?'tag-med':'tag-pass';
+    const tagLabel=isHigh?'HIGH':isMed?'MED':'LOW';
+    html+=`
+    <div class="finding" style="margin-bottom:8px">
+      <div class="finding-hd">
+        <span class="${tagClass}">${tagLabel}</span>
+        <span style="font-size:12px;font-weight:700;margin-left:4px">${issue.category}</span>
+        ${issue.regulation?`<span style="font-size:10px;color:var(--t3);margin-left:auto">${issue.regulation}</span>`:''}
+      </div>
+      <div class="finding-bd">
+        <div style="background:var(--sf);border-radius:var(--rs);padding:8px 10px;font-size:11px;color:var(--t2);margin-bottom:6px">${issue.finding}</div>
+        ${issue.consequence?`<div style="background:${isHigh?'rgba(184,50,48,.06)':'rgba(194,123,10,.06)'};border:1px solid ${isHigh?'rgba(184,50,48,.15)':'rgba(194,123,10,.2)'};border-radius:var(--rs);padding:8px 10px;font-size:10px;color:var(--t2);margin-bottom:6px"><span style="font-weight:700;color:${isHigh?'var(--rd)':'var(--am)'};text-transform:uppercase;font-size:9px;letter-spacing:.3px">Consequence · </span>${issue.consequence}</div>`:''}
+        ${issue.fix?`<div class="suggestion">💡 ${issue.fix}</div>`:''}
+      </div>
+    </div>`;
+  });
+
+  // Passed checks
+  if(data.passed?.length){
+    html+=`<div class="pass-list" style="margin-top:10px">
+      <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Checks passed</div>
+      <div style="font-size:12px;color:var(--t2);line-height:2">
+        ${data.passed.map(p=>`✅ <b>${p.category}</b>${p.note?' — '+p.note:''}`).join('<br>')}
+      </div>
+    </div>`;
+  }
+
+  box.innerHTML=html;
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ═══════════ CROSSCHECK ═══════════
+let ccFiles=[];  // array of {name, size, b64, type}
+
+function ccDragOver(e){e.preventDefault();e.currentTarget.style.borderColor='var(--nvm)'}
+function ccDrop(e){e.preventDefault();e.currentTarget.style.borderColor='';ccFilesAdded(e.dataTransfer.files)}
+
+function ccFilesAdded(fileList){
+  const allowed=['application/pdf','image/png','image/jpeg'];
+  Array.from(fileList).forEach(f=>{
+    if(!allowed.includes(f.type)){alert(`${f.name}: only PDF, PNG, JPG supported`);return}
+    if(ccFiles.find(x=>x.name===f.name)) return; // skip duplicates
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      ccFiles.push({name:f.name,size:f.size,type:f.type,b64:ev.target.result.split(',')[1]});
+      ccRenderFileList();
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function ccRenderFileList(){
+  const list=document.getElementById('ccFileList');
+  const rows=document.getElementById('ccFileRows');
+  if(!ccFiles.length){list.style.display='none';return}
+  list.style.display='';
+  rows.innerHTML=ccFiles.map((f,i)=>`
+    <div class="file-row">
+      <div class="file-icon" style="background:var(--nvw);font-size:18px">${f.type==='application/pdf'?'📄':'🖼️'}</div>
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:600">${f.name}</div>
+        <div style="font-size:10px;color:var(--t3)">${(f.size/1024).toFixed(0)} KB</div>
+      </div>
+      <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:700;margin-right:8px">Ready</span>
+      <button class="btn-outline" style="height:26px;padding:0 8px;font-size:10px" onclick="ccRemove(${i})">✕</button>
+    </div>`).join('');
+}
+
+function ccRemove(i){ccFiles.splice(i,1);ccRenderFileList()}
+
+function ccReset(){
+  ccFiles=[];
+  ccRenderFileList();
+  document.getElementById('cc-results').style.display='none';
+  document.getElementById('cc-results').innerHTML='';
+  document.getElementById('ccFileInput').value='';
+}
+
+async function runCC(){
+  if(ccFiles.length<2){alert('Please upload at least 2 documents to cross-check.');return}
+  const btn=document.getElementById('ccBtn');
+  const ov=document.getElementById('loader');
+  btn.disabled=true;
+  document.getElementById('loMsg').textContent='AI is cross-checking your documents...';
+  ov.classList.add('on');
+  document.getElementById('cc-results').style.display='none';
+
+  try{
+    // Build message content: one text block + one image/doc block per file
+    const content=[{
+      type:'text',
+      text:`You are a senior export documentation specialist with 20+ years experience clearing shipments through US, EU, Japan, and Southeast Asian customs. I am uploading ${ccFiles.length} export documents. Perform a deep, multi-layer audit across ALL 5 categories below.
+
+━━━ CATEGORY 1: CONSISTENCY CHECK ━━━
+Cross-reference EVERY field across all documents. Flag any mismatch, even minor ones:
+- Shipper/exporter name and address (must be identical, including punctuation)
+- Consignee/importer name and address
+- Notify party
+- Commodity description (must match in all docs)
+- HS Code (must be identical across all docs)
+- Quantity and unit of measure
+- Net weight and gross weight (flag even 1kg discrepancy)
+- Package count and type
+- Unit price, total value, currency
+- Incoterms and named place
+- Payment terms
+- Marks & numbers
+- Country of origin
+- Port of loading and port of discharge
+
+━━━ CATEGORY 2: DATE LOGIC CHECK ━━━
+Check chronological order and logical sequence — NOT whether dates are the same:
+- Invoice date must be BEFORE or same as Packing List date
+- Bill of Lading date must be AFTER Invoice date
+- Certificate of Origin date must be BEFORE or same as Bill of Lading date
+- LC expiry date must be AFTER estimated arrival date
+- Flag any date that is missing, unclear, or logically impossible
+
+━━━ CATEGORY 3: MISSING DOCUMENT DETECTION ━━━
+Based on the commodity, destination country, and Incoterms visible in the documents, identify what documents are MISSING:
+- Commercial Invoice (mandatory everywhere)
+- Packing List (mandatory everywhere)
+- Bill of Lading or Airway Bill (mandatory everywhere)
+- Certificate of Origin (required for preferential tariff or by destination)
+- Phytosanitary Certificate (required for agricultural products)
+- Certificate of Analysis / COA (required by FDA, EU for food products)
+- Health Certificate (required for food/beverage exports)
+- FDA Prior Notice (required for all food entering USA — must be submitted 15 days before arrival via furls.fda.gov)
+- Fumigation Certificate (required for wooden packaging)
+- Insurance Certificate (required under CIF Incoterms)
+
+━━━ CATEGORY 4: HS CODE VALIDATION ━━━
+- Verify HS Code matches the commodity description
+- Flag if HS Code appears incorrect for the stated product
+- Check consistency across all documents
+- Note if HS Code may attract additional duties or inspection at destination
+
+━━━ CATEGORY 5: RED FLAGS & COMPLIANCE GAPS ━━━
+- Incoterms mismatch with payment terms
+- Vague commodity description that may trigger inspection
+- Total value inconsistency (unit price × quantity ≠ total value)
+- Missing weight tolerance statement (customs allow ±5%)
+- Country of origin claim without supporting Certificate of Origin
+- Any regulatory requirement for the destination country that appears unmet
+
+━━━ OUTPUT FORMAT ━━━
+Return ONLY a valid JSON object — no markdown, no explanation:
+{
+  "summary": {
+    "docs": ["Invoice INV-2024-001", "Packing List PL-2024-001"],
+    "commodity": "Cocoa Powder",
+    "destination": "USA",
+    "issues_found": 4,
+    "passed": 8,
+    "verdict": "3 critical issues must be resolved before shipment"
+  },
+  "issues": [
+    {
+      "severity": "critical",
+      "category": "Consistency Check",
+      "field": "Gross Weight",
+      "finding": "Invoice states 5,250 kg but Packing List states 5,200 kg — 50 kg discrepancy",
+      "impact": "Bank will reject LC document set. Customs will flag for re-weighing, causing 3-7 day hold and $1,200-$3,500 in demurrage charges.",
+      "fix": "Correct gross weight to match across all documents. Reissue affected document and re-present to bank."
+    }
+  ],
+  "missing_docs": [
+    {
+      "severity": "critical",
+      "document": "FDA Prior Notice",
+      "reason": "All food products entering the USA require Prior Notice submission via FDA FURLS system at least 15 days before vessel arrival.",
+      "how_to_obtain": "Submit online at furls.fda.gov — free, takes 30 minutes. Keep confirmation number for customs."
+    }
+  ],
+  "passed": [
+    {
+      "category": "Consistency Check",
+      "field": "Consignee Name",
+      "note": "Matches exactly across all documents"
+    }
+  ]
+}
+severity must be exactly "critical", "warning", or "info".
+missing_docs array may be empty [] if no documents are missing.
+Return ONLY the JSON. Nothing else.`
+    }];
+
+    // Attach each file as a vision content block
+    ccFiles.forEach(f=>{
+      if(f.type==='application/pdf'){
+        // PDF: send as document block
+        content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:f.b64}});
+      } else {
+        // Image: send as image block
+        content.push({type:'image',source:{type:'base64',media_type:f.type,data:f.b64}});
+      }
+    });
+
+    const res=await fetch('/api/claude',{
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4096,messages:[{role:'user',content}]})
+    });
+    if(!res.ok) throw new Error(`API returned ${res.status}`);
+    const apiData=await res.json();
+    const rawText=apiData.content&&apiData.content[0]&&apiData.content[0].text;
+    console.log('CC raw response:',rawText);
+    if(!rawText) throw new Error('No text in response: '+JSON.stringify(apiData));
+    const data=extractJSON(rawText);
+    ov.classList.remove('on');
+    btn.disabled=false;
+    document.getElementById('loMsg').textContent='Analysing trade corridor...';
+    renderCC(data);
+  }catch(err){
+    ov.classList.remove('on');
+    btn.disabled=false;
+    document.getElementById('loMsg').textContent='Analysing trade corridor...';
+    alert('Cross-check failed: '+err.message);
+    console.error('CC error:',err);
+  }
+}
+
+function renderCC(data){
+  const box=document.getElementById('cc-results');
+  box.style.display='';
+
+  const issueCount=data.issues?.length||0;
+  const missingCount=data.missing_docs?.length||0;
+  const passCount=data.passed?.length||0;
+  const criticals=data.issues?.filter(i=>i.severity==='critical')||[];
+  const warnings=data.issues?.filter(i=>i.severity==='warning'||i.severity==='info')||[];
+  const missingCrit=data.missing_docs?.filter(d=>d.severity==='critical')||[];
+  const missingWarn=data.missing_docs?.filter(d=>d.severity==='warning'||d.severity==='info')||[];
+  const totalCritical=criticals.length+missingCrit.length;
+  const totalWarning=warnings.length+missingWarn.length;
+
+  // Summary banner
+  const bannerBg=totalCritical?'var(--rdbg)':totalWarning?'var(--ambg)':'var(--gnbg)';
+  const bannerBd=totalCritical?'#E8A0A0':totalWarning?'var(--ambd)':'#A3DFB8';
+  const bannerIcon=totalCritical?'🚨':totalWarning?'⚠️':'✅';
+  const bannerTitle=totalCritical?`${totalCritical} Critical Issue${totalCritical>1?'s':''} Found`:totalWarning?`${totalWarning} Warning${totalWarning>1?'s':''} Found`:'All Checks Passed';
+  const bannerColor=totalCritical?'var(--rd)':totalWarning?'var(--am)':'var(--gn)';
+  const verdict=data.summary?.verdict||'';
+
+  let html=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div><h2 style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--nv)">Cross-Check Results</h2>
+      <p style="font-size:11px;color:var(--t3)">${(data.summary?.docs||ccFiles.map(f=>f.name)).join(' · ')}${data.summary?.commodity?' · '+data.summary.commodity:''}</p></div>
+      <button class="btn-outline" onclick="ccReset()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg> New Check</button>
+    </div>
+    <div style="background:${bannerBg};border:1.5px solid ${bannerBd};border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <div style="font-size:22px">${bannerIcon}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:${bannerColor}">${bannerTitle}</div>
+      <div style="font-size:10px;color:${bannerColor};opacity:.7">${verdict||`${passCount} check${passCount!==1?'s':''} passed · ${issueCount+missingCount} issue${issueCount+missingCount!==1?'s':''} found`}</div></div>
+      <div style="text-align:right"><div style="font-size:22px;font-weight:900;color:${bannerColor}">${passCount}/${passCount+issueCount+missingCount}</div><div style="font-size:8px;color:${bannerColor};opacity:.6;font-weight:700">Passed</div></div>
+    </div>`;
+
+  // Issues
+  if(criticals.length||warnings.length){
+    html+=`<div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Document Issues</div>`;
+    [...criticals,...warnings].forEach(issue=>{
+      const isCrit=issue.severity==='critical';
+      html+=`
+      <div class="finding" style="margin-bottom:8px">
+        <div class="finding-hd">
+          <span class="${isCrit?'tag-high':'tag-med'}">${isCrit?'CRITICAL':'WARNING'}</span>
+          <span style="font-size:11px;color:var(--t3);margin-left:4px">${issue.category||''}</span>
+          <span style="font-size:12px;font-weight:700;margin-left:4px">· ${issue.field}</span>
+        </div>
+        <div class="finding-bd">
+          <div style="background:var(--sf);border-radius:var(--rs);padding:8px 10px;font-size:11px;color:var(--t2);margin-bottom:6px">${issue.finding}</div>
+          ${issue.impact?`<div style="background:${isCrit?'rgba(184,50,48,.06)':'rgba(194,123,10,.06)'};border:1px solid ${isCrit?'rgba(184,50,48,.15)':'rgba(194,123,10,.2)'};border-radius:var(--rs);padding:8px 10px;font-size:10px;color:var(--t2);margin-bottom:6px"><span style="font-weight:700;color:${isCrit?'var(--rd)':'var(--am)'};text-transform:uppercase;font-size:9px;letter-spacing:.3px">Impact · </span>${issue.impact}</div>`:''}
+          ${issue.fix?`<div class="suggestion">💡 ${issue.fix}</div>`:''}
+        </div>
+      </div>`;
+    });
+  }
+
+  // Missing documents
+  if(data.missing_docs?.length){
+    html+=`<div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin:14px 0 8px">Missing Documents</div>`;
+    data.missing_docs.forEach(doc=>{
+      const isCrit=doc.severity==='critical';
+      html+=`
+      <div class="finding" style="margin-bottom:8px">
+        <div class="finding-hd">
+          <span class="${isCrit?'tag-high':'tag-med'}">${isCrit?'MISSING':'RECOMMENDED'}</span>
+          <span style="font-size:12px;font-weight:700;margin-left:6px">${doc.document}</span>
+        </div>
+        <div class="finding-bd">
+          <div style="background:var(--sf);border-radius:var(--rs);padding:8px 10px;font-size:11px;color:var(--t2);margin-bottom:6px">${doc.reason}</div>
+          ${doc.how_to_obtain?`<div class="suggestion">📋 ${doc.how_to_obtain}</div>`:''}
+        </div>
+      </div>`;
+    });
+  }
+
+  // Passed checks
+  if(data.passed?.length){
+    html+=`<div class="pass-list">
+      <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Checks Passed</div>
+      <div style="font-size:12px;color:var(--t2);line-height:2">
+        ${data.passed.map(p=>`✅ <b>${p.field||p.category}</b>${p.note?' — '+p.note:''}`).join('<br>')}
+      </div>
+    </div>`;
+  }
+
+  box.innerHTML=html;
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
