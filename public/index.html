@@ -157,6 +157,22 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 .footer{text-align:center;padding:20px;font-size:10px;color:var(--t3)}
 
+/* OVERVIEW CARDS */
+.ov-card{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:10px;overflow:hidden;transition:all .2s}
+.ov-card.active-shipment{border-color:var(--ambd);border-width:1.5px}
+.ov-head{padding:14px 18px;cursor:pointer;transition:background .1s}
+.ov-head:hover{background:var(--nvw)}
+.ov-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.ov-card.open .ov-body{max-height:800px}
+.ov-body-in{padding:0 18px 16px}
+.ov-chevron{transition:transform .2s;color:var(--t3)}
+.ov-card.open .ov-chevron{transform:rotate(180deg)}
+.ov-act{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--rs);font-size:10px;font-weight:700;font-family:inherit;cursor:pointer;border:1.5px solid var(--bd);background:var(--wh);color:var(--t2);transition:all .15s}
+.ov-act:hover{border-color:var(--nvm);color:var(--nv);background:var(--nvw)}
+.ov-act.primary{background:var(--nv);color:var(--wh);border-color:var(--nv)}
+.ov-act.primary:hover{background:var(--nvl)}
+.ovf.active{background:var(--nv);color:var(--wh);border-color:var(--nv)}
+
 /* COST MODE TOGGLE */
 .cost-mode-btn{flex:1;padding:8px 16px;font-size:12px;font-weight:700;font-family:inherit;border:none;background:transparent;color:var(--t3);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
 .cost-mode-btn:hover{color:var(--t1)}
@@ -385,12 +401,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
         </div>
       </div>
 
-      <div class="fd" style="margin-bottom:12px"><label>Currency</label>
-        <select id="manualCurrency" style="width:140px" onchange="manualRecalc()">
-          <option value="USD">USD ($)</option><option value="IDR">IDR (Rp)</option><option value="EUR">EUR</option><option value="GBP">GBP</option><option value="JPY">JPY</option>
-        </select>
-      </div>
-
       <div id="manualRows">
         <!-- pre-filled common items -->
       </div>
@@ -411,128 +421,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
   <!-- ═══ SHIPMENT OVERVIEW TAB ═══ -->
   <div class="tab-panel" id="tp-overview">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Shipment Overview</h2>
-    <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Track your active shipments and compliance progress at a glance.</p>
-
-    <!-- Mock shipment cards -->
-    <div style="display:grid;gap:12px">
-      <div style="background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);padding:16px 18px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--nv)">Cocoa Powder to USA</div>
-            <div style="font-size:10px;color:var(--t3)">PT Agrosera → Choco USA Inc · FOB Tanjung Priok</div>
-          </div>
-          <span style="font-size:9px;background:var(--ambg);color:var(--am);padding:3px 10px;border-radius:10px;font-weight:700">IN PROGRESS</span>
-        </div>
-        <div style="display:flex;gap:16px;margin-bottom:10px">
-          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Compliance</div>
-            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:72%;background:linear-gradient(90deg,var(--nvm),var(--gn));border-radius:3px"></div></div>
-            <div style="font-size:11px;font-weight:700;color:var(--nv);margin-top:2px">72%</div></div>
-          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Documents</div>
-            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:60%;background:var(--am);border-radius:3px"></div></div>
-            <div style="font-size:11px;font-weight:700;color:var(--am);margin-top:2px">3 of 5 uploaded</div></div>
-        </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:600">Invoice</span>
-          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:600">Packing List</span>
-          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:600">BL</span>
-          <span style="font-size:9px;background:var(--rdbg);color:var(--rd);padding:2px 8px;border-radius:4px;font-weight:600">COO missing</span>
-          <span style="font-size:9px;background:var(--rdbg);color:var(--rd);padding:2px 8px;border-radius:4px;font-weight:600">Phyto missing</span>
-        </div>
-        <!-- Timeline -->
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bdl)">
-          <div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px">Shipment Timeline</div>
-          <div style="display:flex;align-items:flex-start;gap:0;position:relative">
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div style="font-size:9px;font-weight:700;color:var(--gn)">Booking</div>
-              <div style="font-size:8px;color:var(--t3)">Jul 20</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div style="font-size:9px;font-weight:700;color:var(--gn)">Docs Filed</div>
-              <div style="font-size:8px;color:var(--t3)">Jul 28</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--am);margin:0 auto 4px;border:2px solid var(--am)"></div>
-              <div style="font-size:9px;font-weight:700;color:var(--am)">Loading</div>
-              <div style="font-size:8px;color:var(--t3)">Aug 12</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--bdl);margin:0 auto 4px;border:2px solid var(--bd)"></div>
-              <div style="font-size:9px;font-weight:600;color:var(--t3)">Sailing</div>
-              <div style="font-size:8px;color:var(--t3)">Aug 15</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--bdl);margin:0 auto 4px;border:2px solid var(--bd)"></div>
-              <div style="font-size:9px;font-weight:600;color:var(--t3)">Arrival</div>
-              <div style="font-size:8px;color:var(--t3)">Sep 12</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bdl);display:flex;gap:20px">
-          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Value</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$17,500</div></div>
-          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Est. Cost</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$2,840</div></div>
-        </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:2px">Shipment Overview</h2>
+        <p style="font-size:12px;color:var(--t3)">Track your active shipments and compliance progress.</p>
       </div>
-
-      <div style="background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);padding:16px 18px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--nv)">Cocoa Butter to Japan</div>
-            <div style="font-size:10px;color:var(--t3)">PT Agrosera → Morinaga Co Ltd · CIF Yokohama</div>
-          </div>
-          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:3px 10px;border-radius:10px;font-weight:700">READY</span>
-        </div>
-        <div style="display:flex;gap:16px;margin-bottom:10px">
-          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Compliance</div>
-            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--gn);border-radius:3px"></div></div>
-            <div style="font-size:11px;font-weight:700;color:var(--gn);margin-top:2px">100%</div></div>
-          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Documents</div>
-            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--gn);border-radius:3px"></div></div>
-            <div style="font-size:11px;font-weight:700;color:var(--gn);margin-top:2px">7 of 7 uploaded</div></div>
-        </div>
-        <!-- Timeline -->
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bdl)">
-          <div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px">Shipment Timeline</div>
-          <div style="display:flex;align-items:flex-start;gap:0;position:relative">
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div style="font-size:9px;font-weight:700;color:var(--gn)">Booking</div>
-              <div style="font-size:8px;color:var(--t3)">Jul 10</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div style="font-size:9px;font-weight:700;color:var(--gn)">Docs Filed</div>
-              <div style="font-size:8px;color:var(--t3)">Jul 18</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div style="font-size:9px;font-weight:700;color:var(--gn)">Loading</div>
-              <div style="font-size:8px;color:var(--t3)">Jul 25</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div style="font-size:9px;font-weight:700;color:var(--gn)">Sailing</div>
-              <div style="font-size:8px;color:var(--t3)">Jul 28</div>
-            </div>
-            <div style="flex:1;text-align:center">
-              <div style="width:16px;height:16px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <div style="font-size:9px;font-weight:700;color:var(--gn)">Arrived</div>
-              <div style="font-size:8px;color:var(--t3)">Aug 10</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bdl);display:flex;gap:20px">
-          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Value</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$42,000</div></div>
-          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Est. Cost</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$5,200</div></div>
-        </div>
+      <div style="display:flex;gap:6px" id="ovFilterBtns">
+        <button class="btn-outline ovf active" onclick="ovFilter('all')" style="height:28px;font-size:10px">All (2)</button>
+        <button class="btn-outline ovf" onclick="ovFilter('active')" style="height:28px;font-size:10px">Active (1)</button>
+        <button class="btn-outline ovf" onclick="ovFilter('done')" style="height:28px;font-size:10px">Completed (1)</button>
       </div>
     </div>
-
-    <div style="text-align:center;margin-top:20px">
-      <p style="font-size:11px;color:var(--t3)">This is a demo view. Connect your account to track real shipments.</p>
-    </div>
+    <div id="ovCards"></div>
   </div>
 
   <!-- ═══ CROSSCHECK TAB ═══ -->
@@ -681,8 +581,6 @@ function switchTab(id){
 
 // CHECKER
 function resetCk(){
-  // Only confirm if user has made some progress
-  if(chk>0 && !confirm(`You have ${chk} item${chk>1?'s':''} checked. Start a new check? Your progress will be cleared.`)) return;
   if(window._ckKey) localStorage.removeItem('ck:'+window._ckKey);
   window._ckKey=null;
   document.getElementById('ck-input').style.display='';
@@ -1073,15 +971,12 @@ function manualAddRow(cat,name,amt){
 }
 
 function manualRecalc(){
-  const cur=document.getElementById('manualCurrency').value;
-  const sym={USD:'$',IDR:'Rp ',EUR:'€',GBP:'£',JPY:'¥'}[cur]||'$';
   let total=0;
   document.querySelectorAll('#manualRows .manual-row').forEach(r=>{
     const v=parseFloat(r.querySelector('input[type="number"]').value)||0;
     total+=v;
   });
-  const fmt=cur==='IDR'?total.toLocaleString('id-ID'):total.toLocaleString('en-US');
-  document.getElementById('manualTotal').textContent=sym+fmt;
+  document.getElementById('manualTotal').textContent='$'+total.toLocaleString('en-US');
 }
 
 // ═══════════ CROSSCHECK ═══════════
@@ -1415,6 +1310,181 @@ function renderCC(data){
   box.innerHTML=html;
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+// ═══════════ SHIPMENT OVERVIEW ═══════════
+const OV_SHIPMENTS=[
+  {
+    id:'BK-2026-0047',status:'active',
+    title:'Cocoa Powder (Natural) → New York',
+    bl:'IDPRIOK2607A',vessel:'MV Meratus Java 026E',container:'20ft Standard',
+    tags:['FOB Tanjung Priok','HS 1805.00','LC at Sight','5,000 kg net'],
+    compliance:72,compNote:'2 docs pending',
+    docsTotal:5,docsVerified:3,
+    docs:[
+      {name:'Commercial Invoice INV-AG-2607',ok:true},
+      {name:'Packing List PL-AG-2607',ok:true},
+      {name:'Bill of Lading',ok:true},
+      {name:'Certificate of Origin',ok:false,note:'Not filed — apply at KADIN'},
+      {name:'Phytosanitary Certificate',ok:false,note:'Pending BKIPM inspection'}
+    ],
+    timeline:[
+      {label:'Booked',date:'Jul 15',done:true},
+      {label:'Loaded',date:'Jul 22',done:true},
+      {label:'In Transit',date:'Now',current:true},
+      {label:'Customs',date:'~Aug 18',done:false},
+      {label:'Delivered',date:'~Aug 22',done:false}
+    ],
+    buyer:'Premium Cacao LLC, NY',value:'$17,500',cost:'$2,840',eta:'Aug 22, 2026',payment:null
+  },
+  {
+    id:'BK-2026-0039',status:'done',
+    title:'Cocoa Butter → Yokohama',
+    bl:'IDPRIOK2607B',vessel:'MV WAN HAI 312',container:'20ft Reefer',
+    tags:['CIF Yokohama','HS 1804.00','TT 30/70','12,000 kg net'],
+    compliance:100,compNote:'All cleared',
+    docsTotal:7,docsVerified:7,
+    docs:[
+      {name:'Commercial Invoice INV-AG-2539',ok:true},
+      {name:'Packing List PL-AG-2539',ok:true},
+      {name:'Bill of Lading',ok:true},
+      {name:'Certificate of Origin (IJEPA)',ok:true},
+      {name:'Certificate of Analysis',ok:true},
+      {name:'Phytosanitary Certificate',ok:true},
+      {name:'Insurance Certificate ICC(A)',ok:true}
+    ],
+    timeline:[
+      {label:'Booked',date:'Jun 25',done:true},
+      {label:'Loaded',date:'Jul 2',done:true},
+      {label:'Arrived',date:'Jul 14',done:true},
+      {label:'Cleared',date:'Jul 16',done:true},
+      {label:'Delivered',date:'Jul 18',done:true}
+    ],
+    buyer:'Morinaga Co Ltd',value:'$42,000',cost:'$5,200',eta:null,payment:'Received Jul 20'
+  }
+];
+
+let ovFilterMode='all';
+function ovFilter(mode){
+  ovFilterMode=mode;
+  document.querySelectorAll('.ovf').forEach(b=>b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  renderOV();
+}
+
+function toggleOV(id){
+  document.getElementById('ov-'+id).classList.toggle('open');
+}
+
+function renderOV(){
+  const box=document.getElementById('ovCards');
+  const ships=OV_SHIPMENTS.filter(s=>{
+    if(ovFilterMode==='active') return s.status==='active';
+    if(ovFilterMode==='done') return s.status==='done';
+    return true;
+  });
+
+  box.innerHTML=ships.map(s=>{
+    const isActive=s.status==='active';
+    const statusBg=isActive?'var(--am)':'var(--gn)';
+    const statusLabel=isActive?'IN TRANSIT':'DELIVERED';
+    const compColor=s.compliance===100?'var(--gn)':'var(--nv)';
+    const docColor=s.docsVerified===s.docsTotal?'var(--gn)':'var(--am)';
+
+    const tlHTML=s.timeline.map(t=>{
+      if(t.done) return `<div style="flex:1;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div style="font-size:9px;font-weight:700;color:var(--gn)">${t.label}</div>
+        <div style="font-size:8px;color:var(--t3)">${t.date}</div></div>`;
+      if(t.current) return `<div style="flex:1;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:var(--am);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><div style="width:6px;height:6px;background:#fff;border-radius:50%"></div></div>
+        <div style="font-size:9px;font-weight:700;color:var(--am)">${t.label}</div>
+        <div style="font-size:8px;color:var(--t3)">${t.date}</div></div>`;
+      return `<div style="flex:1;text-align:center">
+        <div style="width:18px;height:18px;border-radius:50%;background:var(--bdl);margin:0 auto 4px;border:2px solid var(--bd)"></div>
+        <div style="font-size:9px;font-weight:600;color:var(--t3)">${t.label}</div>
+        <div style="font-size:8px;color:var(--t3)">${t.date}</div></div>`;
+    }).join('');
+
+    const docsHTML=s.docs.map(d=>`<div style="display:flex;align-items:center;gap:6px;padding:4px 0">
+      <span style="font-size:12px">${d.ok?'✅':'❌'}</span>
+      <span style="font-size:11px;${d.ok?'color:var(--t2)':'color:var(--rd);font-weight:600'}">${d.name}</span>
+      ${d.note?'<span style="font-size:9px;color:var(--t3);margin-left:auto">'+d.note+'</span>':''}
+    </div>`).join('');
+
+    return `<div class="ov-card${isActive?' active-shipment open':''}" id="ov-${s.id}">
+      <div class="ov-head" onclick="toggleOV('${s.id}')">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+              <div style="font-size:14px;font-weight:700;color:var(--nv)">${s.title}</div>
+              <span style="font-size:8px;background:${statusBg};color:#fff;padding:2px 8px;border-radius:10px;font-weight:700">${statusLabel}</span>
+            </div>
+            <div style="font-size:10px;color:var(--t3)">${s.id} · BL ${s.bl} · ${s.vessel} · ${s.container}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="text-align:right">
+              <div style="font-family:'DM Serif Display',serif;font-size:18px;color:${compColor}">${s.compliance}%</div>
+              <div style="font-size:8px;color:var(--t3)">Compliance</div>
+            </div>
+            <div class="ov-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="ov-body"><div class="ov-body-in">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+          ${s.tags.map(t=>`<span style="font-size:9px;background:var(--nvw);color:var(--nvm);padding:2px 8px;border-radius:4px;font-weight:600">${t}</span>`).join('')}
+        </div>
+
+        <div style="display:flex;gap:16px;margin-bottom:12px">
+          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Compliance</div>
+            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:${s.compliance}%;background:${s.compliance===100?'var(--gn)':'linear-gradient(90deg,var(--nvm),var(--gn))'};border-radius:3px"></div></div>
+            <div style="font-size:11px;font-weight:700;color:${compColor};margin-top:2px">${s.compliance}% — ${s.compNote}</div></div>
+          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Documents</div>
+            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:${s.docsVerified/s.docsTotal*100}%;background:${docColor};border-radius:3px"></div></div>
+            <div style="font-size:11px;font-weight:700;color:${docColor};margin-top:2px">${s.docsVerified} of ${s.docsTotal} verified</div></div>
+        </div>
+
+        <div style="background:var(--wh);border:1px solid var(--bdl);border-radius:var(--rs);padding:10px 12px;margin-bottom:12px">
+          <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px">Document Status</div>
+          ${docsHTML}
+        </div>
+
+        <div style="margin-bottom:12px">
+          <div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px">Shipment Timeline</div>
+          <div style="display:flex;align-items:flex-start;gap:0">${tlHTML}</div>
+        </div>
+
+        <div style="padding-top:10px;border-top:1px solid var(--bdl);display:flex;gap:24px;flex-wrap:wrap;margin-bottom:12px">
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Buyer</div><div style="font-size:11px;font-weight:600;color:var(--nv)">${s.buyer}</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Invoice Value</div><div style="font-size:11px;font-weight:700;color:var(--nv)">${s.value}</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Shipping Cost</div><div style="font-size:11px;font-weight:700;color:var(--nv)">${s.cost}</div></div>
+          ${s.eta?`<div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">ETA</div><div style="font-size:11px;font-weight:700;color:var(--am)">${s.eta}</div></div>`:''}
+          ${s.payment?`<div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Payment</div><div style="font-size:11px;font-weight:700;color:var(--gn)">${s.payment}</div></div>`:''}
+        </div>
+
+        <div style="display:flex;gap:8px">
+          <button class="ov-act primary" onclick="switchTab('crosscheck')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Check Documents
+          </button>
+          <button class="ov-act" onclick="switchTab('cost')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            Cost Breakdown
+          </button>
+          <button class="ov-act" onclick="switchTab('checker')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><path d="M9 14l2 2 4-4"/></svg>
+            Compliance Check
+          </button>
+        </div>
+      </div></div>
+    </div>`;
+  }).join('');
+
+  if(!ships.length) box.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3);font-size:12px">No shipments match this filter.</div>';
+}
+
+// Init overview on load
+setTimeout(renderOV,100);
 
 // ═══════════ TARA CHAT ═══════════
 let taraHistory=[];
