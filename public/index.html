@@ -157,6 +157,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 .footer{text-align:center;padding:20px;font-size:10px;color:var(--t3)}
 
+/* COST MODE TOGGLE */
+.cost-mode-btn{flex:1;padding:8px 16px;font-size:12px;font-weight:700;font-family:inherit;border:none;background:transparent;color:var(--t3);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.cost-mode-btn:hover{color:var(--t1)}
+.cost-mode-btn.active{background:var(--wh);color:var(--nv);box-shadow:0 1px 4px rgba(27,42,74,.1)}
+.manual-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.manual-row input[type="text"]{flex:1;height:36px;padding:0 10px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:12px;font-family:inherit;outline:none}
+.manual-row input[type="number"]{width:120px;height:36px;padding:0 10px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:12px;font-family:inherit;outline:none;text-align:right}
+.manual-row input:focus{border-color:var(--nvm)}
+.manual-row select{height:36px;padding:0 8px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:11px;font-family:inherit;outline:none;width:100px}
+.manual-del{width:28px;height:28px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.manual-del:hover{background:var(--rdbg);color:var(--rd)}
+
 /* TARA CHAT */
 .tara-fab{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;align-items:center;gap:10px;cursor:pointer}
 .tara-cta{background:var(--nv);color:var(--wh);padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;font-family:inherit;box-shadow:0 4px 16px rgba(27,42,74,.25);white-space:nowrap;animation:taraSlide .5s ease}
@@ -299,53 +311,102 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   <!-- ═══ COST CALCULATOR TAB ═══ -->
   <div class="tab-panel" id="tp-cost">
     <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Cost Calculator</h2>
-    <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Estimate your total shipment cost — freight, insurance, customs, certificates, and hidden fees.</p>
-    <div class="fg">
-      <div class="fd"><label>Commodity</label>
-        <select id="costCom"><option value="">Select product</option>
-          <optgroup label="Cocoa"><option>Cocoa Powder</option><option>Cocoa Butter</option><option>Raw Cocoa Beans</option></optgroup>
-          <optgroup label="Coffee"><option>Green Coffee Beans</option><option>Roasted Coffee</option></optgroup>
-          <optgroup label="Spices"><option>Ground Turmeric</option><option>Black Pepper</option><option>Vanilla Beans</option></optgroup>
-          <optgroup label="Seafood"><option>Frozen Shrimp</option><option>Canned Tuna</option></optgroup>
-          <optgroup label="Other"><option value="_o">Other (type below)</option></optgroup>
-        </select>
-        <input type="text" id="costComCust" placeholder="Type commodity" style="display:none;margin-top:5px" class="fd" autocomplete="off">
-      </div>
-      <div class="fd"><label>Origin</label>
-        <select id="costOrig"><option value="">Select origin</option>
-          <option>Indonesia</option><option>Vietnam</option><option>India</option><option>Brazil</option><option>Ghana</option><option>Colombia</option><option>Thailand</option><option>Philippines</option>
-        </select>
-      </div>
-      <div class="fd"><label>Destination</label>
-        <select id="costDest"><option value="">Select destination</option>
-          <option>United States</option><option>United Kingdom</option><option>Japan</option><option>Germany</option><option>Netherlands</option><option>UAE</option><option>Australia</option><option>China</option><option>South Korea</option><option>Saudi Arabia</option>
-        </select>
-      </div>
-      <div class="fd"><label>Incoterms</label>
-        <select id="costInco"><option value="">Select terms</option>
-          <option value="FOB">FOB</option><option value="CIF">CIF</option><option value="CFR">CFR</option><option value="EXW">EXW</option><option value="FCA">FCA</option><option value="DDP">DDP</option>
-        </select>
-      </div>
-      <div class="fd"><label>Container Type</label>
-        <select id="costContainer">
-          <option value="20ft">20ft Standard</option>
-          <option value="40ft">40ft Standard</option>
-          <option value="20ft-reefer">20ft Reefer</option>
-          <option value="LCL">LCL (Less than Container)</option>
-        </select>
-      </div>
-      <div class="fd"><label>Estimated Weight (kg)</label>
-        <input type="number" id="costWeight" placeholder="e.g. 5000" autocomplete="off">
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <span style="font-size:10px;color:var(--t3)">AI-powered estimates. Get firm quotes from your forwarder.</span>
-      <button class="btn" onclick="runCostCalc()" id="costBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-        Calculate Costs
+    <p style="font-size:12px;color:var(--t3);margin-bottom:12px">Estimate your total shipment cost — freight, insurance, customs, certificates, and hidden fees.</p>
+
+    <!-- Mode toggle -->
+    <div style="display:flex;gap:4px;margin-bottom:16px;background:var(--sf);border-radius:8px;padding:3px;border:1px solid var(--bdl)">
+      <button class="cost-mode-btn active" id="costModeAI" onclick="switchCostMode('ai')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        AI Estimate
+      </button>
+      <button class="cost-mode-btn" id="costModeManual" onclick="switchCostMode('manual')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="10" y1="4" x2="10" y2="20"/></svg>
+        Manual Calculate
       </button>
     </div>
-    <div id="cost-results" style="display:none;margin-top:16px"></div>
+
+    <!-- AI ESTIMATE MODE -->
+    <div id="costAIPanel">
+      <div class="fg">
+        <div class="fd"><label>Commodity</label>
+          <select id="costCom"><option value="">Select product</option>
+            <optgroup label="Cocoa"><option>Cocoa Powder</option><option>Cocoa Butter</option><option>Raw Cocoa Beans</option></optgroup>
+            <optgroup label="Coffee"><option>Green Coffee Beans</option><option>Roasted Coffee</option></optgroup>
+            <optgroup label="Spices"><option>Ground Turmeric</option><option>Black Pepper</option><option>Vanilla Beans</option></optgroup>
+            <optgroup label="Seafood"><option>Frozen Shrimp</option><option>Canned Tuna</option></optgroup>
+            <optgroup label="Other"><option value="_o">Other (type below)</option></optgroup>
+          </select>
+          <input type="text" id="costComCust" placeholder="Type commodity" style="display:none;margin-top:5px" class="fd" autocomplete="off">
+        </div>
+        <div class="fd"><label>Origin</label>
+          <select id="costOrig"><option value="">Select origin</option>
+            <option>Indonesia</option><option>Vietnam</option><option>India</option><option>Brazil</option><option>Ghana</option><option>Colombia</option><option>Thailand</option><option>Philippines</option>
+          </select>
+        </div>
+        <div class="fd"><label>Destination</label>
+          <select id="costDest"><option value="">Select destination</option>
+            <option>United States</option><option>United Kingdom</option><option>Japan</option><option>Germany</option><option>Netherlands</option><option>UAE</option><option>Australia</option><option>China</option><option>South Korea</option><option>Saudi Arabia</option>
+          </select>
+        </div>
+        <div class="fd"><label>Incoterms</label>
+          <select id="costInco"><option value="">Select terms</option>
+            <option value="FOB">FOB</option><option value="CIF">CIF</option><option value="CFR">CFR</option><option value="EXW">EXW</option><option value="FCA">FCA</option><option value="DDP">DDP</option>
+          </select>
+        </div>
+        <div class="fd"><label>Container Type</label>
+          <select id="costContainer">
+            <option value="20ft">20ft Standard</option>
+            <option value="40ft">40ft Standard</option>
+            <option value="20ft-reefer">20ft Reefer</option>
+            <option value="LCL">LCL (Less than Container)</option>
+          </select>
+        </div>
+        <div class="fd"><label>Estimated Weight (kg)</label>
+          <input type="number" id="costWeight" placeholder="e.g. 5000" autocomplete="off">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;color:var(--t3)">AI-powered estimates. Get firm quotes from your forwarder.</span>
+        <button class="btn" onclick="runCostCalc()" id="costBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          Calculate Costs
+        </button>
+      </div>
+      <div id="cost-results" style="display:none;margin-top:16px"></div>
+    </div>
+
+    <!-- MANUAL CALCULATE MODE -->
+    <div id="costManualPanel" style="display:none">
+      <div style="background:var(--nvw);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px">
+        <div style="font-size:16px">📝</div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--nv);margin-bottom:2px">Build your own cost breakdown</div>
+          <div style="font-size:11px;color:var(--t2)">Add each cost item and amount. The total updates automatically.</div>
+        </div>
+      </div>
+
+      <div class="fd" style="margin-bottom:12px"><label>Currency</label>
+        <select id="manualCurrency" style="width:140px" onchange="manualRecalc()">
+          <option value="USD">USD ($)</option><option value="IDR">IDR (Rp)</option><option value="EUR">EUR</option><option value="GBP">GBP</option><option value="JPY">JPY</option>
+        </select>
+      </div>
+
+      <div id="manualRows">
+        <!-- pre-filled common items -->
+      </div>
+
+      <button class="btn-outline" onclick="manualAddRow()" style="margin-top:8px">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Cost Item
+      </button>
+
+      <div style="background:var(--nv);border-radius:var(--r);padding:14px 18px;margin-top:16px;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.6)">TOTAL ESTIMATED COST</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--wh)" id="manualTotal">$0</div>
+      </div>
+
+      <div class="ct-n" style="margin-top:8px">Use this to track your own quotes and build a custom cost sheet.</div>
+    </div>
   </div>
 
   <!-- ═══ SHIPMENT OVERVIEW TAB ═══ -->
@@ -896,6 +957,67 @@ function renderCostCalc(data){
   html+=`<div class="ct-n" style="margin-top:10px">AI estimates based on market data. Get firm quotes from your freight forwarder and bank.</div>`;
   box.innerHTML=html;
   box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── Cost mode toggle ──
+function switchCostMode(mode){
+  document.getElementById('costModeAI').classList.toggle('active',mode==='ai');
+  document.getElementById('costModeManual').classList.toggle('active',mode==='manual');
+  document.getElementById('costAIPanel').style.display=mode==='ai'?'':'none';
+  document.getElementById('costManualPanel').style.display=mode==='manual'?'':'none';
+  if(mode==='manual'&&!document.getElementById('manualRows').children.length) manualInit();
+}
+
+const MANUAL_PRESETS=[
+  {cat:'Origin',name:'Inland trucking to port',amt:''},
+  {cat:'Origin',name:'Export customs clearance',amt:''},
+  {cat:'Origin',name:'Terminal handling (THC)',amt:''},
+  {cat:'Documentation',name:'Certificate of Origin',amt:''},
+  {cat:'Documentation',name:'Phytosanitary Certificate',amt:''},
+  {cat:'Documentation',name:'Lab testing',amt:''},
+  {cat:'Documentation',name:'Bill of Lading',amt:''},
+  {cat:'Freight',name:'Ocean freight',amt:''},
+  {cat:'Insurance',name:'Marine insurance',amt:''},
+  {cat:'Destination',name:'Import customs & duties',amt:''},
+  {cat:'Finance',name:'Bank / LC charges',amt:''}
+];
+
+function manualInit(){
+  const box=document.getElementById('manualRows');
+  box.innerHTML='';
+  MANUAL_PRESETS.forEach(p=>manualAddRow(p.cat,p.name,p.amt));
+}
+
+function manualAddRow(cat,name,amt){
+  const box=document.getElementById('manualRows');
+  const row=document.createElement('div');
+  row.className='manual-row';
+  row.innerHTML=`
+    <select onchange="manualRecalc()">
+      <option${cat==='Origin'?' selected':''}>Origin</option>
+      <option${cat==='Freight'?' selected':''}>Freight</option>
+      <option${cat==='Destination'?' selected':''}>Destination</option>
+      <option${cat==='Documentation'?' selected':''}>Documentation</option>
+      <option${cat==='Insurance'?' selected':''}>Insurance</option>
+      <option${cat==='Finance'?' selected':''}>Finance</option>
+    </select>
+    <input type="text" value="${name||''}" placeholder="Cost item name">
+    <input type="number" value="${amt||''}" placeholder="0" oninput="manualRecalc()">
+    <button class="manual-del" onclick="this.parentElement.remove();manualRecalc()">✕</button>
+  `;
+  box.appendChild(row);
+}
+
+function manualRecalc(){
+  const cur=document.getElementById('manualCurrency').value;
+  const sym={USD:'$',IDR:'Rp ',EUR:'€',GBP:'£',JPY:'¥'}[cur]||'$';
+  let total=0;
+  document.querySelectorAll('#manualRows .manual-row').forEach(r=>{
+    const v=parseFloat(r.querySelector('input[type="number"]').value)||0;
+    total+=v;
+  });
+  const fmt=cur==='IDR'?total.toLocaleString('id-ID'):total.toLocaleString('en-US');
+  document.getElementById('manualTotal').textContent=sym+fmt;
 }
 
 // ═══════════ CROSSCHECK ═══════════
