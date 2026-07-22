@@ -1018,7 +1018,7 @@ IMPORTANT: Keep each text field concise — maximum 2 sentences per field. Do no
     const res=await fetch('/api/claude',{
       method:'POST',
       headers:{'content-type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4096,messages:[{role:'user',content}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:8096,messages:[{role:'user',content}]})
     });
     if(!res.ok) throw new Error(`API returned ${res.status}`);
     const apiData=await res.json();
