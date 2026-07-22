@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShipSafe — AI Food Export Compliance</title>
+<title>ShipSafe — AI Trade Compliance</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -128,7 +128,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .ctb td{padding:8px 4px;font-size:11px}.ctb td:first-child{color:var(--t2)}.ctb td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .ct-n{font-size:10px;color:var(--t3);margin-top:8px;font-style:italic}
 
-/* AUDITOR */
+/* SHARED: UPLOAD & FINDINGS */
 .upload-zone{border:2px dashed var(--bd);border-radius:var(--r);padding:40px;text-align:center;cursor:pointer;transition:border-color .15s}
 .upload-zone:hover{border-color:var(--nvm)}
 .scan-prog{background:var(--sf);border-radius:var(--r);padding:40px;text-align:center}
@@ -157,12 +157,30 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 .footer{text-align:center;padding:20px;font-size:10px;color:var(--t3)}
 
-/* MOCK LABEL */
-.mock-label{background:linear-gradient(to bottom,#1a3a2a,#0f261a);border:1px solid #2a5a3a;border-radius:var(--r);padding:16px;position:relative;overflow:hidden}
-.scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#818cf8,transparent);animation:scanDown 2s ease-in-out infinite}
-@keyframes scanDown{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+/* TARA CHAT */
+.tara-fab{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;align-items:center;gap:10px;cursor:pointer}
+.tara-cta{background:var(--nv);color:var(--wh);padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;font-family:inherit;box-shadow:0 4px 16px rgba(27,42,74,.25);white-space:nowrap;animation:taraSlide .5s ease}
+@keyframes taraSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.tara-btn{width:52px;height:52px;border-radius:50%;background:var(--nv);border:none;color:var(--wh);font-size:22px;box-shadow:0 4px 20px rgba(27,42,74,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.tara-btn:hover{transform:scale(1.08)}
+.tara-panel{position:fixed;bottom:90px;right:24px;width:380px;max-height:520px;background:var(--wh);border-radius:14px;box-shadow:0 8px 40px rgba(27,42,74,.18);z-index:101;display:none;flex-direction:column;overflow:hidden}
+.tara-panel.open{display:flex}
+.tara-hd{background:var(--nv);padding:14px 18px;display:flex;align-items:center;gap:10px}
+.tara-hd-nm{color:var(--wh);font-size:14px;font-weight:700;flex:1}
+.tara-hd-sub{color:rgba(255,255,255,.5);font-size:10px}
+.tara-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:18px;cursor:pointer;padding:0 4px}
+.tara-close:hover{color:var(--wh)}
+.tara-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;max-height:360px}
+.tara-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.6}
+.tara-msg.bot{background:var(--sf);color:var(--t1);align-self:flex-start;border-bottom-left-radius:4px}
+.tara-msg.user{background:var(--nv);color:var(--wh);align-self:flex-end;border-bottom-right-radius:4px}
+.tara-msg.typing{background:var(--sf);align-self:flex-start;border-bottom-left-radius:4px;color:var(--t3);font-style:italic}
+.tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--bdl)}
+.tara-input input{flex:1;height:36px;border:1.5px solid var(--bd);border-radius:18px;padding:0 14px;font-size:12px;font-family:inherit;outline:none}
+.tara-input input:focus{border-color:var(--nvm)}
+.tara-input button{width:36px;height:36px;border-radius:50%;background:var(--nv);border:none;color:var(--wh);cursor:pointer;display:flex;align-items:center;justify-content:center}
 
-@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.how{gap:16px}.tabs-bar{gap:0}.tab-btn{padding:8px 14px;font-size:11px}.tab-panel{padding:18px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}}
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.how{gap:16px}.tabs-bar{gap:0}.tab-btn{padding:8px 14px;font-size:11px}.tab-panel{padding:18px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}}
 </style>
 </head>
 <body>
@@ -194,11 +212,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     </button>
     <button class="tab-btn" onclick="switchTab('checker')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
-      Export Checker
+      Compliance Checker
     </button>
-    <button class="tab-btn" onclick="switchTab('auditor')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20 12c-1.5 2.5-4 5-8 5s-6.5-2.5-8-5c1.5-2.5 4-5 8-5s6.5 2.5 8 5z"/></svg>
-      Label Auditor
+    <button class="tab-btn" onclick="switchTab('cost')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Cost Calculator
+    </button>
+    <button class="tab-btn" onclick="switchTab('overview')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Shipment Overview
     </button>
   </div>
 </section>
@@ -274,78 +296,159 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     </div>
   </div>
 
-  <!-- ═══ AUDITOR TAB ═══ -->
-  <div class="tab-panel" id="tp-auditor">
-    <div id="aud-upload">
-      <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">AI Label Auditor</h2>
-      <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Upload a photo of your product label. AI reads every detail and flags compliance issues against the target market's regulations.</p>
-
-      <!-- Upload zone with target market selector inside -->
-      <div class="upload-zone" id="audDropZone" onclick="document.getElementById('audFileInput').click()" ondragover="audDragOver(event)" ondrop="audDrop(event)">
-        <div style="font-size:28px;margin-bottom:8px">🏷️</div>
-        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px">Upload Product Label</div>
-        <div style="font-size:11px;color:var(--t3);margin-bottom:14px">Photo or scan of your label — JPG, PNG, or PDF. Drag & drop or click.</div>
-        <div onclick="event.stopPropagation()" style="margin-bottom:14px">
-          <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Check against</div>
-          <select id="audMarket" style="height:36px;padding:0 12px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:12px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;max-width:260px;appearance:none;-webkit-appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%237A8099' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px">
-            <option value="US">🇺🇸 United States (FDA 21 CFR)</option>
-            <option value="EU">🇪🇺 European Union (EU Food Law)</option>
-            <option value="UK">🇬🇧 United Kingdom (UK FSA)</option>
-            <option value="Japan">🇯🇵 Japan (MHLW Food Sanitation Act)</option>
-            <option value="UAE">🇦🇪 UAE / Middle East (ESMA / Halal)</option>
-            <option value="Australia">🇦🇺 Australia (FSANZ)</option>
-          </select>
-        </div>
-        <button class="btn" onclick="event.stopPropagation();document.getElementById('audFileInput').click()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Choose File
-        </button>
-        <input type="file" id="audFileInput" accept=".pdf,.png,.jpg,.jpeg" style="display:none" onchange="audFileAdded(this.files[0])">
+  <!-- ═══ COST CALCULATOR TAB ═══ -->
+  <div class="tab-panel" id="tp-cost">
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Cost Calculator</h2>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Estimate your total shipment cost — freight, insurance, customs, certificates, and hidden fees.</p>
+    <div class="fg">
+      <div class="fd"><label>Commodity</label>
+        <select id="costCom"><option value="">Select product</option>
+          <optgroup label="Cocoa"><option>Cocoa Powder</option><option>Cocoa Butter</option><option>Raw Cocoa Beans</option></optgroup>
+          <optgroup label="Coffee"><option>Green Coffee Beans</option><option>Roasted Coffee</option></optgroup>
+          <optgroup label="Spices"><option>Ground Turmeric</option><option>Black Pepper</option><option>Vanilla Beans</option></optgroup>
+          <optgroup label="Seafood"><option>Frozen Shrimp</option><option>Canned Tuna</option></optgroup>
+          <optgroup label="Other"><option value="_o">Other (type below)</option></optgroup>
+        </select>
+        <input type="text" id="costComCust" placeholder="Type commodity" style="display:none;margin-top:5px" class="fd" autocomplete="off">
       </div>
+      <div class="fd"><label>Origin</label>
+        <select id="costOrig"><option value="">Select origin</option>
+          <option>Indonesia</option><option>Vietnam</option><option>India</option><option>Brazil</option><option>Ghana</option><option>Colombia</option><option>Thailand</option><option>Philippines</option>
+        </select>
+      </div>
+      <div class="fd"><label>Destination</label>
+        <select id="costDest"><option value="">Select destination</option>
+          <option>United States</option><option>United Kingdom</option><option>Japan</option><option>Germany</option><option>Netherlands</option><option>UAE</option><option>Australia</option><option>China</option><option>South Korea</option><option>Saudi Arabia</option>
+        </select>
+      </div>
+      <div class="fd"><label>Incoterms</label>
+        <select id="costInco"><option value="">Select terms</option>
+          <option value="FOB">FOB</option><option value="CIF">CIF</option><option value="CFR">CFR</option><option value="EXW">EXW</option><option value="FCA">FCA</option><option value="DDP">DDP</option>
+        </select>
+      </div>
+      <div class="fd"><label>Container Type</label>
+        <select id="costContainer">
+          <option value="20ft">20ft Standard</option>
+          <option value="40ft">40ft Standard</option>
+          <option value="20ft-reefer">20ft Reefer</option>
+          <option value="LCL">LCL (Less than Container)</option>
+        </select>
+      </div>
+      <div class="fd"><label>Estimated Weight (kg)</label>
+        <input type="number" id="costWeight" placeholder="e.g. 5000" autocomplete="off">
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:10px;color:var(--t3)">AI-powered estimates. Get firm quotes from your forwarder.</span>
+      <button class="btn" onclick="runCostCalc()" id="costBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Calculate Costs
+      </button>
+    </div>
+    <div id="cost-results" style="display:none;margin-top:16px"></div>
+  </div>
 
-      <!-- Preview + scan button (shown after file selected) -->
-      <div id="audFileReady" style="display:none;margin-top:12px">
-        <div class="file-row">
-          <div class="file-icon" style="background:var(--nvw);font-size:18px" id="audFileIcon">🖼️</div>
-          <div style="flex:1">
-            <div style="font-size:12px;font-weight:600" id="audFileName"></div>
-            <div style="font-size:10px;color:var(--t3)" id="audFileSize"></div>
+  <!-- ═══ SHIPMENT OVERVIEW TAB ═══ -->
+  <div class="tab-panel" id="tp-overview">
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Shipment Overview</h2>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Track your active shipments and compliance progress at a glance.</p>
+
+    <!-- Mock shipment cards -->
+    <div style="display:grid;gap:12px">
+      <div style="background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);padding:16px 18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--nv)">Cocoa Powder to USA</div>
+            <div style="font-size:10px;color:var(--t3)">PT Agrosera → Choco USA Inc · FOB Tanjung Priok</div>
           </div>
-          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:700;margin-right:8px">Ready</span>
-          <button class="btn-outline" style="height:26px;padding:0 8px;font-size:10px" onclick="resetAud()">✕</button>
+          <span style="font-size:9px;background:var(--ambg);color:var(--am);padding:3px 10px;border-radius:10px;font-weight:700">IN PROGRESS</span>
         </div>
-        <div style="display:flex;justify-content:flex-end;margin-top:10px">
-          <button class="btn" id="audScanBtn" onclick="runAud()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            Scan Label
-          </button>
+        <div style="display:flex;gap:16px;margin-bottom:10px">
+          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Compliance</div>
+            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:72%;background:linear-gradient(90deg,var(--nvm),var(--gn));border-radius:3px"></div></div>
+            <div style="font-size:11px;font-weight:700;color:var(--nv);margin-top:2px">72%</div></div>
+          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Documents</div>
+            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:60%;background:var(--am);border-radius:3px"></div></div>
+            <div style="font-size:11px;font-weight:700;color:var(--am);margin-top:2px">3 of 5 uploaded</div></div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:600">Invoice</span>
+          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:600">Packing List</span>
+          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:4px;font-weight:600">BL</span>
+          <span style="font-size:9px;background:var(--rdbg);color:var(--rd);padding:2px 8px;border-radius:4px;font-weight:600">COO missing</span>
+          <span style="font-size:9px;background:var(--rdbg);color:var(--rd);padding:2px 8px;border-radius:4px;font-weight:600">Phyto missing</span>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bdl);display:flex;gap:20px">
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">ETD</div><div style="font-size:11px;font-weight:700;color:var(--nv)">Aug 15, 2026</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">ETA</div><div style="font-size:11px;font-weight:700;color:var(--nv)">Sep 12, 2026</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Value</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$17,500</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Est. Cost</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$2,840</div></div>
+        </div>
+      </div>
+
+      <div style="background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);padding:16px 18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--nv)">Cocoa Butter to Japan</div>
+            <div style="font-size:10px;color:var(--t3)">PT Agrosera → Morinaga Co Ltd · CIF Yokohama</div>
+          </div>
+          <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:3px 10px;border-radius:10px;font-weight:700">READY</span>
+        </div>
+        <div style="display:flex;gap:16px;margin-bottom:10px">
+          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Compliance</div>
+            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--gn);border-radius:3px"></div></div>
+            <div style="font-size:11px;font-weight:700;color:var(--gn);margin-top:2px">100%</div></div>
+          <div style="flex:1"><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Documents</div>
+            <div style="height:6px;background:var(--bdl);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--gn);border-radius:3px"></div></div>
+            <div style="font-size:11px;font-weight:700;color:var(--gn);margin-top:2px">7 of 7 uploaded</div></div>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bdl);display:flex;gap:20px">
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">ETD</div><div style="font-size:11px;font-weight:700;color:var(--nv)">Jul 28, 2026</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">ETA</div><div style="font-size:11px;font-weight:700;color:var(--nv)">Aug 10, 2026</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Value</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$42,000</div></div>
+          <div><div style="font-size:9px;color:var(--t3);text-transform:uppercase">Est. Cost</div><div style="font-size:11px;font-weight:700;color:var(--nv)">$5,200</div></div>
         </div>
       </div>
     </div>
 
-    <!-- Scanning progress -->
-    <div id="aud-scanning" style="display:none">
-      <div class="scan-prog">
-        <div class="lo-sp" style="margin:0 auto 14px"></div>
-        <div style="font-size:14px;font-weight:700;color:var(--nv);margin-bottom:4px">AI is scanning your label...</div>
-        <div style="font-size:12px;color:var(--t3)" id="scanSt">Reading label text...</div>
-        <div style="width:180px;height:4px;background:var(--bdl);border-radius:2px;margin:12px auto 0;overflow:hidden"><div id="scanBar" style="height:100%;background:linear-gradient(90deg,var(--nvm),var(--nvl));border-radius:2px;transition:width 1s;width:0%"></div></div>
-      </div>
+    <div style="text-align:center;margin-top:20px">
+      <p style="font-size:11px;color:var(--t3)">This is a demo view. Connect your account to track real shipments.</p>
     </div>
-
-    <!-- Results (populated dynamically) -->
-    <div id="aud-results" style="display:none"></div>
   </div>
 
   <!-- ═══ CROSSCHECK TAB ═══ -->
   <div class="tab-panel active" id="tp-crosscheck">
     <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Document Checker</h2>
-    <p style="font-size:12px;color:var(--t3);margin-bottom:12px">Upload your export documents — AI will cross-check everything and catch issues before customs does.</p>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:12px">Upload your trade documents — AI will cross-check everything and catch issues before customs does.</p>
+
+    <!-- Trade context selectors -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div class="fd">
+        <label>Trade Direction</label>
+        <select id="ccDirection">
+          <option value="export">Export (I am shipping out)</option>
+          <option value="import">Import (I am receiving goods)</option>
+        </select>
+      </div>
+      <div class="fd">
+        <label>Incoterms</label>
+        <select id="ccIncoterms">
+          <option value="">Auto-detect from docs</option>
+          <option value="FOB">FOB (Free On Board)</option>
+          <option value="CIF">CIF (Cost, Insurance, Freight)</option>
+          <option value="CFR">CFR (Cost and Freight)</option>
+          <option value="EXW">EXW (Ex Works)</option>
+          <option value="FCA">FCA (Free Carrier)</option>
+          <option value="DDP">DDP (Delivered Duty Paid)</option>
+        </select>
+      </div>
+    </div>
+
     <div style="background:var(--nvw);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px">
       <div style="font-size:16px">💡</div>
       <div>
-        <div style="font-size:11px;font-weight:700;color:var(--nv);margin-bottom:2px">Start here — upload any document</div>
-        <div style="font-size:11px;color:var(--t2)">Upload 1 file or multiple — PDF, photo, or a combined document. Works with Invoice, Packing List, Bill of Lading, COO, Health Certificate, LC, and more.</div>
+        <div style="font-size:11px;font-weight:700;color:var(--nv);margin-bottom:2px">Upload any document — PDF or photo</div>
+        <div style="font-size:11px;color:var(--t2)">Works with Invoice, Packing List, Bill of Lading, COO, Health Certificate, LC, and more. Upload 1 file or multiple.</div>
       </div>
     </div>
 
@@ -353,7 +456,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     <div id="cc-upload">
       <div class="upload-zone" id="ccDropZone" onclick="document.getElementById('ccFileInput').click()" ondragover="ccDragOver(event)" ondrop="ccDrop(event)">
         <div style="font-size:28px;margin-bottom:8px">📂</div>
-        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px">Upload Export Documents</div>
+        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px">Upload Trade Documents</div>
         <div style="font-size:11px;color:var(--t3);margin-bottom:12px">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Drag & drop or click.</div>
         <button class="btn" onclick="event.stopPropagation();document.getElementById('ccFileInput').click()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -384,9 +487,33 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   </div>
 </div>
 
-<div class="footer">ShipSafe.AI Copilot Mode v1.0 · Certified accurate · Final human sign-off required</div>
+<div class="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
 
 <div class="lov" id="loader"><div class="lo-c"><div class="lo-sp"></div><div class="lo-m" id="loMsg">Analysing trade corridor...</div><div class="lo-s">This takes a few seconds</div></div></div>
+
+<!-- TARA FLOATING CHAT -->
+<div class="tara-fab" onclick="toggleTara()">
+  <div class="tara-cta">Ask Tara anything about trade compliance</div>
+  <button class="tara-btn" id="taraFabBtn">💬</button>
+</div>
+
+<div class="tara-panel" id="taraPanel">
+  <div class="tara-hd">
+    <div style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px">🛡️</div>
+    <div style="flex:1">
+      <div class="tara-hd-nm">Tara</div>
+      <div class="tara-hd-sub">Trade Assistant, Ready Anytime</div>
+    </div>
+    <button class="tara-close" onclick="toggleTara()">✕</button>
+  </div>
+  <div class="tara-msgs" id="taraMsgs">
+    <div class="tara-msg bot">Hi! I'm <b>Tara</b>, your trade compliance assistant. Ask me anything — Incoterms, customs rules, document requirements, HS codes, or shipping costs. What can I help with?</div>
+  </div>
+  <div class="tara-input">
+    <input type="text" id="taraInput" placeholder="Ask about trade compliance..." onkeydown="if(event.key==='Enter')sendTara()">
+    <button onclick="sendTara()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+</div>
 
 <script>
 // ═══════════ DATA ═══════════
@@ -412,16 +539,19 @@ let tot=0,chk=0;
   const r=document.getElementById('exRow');
   EX.forEach((e,i)=>{const b=document.createElement('button');b.className='xc';b.textContent=e.l;b.onclick=()=>fill(i);r.appendChild(b)});
   document.getElementById('comSel').onchange=function(){document.getElementById('comCust').style.display=this.value==='_o'?'block':'none'};
+  document.getElementById('costCom').onchange=function(){document.getElementById('costComCust').style.display=this.value==='_o'?'block':'none'};
 })();
 
 function fill(i){const e=EX[i];document.getElementById('comSel').value=e.c;document.getElementById('comCust').style.display='none';document.getElementById('orig').value=e.o;document.getElementById('dest').value=e.d;document.getElementById('inco').value=e.i}
 
 // TABS
+const TAB_IDS=['crosscheck','checker','cost','overview'];
 function switchTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tp-'+id).classList.add('active');
-  event.currentTarget.classList.add('active');
+  const idx=TAB_IDS.indexOf(id);
+  if(idx>=0) document.querySelectorAll('.tab-btn')[idx].classList.add('active');
 }
 
 // CHECKER
@@ -435,7 +565,7 @@ function resetCk(){
 }
 
 // ═══════════ CLAUDE API ═══════════
-const SYSTEM_PROMPT=`You are a senior food export compliance consultant with 20+ years of hands-on experience helping small and mid-size exporters in developing countries (Indonesia, Vietnam, India, Brazil, Ghana) ship agricultural and food commodities to the US, EU, Japan, Middle East, and beyond. You have personally handled customs clearances, FDA detentions, LC discrepancies, and phytosanitary rejections.
+const SYSTEM_PROMPT=`You are a senior trade compliance consultant with 20+ years of hands-on experience helping small and mid-size exporters and importers in developing countries (Indonesia, Vietnam, India, Brazil, Ghana) ship agricultural and food commodities to and from the US, EU, Japan, Middle East, and beyond. You have personally handled customs clearances, FDA detentions, LC discrepancies, and phytosanitary rejections — both from the exporter and importer perspective.
 
 Your advice is SPECIFIC, ACTIONABLE, and EXPERT-LEVEL. You cite exact regulation codes, name the specific government agency and its website or office, state real document names, real processing times, real costs, and real consequences of non-compliance. You write like an experienced consultant briefing a first-time exporter — direct, no fluff, no generic advice.
 
@@ -658,200 +788,112 @@ function tgl(el){
 }
 function upd(){const p=tot>0?Math.round(chk/tot*100):0;document.getElementById('cPct').textContent=p+'%';document.getElementById('cBar').style.width=p+'%';const s=document.getElementById('cSt');if(p===0){s.textContent='Complete the checklist below to track readiness';s.className='conf-st'}else if(p<50){s.textContent='Getting started. Keep going.';s.className='conf-st'}else if(p<90){s.textContent='Good progress. Check blind spots too.';s.className='conf-st'}else if(p<100){s.textContent='Nearly ready. A few items left.';s.className='conf-st'}else{s.textContent='All done. Ready to ship.';s.className='conf-st rdy'}}
 
-// ═══════════ AUDITOR ═══════════
-let audFile=null; // {name, size, type, b64}
+// ═══════════ COST CALCULATOR ═══════════
+async function runCostCalc(){
+  const sel=document.getElementById('costCom').value;
+  const cust=document.getElementById('costComCust').value.trim();
+  const commodity=sel==='_o'?cust:sel;
+  const origin=document.getElementById('costOrig').value;
+  const destination=document.getElementById('costDest').value;
+  const incoterms=document.getElementById('costInco').value;
+  const container=document.getElementById('costContainer').value;
+  const weight=document.getElementById('costWeight').value;
+  if(!commodity||!origin||!destination||!incoterms){alert('Please fill in commodity, origin, destination, and Incoterms.');return}
 
-const AUD_MARKETS={
-  'US':'United States — FDA 21 CFR (Parts 101, 110, 117). Check: product name, net weight in US customary + metric, nutrition facts panel (21 CFR §101.9), ingredient list in descending order by weight, major allergen declaration in plain language (FALCPA — top 9: milk, eggs, fish, shellfish, tree nuts, peanuts, wheat, soybeans, sesame), country of origin, manufacturer name & address, any health/nutrient content claims against 21 CFR §101.13-101.67.',
-  'EU':'European Union — EU Regulation (EU) No 1169/2011 (FIC). Check: product name, net quantity in metric, ingredients list with allergens bolded (14 EU allergens: gluten cereals, crustaceans, eggs, fish, peanuts, soybeans, milk, nuts, celery, mustard, sesame, sulphites >10ppm, lupin, molluscs), nutrition declaration per 100g/100ml (mandatory: energy kJ+kcal, fat, saturates, carbohydrate, sugars, protein, salt), country of origin for meat/certain foods, "best before" / "use by" format, language requirements for destination country.',
-  'UK':'United Kingdom — UK FIC (retained EU law post-Brexit, with GB-specific updates). Same 14 allergens as EU but GB labelling in English required. Check HFSS rules if applicable. Verify BTOM import pre-notification if fresh/chilled.',
-  'Japan':'Japan — Food Labelling Standards (食品表示基準) under Food Labelling Act 2015, enforced by Consumer Affairs Agency. Check: product name in Japanese, ingredients in descending order, additives listed separately, net content, expiry date format (年月日), storage instructions, manufacturer/importer name & address in Japanese, allergens — 8 mandatory (shrimp, crab, wheat, buckwheat, egg, milk, peanut, walnut) + 20 recommended. Nutrition labelling mandatory since 2020: energy, protein, fat, carbohydrate, sodium (as salt equivalent).',
-  'UAE':'UAE / Middle East — UAE.S GSO 9/2013 and Emirates Authority for Standardization (ESMA). Halal certification mandatory for meat/poultry products, recommended for all food. Check: Arabic language labelling mandatory, product name, ingredients, net weight, country of origin, manufacturer details, production & expiry dates in Gregorian calendar, Halal logo from accredited body (MUI Indonesia is recognised). No pork-derived ingredients or alcohol.',
-  'Australia':'Australia — Australia New Zealand Food Standards Code (FSANZ). Check: product name, ingredient list with allergens declared (11 priority allergens: peanuts, tree nuts, milk, eggs, sesame, fish, shellfish, wheat, soy, lupin, bee products), nutrition information panel per serving + per 100g, date marking, country of origin mandatory statement ("Made in X" or "Product of X"), manufacturer/importer in Australia or NZ, FSANZ-approved additives only.'
-};
-
-function audDragOver(e){e.preventDefault();e.currentTarget.style.borderColor='var(--nvm)'}
-function audDrop(e){e.preventDefault();e.currentTarget.style.borderColor='';if(e.dataTransfer.files[0]) audFileAdded(e.dataTransfer.files[0])}
-
-function audFileAdded(f){
-  if(!f) return;
-  const allowed=['application/pdf','image/png','image/jpeg'];
-  if(!allowed.includes(f.type)){alert('Only JPG, PNG, or PDF supported.');return}
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    audFile={name:f.name,size:f.size,type:f.type,b64:ev.target.result.split(',')[1]};
-    document.getElementById('audFileName').textContent=f.name;
-    document.getElementById('audFileSize').textContent=(f.size/1024).toFixed(0)+' KB';
-    document.getElementById('audFileIcon').textContent=f.type==='application/pdf'?'📄':'🖼️';
-    document.getElementById('audFileReady').style.display='';
-  };
-  reader.readAsDataURL(f);
-}
-
-function resetAud(){
-  audFile=null;
-  document.getElementById('audFileInput').value='';
-  document.getElementById('audFileReady').style.display='none';
-  document.getElementById('aud-upload').style.display='';
-  document.getElementById('aud-scanning').style.display='none';
-  document.getElementById('aud-results').style.display='none';
-  document.getElementById('aud-results').innerHTML='';
-}
-
-async function runAud(){
-  if(!audFile){alert('Please upload a label image first.');return}
-  const market=document.getElementById('audMarket').value;
-  const marketLabel=document.getElementById('audMarket').options[document.getElementById('audMarket').selectedIndex].text;
-  const btn=document.getElementById('audScanBtn');
-
-  // Show scanning progress
-  document.getElementById('aud-upload').style.display='none';
-  document.getElementById('aud-scanning').style.display='';
-  document.getElementById('aud-results').style.display='none';
+  const btn=document.getElementById('costBtn');
+  const ov=document.getElementById('loader');
   btn.disabled=true;
-
-  // Animate progress bar while waiting for API
-  const bar=document.getElementById('scanBar'),st=document.getElementById('scanSt');
-  bar.style.width='0%';
-  const steps=[
-    [300,'Reading label text...','15%'],
-    [900,'Checking ingredient list...','40%'],
-    [1600,'Analysing nutrition panel...','60%'],
-    [2200,'Checking allergen declarations...','80%'],
-    [2800,'Validating claims against regulations...','92%']
-  ];
-  steps.forEach(([t,msg,w])=>setTimeout(()=>{st.textContent=msg;bar.style.width=w},t));
+  document.getElementById('loMsg').textContent='AI is calculating shipment costs...';
+  ov.classList.add('on');
 
   try{
-    const content=[
-      {type:'text',text:`You are a senior food label compliance expert. Audit the product label in the attached image against the following regulations:
+    const prompt=`You are a senior freight forwarder and trade cost consultant. Calculate a detailed cost breakdown for this shipment:
 
-${AUD_MARKETS[market]}
+Commodity: ${commodity}
+Origin: ${origin}
+Destination: ${destination}
+Incoterms: ${incoterms}
+Container: ${container}
+Weight: ${weight||'not specified'} kg
 
-Return ONLY a valid JSON object with this structure:
+Under ${incoterms}, clearly mark which costs are the shipper's responsibility and which are the buyer's.
+Use realistic market rates for ${origin} → ${destination} in 2024-2025.
+
+Return ONLY a valid JSON object:
 {
-  "product_name": "Name read from the label",
-  "market": "${marketLabel}",
-  "summary": { "issues_found": 2, "passed": 5, "verdict": "Needs fixes before export" },
-  "issues": [
-    {
-      "severity": "high",
-      "category": "Allergen Declaration",
-      "regulation": "FDA 21 CFR §101.17",
-      "finding": "Shrimp paste listed as ingredient but allergen declaration missing 'Contains: Crustacean Shellfish'",
-      "consequence": "FDA will reject shipment or require recall. FALCPA violation carries civil penalties.",
-      "fix": "Add 'Contains: Crustacean Shellfish (Shrimp)' statement immediately after ingredient list in minimum 10pt font."
-    }
+  "route": "${origin} → ${destination}",
+  "incoterms": "${incoterms}",
+  "container": "${container}",
+  "total_estimate": "$X,XXX - $X,XXX",
+  "costs": [
+    { "category": "Origin", "item": "Inland trucking to port", "estimate": "$200-$400", "who_pays": "Shipper", "note": "Factory to Tanjung Priok" },
+    { "category": "Origin", "item": "Export customs clearance", "estimate": "$80-$150", "who_pays": "Shipper", "note": "" }
   ],
-  "passed": [
-    {
-      "category": "Country of Origin",
-      "note": "Clearly states 'Product of Indonesia' — compliant with 21 CFR §101.5"
-    }
+  "tips": [
+    "Negotiate THC directly with shipping line for better rates",
+    "Book 3-4 weeks ahead during peak season (Aug-Dec)"
   ]
 }
-severity must be exactly "high", "medium", or "low".
-Be specific: cite exact regulation codes, state exact numbers (font sizes in pt, nutrient limits in mg, etc).
-If you cannot read part of the label clearly, note that as a finding with severity "medium".
-Return ONLY the JSON. Nothing else.`},
-      audFile.type==='application/pdf'
-        ?{type:'document',source:{type:'base64',media_type:'application/pdf',data:audFile.b64}}
-        :{type:'image',source:{type:'base64',media_type:audFile.type,data:audFile.b64}}
-    ];
+Provide 10-16 cost items. Categories: "Origin", "Freight", "Destination", "Documentation", "Insurance", "Finance".
+who_pays must be "Shipper" or "Buyer" based on ${incoterms}.
+tips: 3-5 practical tips to reduce costs.
+Return ONLY the JSON. Nothing else.`;
 
     const res=await fetch('/api/claude',{
       method:'POST',
       headers:{'content-type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:2048,messages:[{role:'user',content}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,system:'You are a senior freight forwarder. Return only valid JSON, no markdown or explanation.',messages:[{role:'user',content:prompt}]})
     });
     if(!res.ok) throw new Error(`API returned ${res.status}`);
     const apiData=await res.json();
     const data=extractJSON(apiData.content[0].text);
-
-    bar.style.width='100%';st.textContent='Done.';
-    setTimeout(()=>{
-      document.getElementById('aud-scanning').style.display='none';
-      btn.disabled=false;
-      renderAud(data);
-    },400);
-  }catch(err){
-    document.getElementById('aud-scanning').style.display='none';
-    document.getElementById('aud-upload').style.display='';
+    ov.classList.remove('on');
+    document.getElementById('loMsg').textContent='Analysing trade corridor...';
     btn.disabled=false;
-    alert('Scan failed: '+err.message);
-    console.error('Auditor error:',err);
+    renderCostCalc(data);
+  }catch(err){
+    ov.classList.remove('on');
+    document.getElementById('loMsg').textContent='Analysing trade corridor...';
+    btn.disabled=false;
+    alert('Cost calculation failed: '+err.message);
+    console.error('Cost calc error:',err);
   }
 }
 
-function renderAud(data){
-  const box=document.getElementById('aud-results');
+function renderCostCalc(data){
+  const box=document.getElementById('cost-results');
   box.style.display='';
 
-  const issueCount=data.issues?.length||0;
-  const passCount=data.passed?.length||0;
-  const highs=data.issues?.filter(i=>i.severity==='high')||[];
-  const meds=data.issues?.filter(i=>i.severity==='medium')||[];
-  const lows=data.issues?.filter(i=>i.severity==='low')||[];
-
-  const bannerColor=highs.length?'var(--rd)':meds.length?'var(--am)':'var(--gn)';
-  const bannerBg=highs.length?'var(--rdbg)':meds.length?'var(--ambg)':'var(--gnbg)';
-  const bannerBd=highs.length?'#E8A0A0':meds.length?'var(--ambd)':'#A3DFB8';
-  const verdict=data.summary?.verdict||(highs.length?'Must fix before export':meds.length?'Review recommended':'Ready for export');
+  const shipperCosts=data.costs.filter(c=>c.who_pays==='Shipper');
+  const buyerCosts=data.costs.filter(c=>c.who_pays==='Buyer');
 
   let html=`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <div style="background:var(--nv);border-radius:var(--r);padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
       <div>
-        <h2 style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--nv)">Label Audit Results</h2>
-        <p style="font-size:11px;color:var(--t3)">${data.product_name||audFile.name} — ${data.market}</p>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);font-weight:600">${data.route} · ${data.incoterms} · ${data.container}</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--wh);margin-top:2px">Estimated Total: ${data.total_estimate}</div>
       </div>
-      <button class="btn-outline" onclick="resetAud()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
-        New Scan
-      </button>
-    </div>
-    <div style="background:${bannerBg};border:1.5px solid ${bannerBd};border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px">
-      <div style="font-size:22px">${highs.length?'🛡️':meds.length?'⚠️':'✅'}</div>
-      <div style="flex:1">
-        <div style="font-size:13px;font-weight:700;color:${bannerColor}">${verdict}</div>
-        <div style="font-size:10px;color:${bannerColor};opacity:.7">${issueCount} issue${issueCount!==1?'s':''} found · ${passCount} check${passCount!==1?'s':''} passed</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-size:22px;font-weight:900;color:${bannerColor}">${passCount}/${passCount+issueCount}</div>
-        <div style="font-size:8px;color:${bannerColor};opacity:.6;font-weight:700">Passed</div>
-      </div>
+      <div style="font-size:8px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:3px 10px;border-radius:10px;font-weight:700">AI ESTIMATE</div>
     </div>`;
 
-  // Issues sorted high → medium → low
-  [...highs,...meds,...lows].forEach(issue=>{
-    const isHigh=issue.severity==='high';
-    const isMed=issue.severity==='medium';
-    const tagClass=isHigh?'tag-high':isMed?'tag-med':'tag-pass';
-    const tagLabel=isHigh?'HIGH':isMed?'MED':'LOW';
-    html+=`
-    <div class="finding" style="margin-bottom:8px">
-      <div class="finding-hd">
-        <span class="${tagClass}">${tagLabel}</span>
-        <span style="font-size:12px;font-weight:700;margin-left:4px">${issue.category}</span>
-        ${issue.regulation?`<span style="font-size:10px;color:var(--t3);margin-left:auto">${issue.regulation}</span>`:''}
-      </div>
-      <div class="finding-bd">
-        <div style="background:var(--sf);border-radius:var(--rs);padding:8px 10px;font-size:11px;color:var(--t2);margin-bottom:6px">${issue.finding}</div>
-        ${issue.consequence?`<div style="background:${isHigh?'rgba(184,50,48,.06)':'rgba(194,123,10,.06)'};border:1px solid ${isHigh?'rgba(184,50,48,.15)':'rgba(194,123,10,.2)'};border-radius:var(--rs);padding:8px 10px;font-size:10px;color:var(--t2);margin-bottom:6px"><span style="font-weight:700;color:${isHigh?'var(--rd)':'var(--am)'};text-transform:uppercase;font-size:9px;letter-spacing:.3px">Consequence · </span>${issue.consequence}</div>`:''}
-        ${issue.fix?`<div class="suggestion">💡 ${issue.fix}</div>`:''}
-      </div>
-    </div>`;
-  });
+  if(shipperCosts.length){
+    html+=`<div class="sec"><div style="font-size:11px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Your Costs (Shipper)</div>
+    <table class="ctb">${shipperCosts.map(c=>`<tr><td><span style="font-size:8px;background:var(--nvw);color:var(--nvm);padding:2px 6px;border-radius:3px;font-weight:700;margin-right:6px">${c.category}</span>${c.item}${c.note?'<br><span style="font-size:9px;color:var(--t3)">'+c.note+'</span>':''}</td><td>${c.estimate}</td></tr>`).join('')}</table></div>`;
+  }
 
-  // Passed checks
-  if(data.passed?.length){
-    html+=`<div class="pass-list" style="margin-top:10px">
-      <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Checks passed</div>
-      <div style="font-size:12px;color:var(--t2);line-height:2">
-        ${data.passed.map(p=>`✅ <b>${p.category}</b>${p.note?' — '+p.note:''}`).join('<br>')}
-      </div>
+  if(buyerCosts.length){
+    html+=`<div class="sec" style="opacity:.6"><div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Buyer's Costs (not your responsibility under ${data.incoterms})</div>
+    <table class="ctb">${buyerCosts.map(c=>`<tr><td><span style="font-size:8px;background:var(--sf);color:var(--t3);padding:2px 6px;border-radius:3px;font-weight:700;margin-right:6px">${c.category}</span>${c.item}</td><td>${c.estimate}</td></tr>`).join('')}</table></div>`;
+  }
+
+  if(data.tips?.length){
+    html+=`<div style="background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--r);padding:14px 16px;margin-top:4px">
+      <div style="font-size:11px;font-weight:700;color:var(--am);margin-bottom:6px">💡 Cost-Saving Tips</div>
+      <ul style="font-size:11px;color:var(--t2);padding-left:16px;margin:0;line-height:1.8">${data.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
     </div>`;
   }
 
+  html+=`<div class="ct-n" style="margin-top:10px">AI estimates based on market data. Get firm quotes from your freight forwarder and bank.</div>`;
   box.innerHTML=html;
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -912,11 +954,15 @@ async function runCC(){
   ov.classList.add('on');
   document.getElementById('cc-results').style.display='none';
 
+  const tradeDir=document.getElementById('ccDirection').value;
+  const ccInco=document.getElementById('ccIncoterms').value;
+  const dirLabel=tradeDir==='import'?'IMPORT':'EXPORT';
+
   try{
     // Build message content: one text block + one image/doc block per file
     const content=[{
       type:'text',
-      text:`You are a senior export documentation specialist with 20+ years experience clearing shipments through US, EU, Japan, and Southeast Asian customs. I am uploading ${ccFiles.length} export documents. Perform a deep, multi-layer audit across ALL 5 categories below.
+      text:`You are a senior ${dirLabel.toLowerCase()} documentation specialist with 20+ years experience clearing shipments through US, EU, Japan, and Southeast Asian customs. I am uploading ${ccFiles.length} ${dirLabel.toLowerCase()} documents.${ccInco?' The Incoterms for this shipment is '+ccInco+'.':' Detect the Incoterms from the documents if possible.'} This is an ${dirLabel} transaction — check documents from the ${tradeDir==='import'?'importer/buyer':'exporter/shipper'} perspective. Perform a deep, multi-layer audit across ALL 5 categories below.
 
 ━━━ CATEGORY 1: CONSISTENCY CHECK ━━━
 Cross-reference EVERY field across all documents. Flag any mismatch, even minor ones:
@@ -1139,6 +1185,62 @@ function renderCC(data){
 
   box.innerHTML=html;
   box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ═══════════ TARA CHAT ═══════════
+let taraHistory=[];
+
+function toggleTara(){
+  const p=document.getElementById('taraPanel');
+  const isOpen=p.classList.toggle('open');
+  document.getElementById('taraFabBtn').textContent=isOpen?'✕':'💬';
+  if(isOpen) document.getElementById('taraInput').focus();
+}
+
+function addTaraMsg(text,role){
+  const box=document.getElementById('taraMsgs');
+  const div=document.createElement('div');
+  div.className='tara-msg '+(role==='user'?'user':'bot');
+  div.innerHTML=text;
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+  return div;
+}
+
+async function sendTara(){
+  const input=document.getElementById('taraInput');
+  const q=input.value.trim();
+  if(!q) return;
+  input.value='';
+
+  addTaraMsg(q,'user');
+  taraHistory.push({role:'user',content:q});
+
+  const typing=addTaraMsg('Tara is thinking...','typing');
+
+  try{
+    const msgs=taraHistory.slice(-10); // keep last 10 messages for context
+    const res=await fetch('/api/claude',{
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        system:`You are Tara (Trade Assistant, Ready Anytime), ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.`,
+        messages:msgs
+      })
+    });
+    if(!res.ok) throw new Error(`API ${res.status}`);
+    const data=await res.json();
+    const reply=data.content&&data.content[0]&&data.content[0].text||'Sorry, I could not process that.';
+    typing.remove();
+    addTaraMsg(reply,'bot');
+    taraHistory.push({role:'assistant',content:reply});
+  }catch(err){
+    typing.remove();
+    addTaraMsg('Sorry, I could not connect. Please try again.','bot');
+    console.error('Tara error:',err);
+  }
 }
 </script>
 </body>
