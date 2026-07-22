@@ -181,13 +181,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     <h1>Stop guessing.<br>Ship with confidence.</h1>
     <p>Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.</p>
     <div class="how">
-      <div class="how-s"><span class="how-n">1</span> Enter trade details</div>
-      <div class="how-s"><span class="how-n">2</span> AI scans requirements</div>
-      <div class="how-s"><span class="how-n">3</span> Get your checklist</div>
+      <div class="how-s"><span class="how-n">1</span> Upload your documents</div>
+      <div class="how-s"><span class="how-n">2</span> AI cross-checks everything</div>
+      <div class="how-s"><span class="how-n">3</span> Fix issues before customs</div>
     </div>
   </div>
   <div class="tabs-bar" style="max-width:900px;margin:0 auto">
-    <button class="tab-btn active" onclick="switchTab('checker')">
+    <button class="tab-btn active" onclick="switchTab('crosscheck')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      Doc Cross-Checker
+      <span style="font-size:8px;background:var(--nvm);color:white;padding:2px 6px;border-radius:10px;margin-left:4px;font-weight:700">START HERE</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('checker')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
       Export Checker
     </button>
@@ -195,17 +200,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20 12c-1.5 2.5-4 5-8 5s-6.5-2.5-8-5c1.5-2.5 4-5 8-5s6.5 2.5 8 5z"/></svg>
       Label Auditor
     </button>
-    <button class="tab-btn" onclick="switchTab('crosscheck')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-      Doc Cross-Checker
-    </button>
   </div>
 </section>
 
 <div class="main-card">
 
   <!-- ═══ CHECKER TAB ═══ -->
-  <div class="tab-panel active" id="tp-checker">
+  <div class="tab-panel" id="tp-checker">
     <div id="ck-input">
       <div class="xl">Quick start — click a corridor</div>
       <div class="xr" id="exRow"></div>
@@ -337,9 +338,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   </div>
 
   <!-- ═══ CROSSCHECK TAB ═══ -->
-  <div class="tab-panel" id="tp-crosscheck">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Cross-Border Document Checker</h2>
-    <p style="font-size:12px;color:var(--t3);margin-bottom:16px">Upload 2–5 export documents. AI cross-references all fields to catch discrepancies that cause customs holds.</p>
+  <div class="tab-panel active" id="tp-crosscheck">
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Document Checker</h2>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:12px">Upload your export documents — AI will cross-check everything and catch issues before customs does.</p>
+    <div style="background:var(--nvw);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px">
+      <div style="font-size:16px">💡</div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--nv);margin-bottom:2px">Start here — upload any document</div>
+        <div style="font-size:11px;color:var(--t2)">Upload 1 file or multiple — PDF, photo, or a combined document. Works with Invoice, Packing List, Bill of Lading, COO, Health Certificate, LC, and more.</div>
+      </div>
+    </div>
 
     <!-- Upload zone -->
     <div id="cc-upload">
@@ -896,7 +904,7 @@ function ccReset(){
 }
 
 async function runCC(){
-  if(ccFiles.length<2){alert('Please upload at least 2 documents to cross-check.');return}
+  if(ccFiles.length<1){alert('Please upload at least 1 document.');return}
   const btn=document.getElementById('ccBtn');
   const ov=document.getElementById('loader');
   btn.disabled=true;
