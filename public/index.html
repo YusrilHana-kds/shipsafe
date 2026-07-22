@@ -307,10 +307,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     <div id="ck-results" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div id="routeBar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"></div>
-        <button class="btn-outline" onclick="resetCk()">
+        <button class="btn-outline" onclick="ckConfirmReset()">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
           New Check
         </button>
+      </div>
+      <div id="ckConfirmBar" style="display:none;background:var(--ambg);border:1.5px solid var(--ambd);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;display:none">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:18px">⚠️</div>
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:700;color:var(--am)">Start a new compliance check?</div>
+            <div style="font-size:11px;color:var(--t2)">Your current progress will be saved to history.</div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="btn-outline" style="height:30px;font-size:11px" onclick="ckDismissConfirm()">Cancel</button>
+            <button class="btn" style="height:30px;font-size:11px;background:var(--am)" onclick="resetCk()">Yes, New Check</button>
+          </div>
+        </div>
       </div>
       <div class="conf">
         <div class="conf-top"><span class="conf-lb">Shipment Readiness</span><span class="conf-p" id="cPct">0%</span></div>
@@ -321,6 +334,12 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <div id="alBox" style="margin-top:12px"></div>
       <div id="payBox" style="display:none;margin-top:12px"></div>
       <div id="costBox" style="display:none;margin-top:12px"></div>
+    </div>
+
+    <!-- Previous compliance checks history -->
+    <div id="ck-history" style="display:none;margin-top:16px">
+      <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Previous Compliance Checks</div>
+      <div id="ck-history-list"></div>
     </div>
   </div>
 
@@ -580,11 +599,69 @@ function switchTab(id){
 }
 
 // CHECKER
+let ckHistory=[]; // saved past compliance checks
+
+function ckConfirmReset(){
+  const bar=document.getElementById('ckConfirmBar');
+  bar.style.display='';
+  bar.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function ckDismissConfirm(){
+  document.getElementById('ckConfirmBar').style.display='none';
+}
+
 function resetCk(){
+  document.getElementById('ckConfirmBar').style.display='none';
+  // Save current results to history before clearing
+  const resultsEl=document.getElementById('ck-results');
+  if(resultsEl.style.display!=='none'&&window._ckKey){
+    const routeBar=document.getElementById('routeBar');
+    const pct=document.getElementById('cPct').textContent;
+    ckHistory.unshift({
+      html:resultsEl.innerHTML,
+      corridor:window._ckKey,
+      progress:pct,
+      time:new Date()
+    });
+    if(ckHistory.length>5) ckHistory.pop();
+    ckRenderHistory();
+  }
   if(window._ckKey) localStorage.removeItem('ck:'+window._ckKey);
   window._ckKey=null;
   document.getElementById('ck-input').style.display='';
-  document.getElementById('ck-results').style.display='none';
+  resultsEl.style.display='none';
+}
+
+function ckRenderHistory(){
+  const box=document.getElementById('ck-history');
+  const list=document.getElementById('ck-history-list');
+  if(!ckHistory.length){box.style.display='none';return}
+  box.style.display='';
+  list.innerHTML=ckHistory.map((h,i)=>{
+    const ago=timeAgo(h.time);
+    const parts=h.corridor.split('|');
+    const label=parts[0]+' → '+parts[2]+' ('+parts[3]+')';
+    return `<div style="background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);padding:12px 14px;margin-bottom:6px;cursor:pointer;transition:background .1s" onclick="ckShowHistory(${i})" onmouseover="this.style.background='var(--nvw)'" onmouseout="this.style.background='var(--sf)'">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--nv)">${label}</div>
+          <div style="font-size:10px;color:var(--t3)">${ago} · Progress: ${h.progress}</div>
+        </div>
+        <span style="font-size:10px;color:var(--nvm);font-weight:600">View →</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function ckShowHistory(i){
+  const h=ckHistory[i];
+  if(!h) return;
+  const resultsEl=document.getElementById('ck-results');
+  resultsEl.innerHTML=h.html;
+  resultsEl.style.display='';
+  document.getElementById('ck-input').style.display='none';
+  resultsEl.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ═══════════ CLAUDE API ═══════════
@@ -1069,6 +1146,33 @@ function timeAgo(d){
   return Math.floor(s/86400)+' day ago';
 }
 
+function ccGoToChecker(commodity,origin,destination,incoterms){
+  switchTab('checker');
+  // Auto-fill fields if values detected from docs
+  if(commodity){
+    const sel=document.getElementById('comSel');
+    const opt=Array.from(sel.options).find(o=>o.text.toLowerCase().includes(commodity.toLowerCase()));
+    if(opt) sel.value=opt.value;
+    else{sel.value='_o';document.getElementById('comCust').style.display='block';document.getElementById('comCust').value=commodity}
+  }
+  if(origin){
+    const sel=document.getElementById('orig');
+    const opt=Array.from(sel.options).find(o=>o.value.toLowerCase().includes(origin.toLowerCase()));
+    if(opt) sel.value=opt.value;
+  }
+  if(destination){
+    const sel=document.getElementById('dest');
+    const opt=Array.from(sel.options).find(o=>o.value.toLowerCase().includes(destination.toLowerCase()));
+    if(opt) sel.value=opt.value;
+  }
+  if(incoterms){
+    const sel=document.getElementById('inco');
+    const opt=Array.from(sel.options).find(o=>o.value.toUpperCase()===incoterms.toUpperCase());
+    if(opt) sel.value=opt.value;
+  }
+  document.querySelector('.main-card').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 async function runCC(){
   if(ccFiles.length<1){alert('Please upload at least 1 document.');return}
   const btn=document.getElementById('ccBtn');
@@ -1146,7 +1250,9 @@ Return ONLY a valid JSON object — no markdown, no explanation:
   "summary": {
     "docs": ["Invoice INV-2024-001", "Packing List PL-2024-001"],
     "commodity": "Cocoa Powder",
-    "destination": "USA",
+    "origin": "Indonesia",
+    "destination": "United States",
+    "incoterms": "FOB",
     "issues_found": 4,
     "passed": 8,
     "verdict": "3 critical issues must be resolved before shipment"
@@ -1307,6 +1413,39 @@ function renderCC(data){
     </div>`;
   }
 
+  // Next Steps — connect to Compliance Checker
+  const actionItems=[];
+  if(data.missing_docs?.length) data.missing_docs.forEach(d=>actionItems.push({label:d.document,type:'missing',detail:d.how_to_obtain||d.reason}));
+  if(criticals.length) criticals.forEach(c=>actionItems.push({label:c.field,type:'critical',detail:c.fix||c.finding}));
+  if(warnings.length) warnings.forEach(w=>actionItems.push({label:w.field,type:'warning',detail:w.fix||w.finding}));
+
+  // Try to extract commodity/origin/destination from AI summary
+  const detectedCommodity=data.summary?.commodity||'';
+  const detectedOrigin=data.summary?.origin||'';
+  const detectedDest=data.summary?.destination||'';
+  const detectedIncoterms=data.summary?.incoterms||'';
+
+  html+=`<div style="background:var(--nvw);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px 18px;margin-top:14px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <div style="font-size:18px">🎯</div>
+      <div style="font-size:13px;font-weight:700;color:var(--nv)">What to Do Next</div>
+    </div>
+    ${actionItems.length?`<div style="margin-bottom:12px">${actionItems.slice(0,5).map(a=>`<div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--bdl)">
+      <span style="font-size:8px;font-weight:800;padding:2px 6px;border-radius:3px;color:#fff;background:${a.type==='missing'?'var(--rd)':a.type==='critical'?'var(--rd)':'var(--am)'};white-space:nowrap;margin-top:2px">${a.type==='missing'?'GET':'FIX'}</span>
+      <div><div style="font-size:11px;font-weight:700;color:var(--t1)">${a.label}</div><div style="font-size:10px;color:var(--t2)">${a.detail}</div></div>
+    </div>`).join('')}</div>`:'<div style="font-size:12px;color:var(--gn);font-weight:600;margin-bottom:12px">All documents look good. No critical actions needed.</div>'}
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="font-size:11px;height:34px" onclick="ccGoToChecker('${detectedCommodity.replace(/'/g,"\\'")}','${detectedOrigin.replace(/'/g,"\\'")}','${detectedDest.replace(/'/g,"\\'")}','${detectedIncoterms.replace(/'/g,"\\'")}')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><path d="M9 14l2 2 4-4"/></svg>
+        Run Full Compliance Check
+      </button>
+      <button class="btn-outline" style="font-size:11px;height:34px" onclick="switchTab('cost')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Estimate Costs
+      </button>
+    </div>
+  </div>`;
+
   box.innerHTML=html;
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -1390,16 +1529,17 @@ function renderOV(){
     const compColor=s.compliance===100?'var(--gn)':'var(--nv)';
     const docColor=s.docsVerified===s.docsTotal?'var(--gn)':'var(--am)';
 
-    const tlHTML=s.timeline.map(t=>{
-      if(t.done) return `<div style="flex:1;text-align:center">
+    const tlHTML=s.timeline.map((t,ti)=>{
+      const clickable=isActive?` onclick="ovUpdateTimeline('${s.id}',${ti})" style="flex:1;text-align:center;cursor:pointer" title="Click to mark as current step"`:`style="flex:1;text-align:center"`;
+      if(t.done) return `<div ${clickable}>
         <div style="width:18px;height:18px;border-radius:50%;background:var(--gn);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div style="font-size:9px;font-weight:700;color:var(--gn)">${t.label}</div>
         <div style="font-size:8px;color:var(--t3)">${t.date}</div></div>`;
-      if(t.current) return `<div style="flex:1;text-align:center">
+      if(t.current) return `<div ${clickable}>
         <div style="width:18px;height:18px;border-radius:50%;background:var(--am);margin:0 auto 4px;display:flex;align-items:center;justify-content:center"><div style="width:6px;height:6px;background:#fff;border-radius:50%"></div></div>
         <div style="font-size:9px;font-weight:700;color:var(--am)">${t.label}</div>
         <div style="font-size:8px;color:var(--t3)">${t.date}</div></div>`;
-      return `<div style="flex:1;text-align:center">
+      return `<div ${clickable}>
         <div style="width:18px;height:18px;border-radius:50%;background:var(--bdl);margin:0 auto 4px;border:2px solid var(--bd)"></div>
         <div style="font-size:9px;font-weight:600;color:var(--t3)">${t.label}</div>
         <div style="font-size:8px;color:var(--t3)">${t.date}</div></div>`;
@@ -1481,6 +1621,35 @@ function renderOV(){
   }).join('');
 
   if(!ships.length) box.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3);font-size:12px">No shipments match this filter.</div>';
+}
+
+function ovUpdateTimeline(shipId,stepIdx){
+  const ship=OV_SHIPMENTS.find(s=>s.id===shipId);
+  if(!ship||ship.status==='done') return;
+  // Mark all steps up to and including stepIdx as done, clear current
+  ship.timeline.forEach((t,i)=>{
+    t.done=i<=stepIdx;
+    t.current=i===stepIdx+1;
+  });
+  // If last step is done, mark shipment as delivered
+  const lastDone=ship.timeline.every(t=>t.done);
+  if(lastDone){
+    ship.status='done';
+    ship.compliance=100;
+    ship.compNote='All cleared';
+    ship.docsVerified=ship.docsTotal;
+    ship.docs.forEach(d=>{d.ok=true;delete d.note});
+  }
+  // If clicked step is the current one, mark it current (not done)
+  if(!lastDone&&stepIdx<ship.timeline.length){
+    ship.timeline[stepIdx].done=false;
+    ship.timeline[stepIdx].current=true;
+    // Everything before is done
+    for(let i=0;i<stepIdx;i++){ship.timeline[i].done=true;ship.timeline[i].current=false}
+    // Everything after is pending
+    for(let i=stepIdx+1;i<ship.timeline.length;i++){ship.timeline[i].done=false;ship.timeline[i].current=false}
+  }
+  renderOV();
 }
 
 // Init overview on load
