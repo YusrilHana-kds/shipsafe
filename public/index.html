@@ -208,7 +208,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .tara-input input:focus{border-color:var(--nvm)}
 .tara-input button{width:36px;height:36px;border-radius:50%;background:var(--nv);border:none;color:var(--wh);cursor:pointer;display:flex;align-items:center;justify-content:center}
 
-@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.how{gap:16px}.tabs-bar{gap:0}.tab-btn{padding:8px 14px;font-size:11px}.tab-panel{padding:18px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}}
+/* LANGUAGE TOGGLE */
+.lang-sw{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.08);border-radius:20px;padding:3px}
+.lang-btn{border:none;background:transparent;color:rgba(255,255,255,.45);font-size:10px;font-weight:800;font-family:inherit;padding:3px 9px;border-radius:16px;cursor:pointer;letter-spacing:.3px;transition:all .15s}
+.lang-btn:hover{color:rgba(255,255,255,.8)}
+.lang-btn.active{background:rgba(255,255,255,.18);color:#fff}
+
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.how{gap:16px}.tabs-bar{gap:0}.tab-btn{padding:8px 14px;font-size:11px}.tab-panel{padding:18px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}}
 </style>
 </head>
 <body>
@@ -218,37 +224,44 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     <div class="hd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
     <span class="hd-nm">ShipSafe</span>
   </div>
-  <span class="hd-tg">AI Compliance Agent</span>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="lang-sw">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('id')">ID</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+    <span class="hd-tg" data-i18n="tagline">AI Compliance Agent</span>
+  </div>
 </header>
 
 <section class="hero">
   <div class="hero-in">
-    <div class="hero-badge">Avoid $3,000+ customs holds</div>
-    <h1>Stop guessing.<br>Ship with confidence.</h1>
-    <p>Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.</p>
+    <div class="hero-badge" data-i18n="hero_badge">Avoid $3,000+ customs holds</div>
+    <h1 data-i18n="hero_h1">Stop guessing.<br>Ship with confidence.</h1>
+    <p data-i18n="hero_p">Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.</p>
     <div class="how">
-      <div class="how-s"><span class="how-n">1</span> Upload your documents</div>
-      <div class="how-s"><span class="how-n">2</span> AI cross-checks everything</div>
-      <div class="how-s"><span class="how-n">3</span> Fix issues before customs</div>
+      <div class="how-s"><span class="how-n">1</span> <span data-i18n="how1">Upload your documents</span></div>
+      <div class="how-s"><span class="how-n">2</span> <span data-i18n="how2">AI cross-checks everything</span></div>
+      <div class="how-s"><span class="how-n">3</span> <span data-i18n="how3">Fix issues before customs</span></div>
     </div>
   </div>
   <div class="tabs-bar" style="max-width:900px;margin:0 auto">
     <button class="tab-btn active" onclick="switchTab('crosscheck')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-      Doc Cross-Checker
-      <span style="font-size:8px;background:var(--nvm);color:white;padding:2px 6px;border-radius:10px;margin-left:4px;font-weight:700">START HERE</span>
+      <span data-i18n="tab_crosscheck">Doc Cross-Checker</span>
+      <span style="font-size:8px;background:var(--nvm);color:white;padding:2px 6px;border-radius:10px;margin-left:4px;font-weight:700" data-i18n="tab_start">START HERE</span>
     </button>
     <button class="tab-btn" onclick="switchTab('checker')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
-      Compliance Checker
+      <span data-i18n="tab_checker">Compliance Checker</span>
     </button>
     <button class="tab-btn" onclick="switchTab('cost')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      Cost Calculator
+      <span data-i18n="tab_cost">Cost Calculator</span>
     </button>
     <button class="tab-btn" onclick="switchTab('overview')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-      Shipment Overview
+      <span data-i18n="tab_overview">Shipment Overview</span>
     </button>
   </div>
 </section>
@@ -258,7 +271,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   <!-- ═══ CHECKER TAB ═══ -->
   <div class="tab-panel" id="tp-checker">
     <div id="ck-input">
-      <div class="xl">Quick start — click a corridor</div>
+      <div class="xl" data-i18n="ck_quickstart">Quick start — click a corridor</div>
       <div class="xr" id="exRow"></div>
       <div class="fg">
         <div class="fd"><label>Commodity</label>
@@ -295,10 +308,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <span style="font-size:10px;color:var(--t3)">AI-powered guidance. Not legal advice.</span>
+        <span style="font-size:10px;color:var(--t3)" data-i18n="ck_disclaimer">AI-powered guidance. Not legal advice.</span>
         <button class="btn" onclick="runCheck()" id="goBtn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Run Compliance Check
+          <span data-i18n="ck_run_btn">Run Compliance Check</span>
         </button>
       </div>
       <div class="err" id="errBox"></div>
@@ -456,8 +469,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
   <!-- ═══ CROSSCHECK TAB ═══ -->
   <div class="tab-panel active" id="tp-crosscheck">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px">Document Checker</h2>
-    <p style="font-size:12px;color:var(--t3);margin-bottom:12px">Upload your trade documents — AI will cross-check everything and catch issues before customs does.</p>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px" data-i18n="cc_title">Document Checker</h2>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:12px" data-i18n="cc_subtitle">Upload your trade documents — AI will cross-check everything and catch issues before customs does.</p>
 
     <!-- Trade context selectors -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
@@ -494,11 +507,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     <div id="cc-upload">
       <div class="upload-zone" id="ccDropZone" onclick="document.getElementById('ccFileInput').click()" ondragover="ccDragOver(event)" ondrop="ccDrop(event)">
         <div style="font-size:28px;margin-bottom:8px">📂</div>
-        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px">Upload Trade Documents</div>
-        <div style="font-size:11px;color:var(--t3);margin-bottom:12px">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Drag & drop or click.</div>
+        <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px" data-i18n="cc_upload_title">Upload Trade Documents</div>
+        <div style="font-size:11px;color:var(--t3);margin-bottom:12px" data-i18n="cc_upload_hint">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Drag & drop or click.</div>
         <button class="btn" onclick="event.stopPropagation();document.getElementById('ccFileInput').click()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Choose Files
+          <span data-i18n="cc_choose_files">Choose Files</span>
         </button>
         <input type="file" id="ccFileInput" multiple accept=".pdf,.png,.jpg,.jpeg" style="display:none" onchange="ccFilesAdded(this.files)">
       </div>
@@ -514,7 +527,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
           </button>
           <button class="btn" onclick="runCC()" id="ccBtn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M8 21H3v-5"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-            Run Cross-Check
+            <span data-i18n="cc_run_btn">Run Cross-Check</span>
           </button>
         </div>
       </div>
@@ -531,13 +544,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   </div>
 </div>
 
-<div class="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
+<div class="footer" data-i18n="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
 
 <div class="lov" id="loader"><div class="lo-c"><div class="lo-sp"></div><div class="lo-m" id="loMsg">Analysing trade corridor...</div><div class="lo-s">This takes a few seconds</div></div></div>
 
 <!-- TARA FLOATING CHAT -->
 <div class="tara-fab" onclick="toggleTara()">
-  <div class="tara-cta">Ask Tara anything about trade compliance</div>
+  <div class="tara-cta" data-i18n="tara_cta">Ask Tara anything about trade compliance</div>
   <button class="tara-btn" id="taraFabBtn">💬</button>
 </div>
 
@@ -560,6 +573,92 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 </div>
 
 <script>
+// ═══════════ MULTILINGUAL ═══════════
+let currentLang='en';
+
+const T={
+  en:{
+    tagline:'AI Compliance Agent',
+    hero_badge:'Avoid $3,000+ customs holds',
+    hero_h1:'Stop guessing.<br>Ship with confidence.',
+    hero_p:'Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.',
+    how1:'Upload your documents',how2:'AI cross-checks everything',how3:'Fix issues before customs',
+    tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',
+    ck_quickstart:'Quick start — click a corridor',
+    ck_disclaimer:'AI-powered guidance. Not legal advice.',
+    ck_run_btn:'Run Compliance Check',
+    cc_title:'Document Checker',
+    cc_subtitle:'Upload your trade documents — AI will cross-check everything and catch issues before customs does.',
+    cc_upload_title:'Upload Trade Documents',
+    cc_upload_hint:'Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Drag & drop or click.',
+    cc_choose_files:'Choose Files',
+    cc_run_btn:'Run Cross-Check',
+    tara_cta:'Ask Tara anything about trade compliance',
+    footer:'ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
+    lang_instruction:'',
+  },
+  id:{
+    tagline:'Agen Kepatuhan AI',
+    hero_badge:'Hindari penahanan bea cukai $3.000+',
+    hero_h1:'Berhenti menebak-nebak.<br>Kirim dengan percaya diri.',
+    hero_p:'Masukkan detail perdagangan Anda. AI akan memeriksa persyaratan kepatuhan, menandai risiko tersembunyi, dan memberi tahu Anda apa yang harus disiapkan sebelum pengiriman.',
+    how1:'Unggah dokumen Anda',how2:'AI memeriksa semuanya',how3:'Perbaiki masalah sebelum bea cukai',
+    tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',
+    ck_quickstart:'Mulai cepat — klik koridor',
+    ck_disclaimer:'Panduan berbasis AI. Bukan nasihat hukum.',
+    ck_run_btn:'Jalankan Cek Kepatuhan',
+    cc_title:'Pemeriksa Dokumen',
+    cc_subtitle:'Unggah dokumen perdagangan Anda — AI akan memeriksa semuanya dan menangkap masalah sebelum bea cukai.',
+    cc_upload_title:'Unggah Dokumen Perdagangan',
+    cc_upload_hint:'Invoice, Packing List, Bill of Lading, COO, dll. — PDF atau gambar. Seret & lepas atau klik.',
+    cc_choose_files:'Pilih File',
+    cc_run_btn:'Jalankan Pemeriksaan Silang',
+    tara_cta:'Tanyakan apa saja tentang kepatuhan perdagangan ke Tara',
+    footer:'ShipSafe · Kepatuhan Perdagangan AI v2.0 · Bukan nasihat hukum · Perlu persetujuan ahli',
+    lang_instruction:'Respond entirely in Bahasa Indonesia.',
+  },
+  es:{
+    tagline:'Agente de Cumplimiento IA',
+    hero_badge:'Evita retenciones aduaneras de $3,000+',
+    hero_h1:'Deja de adivinar.<br>Exporta con confianza.',
+    hero_p:'Ingresa los detalles de tu operación. La IA verifica los requisitos de cumplimiento, detecta riesgos ocultos y te dice exactamente qué preparar antes de enviar.',
+    how1:'Sube tus documentos',how2:'La IA verifica todo',how3:'Corrige problemas antes de aduana',
+    tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',
+    ck_quickstart:'Inicio rápido — elige un corredor',
+    ck_disclaimer:'Orientación basada en IA. No es asesoría legal.',
+    ck_run_btn:'Verificar Cumplimiento',
+    cc_title:'Verificador de Documentos',
+    cc_subtitle:'Sube tus documentos comerciales — la IA verificará todo y detectará problemas antes de la aduana.',
+    cc_upload_title:'Subir Documentos Comerciales',
+    cc_upload_hint:'Factura, Lista de Empaque, Bill of Lading, COO, etc. — PDF o imágenes. Arrastra y suelta o haz clic.',
+    cc_choose_files:'Elegir Archivos',
+    cc_run_btn:'Ejecutar Verificación',
+    tara_cta:'Pregúntale a Tara sobre cumplimiento comercial',
+    footer:'ShipSafe · Cumplimiento Comercial IA v2.0 · No es asesoría legal · Se requiere revisión humana',
+    lang_instruction:'Respond entirely in Spanish (Español).',
+  }
+};
+
+function setLang(lang){
+  currentLang=lang;
+  // Update toggle buttons
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.trim().toLowerCase()===lang);
+  });
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][key]!==undefined) el.innerHTML=T[lang][key];
+  });
+  // Update Tara input placeholder
+  const taraInput=document.getElementById('taraInput');
+  if(taraInput) taraInput.placeholder=T[lang].tara_cta||T.en.tara_cta;
+}
+
+function getLangInstruction(){
+  return T[currentLang]?.lang_instruction||'';
+}
+
 // ═══════════ DATA ═══════════
 const DB={
 "Cocoa Powder (Natural)|Indonesia|United States|FOB":{phases:[{id:"pre_shipment",title:"Pre-Shipment",items:[{task:"Register with FDA as a Food Facility",detail:"Register at furls.fda.gov. Without this, your shipment gets refused at the US port automatically."},{task:"File Prior Notice with FDA",detail:"US requires Prior Notice at least 15 days before arrival. Confirm with your buyer this is done. Missing it causes automatic detention."},{task:"Lab testing for aflatoxin and heavy metals",detail:"FDA max aflatoxin 20 ppb, limits lead in cocoa. Send samples to Sucofindo or SGS at least 3 weeks before shipment."},{task:"Get Certificate of Origin from KADIN",detail:"Go to KADIN with your commercial invoice. Confirms Indonesian origin, may qualify buyer for reduced tariffs."},{task:"Get Phytosanitary Certificate from BKIPM",detail:"BKIPM inspects cocoa powder and certifies pest-free. US CBP may request this at port of entry."},{task:"Prepare HACCP documentation",detail:"Under FSMA, your US importer must verify your facility has food safety controls. Have HACCP plan ready."},{task:"Confirm packaging meets FDA labelling rules",detail:"Labels: product name, net weight (metric + US), country of origin, lot number, allergen info. Wrong labelling delays clearance."},{task:"Book freight forwarder and confirm container",detail:"Contact forwarder 2 to 3 weeks before. Confirm 20ft container. Peak season (Aug-Dec) causes shortages."}]},{id:"shipment",title:"During Shipment",items:[{task:"Use moisture barrier packaging",detail:"Cocoa absorbs moisture. Food-grade PE liner bags inside kraft sacks. Seal tightly."},{task:"Get a clean Bill of Lading",detail:"Must show 'clean on board'. Damage remarks let buyer refuse payment."},{task:"Arrange fumigation if required",detail:"Some US ports require fumigation for Indonesian agricultural products."},{task:"Inspect container before loading",detail:"Clean, dry, odour-free, no holes. Take timestamped photos."},{task:"Share tracking details with buyer",detail:"Send BL number, vessel name, ETA immediately after sailing."},{task:"Send all shipping documents within 3 days",detail:"Invoice, Packing List, BL, COO, Phyto Cert, Lab Results. Missing docs delay clearance."}]},{id:"payment",title:"Payment & Settlement",items:[{task:"Agree payment terms before shipping",detail:"New buyers: request LC or min 30% advance TT. Never ship on open credit."},{task:"Check LC document requirements line by line",detail:"Banks reject for small mistakes: spelling, weight discrepancies, wrong Incoterms."},{task:"Submit docs within LC presentation period",detail:"Most LCs give 21 days after shipment. Submit early."},{task:"Invoice in USD with all required details",detail:"Must match LC exactly: seller/buyer, product, quantity, FOB + port, payment terms."},{task:"Factor in bank charges",detail:"Indonesian banks charge 0.25-0.5% for LC negotiation plus courier."}]}],blind_spots:[{title:"FDA Detention Without Examination",description:"If your FDA registration lapses, shipments get automatically detained without inspection. Have you verified registration is current?"},{title:"FSVP Importer Compliance",description:"Under FSMA, your US buyer needs a Foreign Supplier Verification Program for your facility. Have you asked them?"},{title:"Aflatoxin increases during transit",description:"Humid containers can raise aflatoxin levels during 3-4 week voyage. Are you using desiccants?"},{title:"BL name mismatch with LC",description:"If consignee name on BL doesn't match LC exactly, bank rejects. Have you compared word by word?"},{title:"VGM declaration",description:"Under SOLAS, Verified Gross Mass must be submitted before loading. Has your forwarder arranged this?"}],payment_guidance:[{method:"Letter of Credit (LC)",risk_level:"recommended",description:"Strongly recommended for new US buyers. Major US banks give reliable guarantees. Cost: 1-2% of invoice."},{method:"Telegraphic Transfer (TT)",risk_level:"caution",description:"OK for established buyers (3+ shipments). Request 30% advance, 70% against BL copy."},{method:"Documents Against Payment (DP)",risk_level:"caution",description:"Buyer's bank holds docs until payment. If buyer refuses, goods stuck at US port."},{method:"Documents Against Acceptance (DA)",risk_level:"risky",description:"Buyer gets docs by promising to pay later. No guarantee. Not recommended."}],cost_estimation:[{item:"Inland transport",estimate:"$200-$400",note:"Factory to port"},{item:"Export customs clearance",estimate:"$80-$150",note:"Broker fee"},{item:"Terminal handling",estimate:"$150-$250",note:"THC"},{item:"Lab testing",estimate:"$200-$400",note:"Aflatoxin, metals, micro"},{item:"Phytosanitary certificate",estimate:"$30-$60",note:"BKIPM"},{item:"Certificate of Origin",estimate:"$20-$40",note:"KADIN"},{item:"BL and docs",estimate:"$50-$100",note:""},{item:"LC bank charges",estimate:"0.25-0.5%",note:""},{item:"Container stuffing",estimate:"$80-$150",note:""},{item:"Ocean freight",estimate:"Buyer pays",note:"FOB"},{item:"Insurance",estimate:"Buyer pays",note:"FOB"}]},
@@ -699,7 +798,8 @@ function extractJSON(text){
 
 // Call Claude API for any corridor not in the local DB
 async function fetchFromClaude(commodity,origin,destination,incoterms){
-  const userPrompt=`Generate a complete, expert-level export compliance checklist for this exact trade corridor:
+  const langNote=getLangInstruction();
+  const userPrompt=`${langNote?langNote+'\n\n':''}Generate a complete, expert-level export compliance checklist for this exact trade corridor:
 
 Commodity: ${commodity}
 Origin Country: ${origin}
@@ -907,7 +1007,7 @@ async function runCostCalc(){
   ov.classList.add('on');
 
   try{
-    const prompt=`You are a senior freight forwarder and trade cost consultant. Calculate a detailed cost breakdown for this shipment:
+    const prompt=`${getLangInstruction()?getLangInstruction()+'\n\n':''}You are a senior freight forwarder and trade cost consultant. Calculate a detailed cost breakdown for this shipment:
 
 Commodity: ${commodity}
 Origin: ${origin}
@@ -1190,7 +1290,7 @@ async function runCC(){
     // Build message content: one text block + one image/doc block per file
     const content=[{
       type:'text',
-      text:`You are a senior ${dirLabel.toLowerCase()} documentation specialist with 20+ years experience clearing shipments through US, EU, Japan, and Southeast Asian customs. I am uploading ${ccFiles.length} ${dirLabel.toLowerCase()} documents.${ccInco?' The Incoterms for this shipment is '+ccInco+'.':' Detect the Incoterms from the documents if possible.'} This is an ${dirLabel} transaction — check documents from the ${tradeDir==='import'?'importer/buyer':'exporter/shipper'} perspective. Perform a deep, multi-layer audit across ALL 5 categories below.
+      text:`${getLangInstruction()?getLangInstruction()+'\n\n':''}You are a senior ${dirLabel.toLowerCase()} documentation specialist with 20+ years experience clearing shipments through US, EU, Japan, and Southeast Asian customs. I am uploading ${ccFiles.length} ${dirLabel.toLowerCase()} documents.${ccInco?' The Incoterms for this shipment is '+ccInco+'.':' Detect the Incoterms from the documents if possible.'} This is an ${dirLabel} transaction — check documents from the ${tradeDir==='import'?'importer/buyer':'exporter/shipper'} perspective. Perform a deep, multi-layer audit across ALL 5 categories below.
 
 ━━━ CATEGORY 1: CONSISTENCY CHECK ━━━
 Cross-reference EVERY field across all documents. Flag any mismatch, even minor ones:
@@ -1694,7 +1794,7 @@ async function sendTara(){
       body:JSON.stringify({
         model:'claude-sonnet-4-6',
         max_tokens:1000,
-        system:`You are Tara (Trade Assistant, Ready Anytime), ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.`,
+        system:`You are Tara (Trade Assistant, Ready Anytime), ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.${getLangInstruction()?' '+getLangInstruction():''}`,
         messages:msgs
       })
     });
