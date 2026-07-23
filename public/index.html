@@ -28,14 +28,31 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .hd-tg{color:rgba(255,255,255,.4);font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
 
 /* HERO */
-.hero{background:linear-gradient(170deg,var(--nv),var(--nvm) 60%,#2a5594);padding:44px 24px 0;text-align:center}
-.hero-in{max-width:620px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:18px}
-.hero h1{font-family:'DM Serif Display',serif;color:var(--wh);font-size:34px;line-height:1.15;margin-bottom:12px}
-.hero p{color:rgba(255,255,255,.6);font-size:15px;max-width:480px;margin:0 auto 32px}
+.hero{background:linear-gradient(170deg,var(--nv),var(--nvm) 60%,#2a5594);padding:52px 24px 0;text-align:center}
+.hero-in{max-width:680px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
+.hero-stat{display:flex;justify-content:center;gap:0;margin-bottom:28px;flex-wrap:wrap;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-stat-item{flex:1;min-width:140px;padding:14px 20px;border-right:1px solid rgba(255,255,255,.1)}
+.hero-stat-item:last-child{border-right:none}
+.hero-stat-n{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;line-height:1}
+.hero-stat-l{font-size:10px;color:rgba(255,255,255,.45);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+.hero h1{font-family:'DM Serif Display',serif;color:var(--wh);font-size:38px;line-height:1.1;margin-bottom:14px}
+.hero h1 em{color:#F0C060;font-style:normal}
+.hero p{color:rgba(255,255,255,.6);font-size:15px;max-width:500px;margin:0 auto 28px}
 .how{display:flex;justify-content:center;gap:32px;margin-bottom:36px;flex-wrap:wrap}
 .how-s{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.55);font-size:12px;font-weight:600}
 .how-n{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);color:var(--wh);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+/* WELCOME BANNER */
+.welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,#1D7A3F,#166232);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:opacity .2s}
+.welcome-banner.hidden{display:none}
+.welcome-icon{width:40px;height:40px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.welcome-text{flex:1}
+.welcome-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.welcome-sub{font-size:11px;color:rgba(255,255,255,.65)}
+.welcome-cta{background:rgba(255,255,255,.2);color:#fff;border:none;padding:8px 16px;border-radius:7px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:background .15s}
+.welcome-cta:hover{background:rgba(255,255,255,.3)}
+.welcome-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:16px;cursor:pointer;padding:0 4px;margin-left:4px}
+.welcome-close:hover{color:rgba(255,255,255,.8)}
 
 /* FEATURE TABS */
 .tabs-bar{display:flex;justify-content:center;gap:4px;padding-bottom:0;margin-bottom:-1px;position:relative;z-index:2}
@@ -236,9 +253,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 <section class="hero">
   <div class="hero-in">
-    <div class="hero-badge" data-i18n="hero_badge">Avoid $3,000+ customs holds</div>
-    <h1 data-i18n="hero_h1">Stop guessing.<br>Ship with confidence.</h1>
-    <p data-i18n="hero_p">Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.</p>
+    <div class="hero-badge" data-i18n="hero_badge">For food &amp; agri exporters worldwide</div>
+    <h1 data-i18n="hero_h1">One missing document.<br><em>$8,500 lost. 23 days stuck.</em></h1>
+    <p data-i18n="hero_p">ShipSafe catches compliance gaps before customs does — so your shipment moves, not sits.</p>
+    <div class="hero-stat">
+      <div class="hero-stat-item"><div class="hero-stat-n">$8,500</div><div class="hero-stat-l" data-i18n="stat1">Avg customs detention cost</div></div>
+      <div class="hero-stat-item"><div class="hero-stat-n">23 days</div><div class="hero-stat-l" data-i18n="stat2">Avg hold duration</div></div>
+      <div class="hero-stat-item"><div class="hero-stat-n">1 in 3</div><div class="hero-stat-l" data-i18n="stat3">First shipments hit a compliance issue</div></div>
+    </div>
     <div class="how">
       <div class="how-s"><span class="how-n">1</span> <span data-i18n="how1">Upload your documents</span></div>
       <div class="how-s"><span class="how-n">2</span> <span data-i18n="how2">AI cross-checks everything</span></div>
@@ -265,6 +287,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     </button>
   </div>
 </section>
+
+<!-- WELCOME BANNER -->
+<div class="welcome-banner" id="welcomeBanner">
+  <div class="welcome-icon">👋</div>
+  <div class="welcome-text">
+    <div class="welcome-title" data-i18n="wb_title">First time here? Start with Doc Cross-Checker.</div>
+    <div class="welcome-sub" data-i18n="wb_sub">Upload your Invoice + Packing List. Takes 30 seconds — AI catches issues instantly.</div>
+  </div>
+  <button class="welcome-cta" onclick="switchTab('crosscheck');dismissWelcome()" data-i18n="wb_cta">Try it now →</button>
+  <button class="welcome-close" onclick="dismissWelcome()" title="Dismiss">✕</button>
+</div>
 
 <div class="main-card">
 
@@ -582,6 +615,8 @@ const T={
     hero_badge:'Avoid $3,000+ customs holds',
     hero_h1:'Stop guessing.<br>Ship with confidence.',
     hero_p:'Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.',
+    stat1:'Avg customs detention cost',stat2:'Avg hold duration',stat3:'First shipments hit a compliance issue',
+    wb_title:'First time here? Start with Doc Cross-Checker.',wb_sub:'Upload your Invoice + Packing List. Takes 30 seconds — AI catches issues instantly.',wb_cta:'Try it now →',
     how1:'Upload your documents',how2:'AI cross-checks everything',how3:'Fix issues before customs',
     tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',
     ck_quickstart:'Quick start — click a corridor',
@@ -602,6 +637,8 @@ const T={
     hero_badge:'Hindari penahanan bea cukai $3.000+',
     hero_h1:'Berhenti menebak-nebak.<br>Kirim dengan percaya diri.',
     hero_p:'Masukkan detail perdagangan Anda. AI akan memeriksa persyaratan kepatuhan, menandai risiko tersembunyi, dan memberi tahu Anda apa yang harus disiapkan sebelum pengiriman.',
+    stat1:'Rata-rata biaya penahanan bea cukai',stat2:'Rata-rata durasi penahanan',stat3:'Pengiriman pertama terkena masalah kepatuhan',
+    wb_title:'Pertama kali? Mulai dengan Pemeriksa Dokumen.',wb_sub:'Upload Invoice + Packing List. 30 detik — AI langsung temukan masalahnya.',wb_cta:'Coba sekarang →',
     how1:'Unggah dokumen Anda',how2:'AI memeriksa semuanya',how3:'Perbaiki masalah sebelum bea cukai',
     tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',
     ck_quickstart:'Mulai cepat — klik koridor',
@@ -622,6 +659,8 @@ const T={
     hero_badge:'Evita retenciones aduaneras de $3,000+',
     hero_h1:'Deja de adivinar.<br>Exporta con confianza.',
     hero_p:'Ingresa los detalles de tu operación. La IA verifica los requisitos de cumplimiento, detecta riesgos ocultos y te dice exactamente qué preparar antes de enviar.',
+    stat1:'Costo promedio de detención aduanera',stat2:'Duración promedio de retención',stat3:'Primeros envíos con problema de cumplimiento',
+    wb_title:'¿Primera vez? Empieza con el Verificador de Documentos.',wb_sub:'Sube tu Factura + Lista de Empaque. 30 segundos — la IA detecta problemas al instante.',wb_cta:'Pruébalo ahora →',
     how1:'Sube tus documentos',how2:'La IA verifica todo',how3:'Corrige problemas antes de aduana',
     tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',
     ck_quickstart:'Inicio rápido — elige un corredor',
@@ -658,6 +697,15 @@ function setLang(lang){
 function getLangInstruction(){
   return T[currentLang]?.lang_instruction||'';
 }
+
+function dismissWelcome(){
+  const b=document.getElementById('welcomeBanner');
+  if(b){b.style.opacity='0';b.style.transform='translateY(-8px)';b.style.transition='all .25s';setTimeout(()=>b.classList.add('hidden'),250)}
+  try{sessionStorage.setItem('ss_welcome','1')}catch(e){}
+}
+
+// Hide banner if already dismissed this session
+(function(){try{if(sessionStorage.getItem('ss_welcome')) document.getElementById('welcomeBanner')?.classList.add('hidden')}catch(e){}})();
 
 // ═══════════ DATA ═══════════
 const DB={
