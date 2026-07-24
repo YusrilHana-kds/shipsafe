@@ -897,7 +897,7 @@ function extractJSON(text){
       if(c==='[')ob2++;else if(c===']')ob2--;
     }
     if(ob>0||ob2>0){
-      chunk+=']'.repeat(Math.max(0,ob2))+'}}'.repeat(Math.max(0,ob));
+      chunk+=']'.repeat(Math.max(0,ob2))+'}'.repeat(Math.max(0,ob));
       // Fix trailing comma before closing
       chunk=chunk.replace(/,\s*([}\]])/g,'$1');
       try{return JSON.parse(chunk)}catch(e){console.log('JSON repair failed:',e.message)}
@@ -1040,6 +1040,8 @@ Return ONLY the JSON. Nothing else.`;
   });
   if(!rawText) throw new Error('Empty response from Claude');
   console.log('Claude raw (first 500 chars):',rawText.slice(0,500));
+  console.log('Claude raw (last 300 chars):',rawText.slice(-300));
+  console.log('Claude raw total length:',rawText.length);
   return extractJSON(rawText);
 }
 
