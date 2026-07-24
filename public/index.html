@@ -988,7 +988,8 @@ function runCheck(){
       ov.classList.remove('on');
       document.getElementById('loMsg').textContent='Analysing trade corridor...';
       goBtn.disabled=false;
-      eb.textContent='Could not generate compliance data. Please check your connection and try again.';
+      const msg=err&&err.message?err.message:'Unknown error';
+      eb.textContent='Could not generate compliance data: '+msg;
       eb.style.display='block';
       console.error('ShipSafe API error:',err);
     });
