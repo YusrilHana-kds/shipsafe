@@ -6,6 +6,9 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
+    // Add stream:true to the request
+    body.stream = true;
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -16,13 +19,19 @@ export async function POST(request) {
       body: JSON.stringify(body),
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      return NextResponse.json(data, { status: response.status });
+      const errData = await response.json();
+      return NextResponse.json(errData, { status: response.status });
     }
 
-    return NextResponse.json(data);
+    // Stream the response through — keeps Vercel connection alive
+    return new Response(response.body, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

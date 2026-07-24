@@ -883,6 +883,41 @@ function extractJSON(text){
   throw new Error('Could not extract valid JSON from Claude response');
 }
 
+// Stream Claude API — reads SSE chunks, returns accumulated text
+async function streamClaude(reqBody){
+  const r=await fetch('/api/claude',{
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify(reqBody)
+  });
+  if(!r.ok){
+    let errMsg=`API returned ${r.status}`;
+    try{const e=await r.json();errMsg+=': '+JSON.stringify(e)}catch(ex){}
+    throw new Error(errMsg);
+  }
+  const reader=r.body.getReader();
+  const decoder=new TextDecoder();
+  let buf='';
+  let text='';
+  while(true){
+    const{done,value}=await reader.read();
+    if(done) break;
+    buf+=decoder.decode(value,{stream:true});
+    const lines=buf.split('\n');
+    buf=lines.pop()||'';
+    for(const line of lines){
+      if(!line.startsWith('data: ')||line==='data: [DONE]') continue;
+      try{
+        const ev=JSON.parse(line.slice(6));
+        if(ev.type==='content_block_delta'&&ev.delta?.type==='text_delta'){
+          text+=ev.delta.text;
+        }
+      }catch(e){}
+    }
+  }
+  return text;
+}
+
 // Call Claude API for any corridor not in the local DB
 async function fetchFromClaude(commodity,origin,destination,incoterms){
   const langNote=getLangInstruction();
@@ -970,48 +1005,14 @@ Quantity targets: 7-9 pre-shipment items, 5-7 shipment items, 4-6 payment items,
 risk_level must be exactly: "recommended", "caution", or "risky" — no other values.
 Return ONLY the JSON. Nothing else.`;
 
-  // Web search disabled sementara — Vercel Hobby plan timeout 10s tidak cukup untuk web search (30-60s)
-  // Upgrade ke Pro plan untuk enable ulang tools: [{type:'web_search_20250305', name:'web_search', max_uses:5}]
-  const messages=[{role:'user',content:userPrompt}];
-  async function callAPI(msgs){
-    const r=await fetch('/api/claude',{
-      method:'POST',
-      headers:{'content-type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-6',
-        max_tokens:4096,
-        system:SYSTEM_PROMPT,
-        messages:msgs
-      })
-    });
-    if(!r.ok) throw new Error(`API returned ${r.status}: ${JSON.stringify(await r.json())}`);
-    return r.json();
-  }
-  let apiData=await callAPI(messages);
-  // Handle pause_turn (long-running search) — retry once with assistant response echoed back
-  if(apiData.stop_reason==='pause_turn'&&apiData.content){
-    apiData=await callAPI([...messages,{role:'assistant',content:apiData.content}]);
-  }
-  // Collect all text blocks + dedupe citations by URL
-  const textParts=[];
-  const sourcesMap={};
-  if(Array.isArray(apiData.content)){
-    apiData.content.forEach(block=>{
-      if(block.type==='text'&&block.text){
-        textParts.push(block.text);
-        if(Array.isArray(block.citations)){
-          block.citations.forEach(c=>{
-            if(c.url&&!sourcesMap[c.url]) sourcesMap[c.url]={url:c.url,title:c.title||'',cited_text:c.cited_text||''};
-          });
-        }
-      }
-    });
-  }
-  const rawText=textParts.join('\n');
-  if(!rawText) throw new Error('No text in response: '+JSON.stringify(apiData).slice(0,500));
-  const parsed=extractJSON(rawText);
-  parsed._sources=Object.values(sourcesMap);
-  return parsed;
+  const rawText=await streamClaude({
+    model:'claude-sonnet-4-6',
+    max_tokens:4096,
+    system:SYSTEM_PROMPT,
+    messages:[{role:'user',content:userPrompt}]
+  });
+  if(!rawText) throw new Error('Empty response from Claude');
+  return extractJSON(rawText);
 }
 
 function runCheck(){
@@ -1172,14 +1173,8 @@ who_pays must be "Shipper" or "Buyer" based on ${incoterms}.
 tips: 3-5 practical tips to reduce costs.
 Return ONLY the JSON. Nothing else.`;
 
-    const res=await fetch('/api/claude',{
-      method:'POST',
-      headers:{'content-type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:3000,system:'You are a senior freight forwarder. Return only valid JSON, no markdown or explanation.',messages:[{role:'user',content:prompt}]})
-    });
-    if(!res.ok) throw new Error(`API returned ${res.status}`);
-    const apiData=await res.json();
-    const data=extractJSON(apiData.content[0].text);
+    const rawText=await streamClaude({model:'claude-sonnet-4-6',max_tokens:3000,system:'You are a senior freight forwarder. Return only valid JSON, no markdown or explanation.',messages:[{role:'user',content:prompt}]});
+    const data=extractJSON(rawText);
     ov.classList.remove('on');
     document.getElementById('loMsg').textContent='Analysing trade corridor...';
     btn.disabled=false;
@@ -1537,16 +1532,9 @@ Return ONLY the JSON. Nothing else.`
       }
     });
 
-    const res=await fetch('/api/claude',{
-      method:'POST',
-      headers:{'content-type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:8096,messages:[{role:'user',content}]})
-    });
-    if(!res.ok) throw new Error(`API returned ${res.status}`);
-    const apiData=await res.json();
-    const rawText=apiData.content&&apiData.content[0]&&apiData.content[0].text;
+    const rawText=await streamClaude({model:'claude-sonnet-4-6',max_tokens:8096,messages:[{role:'user',content}]});
     console.log('CC raw response:',rawText);
-    if(!rawText) throw new Error('No text in response: '+JSON.stringify(apiData));
+    if(!rawText) throw new Error('Empty response from Claude');
     const data=extractJSON(rawText);
     ov.classList.remove('on');
     btn.disabled=false;
@@ -1921,19 +1909,12 @@ async function sendTara(){
 
   try{
     const msgs=taraHistory.slice(-10); // keep last 10 messages for context
-    const res=await fetch('/api/claude',{
-      method:'POST',
-      headers:{'content-type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-6',
-        max_tokens:1000,
-        system:`You are Tara (Trade Assistant, Ready Anytime), ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.${getLangInstruction()?' '+getLangInstruction():''}`,
-        messages:msgs
-      })
-    });
-    if(!res.ok) throw new Error(`API ${res.status}`);
-    const data=await res.json();
-    const reply=data.content&&data.content[0]&&data.content[0].text||'Sorry, I could not process that.';
+    const reply=await streamClaude({
+      model:'claude-sonnet-4-6',
+      max_tokens:1000,
+      system:`You are Tara (Trade Assistant, Ready Anytime), ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.${getLangInstruction()?' '+getLangInstruction():''}`,
+      messages:msgs
+    })||'Sorry, I could not process that.';
     typing.remove();
     addTaraMsg(reply,'bot');
     taraHistory.push({role:'assistant',content:reply});
