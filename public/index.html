@@ -658,8 +658,8 @@ const T={
     tara_cta:'Ask Tara anything about trade compliance',
     footer:'ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
     ai_disc_t:'AI Reasoning — Needs Verification',
-    ai_disc_b:'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.',
-    searching_web:'Searching web for latest regulations...',
+    ai_disc_b:'These recommendations are AI-generated and may not reflect the latest regulations. Cross-check with a licensed customs broker before shipping.',
+    searching_web:'AI is generating your compliance checklist...',
     sources_heading:'Sources & References',
     lang_instruction:'',
   },
@@ -684,8 +684,8 @@ const T={
     tara_cta:'Tanyakan apa saja tentang kepatuhan perdagangan ke Tara',
     footer:'ShipSafe · Kepatuhan Perdagangan AI v2.0 · Bukan nasihat hukum · Perlu persetujuan ahli',
     ai_disc_t:'AI Reasoning — Perlu Verifikasi',
-    ai_disc_b:'Rekomendasi ini menggunakan AI reasoning + pencarian web live. Verifikasi dengan customs broker berlisensi sebelum kirim.',
-    searching_web:'Mencari regulasi terbaru di web...',
+    ai_disc_b:'Rekomendasi ini dihasilkan AI dan mungkin tidak mencerminkan regulasi terbaru. Verifikasi dengan customs broker berlisensi sebelum kirim.',
+    searching_web:'AI sedang menyusun checklist kepatuhan...',
     sources_heading:'Sumber & Referensi',
     lang_instruction:'Respond entirely in Bahasa Indonesia.',
   },
@@ -710,8 +710,8 @@ const T={
     tara_cta:'Pregúntale a Tara sobre cumplimiento comercial',
     footer:'ShipSafe · Cumplimiento Comercial IA v2.0 · No es asesoría legal · Se requiere revisión humana',
     ai_disc_t:'Razonamiento IA — Requiere Verificación',
-    ai_disc_b:'Estas recomendaciones usan razonamiento IA + búsqueda web en vivo. Verifique con un agente aduanal licenciado antes de enviar.',
-    searching_web:'Buscando regulaciones más recientes...',
+    ai_disc_b:'Estas recomendaciones son generadas por IA y pueden no reflejar las regulaciones más recientes. Verifique con un agente aduanal licenciado antes de enviar.',
+    searching_web:'IA generando tu lista de cumplimiento...',
     sources_heading:'Fuentes y Referencias',
     lang_instruction:'Respond entirely in Spanish (Español).',
   }
@@ -970,18 +970,18 @@ Quantity targets: 7-9 pre-shipment items, 5-7 shipment items, 4-6 payment items,
 risk_level must be exactly: "recommended", "caution", or "risky" — no other values.
 Return ONLY the JSON. Nothing else.`;
 
-  const searchNote=`\n\nIMPORTANT: Use the web_search tool to look up the LATEST regulations, MRLs, HS codes, and government requirements before generating the checklist. Prioritize official government sources: fda.gov, europa.eu, eur-lex.europa.eu, gov.uk, mhlw.go.jp, customs.gov.au, and equivalent official trade authorities. Search for the most recent updates (last 12 months). After searching, compile the JSON checklist based on the verified information you found. Still return ONLY the JSON as final output.`;
-  const messages=[{role:'user',content:userPrompt+searchNote}];
+  // Web search disabled sementara — Vercel Hobby plan timeout 10s tidak cukup untuk web search (30-60s)
+  // Upgrade ke Pro plan untuk enable ulang tools: [{type:'web_search_20250305', name:'web_search', max_uses:5}]
+  const messages=[{role:'user',content:userPrompt}];
   async function callAPI(msgs){
     const r=await fetch('/api/claude',{
       method:'POST',
       headers:{'content-type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-6',
-        max_tokens:8192,
+        max_tokens:4096,
         system:SYSTEM_PROMPT,
-        messages:msgs,
-        tools:[{type:'web_search_20250305',name:'web_search',max_uses:5}]
+        messages:msgs
       })
     });
     if(!r.ok) throw new Error(`API returned ${r.status}: ${JSON.stringify(await r.json())}`);
