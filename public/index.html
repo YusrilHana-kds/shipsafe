@@ -143,6 +143,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .al-t{font-size:11px;font-weight:700;color:var(--am);margin-bottom:1px}
 .al-tx{font-size:11px;color:var(--t1);line-height:1.55}
 
+.ai-disc{background:linear-gradient(90deg,#FEF7E0,#FFF9E6);border:1px solid #E8C547;border-radius:var(--r);padding:12px 16px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+.ai-disc-ic{width:26px;height:26px;background:#E8C547;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#4A3800;font-size:14px}
+.ai-disc-t{font-size:11px;font-weight:800;color:#7A5C00;margin-bottom:2px;letter-spacing:.2px;text-transform:uppercase}
+.ai-disc-b{font-size:11px;color:#5C4400;line-height:1.55}
+
+.src-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.src-itm{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--wh);border:1px solid var(--bdl);border-radius:var(--rs);text-decoration:none;color:var(--t1);transition:all .1s}
+.src-itm:hover{border-color:var(--nv);background:var(--sf)}
+.src-n{width:20px;height:20px;background:var(--nv);color:#fff;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.src-t{font-size:11px;font-weight:600;line-height:1.35}
+.src-u{font-size:9px;color:var(--t3);margin-top:1px;text-transform:lowercase}
+
 .sec{background:var(--sf);border-radius:var(--r);padding:18px 20px;margin-bottom:12px}
 .pg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .pc{border:1.5px solid var(--bd);border-radius:var(--r);padding:12px 14px;background:var(--wh)}
@@ -384,6 +396,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
           </div>
         </div>
       </div>
+      <div id="aiDisc"></div>
       <div class="conf">
         <div class="conf-top"><span class="conf-lb">Shipment Readiness</span><span class="conf-p" id="cPct">0%</span></div>
         <div class="conf-tr"><div class="conf-fl" id="cBar"></div></div>
@@ -393,6 +406,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <div id="alBox" style="margin-top:12px"></div>
       <div id="payBox" style="display:none;margin-top:12px"></div>
       <div id="costBox" style="display:none;margin-top:12px"></div>
+      <div id="srcBox" style="display:none;margin-top:12px"></div>
     </div>
 
     <!-- Previous compliance checks history -->
@@ -643,6 +657,10 @@ const T={
     cc_run_btn:'Run Cross-Check',
     tara_cta:'Ask Tara anything about trade compliance',
     footer:'ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
+    ai_disc_t:'AI Reasoning — Needs Verification',
+    ai_disc_b:'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.',
+    searching_web:'Searching web for latest regulations...',
+    sources_heading:'Sources & References',
     lang_instruction:'',
   },
   id:{
@@ -665,6 +683,10 @@ const T={
     cc_run_btn:'Jalankan Pemeriksaan Silang',
     tara_cta:'Tanyakan apa saja tentang kepatuhan perdagangan ke Tara',
     footer:'ShipSafe · Kepatuhan Perdagangan AI v2.0 · Bukan nasihat hukum · Perlu persetujuan ahli',
+    ai_disc_t:'AI Reasoning — Perlu Verifikasi',
+    ai_disc_b:'Rekomendasi ini menggunakan AI reasoning + pencarian web live. Verifikasi dengan customs broker berlisensi sebelum kirim.',
+    searching_web:'Mencari regulasi terbaru di web...',
+    sources_heading:'Sumber & Referensi',
     lang_instruction:'Respond entirely in Bahasa Indonesia.',
   },
   es:{
@@ -687,6 +709,10 @@ const T={
     cc_run_btn:'Ejecutar Verificación',
     tara_cta:'Pregúntale a Tara sobre cumplimiento comercial',
     footer:'ShipSafe · Cumplimiento Comercial IA v2.0 · No es asesoría legal · Se requiere revisión humana',
+    ai_disc_t:'Razonamiento IA — Requiere Verificación',
+    ai_disc_b:'Estas recomendaciones usan razonamiento IA + búsqueda web en vivo. Verifique con un agente aduanal licenciado antes de enviar.',
+    searching_web:'Buscando regulaciones más recientes...',
+    sources_heading:'Fuentes y Referencias',
     lang_instruction:'Respond entirely in Spanish (Español).',
   }
 };
@@ -944,16 +970,48 @@ Quantity targets: 7-9 pre-shipment items, 5-7 shipment items, 4-6 payment items,
 risk_level must be exactly: "recommended", "caution", or "risky" — no other values.
 Return ONLY the JSON. Nothing else.`;
 
-  const res=await fetch('/api/claude',{
-    method:'POST',
-    headers:{'content-type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4096,system:SYSTEM_PROMPT,messages:[{role:'user',content:userPrompt}]})
-  });
-  if(!res.ok) throw new Error(`API returned ${res.status}: ${JSON.stringify(await res.json())}`);
-  const apiData=await res.json();
-  const rawText=apiData.content&&apiData.content[0]&&apiData.content[0].text;
-  if(!rawText) throw new Error('No text in response: '+JSON.stringify(apiData));
-  return extractJSON(rawText);
+  const searchNote=`\n\nIMPORTANT: Use the web_search tool to look up the LATEST regulations, MRLs, HS codes, and government requirements before generating the checklist. Prioritize official government sources: fda.gov, europa.eu, eur-lex.europa.eu, gov.uk, mhlw.go.jp, customs.gov.au, and equivalent official trade authorities. Search for the most recent updates (last 12 months). After searching, compile the JSON checklist based on the verified information you found. Still return ONLY the JSON as final output.`;
+  const messages=[{role:'user',content:userPrompt+searchNote}];
+  async function callAPI(msgs){
+    const r=await fetch('/api/claude',{
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:8192,
+        system:SYSTEM_PROMPT,
+        messages:msgs,
+        tools:[{type:'web_search_20250305',name:'web_search',max_uses:5}]
+      })
+    });
+    if(!r.ok) throw new Error(`API returned ${r.status}: ${JSON.stringify(await r.json())}`);
+    return r.json();
+  }
+  let apiData=await callAPI(messages);
+  // Handle pause_turn (long-running search) — retry once with assistant response echoed back
+  if(apiData.stop_reason==='pause_turn'&&apiData.content){
+    apiData=await callAPI([...messages,{role:'assistant',content:apiData.content}]);
+  }
+  // Collect all text blocks + dedupe citations by URL
+  const textParts=[];
+  const sourcesMap={};
+  if(Array.isArray(apiData.content)){
+    apiData.content.forEach(block=>{
+      if(block.type==='text'&&block.text){
+        textParts.push(block.text);
+        if(Array.isArray(block.citations)){
+          block.citations.forEach(c=>{
+            if(c.url&&!sourcesMap[c.url]) sourcesMap[c.url]={url:c.url,title:c.title||'',cited_text:c.cited_text||''};
+          });
+        }
+      }
+    });
+  }
+  const rawText=textParts.join('\n');
+  if(!rawText) throw new Error('No text in response: '+JSON.stringify(apiData).slice(0,500));
+  const parsed=extractJSON(rawText);
+  parsed._sources=Object.values(sourcesMap);
+  return parsed;
 }
 
 function runCheck(){
@@ -973,7 +1031,7 @@ function runCheck(){
   if(cached){try{const d=JSON.parse(cached);setTimeout(()=>{ov.classList.remove('on');render(d,commodity,origin,destination,incoterms)},400);return}catch(e){localStorage.removeItem('ai:'+key)}}
 
   // DB miss: panggil Claude API
-  document.getElementById('loMsg').textContent='AI is generating your compliance checklist...';
+  document.getElementById('loMsg').textContent=T[currentLang]?.searching_web||'Searching web for latest regulations...';
   goBtn.disabled=true;
   fetchFromClaude(commodity,origin,destination,incoterms)
     .then(data=>{
@@ -999,6 +1057,7 @@ function render(data,commodity,origin,destination,incoterms){
   document.getElementById('ck-input').style.display='none';
   document.getElementById('ck-results').style.display='';
   document.getElementById('routeBar').innerHTML=`<span class="rt">📦 <b>${commodity}</b></span><span class="ra">→</span><span class="rt">🏭 <b>${origin}</b></span><span class="ra">→</span><span class="rt">🚢 <b>${destination}</b></span><span class="ra">·</span><span class="rt">📋 <b>${incoterms}</b></span>`;
+  document.getElementById('aiDisc').innerHTML=`<div class="ai-disc"><div class="ai-disc-ic">⚡</div><div><div class="ai-disc-t">${T[currentLang]?.ai_disc_t||'AI Reasoning — Needs Verification'}</div><div class="ai-disc-b">${T[currentLang]?.ai_disc_b||'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.'}</div></div></div>`;
   tot=0;chk=0;
 
   // Save current corridor key for save/restore operations
@@ -1031,6 +1090,18 @@ function render(data,commodity,origin,destination,incoterms){
 
   const cb=document.getElementById('costBox');
   if(data.cost_estimation?.length){cb.style.display='';cb.innerHTML=`<div class="sec"><div class="sh">Hidden Cost Breakdown</div><div style="font-size:11px;color:var(--t2);margin-bottom:4px">${incoterms} · 20ft container</div><table class="ctb">${data.cost_estimation.map(c=>`<tr><td>${c.item}${c.note?'<br><span style="font-size:9px;color:var(--t3)">'+c.note+'</span>':''}</td><td>${c.estimate}</td></tr>`).join('')}</table><div class="ct-n">Rough estimates. Get firm quotes from your forwarder and bank.</div></div>`}else cb.style.display='none';
+
+  const sb=document.getElementById('srcBox');
+  if(data._sources&&data._sources.length){
+    sb.style.display='';
+    const srcHtml=data._sources.map((s,i)=>{
+      let host=s.url;try{host=new URL(s.url).hostname.replace(/^www\./,'')}catch(e){}
+      const title=s.title||host;
+      return `<a class="src-itm" href="${s.url}" target="_blank" rel="noopener"><span class="src-n">${i+1}</span><div style="min-width:0;flex:1"><div class="src-t">${title}</div><div class="src-u">${host}</div></div></a>`;
+    }).join('');
+    sb.innerHTML=`<div class="sec"><div class="sh">📚 ${T[currentLang]?.sources_heading||'Sources & References'}</div><div style="font-size:11px;color:var(--t2);margin-bottom:4px">${data._sources.length} live sources verified via web search</div><div class="src-list">${srcHtml}</div></div>`;
+  }else sb.style.display='none';
+
   document.querySelector('.main-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
