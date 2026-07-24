@@ -880,30 +880,51 @@ function extractJSON(text){
   if(fm){try{return JSON.parse(fm[1].trim())}catch(e){}}
   const s=text.indexOf('{'),en=text.lastIndexOf('}');
   if(s!==-1&&en>s){try{return JSON.parse(text.slice(s,en+1))}catch(e){}}
-  // Truncated JSON repair: try closing open brackets/braces
+  // Truncated JSON repair — walk the string, track structure, close cleanly
   if(s!==-1){
-    let chunk=text.slice(s);
-    // Remove trailing incomplete string (after last complete value)
-    chunk=chunk.replace(/,\s*"[^"]*"?\s*:?\s*"?[^"}]*$/,'');
-    // Count unclosed braces/brackets and close them
-    let ob=0,ob2=0,inStr=false,esc=false;
-    for(let i=0;i<chunk.length;i++){
-      const c=chunk[i];
-      if(esc){esc=false;continue}
-      if(c==='\\'){esc=true;continue}
-      if(c==='"'){inStr=!inStr;continue}
-      if(inStr) continue;
-      if(c==='{')ob++;else if(c==='}')ob--;
-      if(c==='[')ob2++;else if(c===']')ob2--;
-    }
-    if(ob>0||ob2>0){
-      chunk+=']'.repeat(Math.max(0,ob2))+'}'.repeat(Math.max(0,ob));
-      // Fix trailing comma before closing
-      chunk=chunk.replace(/,\s*([}\]])/g,'$1');
-      try{return JSON.parse(chunk)}catch(e){console.log('JSON repair failed:',e.message)}
-    }
+    const repaired=repairTruncatedJSON(text.slice(s));
+    if(repaired!==null){try{return JSON.parse(repaired)}catch(e){console.log('JSON repair parse failed:',e.message)}}
   }
   throw new Error('Could not extract valid JSON from Claude response');
+}
+
+// Repair a JSON string that was cut off mid-generation.
+// Safe truncation points are only: just after a comma, or just after a
+// closing bracket/brace. This cleanly drops any half-written key/value.
+function repairTruncatedJSON(str){
+  let inStr=false,esc=false;
+  const stack=[];
+  let lastSafe=-1;
+  for(let i=0;i<str.length;i++){
+    const c=str[i];
+    if(inStr){
+      if(esc){esc=false;continue}
+      if(c==='\\'){esc=true;continue}
+      if(c==='"'){inStr=false}
+      continue;
+    }
+    if(c==='"'){inStr=true;continue}
+    if(c==='{'){stack.push('{');continue}
+    if(c==='['){stack.push('[');lastSafe=i+1;continue}
+    if(c==='}'||c===']'){stack.pop();lastSafe=i+1;continue}
+    if(c===','){lastSafe=i+1;continue}
+  }
+  if(!stack.length) return null;
+  let chunk=lastSafe>0?str.slice(0,lastSafe):'';
+  if(!chunk) return null;
+  chunk=chunk.replace(/[\s,]*$/,'');
+  // Recompute open containers for the truncated chunk
+  const st2=[];inStr=false;esc=false;
+  for(let i=0;i<chunk.length;i++){
+    const c=chunk[i];
+    if(inStr){if(esc){esc=false}else if(c==='\\'){esc=true}else if(c==='"'){inStr=false}continue}
+    if(c==='"'){inStr=true}
+    else if(c==='{'||c==='[')st2.push(c);
+    else if(c==='}'||c===']')st2.pop();
+  }
+  for(let i=st2.length-1;i>=0;i--){chunk+=st2[i]==='{'?'}':']'}
+  chunk=chunk.replace(/,(\s*[}\]])/g,'$1');
+  return chunk;
 }
 
 // Stream Claude API — reads SSE chunks, returns accumulated text
@@ -1035,7 +1056,7 @@ Return ONLY the JSON. Nothing else.`;
 
   const rawText=await streamClaude({
     model:'claude-sonnet-4-6',
-    max_tokens:8192,
+    max_tokens:16384,
     system:SYSTEM_PROMPT,
     messages:[{role:'user',content:userPrompt}]
   });
