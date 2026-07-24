@@ -880,6 +880,29 @@ function extractJSON(text){
   if(fm){try{return JSON.parse(fm[1].trim())}catch(e){}}
   const s=text.indexOf('{'),en=text.lastIndexOf('}');
   if(s!==-1&&en>s){try{return JSON.parse(text.slice(s,en+1))}catch(e){}}
+  // Truncated JSON repair: try closing open brackets/braces
+  if(s!==-1){
+    let chunk=text.slice(s);
+    // Remove trailing incomplete string (after last complete value)
+    chunk=chunk.replace(/,\s*"[^"]*"?\s*:?\s*"?[^"}]*$/,'');
+    // Count unclosed braces/brackets and close them
+    let ob=0,ob2=0,inStr=false,esc=false;
+    for(let i=0;i<chunk.length;i++){
+      const c=chunk[i];
+      if(esc){esc=false;continue}
+      if(c==='\\'){esc=true;continue}
+      if(c==='"'){inStr=!inStr;continue}
+      if(inStr) continue;
+      if(c==='{')ob++;else if(c==='}')ob--;
+      if(c==='[')ob2++;else if(c===']')ob2--;
+    }
+    if(ob>0||ob2>0){
+      chunk+=']'.repeat(Math.max(0,ob2))+'}}'.repeat(Math.max(0,ob));
+      // Fix trailing comma before closing
+      chunk=chunk.replace(/,\s*([}\]])/g,'$1');
+      try{return JSON.parse(chunk)}catch(e){console.log('JSON repair failed:',e.message)}
+    }
+  }
   throw new Error('Could not extract valid JSON from Claude response');
 }
 
@@ -1011,7 +1034,7 @@ Return ONLY the JSON. Nothing else.`;
 
   const rawText=await streamClaude({
     model:'claude-sonnet-4-6',
-    max_tokens:4096,
+    max_tokens:8192,
     system:SYSTEM_PROMPT,
     messages:[{role:'user',content:userPrompt}]
   });
