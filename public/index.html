@@ -899,22 +899,26 @@ async function streamClaude(reqBody){
   const decoder=new TextDecoder();
   let buf='';
   let text='';
+  let evCount=0;
   while(true){
     const{done,value}=await reader.read();
     if(done) break;
     buf+=decoder.decode(value,{stream:true});
-    const lines=buf.split('\n');
+    const lines=buf.replace(/\r\n/g,'\n').split('\n');
     buf=lines.pop()||'';
     for(const line of lines){
-      if(!line.startsWith('data: ')||line==='data: [DONE]') continue;
+      const trimmed=line.trim();
+      if(!trimmed.startsWith('data: ')||trimmed==='data: [DONE]') continue;
       try{
-        const ev=JSON.parse(line.slice(6));
+        const ev=JSON.parse(trimmed.slice(6));
+        evCount++;
         if(ev.type==='content_block_delta'&&ev.delta?.type==='text_delta'){
           text+=ev.delta.text;
         }
       }catch(e){}
     }
   }
+  console.log('streamClaude: parsed',evCount,'SSE events, text length:',text.length);
   return text;
 }
 
@@ -1012,6 +1016,7 @@ Return ONLY the JSON. Nothing else.`;
     messages:[{role:'user',content:userPrompt}]
   });
   if(!rawText) throw new Error('Empty response from Claude');
+  console.log('Claude raw (first 500 chars):',rawText.slice(0,500));
   return extractJSON(rawText);
 }
 
