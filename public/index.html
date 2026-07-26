@@ -52,9 +52,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .hero h1{font-family:'DM Serif Display',serif;color:var(--wh);font-size:38px;line-height:1.1;margin-bottom:14px}
 .hero h1 em{color:#F0C060;font-style:normal}
 .hero p{color:rgba(255,255,255,.6);font-size:15px;max-width:500px;margin:0 auto 28px}
-.how{display:flex;justify-content:center;gap:32px;margin-bottom:36px;flex-wrap:wrap}
-.how-s{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.55);font-size:12px;font-weight:600}
-.how-n{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);color:var(--wh);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.how{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:36px;flex-wrap:wrap}
+.how-s{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.6);font-size:12px;font-weight:600}
+.how-n{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);color:var(--wh);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.how-ar{color:rgba(255,255,255,.28);font-size:14px;font-weight:700}
+@media(max-width:640px){.how-ar{display:none}.how{gap:10px 18px}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,#1D7A3F,#166232);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:opacity .2s}
 .welcome-banner.hidden{display:none}
@@ -73,6 +75,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .tab-btn:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.05)}
 .tab-btn.active{background:var(--wh);color:var(--nv)}
 .tab-btn svg{width:16px;height:16px}
+.tab-step{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tab-btn.active .tab-step{background:var(--nv);color:#fff}
 
 /* MAIN CARD */
 .main-card{background:var(--wh);max-width:900px;margin:-1px auto 0;border-radius:0 0 14px 14px;box-shadow:0 8px 40px rgba(27,42,74,.1);padding:0;min-height:400px;position:relative}
@@ -162,6 +166,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .note-sv.saved{color:#1E7A34}
 .note-sv .dot{width:6px;height:6px;border-radius:50%;background:var(--t3)}
 .note-sv.saved .dot{background:#1E7A34}
+/* Next-step nudge */
+.nstep{background:linear-gradient(135deg,#EEF4FF,#F5F9FF);border:1px solid var(--nvm);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.nstep-ic{width:34px;height:34px;border-radius:9px;background:var(--nv);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nstep-ic svg{width:17px;height:17px}
+.nstep-tx{flex:1}
+.nstep-t{font-size:12px;font-weight:800;color:var(--nv);margin-bottom:2px}
+.nstep-b{font-size:11px;color:var(--t2);line-height:1.5}
+.nstep-cta{background:var(--nv);color:#fff;border:none;font-family:inherit;font-size:11px;font-weight:700;padding:9px 14px;border-radius:var(--rs);cursor:pointer;white-space:nowrap;transition:transform .1s}
+.nstep-cta:hover{transform:translateX(2px)}
 
 .sec{background:var(--sf);border-radius:var(--r);padding:18px 20px;margin-bottom:12px}
 .pg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
@@ -236,27 +249,50 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .manual-del:hover{background:var(--rdbg);color:var(--rd)}
 
 /* TARA CHAT */
+.tara-av{background:linear-gradient(135deg,#3B5BDB,#1B2A4A);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:.5px}
 .tara-fab{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;align-items:center;gap:10px;cursor:pointer}
-.tara-cta{background:var(--nv);color:var(--wh);padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;font-family:inherit;box-shadow:0 4px 16px rgba(27,42,74,.25);white-space:nowrap;animation:taraSlide .5s ease}
+.tara-cta{background:var(--nv);color:var(--wh);padding:9px 16px;border-radius:20px;font-size:12px;font-weight:700;font-family:inherit;box-shadow:0 4px 16px rgba(27,42,74,.25);white-space:nowrap;animation:taraSlide .5s ease}
 @keyframes taraSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
-.tara-btn{width:52px;height:52px;border-radius:50%;background:var(--nv);border:none;color:var(--wh);font-size:22px;box-shadow:0 4px 20px rgba(27,42,74,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.tara-btn{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#3B5BDB,#1B2A4A);border:none;color:var(--wh);font-size:20px;font-weight:800;letter-spacing:.5px;box-shadow:0 6px 22px rgba(27,42,74,.34);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
 .tara-btn:hover{transform:scale(1.08)}
-.tara-panel{position:fixed;bottom:90px;right:24px;width:380px;max-height:520px;background:var(--wh);border-radius:14px;box-shadow:0 8px 40px rgba(27,42,74,.18);z-index:101;display:none;flex-direction:column;overflow:hidden}
-.tara-panel.open{display:flex}
-.tara-hd{background:var(--nv);padding:14px 18px;display:flex;align-items:center;gap:10px}
-.tara-hd-nm{color:var(--wh);font-size:14px;font-weight:700;flex:1}
-.tara-hd-sub{color:rgba(255,255,255,.5);font-size:10px}
-.tara-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:18px;cursor:pointer;padding:0 4px}
+.tara-panel{position:fixed;bottom:94px;right:24px;width:392px;max-height:560px;background:var(--wh);border-radius:18px;box-shadow:0 12px 48px rgba(27,42,74,.22);z-index:101;display:none;flex-direction:column;overflow:hidden}
+.tara-panel.open{display:flex;animation:taraPop .22s cubic-bezier(.16,1,.3,1)}
+@keyframes taraPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.tara-hd{background:linear-gradient(135deg,#1B2A4A,#25406E);padding:16px 18px;display:flex;align-items:center;gap:12px}
+.tara-hd .tara-av{width:40px;height:40px;border-radius:11px;font-size:17px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.tara-hd-nm{color:var(--wh);font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
+.tara-hd-sub{color:rgba(255,255,255,.6);font-size:11px;margin-top:1px}
+.tara-online{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:#4ADE80}
+.tara-online .odot{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:taraPulse 2s infinite}
+@keyframes taraPulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 6px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.tara-close{background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
 .tara-close:hover{color:var(--wh)}
-.tara-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;max-height:360px}
-.tara-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.6}
-.tara-msg.bot{background:var(--sf);color:var(--t1);align-self:flex-start;border-bottom-left-radius:4px}
-.tara-msg.user{background:var(--nv);color:var(--wh);align-self:flex-end;border-bottom-right-radius:4px}
-.tara-msg.typing{background:var(--sf);align-self:flex-start;border-bottom-left-radius:4px;color:var(--t3);font-style:italic}
-.tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--bdl)}
-.tara-input input{flex:1;height:36px;border:1.5px solid var(--bd);border-radius:18px;padding:0 14px;font-size:12px;font-family:inherit;outline:none}
-.tara-input input:focus{border-color:var(--nvm)}
-.tara-input button{width:36px;height:36px;border-radius:50%;background:var(--nv);border:none;color:var(--wh);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tara-msgs{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px;max-height:380px;background:var(--sf)}
+.tara-row{display:flex;gap:9px;align-items:flex-end;max-width:90%}
+.tara-row.user{align-self:flex-end;flex-direction:row-reverse}
+.tara-row.bot{align-self:flex-start}
+.tara-row .tara-av{width:28px;height:28px;border-radius:8px;font-size:12px}
+.tara-msg{padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.6}
+.tara-msg.bot{background:var(--wh);color:var(--t1);border:1px solid var(--bdl);border-bottom-left-radius:5px;box-shadow:0 1px 3px rgba(27,42,74,.05)}
+.tara-msg.user{background:var(--nv);color:var(--wh);border-bottom-right-radius:5px}
+.tara-msg p{margin:0 0 8px}.tara-msg p:last-child{margin:0}
+.tara-msg ul,.tara-msg ol{margin:6px 0;padding-left:18px}
+.tara-msg li{margin:3px 0}
+.tara-msg strong{font-weight:800}
+.tara-msg code{background:var(--sf);padding:1px 5px;border-radius:4px;font-size:12px;font-family:ui-monospace,monospace}
+.tara-msg.bot code{background:var(--bg)}
+.tara-typing{display:flex;gap:4px;padding:13px 15px;background:var(--wh);border:1px solid var(--bdl);border-radius:14px;border-bottom-left-radius:5px;width:fit-content}
+.tara-typing span{width:7px;height:7px;border-radius:50%;background:var(--t3);animation:taraDot 1.3s infinite}
+.tara-typing span:nth-child(2){animation-delay:.2s}.tara-typing span:nth-child(3){animation-delay:.4s}
+@keyframes taraDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+.tara-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 12px;background:var(--sf)}
+.tara-chip{background:var(--wh);border:1px solid var(--nvm);color:var(--nv);font-family:inherit;font-size:11.5px;font-weight:600;padding:7px 12px;border-radius:16px;cursor:pointer;transition:all .12s}
+.tara-chip:hover{background:var(--nv);color:#fff}
+.tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--bdl);background:var(--wh)}
+.tara-input input{flex:1;height:40px;border:1.5px solid var(--bd);border-radius:20px;padding:0 16px;font-size:13px;font-family:inherit;outline:none;transition:border-color .12s}
+.tara-input input:focus{border-color:var(--nv)}
+.tara-input button{width:40px;height:40px;border-radius:50%;background:var(--nv);border:none;color:var(--wh);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .1s}
+.tara-input button:hover{transform:scale(1.06)}
 
 /* LANGUAGE TOGGLE */
 .lang-sw{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.08);border-radius:20px;padding:3px}
@@ -295,26 +331,34 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <div class="hero-stat-item"><div class="hero-stat-n">1 in 3</div><div class="hero-stat-l" data-i18n="stat3">First shipments hit a compliance issue</div></div>
     </div>
     <div class="how">
-      <div class="how-s"><span class="how-n">1</span> <span data-i18n="how1">Upload your documents</span></div>
-      <div class="how-s"><span class="how-n">2</span> <span data-i18n="how2">AI cross-checks everything</span></div>
-      <div class="how-s"><span class="how-n">3</span> <span data-i18n="how3">Fix issues before customs</span></div>
+      <div class="how-s"><span class="how-n">1</span> <span data-i18n="how1">Check requirements</span></div>
+      <span class="how-ar">→</span>
+      <div class="how-s"><span class="how-n">2</span> <span data-i18n="how2">Cross-check your docs</span></div>
+      <span class="how-ar">→</span>
+      <div class="how-s"><span class="how-n">3</span> <span data-i18n="how3">Estimate landed cost</span></div>
+      <span class="how-ar">→</span>
+      <div class="how-s"><span class="how-n">4</span> <span data-i18n="how4">Track &amp; ship</span></div>
     </div>
   </div>
   <div class="tabs-bar" style="max-width:900px;margin:0 auto">
-    <button class="tab-btn active" onclick="switchTab('crosscheck')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-      <span data-i18n="tab_crosscheck">Doc Cross-Checker</span>
-      <span style="font-size:8px;background:var(--nvm);color:white;padding:2px 6px;border-radius:10px;margin-left:4px;font-weight:700" data-i18n="tab_start">START HERE</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('checker')">
+    <button class="tab-btn active" onclick="switchTab('checker')">
+      <span class="tab-step">1</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
       <span data-i18n="tab_checker">Compliance Checker</span>
+      <span style="font-size:8px;background:var(--nvm);color:white;padding:2px 6px;border-radius:10px;margin-left:4px;font-weight:700" data-i18n="tab_start">START HERE</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('crosscheck')">
+      <span class="tab-step">2</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      <span data-i18n="tab_crosscheck">Doc Cross-Checker</span>
     </button>
     <button class="tab-btn" onclick="switchTab('cost')">
+      <span class="tab-step">3</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
       <span data-i18n="tab_cost">Cost Calculator</span>
     </button>
     <button class="tab-btn" onclick="switchTab('overview')">
+      <span class="tab-step">4</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       <span data-i18n="tab_overview">Shipment Overview</span>
     </button>
@@ -328,14 +372,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     <div class="welcome-title" data-i18n="wb_title">First time here? Start with Doc Cross-Checker.</div>
     <div class="welcome-sub" data-i18n="wb_sub">Upload your Invoice + Packing List. Takes 30 seconds — AI catches issues instantly.</div>
   </div>
-  <button class="welcome-cta" onclick="switchTab('crosscheck');dismissWelcome()" data-i18n="wb_cta">Try it now →</button>
+  <button class="welcome-cta" onclick="switchTab('checker');dismissWelcome()" data-i18n="wb_cta">Try it now →</button>
   <button class="welcome-close" onclick="dismissWelcome()" title="Dismiss">✕</button>
 </div>
 
 <div class="main-card">
 
   <!-- ═══ CHECKER TAB ═══ -->
-  <div class="tab-panel" id="tp-checker">
+  <div class="tab-panel active" id="tp-checker">
     <div id="ck-input">
       <div class="xl" data-i18n="ck_quickstart">Quick start — click a corridor</div>
       <div class="xr" id="exRow"></div>
@@ -416,6 +460,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <div id="costBox" style="display:none;margin-top:12px"></div>
       <div id="srcBox" style="display:none;margin-top:12px"></div>
       <div id="noteBox" style="margin-top:12px"></div>
+      <div id="nextStep" style="display:none;margin-top:14px"></div>
     </div>
 
     <!-- Previous compliance checks history -->
@@ -537,7 +582,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   </div>
 
   <!-- ═══ CROSSCHECK TAB ═══ -->
-  <div class="tab-panel active" id="tp-crosscheck">
+  <div class="tab-panel" id="tp-crosscheck">
     <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px" data-i18n="cc_title">Document Checker</h2>
     <p style="font-size:12px;color:var(--t3);margin-bottom:12px" data-i18n="cc_subtitle">Upload your trade documents — AI will cross-check everything and catch issues before customs does.</p>
 
@@ -620,24 +665,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 <!-- TARA FLOATING CHAT -->
 <div class="tara-fab" onclick="toggleTara()">
   <div class="tara-cta" data-i18n="tara_cta">Ask Tara anything about trade compliance</div>
-  <button class="tara-btn" id="taraFabBtn">💬</button>
+  <button class="tara-btn" id="taraFabBtn">T</button>
 </div>
 
 <div class="tara-panel" id="taraPanel">
   <div class="tara-hd">
-    <div style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px">🛡️</div>
+    <div class="tara-av">T</div>
     <div style="flex:1">
-      <div class="tara-hd-nm">Tara</div>
-      <div class="tara-hd-sub">Trade Assistant, Ready Anytime</div>
+      <div class="tara-hd-nm">Tara <span class="tara-online"><span class="odot"></span><span data-i18n="tara_online">Online</span></span></div>
+      <div class="tara-hd-sub" data-i18n="tara_role">Trade Compliance Assistant</div>
     </div>
     <button class="tara-close" onclick="toggleTara()">✕</button>
   </div>
-  <div class="tara-msgs" id="taraMsgs">
-    <div class="tara-msg bot">Hi! I'm <b>Tara</b>, your trade compliance assistant. Ask me anything — Incoterms, customs rules, document requirements, HS codes, or shipping costs. What can I help with?</div>
-  </div>
+  <div class="tara-msgs" id="taraMsgs"></div>
+  <div class="tara-chips" id="taraChips"></div>
   <div class="tara-input">
-    <input type="text" id="taraInput" placeholder="Ask about trade compliance..." onkeydown="if(event.key==='Enter')sendTara()">
-    <button onclick="sendTara()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    <input type="text" id="taraInput" data-i18n-ph="tara_ph" placeholder="Ask about trade compliance..." onkeydown="if(event.key==='Enter')sendTara()">
+    <button onclick="sendTara()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
   </div>
 </div>
 
@@ -652,8 +696,9 @@ const T={
     hero_h1:'Stop guessing.<br>Ship with confidence.',
     hero_p:'Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.',
     stat1:'Avg customs detention cost',stat2:'Avg hold duration',stat3:'First shipments hit a compliance issue',
-    wb_title:'First time here? Start with Doc Cross-Checker.',wb_sub:'Upload your Invoice + Packing List. Takes 30 seconds — AI catches issues instantly.',wb_cta:'Try it now →',
-    how1:'Upload your documents',how2:'AI cross-checks everything',how3:'Fix issues before customs',
+    wb_title:'First time here? Start with the Compliance Checker.',wb_sub:'Pick your product + route. In seconds you\'ll see exactly what customs requires — then follow the steps.',wb_cta:'Start step 1 →',
+    how1:'Check requirements',how2:'Cross-check your docs',how3:'Estimate landed cost',how4:'Track &amp; ship',
+    nstep_t:'Next: cross-check your documents',nstep_b:'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.',nstep_cta:'Go to Doc Cross-Checker →',
     tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',
     ck_quickstart:'Quick start — click a corridor',
     ck_disclaimer:'AI-powered guidance. Not legal advice.',
@@ -665,6 +710,9 @@ const T={
     cc_choose_files:'Choose Files',
     cc_run_btn:'Run Cross-Check',
     tara_cta:'Ask Tara anything about trade compliance',
+    tara_role:'Trade Compliance Assistant',tara_online:'Online',tara_ph:'Ask about trade compliance...',
+    tara_intro:"Hi! I'm **Tara**, your trade compliance assistant. Ask me anything — Incoterms, customs rules, document requirements, HS codes, or shipping costs. What can I help with?",
+    tara_chips:['What documents do I need to export?','Explain FOB vs CIF','How do I find my HS code?'],
     footer:'ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
     ai_disc_t:'AI Reasoning — Needs Verification',
     ai_disc_b:'These recommendations are AI-generated and may not reflect the latest regulations. Cross-check with a licensed customs broker before shipping.',
@@ -682,8 +730,9 @@ const T={
     hero_h1:'Berhenti menebak-nebak.<br>Kirim dengan percaya diri.',
     hero_p:'Masukkan detail perdagangan Anda. AI akan memeriksa persyaratan kepatuhan, menandai risiko tersembunyi, dan memberi tahu Anda apa yang harus disiapkan sebelum pengiriman.',
     stat1:'Rata-rata biaya penahanan bea cukai',stat2:'Rata-rata durasi penahanan',stat3:'Pengiriman pertama terkena masalah kepatuhan',
-    wb_title:'Pertama kali? Mulai dengan Pemeriksa Dokumen.',wb_sub:'Upload Invoice + Packing List. 30 detik — AI langsung temukan masalahnya.',wb_cta:'Coba sekarang →',
-    how1:'Unggah dokumen Anda',how2:'AI memeriksa semuanya',how3:'Perbaiki masalah sebelum bea cukai',
+    wb_title:'Pertama kali? Mulai dari Compliance Checker.',wb_sub:'Pilih produk + rute Anda. Dalam hitungan detik Anda tahu persis syarat bea cukai — lalu ikuti langkahnya.',wb_cta:'Mulai langkah 1 →',
+    how1:'Cek persyaratan',how2:'Cek silang dokumen',how3:'Hitung biaya sampai tujuan',how4:'Pantau &amp; kirim',
+    nstep_t:'Berikutnya: cek silang dokumen Anda',nstep_b:'Anda sudah tahu persyaratannya. Unggah Invoice + Packing List agar AI menemukan ketidakcocokan sebelum bea cukai.',nstep_cta:'Ke Doc Cross-Checker →',
     tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',
     ck_quickstart:'Mulai cepat — klik koridor',
     ck_disclaimer:'Panduan berbasis AI. Bukan nasihat hukum.',
@@ -695,6 +744,9 @@ const T={
     cc_choose_files:'Pilih File',
     cc_run_btn:'Jalankan Pemeriksaan Silang',
     tara_cta:'Tanyakan apa saja tentang kepatuhan perdagangan ke Tara',
+    tara_role:'Asisten Kepatuhan Perdagangan',tara_online:'Online',tara_ph:'Tanya soal kepatuhan perdagangan...',
+    tara_intro:"Hai! Saya **Tara**, asisten kepatuhan perdagangan Anda. Tanya apa saja — Incoterms, aturan bea cukai, syarat dokumen, kode HS, atau biaya pengiriman. Ada yang bisa saya bantu?",
+    tara_chips:['Dokumen apa yang saya perlukan untuk ekspor?','Jelaskan FOB vs CIF','Bagaimana cara menemukan kode HS saya?'],
     footer:'ShipSafe · Kepatuhan Perdagangan AI v2.0 · Bukan nasihat hukum · Perlu persetujuan ahli',
     ai_disc_t:'AI Reasoning — Perlu Verifikasi',
     ai_disc_b:'Rekomendasi ini dihasilkan AI dan mungkin tidak mencerminkan regulasi terbaru. Verifikasi dengan customs broker berlisensi sebelum kirim.',
@@ -712,8 +764,9 @@ const T={
     hero_h1:'Deja de adivinar.<br>Exporta con confianza.',
     hero_p:'Ingresa los detalles de tu operación. La IA verifica los requisitos de cumplimiento, detecta riesgos ocultos y te dice exactamente qué preparar antes de enviar.',
     stat1:'Costo promedio de detención aduanera',stat2:'Duración promedio de retención',stat3:'Primeros envíos con problema de cumplimiento',
-    wb_title:'¿Primera vez? Empieza con el Verificador de Documentos.',wb_sub:'Sube tu Factura + Lista de Empaque. 30 segundos — la IA detecta problemas al instante.',wb_cta:'Pruébalo ahora →',
-    how1:'Sube tus documentos',how2:'La IA verifica todo',how3:'Corrige problemas antes de aduana',
+    wb_title:'¿Primera vez? Empieza con el Verificador de Cumplimiento.',wb_sub:'Elige tu producto + ruta. En segundos verás qué exige la aduana — luego sigue los pasos.',wb_cta:'Empezar paso 1 →',
+    how1:'Verifica requisitos',how2:'Coteja tus documentos',how3:'Estima el costo total',how4:'Rastrea &amp; envía',
+    nstep_t:'Siguiente: coteja tus documentos',nstep_b:'Ya conoces los requisitos. Sube tu Factura + Lista de Empaque para que la IA detecte discrepancias antes que la aduana.',nstep_cta:'Ir al Verificador de Documentos →',
     tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',
     ck_quickstart:'Inicio rápido — elige un corredor',
     ck_disclaimer:'Orientación basada en IA. No es asesoría legal.',
@@ -725,6 +778,9 @@ const T={
     cc_choose_files:'Elegir Archivos',
     cc_run_btn:'Ejecutar Verificación',
     tara_cta:'Pregúntale a Tara sobre cumplimiento comercial',
+    tara_role:'Asistente de Cumplimiento Comercial',tara_online:'En línea',tara_ph:'Pregunta sobre cumplimiento comercial...',
+    tara_intro:"¡Hola! Soy **Tara**, tu asistente de cumplimiento comercial. Pregúntame lo que sea — Incoterms, reglas aduaneras, requisitos de documentos, códigos HS o costos de envío. ¿En qué te ayudo?",
+    tara_chips:['¿Qué documentos necesito para exportar?','Explica FOB vs CIF','¿Cómo encuentro mi código HS?'],
     footer:'ShipSafe · Cumplimiento Comercial IA v2.0 · No es asesoría legal · Se requiere revisión humana',
     ai_disc_t:'Razonamiento IA — Requiere Verificación',
     ai_disc_b:'Estas recomendaciones son generadas por IA y pueden no reflejar las regulaciones más recientes. Verifique con un agente aduanal licenciado antes de enviar.',
@@ -749,9 +805,20 @@ function setLang(lang){
     const key=el.getAttribute('data-i18n');
     if(T[lang]&&T[lang][key]!==undefined) el.innerHTML=T[lang][key];
   });
-  // Update Tara input placeholder
+  // Update placeholders (data-i18n-ph)
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-ph');
+    if(T[lang]&&T[lang][key]!==undefined) el.placeholder=T[lang][key];
+  });
+  // Update Tara input placeholder fallback
   const taraInput=document.getElementById('taraInput');
-  if(taraInput) taraInput.placeholder=T[lang].tara_cta||T.en.tara_cta;
+  if(taraInput) taraInput.placeholder=T[lang]?.tara_ph||T[lang]?.tara_cta||T.en.tara_ph;
+  // Re-seed Tara intro/chips in the new language if not yet interacted
+  if(_taraSeeded&&!taraHistory.length){
+    document.getElementById('taraMsgs').innerHTML='';
+    _taraSeeded=false;
+    seedTara();
+  }
 }
 
 function getLangInstruction(){
@@ -796,7 +863,7 @@ let tot=0,chk=0;
 function fill(i){const e=EX[i];document.getElementById('comSel').value=e.c;document.getElementById('comCust').style.display='none';document.getElementById('orig').value=e.o;document.getElementById('dest').value=e.d;document.getElementById('inco').value=e.i}
 
 // TABS
-const TAB_IDS=['crosscheck','checker','cost','overview'];
+const TAB_IDS=['checker','crosscheck','cost','overview'];
 function switchTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -1185,6 +1252,16 @@ function render(data,commodity,origin,destination,incoterms){
   nb.innerHTML=`<div class="sec"><div class="note-hd"><div class="sh" style="margin:0">📝 ${nHeading}</div><span class="note-sv${savedNote?' saved':''}" id="noteSv"><span class="dot"></span><span id="noteSvT">${savedNote?nSaved:''}</span></span></div><textarea class="note-ta" id="noteTa" placeholder="${nPh.replace(/"/g,'&quot;')}">${savedNote.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea></div>`;
   const ta=document.getElementById('noteTa');
   ta.addEventListener('input',()=>saveNote(ckKey,ta.value));
+
+  // Soft next-step nudge → guide user to step 2 (Doc Cross-Checker)
+  const ns=document.getElementById('nextStep');
+  if(ns){
+    const nsT=T[currentLang]?.nstep_t||'Next: cross-check your documents';
+    const nsB=T[currentLang]?.nstep_b||'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.';
+    const nsC=T[currentLang]?.nstep_cta||'Go to Doc Cross-Checker →';
+    ns.style.display='';
+    ns.innerHTML=`<div class="nstep"><div class="nstep-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div><div class="nstep-tx"><div class="nstep-t">${nsT}</div><div class="nstep-b">${nsB}</div></div><button class="nstep-cta" onclick="switchTab('crosscheck');window.scrollTo({top:0,behavior:'smooth'})">${nsC}</button></div>`;
+  }
 
   document.querySelector('.main-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -1976,21 +2053,73 @@ setTimeout(renderOV,100);
 // ═══════════ TARA CHAT ═══════════
 let taraHistory=[];
 
+let _taraSeeded=false;
+
 function toggleTara(){
   const p=document.getElementById('taraPanel');
   const isOpen=p.classList.toggle('open');
-  document.getElementById('taraFabBtn').textContent=isOpen?'✕':'💬';
-  if(isOpen) document.getElementById('taraInput').focus();
+  document.getElementById('taraFabBtn').textContent=isOpen?'✕':'T';
+  if(isOpen){
+    if(!_taraSeeded) seedTara();
+    document.getElementById('taraInput').focus();
+  }
 }
 
-function addTaraMsg(text,role){
+// Minimal, safe markdown → HTML (bold, inline code, bullet/numbered lists, paragraphs)
+function taraMd(raw){
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const inline=s=>esc(s)
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/`([^`]+?)`/g,'<code>$1</code>');
+  const lines=raw.replace(/\r\n/g,'\n').split('\n');
+  let html='',list=null;
+  const closeList=()=>{if(list){html+=`</${list}>`;list=null}};
+  for(let ln of lines){
+    const t=ln.trim();
+    if(!t){closeList();continue}
+    const ul=t.match(/^[-*]\s+(.*)/);
+    const ol=t.match(/^\d+[.)]\s+(.*)/);
+    if(ul){if(list!=='ul'){closeList();html+='<ul>';list='ul'}html+=`<li>${inline(ul[1])}</li>`}
+    else if(ol){if(list!=='ol'){closeList();html+='<ol>';list='ol'}html+=`<li>${inline(ol[1])}</li>`}
+    else{closeList();html+=`<p>${inline(t)}</p>`}
+  }
+  closeList();
+  return html;
+}
+
+function addTaraMsg(text,role,isMd){
   const box=document.getElementById('taraMsgs');
-  const div=document.createElement('div');
-  div.className='tara-msg '+(role==='user'?'user':'bot');
-  div.innerHTML=text;
-  box.appendChild(div);
+  const row=document.createElement('div');
+  row.className='tara-row '+(role==='user'?'user':'bot');
+  const av=role==='user'?'':`<div class="tara-av">T</div>`;
+  const body=isMd?taraMd(text):text;
+  row.innerHTML=`${av}<div class="tara-msg ${role==='user'?'user':'bot'}">${body}</div>`;
+  box.appendChild(row);
   box.scrollTop=box.scrollHeight;
-  return div;
+  return row;
+}
+
+function addTaraTyping(){
+  const box=document.getElementById('taraMsgs');
+  const row=document.createElement('div');
+  row.className='tara-row bot';
+  row.innerHTML=`<div class="tara-av">T</div><div class="tara-typing"><span></span><span></span><span></span></div>`;
+  box.appendChild(row);
+  box.scrollTop=box.scrollHeight;
+  return row;
+}
+
+function seedTara(){
+  _taraSeeded=true;
+  const intro=T[currentLang]?.tara_intro||"Hi! I'm **Tara**, your trade compliance assistant. Ask me anything — Incoterms, customs rules, document requirements, HS codes, or shipping costs. What can I help with?";
+  addTaraMsg(intro,'bot',true);
+  const chips=T[currentLang]?.tara_chips||['What documents do I need to export?','Explain FOB vs CIF','How do I find my HS code?'];
+  const cb=document.getElementById('taraChips');
+  cb.innerHTML=chips.map(c=>`<button class="tara-chip">${c.replace(/</g,'&lt;')}</button>`).join('');
+  cb.querySelectorAll('.tara-chip').forEach((b,i)=>b.addEventListener('click',()=>{
+    document.getElementById('taraInput').value=chips[i];
+    sendTara();
+  }));
 }
 
 async function sendTara(){
@@ -1998,22 +2127,23 @@ async function sendTara(){
   const q=input.value.trim();
   if(!q) return;
   input.value='';
+  const cb=document.getElementById('taraChips');if(cb) cb.innerHTML='';
 
   addTaraMsg(q,'user');
   taraHistory.push({role:'user',content:q});
 
-  const typing=addTaraMsg('Tara is thinking...','typing');
+  const typing=addTaraTyping();
 
   try{
     const msgs=taraHistory.slice(-10); // keep last 10 messages for context
     const reply=await streamClaude({
       model:'claude-sonnet-4-6',
       max_tokens:1000,
-      system:`You are Tara (Trade Assistant, Ready Anytime), ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.${getLangInstruction()?' '+getLangInstruction():''}`,
+      system:`You are Tara, ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Use **bold** for key terms and bullet lists when listing items. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.${getLangInstruction()?' '+getLangInstruction():''}`,
       messages:msgs
     })||'Sorry, I could not process that.';
     typing.remove();
-    addTaraMsg(reply,'bot');
+    addTaraMsg(reply,'bot',true);
     taraHistory.push({role:'assistant',content:reply});
   }catch(err){
     typing.remove();
