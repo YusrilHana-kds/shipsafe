@@ -44,16 +44,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .landing{background:#0B1628;min-height:calc(100vh - 52px);display:flex;align-items:center;padding:48px 32px;position:relative;overflow:hidden}
 .landing::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
 .landing::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 700px 600px at 70% 15%,rgba(56,120,255,.18),transparent),radial-gradient(ellipse 500px 500px at 25% 85%,rgba(34,197,94,.12),transparent),radial-gradient(ellipse 400px 350px at 90% 70%,rgba(139,92,246,.1),transparent);pointer-events:none}
-.landing-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(1px);animation:orbFloat 10s ease-in-out infinite}
-.landing-orb:nth-child(1){width:6px;height:6px;background:rgba(56,120,255,.35);top:18%;left:12%;animation-delay:0s}
-.landing-orb:nth-child(2){width:4px;height:4px;background:rgba(34,197,94,.4);top:30%;right:10%;animation-delay:-2s}
-.landing-orb:nth-child(3){width:5px;height:5px;background:rgba(139,92,246,.35);bottom:25%;left:20%;animation-delay:-4s}
-.landing-orb:nth-child(4){width:3px;height:3px;background:rgba(56,120,255,.3);bottom:15%;right:25%;animation-delay:-6s}
-.landing-orb:nth-child(5){width:7px;height:7px;background:rgba(34,197,94,.3);top:55%;left:8%;animation-delay:-3s}
-.landing-orb:nth-child(6){width:4px;height:4px;background:rgba(255,255,255,.15);top:12%;right:30%;animation-delay:-7s}
-.landing-orb:nth-child(7){width:5px;height:5px;background:rgba(56,120,255,.25);bottom:35%;right:6%;animation-delay:-1s}
-.landing-orb:nth-child(8){width:3px;height:3px;background:rgba(139,92,246,.3);top:70%;left:35%;animation-delay:-5s}
-@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.landing-bg-ship{position:absolute;bottom:-30px;right:-60px;width:700px;height:auto;opacity:.06;pointer-events:none}
+.landing-bg-route{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.08}
+.landing-bg-route svg{width:100%;height:100%}
 .landing-split{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%}
 .landing-left{text-align:left}
 .landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
@@ -347,7 +340,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .lang-btn.active{background:rgba(255,255,255,.18);color:#fff}
 
 @media(max-width:800px){.landing-split{grid-template-columns:1fr;gap:28px;text-align:center}.landing-left{text-align:center}.landing-sub{margin:0 auto 24px}.landing-btns{justify-content:center}.landing-trust{justify-content:center}.landing-h1{font-size:32px}}
-@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing-orb{display:none}.landing{padding:32px 16px}}
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing-bg-ship,.landing-bg-route{display:none}.landing{padding:32px 16px}}
 </style>
 </head>
 <body>
@@ -369,7 +362,36 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 <!-- ═══ LANDING VIEW ═══ -->
 <section class="landing" id="landingView">
-  <div class="landing-orb"></div><div class="landing-orb"></div><div class="landing-orb"></div><div class="landing-orb"></div><div class="landing-orb"></div><div class="landing-orb"></div><div class="landing-orb"></div><div class="landing-orb"></div>
+  <!-- Background: container ship silhouette -->
+  <svg class="landing-bg-ship" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60 340 L80 280 L720 280 L740 340 Q400 380 60 340Z" stroke="rgba(255,255,255,.6)" stroke-width="1.5" fill="rgba(255,255,255,.03)"/>
+    <rect x="120" y="200" width="60" height="80" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(56,120,255,.06)"/>
+    <rect x="190" y="180" width="60" height="100" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(34,197,94,.06)"/>
+    <rect x="260" y="210" width="60" height="70" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(56,120,255,.06)"/>
+    <rect x="330" y="190" width="60" height="90" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(139,92,246,.06)"/>
+    <rect x="400" y="220" width="60" height="60" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(34,197,94,.06)"/>
+    <rect x="470" y="200" width="60" height="80" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(56,120,255,.06)"/>
+    <rect x="540" y="230" width="60" height="50" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(139,92,246,.06)"/>
+    <rect x="610" y="210" width="60" height="70" rx="3" stroke="rgba(255,255,255,.5)" stroke-width="1" fill="rgba(34,197,94,.06)"/>
+    <rect x="450" y="140" width="40" height="60" rx="2" stroke="rgba(255,255,255,.4)" stroke-width="1" fill="rgba(255,255,255,.04)"/>
+    <line x1="470" y1="100" x2="470" y2="140" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
+    <path d="M20 350 Q200 360 400 345 Q600 330 780 350" stroke="rgba(56,120,255,.15)" stroke-width="1" stroke-dasharray="6 4"/>
+    <path d="M0 370 Q200 385 400 365 Q600 345 800 370" stroke="rgba(34,197,94,.1)" stroke-width="1" stroke-dasharray="4 6"/>
+  </svg>
+  <!-- Background: trade route lines -->
+  <div class="landing-bg-route">
+    <svg viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 300 Q300 150 600 250 Q900 350 1200 200" stroke="rgba(56,120,255,.12)" stroke-width="1.5" stroke-dasharray="8 6">
+        <animate attributeName="stroke-dashoffset" values="0;-28" dur="3s" repeatCount="indefinite"/>
+      </path>
+      <path d="M0 400 Q250 250 500 350 Q750 450 1000 280 L1200 320" stroke="rgba(34,197,94,.1)" stroke-width="1" stroke-dasharray="6 8">
+        <animate attributeName="stroke-dashoffset" values="0;-28" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <circle cx="150" cy="280" r="4" fill="rgba(56,120,255,.25)"/>
+      <circle cx="600" cy="250" r="5" fill="rgba(34,197,94,.3)"/>
+      <circle cx="1050" cy="240" r="4" fill="rgba(139,92,246,.25)"/>
+    </svg>
+  </div>
   <div class="landing-split">
     <div class="landing-left">
       <div class="landing-badge" data-i18n="hero_badge">For food &amp; agri exporters &amp; importers worldwide</div>
