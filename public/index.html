@@ -42,8 +42,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 /* HERO */
 /* LANDING PAGE — split layout */
 .landing{background:linear-gradient(170deg,#0F1A2E,var(--nv) 40%,var(--nvm) 80%,#2a5594);min-height:calc(100vh - 52px);display:flex;align-items:center;padding:48px 32px;position:relative;overflow:hidden}
-.landing::before{content:'';position:absolute;top:-30%;right:-15%;width:500px;height:500px;background:radial-gradient(circle,rgba(59,91,219,.12) 0%,transparent 70%);pointer-events:none}
-.landing::after{content:'';position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(34,197,94,.06) 0%,transparent 70%);pointer-events:none}
+.landing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.landing::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 500px at 75% 20%,rgba(59,91,219,.14),transparent),radial-gradient(ellipse 500px 400px at 20% 80%,rgba(34,197,94,.08),transparent),radial-gradient(ellipse 300px 300px at 50% 50%,rgba(139,92,246,.06),transparent);pointer-events:none}
+.landing-geo{position:absolute;pointer-events:none;border:1px solid rgba(255,255,255,.06);border-radius:4px;animation:geoFloat 8s ease-in-out infinite}
+.landing-geo:nth-child(1){width:60px;height:60px;top:12%;right:8%;transform:rotate(15deg);animation-delay:0s}
+.landing-geo:nth-child(2){width:40px;height:40px;bottom:18%;left:5%;border-radius:50%;animation-delay:-2.5s}
+.landing-geo:nth-child(3){width:80px;height:80px;top:65%;right:22%;transform:rotate(-12deg);animation-delay:-5s;border-color:rgba(255,255,255,.04)}
+.landing-geo:nth-child(4){width:24px;height:24px;top:20%;left:18%;border-radius:50%;animation-delay:-1s;border-color:rgba(34,197,94,.12)}
+.landing-geo:nth-child(5){width:50px;height:50px;bottom:10%;right:35%;transform:rotate(30deg);animation-delay:-3.5s;border-color:rgba(59,91,219,.1)}
+@keyframes geoFloat{0%,100%{transform:translateY(0) rotate(var(--gr,15deg))}50%{transform:translateY(-12px) rotate(var(--gr,15deg))}}
 .landing-split{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%}
 .landing-left{text-align:left}
 .landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
@@ -336,7 +343,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .lang-btn:hover{color:rgba(255,255,255,.8)}
 .lang-btn.active{background:rgba(255,255,255,.18);color:#fff}
 
-@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}}
+@media(max-width:800px){.landing-split{grid-template-columns:1fr;gap:28px;text-align:center}.landing-left{text-align:center}.landing-sub{margin:0 auto 24px}.landing-btns{justify-content:center}.landing-trust{justify-content:center}.landing-h1{font-size:32px}}
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing-geo{display:none}.landing{padding:32px 16px}}
 </style>
 </head>
 <body>
@@ -358,6 +366,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 <!-- ═══ LANDING VIEW ═══ -->
 <section class="landing" id="landingView">
+  <div class="landing-geo"></div><div class="landing-geo"></div><div class="landing-geo"></div><div class="landing-geo"></div><div class="landing-geo"></div>
   <div class="landing-split">
     <div class="landing-left">
       <div class="landing-badge" data-i18n="hero_badge">For food &amp; agri exporters &amp; importers worldwide</div>
