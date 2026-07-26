@@ -217,6 +217,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 @keyframes spin{to{transform:rotate(360deg)}}
 .lo-m{font-size:13px;font-weight:700;color:var(--nv);margin-bottom:3px}
 .lo-s{font-size:11px;color:var(--t3)}
+.lo-cancel{margin-top:14px;background:none;border:1.5px solid var(--bd);color:var(--t2);font-family:inherit;font-size:12px;font-weight:600;padding:7px 20px;border-radius:var(--rs);cursor:pointer;transition:all .12s}
+.lo-cancel:hover{border-color:var(--er);color:var(--er)}
 
 .footer{text-align:center;padding:20px;font-size:10px;color:var(--t3)}
 
@@ -660,7 +662,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 <div class="footer" data-i18n="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
 
-<div class="lov" id="loader"><div class="lo-c"><div class="lo-sp"></div><div class="lo-m" id="loMsg">Analysing trade corridor...</div><div class="lo-s">This takes a few seconds</div></div></div>
+<div class="lov" id="loader"><div class="lo-c"><div class="lo-sp"></div><div class="lo-m" id="loMsg">Analysing trade corridor...</div><div class="lo-s">This takes a few seconds</div><button class="lo-cancel" onclick="cancelAnalysis()" data-i18n="cancel_btn">Cancel</button></div></div>
 
 <!-- TARA FLOATING CHAT -->
 <div class="tara-fab" onclick="toggleTara()">
@@ -722,6 +724,7 @@ const T={
     note_ph:'Add your own notes for this shipment — supplier contacts, buyer requirements, reminders, questions to ask your broker... (saved automatically to this browser)',
     note_saving:'Saving...',
     note_saved:'Saved',
+    cancel_btn:'Cancel',
     lang_instruction:'',
   },
   id:{
@@ -756,6 +759,7 @@ const T={
     note_ph:'Tambahkan catatanmu untuk pengiriman ini — kontak supplier, permintaan buyer, pengingat, pertanyaan untuk broker... (tersimpan otomatis di browser ini)',
     note_saving:'Menyimpan...',
     note_saved:'Tersimpan',
+    cancel_btn:'Batalkan',
     lang_instruction:'Respond entirely in Bahasa Indonesia.',
   },
   es:{
@@ -790,6 +794,7 @@ const T={
     note_ph:'Agrega tus propias notas para este envío — contactos de proveedores, requisitos del comprador, recordatorios, preguntas para tu agente... (guardado automáticamente en este navegador)',
     note_saving:'Guardando...',
     note_saved:'Guardado',
+    cancel_btn:'Cancelar',
     lang_instruction:'Respond entirely in Spanish (Español).',
   }
 };
@@ -1016,11 +1021,19 @@ function repairTruncatedJSON(str){
 }
 
 // Stream Claude API — reads SSE chunks, returns accumulated text
+let _abortCtrl=null;
+
+function cancelAnalysis(){
+  if(_abortCtrl){_abortCtrl.abort();_abortCtrl=null}
+}
+
 async function streamClaude(reqBody){
+  _abortCtrl=new AbortController();
   const r=await fetch('/api/claude',{
     method:'POST',
     headers:{'content-type':'application/json'},
-    body:JSON.stringify(reqBody)
+    body:JSON.stringify(reqBody),
+    signal:_abortCtrl.signal
   });
   if(!r.ok){
     let errMsg=`API returned ${r.status}`;
@@ -1187,6 +1200,7 @@ function runCheck(){
       ov.classList.remove('on');
       document.getElementById('loMsg').textContent='Analysing trade corridor...';
       goBtn.disabled=false;
+      if(err&&err.name==='AbortError') return; // user cancelled
       const msg=err&&err.message?err.message:'Unknown error';
       eb.textContent='Could not generate compliance data: '+msg;
       eb.style.display='block';
@@ -1357,6 +1371,7 @@ Return ONLY the JSON. Nothing else.`;
     ov.classList.remove('on');
     document.getElementById('loMsg').textContent='Analysing trade corridor...';
     btn.disabled=false;
+    if(err&&err.name==='AbortError') return;
     alert('Cost calculation failed: '+err.message);
     console.error('Cost calc error:',err);
   }
@@ -1718,6 +1733,7 @@ Return ONLY the JSON. Nothing else.`
     ov.classList.remove('on');
     btn.disabled=false;
     document.getElementById('loMsg').textContent='Analysing trade corridor...';
+    if(err&&err.name==='AbortError') return;
     alert('Cross-check failed: '+err.message);
     console.error('CC error:',err);
   }
