@@ -41,33 +41,35 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .hd-tg{color:rgba(255,255,255,.4);font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
 
 /* HERO */
-.hero{background:linear-gradient(170deg,var(--nv),var(--nvm) 60%,#2a5594);padding:52px 24px 0;text-align:center}
-.hero-in{max-width:680px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
-.hero-stat{display:flex;justify-content:center;gap:0;margin-bottom:28px;flex-wrap:wrap;max-width:600px;margin-left:auto;margin-right:auto}
-.hero-stat-item{flex:1;min-width:140px;padding:14px 20px;border-right:1px solid rgba(255,255,255,.1)}
-.hero-stat-item:last-child{border-right:none}
-.hero-stat-n{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;line-height:1}
-.hero-stat-l{font-size:10px;color:rgba(255,255,255,.45);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
-.hero h1{font-family:'DM Serif Display',serif;color:var(--wh);font-size:38px;line-height:1.1;margin-bottom:14px}
-.hero h1 em{color:#F0C060;font-style:normal}
-.hero p{color:rgba(255,255,255,.6);font-size:15px;max-width:500px;margin:0 auto 28px}
-.how{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:36px;flex-wrap:nowrap}
-.how-s{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:11px;font-weight:600;white-space:nowrap}
-.how-n{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);color:var(--wh);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.how-ar{color:rgba(255,255,255,.25);font-size:12px;font-weight:700}
-@media(max-width:640px){.how-ar{display:none}.how{flex-wrap:wrap;gap:6px 14px}}
+/* LANDING PAGE — split layout */
+.landing{background:linear-gradient(170deg,#0F1A2E,var(--nv) 40%,var(--nvm) 80%,#2a5594);min-height:calc(100vh - 52px);display:flex;align-items:center;padding:40px 24px}
+.landing-split{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;width:100%}
+.landing-left{text-align:left}
+.landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
+.landing-h1{font-family:'DM Serif Display',serif;color:#fff;font-size:52px;line-height:1.08;margin:0 0 18px;letter-spacing:-.5px}
+.landing-sub{color:rgba(255,255,255,.55);font-size:15px;line-height:1.7;max-width:420px;margin:0 0 28px}
+.landing-btns{display:flex;align-items:center;gap:16px;margin-bottom:36px}
+.landing-cta{background:#fff;color:var(--nv);font-family:inherit;font-size:14px;font-weight:800;padding:13px 32px;border-radius:8px;border:none;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.landing-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.landing-note{color:rgba(255,255,255,.35);font-size:12px;font-weight:600}
+.landing-trust{display:flex;align-items:center;gap:0}
+.landing-trust-item{padding:0 20px;text-align:left}
+.landing-trust-item:first-child{padding-left:0}
+.landing-trust-n{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;display:block;line-height:1.1}
+.landing-trust-l{font-size:9px;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-top:2px;display:block}
+.landing-trust-sep{width:1px;height:32px;background:rgba(255,255,255,.12)}
+.landing-right{position:relative}
 /* DEMO CARD */
-.demo-card{max-width:480px;margin:0 auto 28px;background:rgba(255,255,255,.07);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px 10px;text-align:left}
+.demo-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 18px 12px;text-align:left}
 .demo-hd{margin-bottom:10px}
 .demo-route{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.85);flex-wrap:wrap}
-.demo-ar{color:rgba(255,255,255,.35);font-weight:400}
-.demo-prog{height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:8px;overflow:hidden}
+.demo-ar{color:rgba(255,255,255,.3);font-weight:400}
+.demo-prog{height:4px;background:rgba(255,255,255,.08);border-radius:3px;margin-top:8px;overflow:hidden}
 .demo-prog-bar{height:100%;width:0%;background:linear-gradient(90deg,#4ADE80,#22C55E);border-radius:3px;transition:width .4s ease}
 .demo-pct{font-size:10px;font-weight:800;color:#4ADE80;margin-top:4px;text-align:right}
-.demo-items{display:flex;flex-direction:column;gap:5px;min-height:100px}
-.demo-it{display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,.05);border-radius:7px;font-size:11px;color:rgba(255,255,255,.75);opacity:0;transform:translateY(6px);animation:demoIn .35s ease forwards}
-.demo-it-ck{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.demo-items{display:flex;flex-direction:column;gap:5px;min-height:120px}
+.demo-it{display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:7px;font-size:11px;color:rgba(255,255,255,.7);opacity:0;transform:translateY(6px);animation:demoIn .35s ease forwards}
+.demo-it-ck{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
 .demo-it-ck.on{background:#22C55E;border-color:#22C55E}
 .demo-it-ck svg{width:10px;height:10px;opacity:0;transition:opacity .2s}
 .demo-it-ck.on svg{opacity:1}
@@ -76,12 +78,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .demo-it-st.ok{background:rgba(34,197,94,.15);color:#4ADE80}
 .demo-it-st.warn{background:rgba(245,158,11,.15);color:#FBBF24}
 @keyframes demoIn{to{opacity:1;transform:translateY(0)}}
-.demo-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px}
-.landing-cta{display:inline-block;margin:24px auto 28px;background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff;font-family:inherit;font-size:15px;font-weight:800;padding:14px 36px;border-radius:28px;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(34,197,94,.35);transition:transform .15s,box-shadow .15s;letter-spacing:.2px}
-.landing-cta:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(34,197,94,.45)}
+.demo-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.35);margin-bottom:10px}
+/* APP HERO (compact) */
+.hero{background:linear-gradient(170deg,var(--nv),var(--nvm) 60%,#2a5594);padding:14px 24px 0;text-align:center}
+.hero-in{max-width:900px;margin:0 auto}
 .hero-compact{padding:14px 20px 0}
 .hero-compact .hero-in{padding:14px 20px 0}
-@media(max-width:640px){.demo-card{max-width:100%}}
+.how{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:nowrap}
+.how-s{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:11px;font-weight:600;white-space:nowrap}
+.how-n{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);color:var(--wh);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.how-ar{color:rgba(255,255,255,.25);font-size:12px;font-weight:700}
+@media(max-width:640px){.how-ar{display:none}.how{flex-wrap:wrap;gap:6px 14px}}
+@media(max-width:768px){.landing-split{grid-template-columns:1fr;gap:32px;text-align:center}.landing-left{text-align:center}.landing-sub{margin:0 auto 28px}.landing-btns{justify-content:center}.landing-trust{justify-content:center}.landing-h1{font-size:38px}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,#1D7A3F,#166232);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:opacity .2s}
 .welcome-banner.hidden{display:none}
@@ -348,39 +356,34 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 </header>
 
 <!-- ═══ LANDING VIEW ═══ -->
-<section class="hero" id="landingView">
-  <div class="hero-in">
-    <div class="hero-badge" data-i18n="hero_badge">For food &amp; agri exporters &amp; importers worldwide</div>
-    <h1 data-i18n="hero_h1">One missing document.<br><em>$8,500 lost. 23 days stuck.</em></h1>
-    <p data-i18n="hero_p">ShipSafe catches compliance gaps before customs does — so your shipment moves, not sits.</p>
-
-    <!-- Animated demo preview -->
-    <div class="demo-card" id="demoCard">
-      <div class="demo-label" data-i18n="demo_label">Live preview — Compliance Checker</div>
-      <div class="demo-hd">
-        <div class="demo-route"><span>Cocoa Beans</span><span class="demo-ar">→</span><span>Indonesia → United States</span><span class="demo-ar">·</span><span>FOB</span></div>
-        <div class="demo-prog"><div class="demo-prog-bar" id="demoBar"></div></div>
-        <div class="demo-pct" id="demoPct">0%</div>
+<section class="landing" id="landingView">
+  <div class="landing-split">
+    <div class="landing-left">
+      <div class="landing-badge" data-i18n="hero_badge">For food &amp; agri exporters &amp; importers worldwide</div>
+      <h1 class="landing-h1" data-i18n="landing_h1">Ship with<br>confidence.</h1>
+      <p class="landing-sub" data-i18n="landing_sub">AI checks every compliance requirement, cross-references your documents, and estimates landed costs — before your shipment leaves port.</p>
+      <div class="landing-btns">
+        <button class="landing-cta" onclick="enterApp()" data-i18n="landing_cta">Get Started — it's free</button>
+        <span class="landing-note" data-i18n="landing_note">No signup required</span>
       </div>
-      <div class="demo-items" id="demoItems"></div>
+      <div class="landing-trust">
+        <div class="landing-trust-item"><span class="landing-trust-n">$8,500</span><span class="landing-trust-l" data-i18n="stat1">Avg customs detention cost</span></div>
+        <div class="landing-trust-sep"></div>
+        <div class="landing-trust-item"><span class="landing-trust-n">23 days</span><span class="landing-trust-l" data-i18n="stat2">Avg hold duration</span></div>
+        <div class="landing-trust-sep"></div>
+        <div class="landing-trust-item"><span class="landing-trust-n">1 in 3</span><span class="landing-trust-l" data-i18n="stat3">First shipments hit a compliance issue</span></div>
+      </div>
     </div>
-
-    <button class="landing-cta" onclick="enterApp()" data-i18n="landing_cta">Get Started — it's free</button>
-
-    <div class="how">
-      <div class="how-s"><span class="how-n">1</span> <span data-i18n="how1">Check requirements</span></div>
-      <span class="how-ar">→</span>
-      <div class="how-s"><span class="how-n">2</span> <span data-i18n="how2">Cross-check your docs</span></div>
-      <span class="how-ar">→</span>
-      <div class="how-s"><span class="how-n">3</span> <span data-i18n="how3">Estimate landed cost</span></div>
-      <span class="how-ar">→</span>
-      <div class="how-s"><span class="how-n">4</span> <span data-i18n="how4">Track &amp; ship</span></div>
-    </div>
-
-    <div class="hero-stat">
-      <div class="hero-stat-item"><div class="hero-stat-n">$8,500</div><div class="hero-stat-l" data-i18n="stat1">Avg customs detention cost</div></div>
-      <div class="hero-stat-item"><div class="hero-stat-n">23 days</div><div class="hero-stat-l" data-i18n="stat2">Avg hold duration</div></div>
-      <div class="hero-stat-item"><div class="hero-stat-n">1 in 3</div><div class="hero-stat-l" data-i18n="stat3">First shipments hit a compliance issue</div></div>
+    <div class="landing-right">
+      <div class="demo-card" id="demoCard">
+        <div class="demo-label" data-i18n="demo_label">Live preview — Compliance Checker</div>
+        <div class="demo-hd">
+          <div class="demo-route"><span>Cocoa Beans</span><span class="demo-ar">→</span><span>Indonesia → US</span><span class="demo-ar">·</span><span>FOB</span></div>
+          <div class="demo-prog"><div class="demo-prog-bar" id="demoBar"></div></div>
+          <div class="demo-pct" id="demoPct">0%</div>
+        </div>
+        <div class="demo-items" id="demoItems"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -759,6 +762,7 @@ const T={
     wb_title:'First time here? Start with the Compliance Checker.',wb_sub:'Pick your product + route. In seconds you\'ll see exactly what customs requires — then follow the steps.',wb_cta:'Start step 1 →',
     how1:'Check requirements',how2:'Cross-check your docs',how3:'Estimate landed cost',how4:'Track &amp; ship',
     nstep_t:'Next: cross-check your documents',nstep_b:'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.',nstep_cta:'Go to Doc Cross-Checker →',
+    landing_h1:'Ship with<br>confidence.',landing_sub:'AI checks every compliance requirement, cross-references your documents, and estimates landed costs — before your shipment leaves port.',landing_note:'No signup required',
     demo_label:'Live preview — Compliance Checker',landing_cta:'Get Started — it\'s free',
     tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',
     ck_quickstart:'Quick start — click a corridor',
@@ -795,6 +799,7 @@ const T={
     wb_title:'Pertama kali? Mulai dari Compliance Checker.',wb_sub:'Pilih produk + rute Anda. Dalam hitungan detik Anda tahu persis syarat bea cukai — lalu ikuti langkahnya.',wb_cta:'Mulai langkah 1 →',
     how1:'Cek persyaratan',how2:'Cek silang dokumen',how3:'Hitung biaya sampai tujuan',how4:'Pantau &amp; kirim',
     nstep_t:'Berikutnya: cek silang dokumen Anda',nstep_b:'Anda sudah tahu persyaratannya. Unggah Invoice + Packing List agar AI menemukan ketidakcocokan sebelum bea cukai.',nstep_cta:'Ke Doc Cross-Checker →',
+    landing_h1:'Kirim dengan<br>percaya diri.',landing_sub:'AI memeriksa semua persyaratan kepatuhan, mencocokkan dokumen Anda, dan menghitung biaya sampai tujuan — sebelum pengiriman berangkat.',landing_note:'Tanpa perlu daftar',
     demo_label:'Preview langsung — Compliance Checker',landing_cta:'Mulai Sekarang — gratis',
     tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',
     ck_quickstart:'Mulai cepat — klik koridor',
@@ -831,6 +836,7 @@ const T={
     wb_title:'¿Primera vez? Empieza con el Verificador de Cumplimiento.',wb_sub:'Elige tu producto + ruta. En segundos verás qué exige la aduana — luego sigue los pasos.',wb_cta:'Empezar paso 1 →',
     how1:'Verifica requisitos',how2:'Coteja tus documentos',how3:'Estima el costo total',how4:'Rastrea &amp; envía',
     nstep_t:'Siguiente: coteja tus documentos',nstep_b:'Ya conoces los requisitos. Sube tu Factura + Lista de Empaque para que la IA detecte discrepancias antes que la aduana.',nstep_cta:'Ir al Verificador de Documentos →',
+    landing_h1:'Envía con<br>confianza.',landing_sub:'La IA verifica cada requisito de cumplimiento, coteja tus documentos y estima los costos finales — antes de que tu envío salga del puerto.',landing_note:'Sin registro necesario',
     demo_label:'Vista previa en vivo — Verificador de Cumplimiento',landing_cta:'Comenzar — es gratis',
     tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',
     ck_quickstart:'Inicio rápido — elige un corredor',
