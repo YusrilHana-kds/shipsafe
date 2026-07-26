@@ -42,22 +42,22 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 /* HERO */
 /* LANDING PAGE — split layout */
-.landing{background:linear-gradient(170deg,#0F1A2E,var(--nv) 40%,var(--nvm) 80%,#2a5594);min-height:calc(100vh - 52px);display:flex;align-items:center;padding:40px 24px}
-.landing-split{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;width:100%}
+.landing{background:linear-gradient(170deg,#0F1A2E,var(--nv) 40%,var(--nvm) 80%,#2a5594);padding:56px 32px 48px}
+.landing-split{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%}
 .landing-left{text-align:left}
-.landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}
-.landing-h1{font-family:'DM Serif Display',serif;color:#fff;font-size:52px;line-height:1.08;margin:0 0 18px;letter-spacing:-.5px}
-.landing-sub{color:rgba(255,255,255,.55);font-size:15px;line-height:1.7;max-width:420px;margin:0 0 28px}
-.landing-btns{display:flex;align-items:center;gap:16px;margin-bottom:36px}
-.landing-cta{background:#fff;color:var(--nv);font-family:inherit;font-size:14px;font-weight:800;padding:13px 32px;border-radius:8px;border:none;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
+.landing-h1{font-family:'DM Serif Display',serif;color:#fff;font-size:46px;line-height:1.1;margin:0 0 14px;letter-spacing:-.5px}
+.landing-sub{color:rgba(255,255,255,.5);font-size:14px;line-height:1.7;max-width:400px;margin:0 0 24px}
+.landing-btns{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.landing-cta{background:#fff;color:var(--nv);font-family:inherit;font-size:14px;font-weight:800;padding:12px 28px;border-radius:8px;border:none;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
 .landing-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.2)}
-.landing-note{color:rgba(255,255,255,.35);font-size:12px;font-weight:600}
-.landing-trust{display:flex;align-items:center;gap:0}
-.landing-trust-item{padding:0 20px;text-align:left}
+.landing-note{color:rgba(255,255,255,.3);font-size:11px;font-weight:600}
+.landing-trust{display:flex;align-items:stretch;gap:0}
+.landing-trust-item{padding:0 16px;text-align:left;display:flex;flex-direction:column;justify-content:center}
 .landing-trust-item:first-child{padding-left:0}
-.landing-trust-n{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;display:block;line-height:1.1}
-.landing-trust-l{font-size:9px;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-top:2px;display:block}
-.landing-trust-sep{width:1px;height:32px;background:rgba(255,255,255,.12)}
+.landing-trust-n{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;display:block;line-height:1.1;white-space:nowrap}
+.landing-trust-l{font-size:9px;color:rgba(255,255,255,.35);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-top:2px;display:block;line-height:1.3}
+.landing-trust-sep{width:1px;background:rgba(255,255,255,.1);flex-shrink:0}
 .landing-right{position:relative}
 /* DEMO CARD */
 .demo-card{background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 18px 12px;text-align:left}
@@ -89,7 +89,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .how-n{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);color:var(--wh);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .how-ar{color:rgba(255,255,255,.25);font-size:12px;font-weight:700}
 @media(max-width:640px){.how-ar{display:none}.how{flex-wrap:wrap;gap:6px 14px}}
-@media(max-width:768px){.landing-split{grid-template-columns:1fr;gap:32px;text-align:center}.landing-left{text-align:center}.landing-sub{margin:0 auto 28px}.landing-btns{justify-content:center}.landing-trust{justify-content:center}.landing-h1{font-size:38px}}
+@media(max-width:768px){.landing{padding:36px 20px 32px}.landing-split{grid-template-columns:1fr;gap:28px}.landing-left{text-align:center}.landing-sub{margin:0 auto 20px}.landing-btns{justify-content:center}.landing-trust{justify-content:center;flex-wrap:wrap;gap:8px}.landing-trust-sep{display:none}.landing-trust-item{padding:0 12px}.landing-h1{font-size:34px}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,#1D7A3F,#166232);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:opacity .2s}
 .welcome-banner.hidden{display:none}
@@ -367,11 +367,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
         <span class="landing-note" data-i18n="landing_note">No signup required</span>
       </div>
       <div class="landing-trust">
-        <div class="landing-trust-item"><span class="landing-trust-n">$8,500</span><span class="landing-trust-l" data-i18n="stat1">Avg customs detention cost</span></div>
+        <div class="landing-trust-item"><span class="landing-trust-n">$8,500</span><span class="landing-trust-l" data-i18n="stat1">Avg detention cost</span></div>
         <div class="landing-trust-sep"></div>
-        <div class="landing-trust-item"><span class="landing-trust-n">23 days</span><span class="landing-trust-l" data-i18n="stat2">Avg hold duration</span></div>
+        <div class="landing-trust-item"><span class="landing-trust-n">23 days</span><span class="landing-trust-l" data-i18n="stat2">Avg hold time</span></div>
         <div class="landing-trust-sep"></div>
-        <div class="landing-trust-item"><span class="landing-trust-n">1 in 3</span><span class="landing-trust-l" data-i18n="stat3">First shipments hit a compliance issue</span></div>
+        <div class="landing-trust-item"><span class="landing-trust-n">1 in 3</span><span class="landing-trust-l" data-i18n="stat3">Shipments face issues</span></div>
       </div>
     </div>
     <div class="landing-right">
@@ -758,7 +758,7 @@ const T={
     hero_badge:'For food &amp; agri exporters &amp; importers worldwide',
     hero_h1:'Stop guessing.<br>Ship with confidence.',
     hero_p:'Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.',
-    stat1:'Avg customs detention cost',stat2:'Avg hold duration',stat3:'First shipments hit a compliance issue',
+    stat1:'Avg detention cost',stat2:'Avg hold time',stat3:'Shipments face issues',
     wb_title:'First time here? Start with the Compliance Checker.',wb_sub:'Pick your product + route. In seconds you\'ll see exactly what customs requires — then follow the steps.',wb_cta:'Start step 1 →',
     how1:'Check requirements',how2:'Cross-check your docs',how3:'Estimate landed cost',how4:'Track &amp; ship',
     nstep_t:'Next: cross-check your documents',nstep_b:'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.',nstep_cta:'Go to Doc Cross-Checker →',
@@ -795,7 +795,7 @@ const T={
     hero_badge:'Untuk eksportir &amp; importir pangan &amp; agri di seluruh dunia',
     hero_h1:'Berhenti menebak-nebak.<br>Kirim dengan percaya diri.',
     hero_p:'Masukkan detail perdagangan Anda. AI akan memeriksa persyaratan kepatuhan, menandai risiko tersembunyi, dan memberi tahu Anda apa yang harus disiapkan sebelum pengiriman.',
-    stat1:'Rata-rata biaya penahanan bea cukai',stat2:'Rata-rata durasi penahanan',stat3:'Pengiriman pertama terkena masalah kepatuhan',
+    stat1:'Rata-rata biaya penahanan',stat2:'Rata-rata waktu penahanan',stat3:'Pengiriman bermasalah',
     wb_title:'Pertama kali? Mulai dari Compliance Checker.',wb_sub:'Pilih produk + rute Anda. Dalam hitungan detik Anda tahu persis syarat bea cukai — lalu ikuti langkahnya.',wb_cta:'Mulai langkah 1 →',
     how1:'Cek persyaratan',how2:'Cek silang dokumen',how3:'Hitung biaya sampai tujuan',how4:'Pantau &amp; kirim',
     nstep_t:'Berikutnya: cek silang dokumen Anda',nstep_b:'Anda sudah tahu persyaratannya. Unggah Invoice + Packing List agar AI menemukan ketidakcocokan sebelum bea cukai.',nstep_cta:'Ke Doc Cross-Checker →',
@@ -832,7 +832,7 @@ const T={
     hero_badge:'Para exportadores e importadores de alimentos y agro en todo el mundo',
     hero_h1:'Deja de adivinar.<br>Exporta con confianza.',
     hero_p:'Ingresa los detalles de tu operación. La IA verifica los requisitos de cumplimiento, detecta riesgos ocultos y te dice exactamente qué preparar antes de enviar.',
-    stat1:'Costo promedio de detención aduanera',stat2:'Duración promedio de retención',stat3:'Primeros envíos con problema de cumplimiento',
+    stat1:'Costo promedio de retención',stat2:'Tiempo promedio de retención',stat3:'Envíos con problemas',
     wb_title:'¿Primera vez? Empieza con el Verificador de Cumplimiento.',wb_sub:'Elige tu producto + ruta. En segundos verás qué exige la aduana — luego sigue los pasos.',wb_cta:'Empezar paso 1 →',
     how1:'Verifica requisitos',how2:'Coteja tus documentos',how3:'Estima el costo total',how4:'Rastrea &amp; envía',
     nstep_t:'Siguiente: coteja tus documentos',nstep_b:'Ya conoces los requisitos. Sube tu Factura + Lista de Empaque para que la IA detecte discrepancias antes que la aduana.',nstep_cta:'Ir al Verificador de Documentos →',
