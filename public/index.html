@@ -57,6 +57,29 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .how-n{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);color:var(--wh);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .how-ar{color:rgba(255,255,255,.25);font-size:12px;font-weight:700}
 @media(max-width:640px){.how-ar{display:none}.how{flex-wrap:wrap;gap:6px 14px}}
+/* DEMO CARD */
+.demo-card{max-width:480px;margin:0 auto 28px;background:rgba(255,255,255,.07);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px 10px;text-align:left}
+.demo-hd{margin-bottom:10px}
+.demo-route{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:rgba(255,255,255,.85);flex-wrap:wrap}
+.demo-ar{color:rgba(255,255,255,.35);font-weight:400}
+.demo-prog{height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:8px;overflow:hidden}
+.demo-prog-bar{height:100%;width:0%;background:linear-gradient(90deg,#4ADE80,#22C55E);border-radius:3px;transition:width .4s ease}
+.demo-pct{font-size:10px;font-weight:800;color:#4ADE80;margin-top:4px;text-align:right}
+.demo-items{display:flex;flex-direction:column;gap:5px;min-height:100px}
+.demo-it{display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,.05);border-radius:7px;font-size:11px;color:rgba(255,255,255,.75);opacity:0;transform:translateY(6px);animation:demoIn .35s ease forwards}
+.demo-it-ck{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.demo-it-ck.on{background:#22C55E;border-color:#22C55E}
+.demo-it-ck svg{width:10px;height:10px;opacity:0;transition:opacity .2s}
+.demo-it-ck.on svg{opacity:1}
+.demo-it-tx{flex:1;line-height:1.4}
+.demo-it-st{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.demo-it-st.ok{background:rgba(34,197,94,.15);color:#4ADE80}
+.demo-it-st.warn{background:rgba(245,158,11,.15);color:#FBBF24}
+@keyframes demoIn{to{opacity:1;transform:translateY(0)}}
+.demo-cta-row{text-align:center;margin-top:10px}
+.demo-try{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:inherit;font-size:11px;font-weight:700;padding:8px 18px;border-radius:20px;cursor:pointer;transition:all .15s}
+.demo-try:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.35)}
+@media(max-width:640px){.demo-card{max-width:100%}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,#1D7A3F,#166232);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:opacity .2s}
 .welcome-banner.hidden{display:none}
@@ -332,6 +355,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <div class="hero-stat-item"><div class="hero-stat-n">23 days</div><div class="hero-stat-l" data-i18n="stat2">Avg hold duration</div></div>
       <div class="hero-stat-item"><div class="hero-stat-n">1 in 3</div><div class="hero-stat-l" data-i18n="stat3">First shipments hit a compliance issue</div></div>
     </div>
+    <!-- Animated demo preview -->
+    <div class="demo-card" id="demoCard">
+      <div class="demo-hd">
+        <div class="demo-route"><span>Cocoa Beans</span><span class="demo-ar">→</span><span>Indonesia → United States</span><span class="demo-ar">·</span><span>FOB</span></div>
+        <div class="demo-prog"><div class="demo-prog-bar" id="demoBar"></div></div>
+        <div class="demo-pct" id="demoPct">0%</div>
+      </div>
+      <div class="demo-items" id="demoItems"></div>
+      <div class="demo-cta-row"><button class="demo-try" onclick="switchTab('checker');window.scrollTo({top:0,behavior:'smooth'})" data-i18n="demo_cta">Try it with your own shipment →</button></div>
+    </div>
+
     <div class="how">
       <div class="how-s"><span class="how-n">1</span> <span data-i18n="how1">Check requirements</span></div>
       <span class="how-ar">→</span>
@@ -701,6 +735,7 @@ const T={
     wb_title:'First time here? Start with the Compliance Checker.',wb_sub:'Pick your product + route. In seconds you\'ll see exactly what customs requires — then follow the steps.',wb_cta:'Start step 1 →',
     how1:'Check requirements',how2:'Cross-check your docs',how3:'Estimate landed cost',how4:'Track &amp; ship',
     nstep_t:'Next: cross-check your documents',nstep_b:'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.',nstep_cta:'Go to Doc Cross-Checker →',
+    demo_cta:'Try it with your own shipment →',
     tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',
     ck_quickstart:'Quick start — click a corridor',
     ck_disclaimer:'AI-powered guidance. Not legal advice.',
@@ -736,6 +771,7 @@ const T={
     wb_title:'Pertama kali? Mulai dari Compliance Checker.',wb_sub:'Pilih produk + rute Anda. Dalam hitungan detik Anda tahu persis syarat bea cukai — lalu ikuti langkahnya.',wb_cta:'Mulai langkah 1 →',
     how1:'Cek persyaratan',how2:'Cek silang dokumen',how3:'Hitung biaya sampai tujuan',how4:'Pantau &amp; kirim',
     nstep_t:'Berikutnya: cek silang dokumen Anda',nstep_b:'Anda sudah tahu persyaratannya. Unggah Invoice + Packing List agar AI menemukan ketidakcocokan sebelum bea cukai.',nstep_cta:'Ke Doc Cross-Checker →',
+    demo_cta:'Coba dengan pengiriman Anda sendiri →',
     tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',
     ck_quickstart:'Mulai cepat — klik koridor',
     ck_disclaimer:'Panduan berbasis AI. Bukan nasihat hukum.',
@@ -771,6 +807,7 @@ const T={
     wb_title:'¿Primera vez? Empieza con el Verificador de Cumplimiento.',wb_sub:'Elige tu producto + ruta. En segundos verás qué exige la aduana — luego sigue los pasos.',wb_cta:'Empezar paso 1 →',
     how1:'Verifica requisitos',how2:'Coteja tus documentos',how3:'Estima el costo total',how4:'Rastrea &amp; envía',
     nstep_t:'Siguiente: coteja tus documentos',nstep_b:'Ya conoces los requisitos. Sube tu Factura + Lista de Empaque para que la IA detecte discrepancias antes que la aduana.',nstep_cta:'Ir al Verificador de Documentos →',
+    demo_cta:'Pruébalo con tu propio envío →',
     tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',
     ck_quickstart:'Inicio rápido — elige un corredor',
     ck_disclaimer:'Orientación basada en IA. No es asesoría legal.',
@@ -2167,6 +2204,51 @@ async function sendTara(){
     console.error('Tara error:',err);
   }
 }
+
+// ═══════════ HERO DEMO ANIMATION ═══════════
+(function runHeroDemo(){
+  const DEMO_ITEMS=[
+    {text:'Phytosanitary Certificate (USDA APHIS PPQ 578)',status:'ok',label:'Required'},
+    {text:'FDA Prior Notice (food import)',status:'ok',label:'Required'},
+    {text:'Fumigation Certificate — methyl bromide treatment',status:'warn',label:'Check'},
+    {text:'ICO Certificate of Origin (coffee/cocoa)',status:'ok',label:'Required'},
+    {text:'Bill of Lading — clean on-board',status:'ok',label:'Ready'},
+    {text:'Commercial Invoice — FOB terms',status:'ok',label:'Ready'},
+  ];
+  const box=document.getElementById('demoItems');
+  const bar=document.getElementById('demoBar');
+  const pct=document.getElementById('demoPct');
+  if(!box||!bar||!pct) return;
+
+  function runCycle(){
+    box.innerHTML='';bar.style.width='0%';pct.textContent='0%';
+    let i=0;
+    function addNext(){
+      if(i>=DEMO_ITEMS.length){
+        // Hold for 3s, then restart
+        setTimeout(()=>runCycle(),3500);
+        return;
+      }
+      const it=DEMO_ITEMS[i];
+      const pctVal=Math.round(((i+1)/DEMO_ITEMS.length)*100);
+      const div=document.createElement('div');
+      div.className='demo-it';
+      div.style.animationDelay='0s';
+      div.innerHTML=`<div class="demo-it-ck"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></div><div class="demo-it-tx">${it.text}</div><span class="demo-it-st ${it.status}">${it.label}</span>`;
+      box.appendChild(div);
+      // Animate check after a moment
+      setTimeout(()=>{div.querySelector('.demo-it-ck').classList.add('on')},300);
+      bar.style.width=pctVal+'%';
+      pct.textContent=pctVal+'%';
+      i++;
+      setTimeout(addNext,650);
+    }
+    // Small initial delay
+    setTimeout(addNext,800);
+  }
+  // Start after page loads
+  setTimeout(runCycle,1200);
+})();
 </script>
 </body>
 </html>
