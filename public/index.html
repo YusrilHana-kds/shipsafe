@@ -84,8 +84,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 @keyframes demoIn{to{opacity:1;transform:translateY(0)}}
 .demo-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.35);margin-bottom:10px}
 /* APP VIEW background */
-#appView{position:relative;min-height:calc(100vh - 56px);background:var(--sf)}
-#appView::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 90 L35 80 L85 80 L90 90 Q60 95 30 90Z' stroke='%23C8D0E0' stroke-width='.7' fill='none' opacity='.35'/%3E%3Crect x='40' y='68' width='12' height='12' rx='1' stroke='%23C8D0E0' stroke-width='.5' fill='none' opacity='.25'/%3E%3Crect x='55' y='65' width='12' height='15' rx='1' stroke='%23C8D0E0' stroke-width='.5' fill='none' opacity='.25'/%3E%3Crect x='70' y='70' width='12' height='10' rx='1' stroke='%23C8D0E0' stroke-width='.5' fill='none' opacity='.25'/%3E%3Ccircle cx='15' cy='30' r='2' fill='%23C8D0E0' opacity='.2'/%3E%3Ccircle cx='105' cy='45' r='1.5' fill='%23C8D0E0' opacity='.15'/%3E%3Cpath d='M10 50 Q60 25 110 55' stroke='%23C8D0E0' stroke-width='.5' fill='none' stroke-dasharray='3 4' opacity='.18'/%3E%3C/svg%3E");background-size:120px 120px;pointer-events:none;opacity:.5;z-index:0}
+#appView{position:relative;min-height:calc(100vh - 56px);background:linear-gradient(180deg,var(--sf) 0%,#E8ECF4 50%,var(--sf) 100%)}
+#appView::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(27,42,74,.04) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;z-index:0}
 #appView>*{position:relative;z-index:1}
 
 /* APP HERO (compact) */
@@ -262,6 +262,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .lo-cancel{margin-top:14px;background:none;border:1.5px solid var(--bd);color:var(--t2);font-family:inherit;font-size:12px;font-weight:600;padding:7px 20px;border-radius:var(--rs);cursor:pointer;transition:all .12s}
 .lo-cancel:hover{border-color:var(--er);color:var(--er)}
 
+.app-deco{max-width:900px;margin:0 auto;padding:0 24px;opacity:.8}
+.app-deco svg{width:100%;height:80px}
 .footer{text-align:center;padding:20px;font-size:10px;color:var(--t3)}
 
 /* OVERVIEW CARDS */
@@ -760,6 +762,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   </div>
 </div>
 
+<div class="app-deco">
+  <svg viewBox="0 0 1200 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 50 Q200 20 400 40 Q600 60 800 30 Q1000 10 1200 45" stroke="rgba(27,42,74,.06)" stroke-width="1.5" stroke-dasharray="6 5"><animate attributeName="stroke-dashoffset" values="0;-22" dur="4s" repeatCount="indefinite"/></path>
+    <path d="M0 60 Q300 35 600 55 Q900 75 1200 40" stroke="rgba(34,197,94,.05)" stroke-width="1" stroke-dasharray="4 6"><animate attributeName="stroke-dashoffset" values="0;-20" dur="5s" repeatCount="indefinite"/></path>
+    <circle cx="200" cy="38" r="3" fill="rgba(27,42,74,.08)"/><circle cx="600" cy="48" r="3.5" fill="rgba(34,197,94,.08)"/><circle cx="1000" cy="32" r="3" fill="rgba(27,42,74,.08)"/>
+  </svg>
+</div>
 <div class="footer" data-i18n="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
 </div><!-- /appView -->
 
