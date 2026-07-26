@@ -790,8 +790,8 @@ const T={
     tara_chips:['What documents do I need to export?','Explain FOB vs CIF','How do I find my HS code?'],
     footer:'ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
     ai_disc_t:'AI Reasoning — Needs Verification',
-    ai_disc_b:'These recommendations are AI-generated and may not reflect the latest regulations. Cross-check with a licensed customs broker before shipping.',
-    searching_web:'AI is generating your compliance checklist...',
+    ai_disc_b:'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.',
+    searching_web:'Searching web for latest regulations...',
     sources_heading:'Sources & References',
     note_heading:'My Notes',
     note_ph:'Add your own notes for this shipment — supplier contacts, buyer requirements, reminders, questions to ask your broker... (saved automatically to this browser)',
@@ -827,8 +827,8 @@ const T={
     tara_chips:['Dokumen apa yang saya perlukan untuk ekspor?','Jelaskan FOB vs CIF','Bagaimana cara menemukan kode HS saya?'],
     footer:'ShipSafe · Kepatuhan Perdagangan AI v2.0 · Bukan nasihat hukum · Perlu persetujuan ahli',
     ai_disc_t:'AI Reasoning — Perlu Verifikasi',
-    ai_disc_b:'Rekomendasi ini dihasilkan AI dan mungkin tidak mencerminkan regulasi terbaru. Verifikasi dengan customs broker berlisensi sebelum kirim.',
-    searching_web:'AI sedang menyusun checklist kepatuhan...',
+    ai_disc_b:'Rekomendasi ini menggunakan AI reasoning + pencarian web live. Verifikasi dengan customs broker berlisensi sebelum kirim.',
+    searching_web:'Mencari regulasi terbaru di web...',
     sources_heading:'Sumber & Referensi',
     note_heading:'Catatan Saya',
     note_ph:'Tambahkan catatanmu untuk pengiriman ini — kontak supplier, permintaan buyer, pengingat, pertanyaan untuk broker... (tersimpan otomatis di browser ini)',
@@ -864,8 +864,8 @@ const T={
     tara_chips:['¿Qué documentos necesito para exportar?','Explica FOB vs CIF','¿Cómo encuentro mi código HS?'],
     footer:'ShipSafe · Cumplimiento Comercial IA v2.0 · No es asesoría legal · Se requiere revisión humana',
     ai_disc_t:'Razonamiento IA — Requiere Verificación',
-    ai_disc_b:'Estas recomendaciones son generadas por IA y pueden no reflejar las regulaciones más recientes. Verifique con un agente aduanal licenciado antes de enviar.',
-    searching_web:'IA generando tu lista de cumplimiento...',
+    ai_disc_b:'Estas recomendaciones usan razonamiento IA + búsqueda web en vivo. Verifique con un agente aduanal licenciado antes de enviar.',
+    searching_web:'Buscando regulaciones más recientes en la web...',
     sources_heading:'Fuentes y Referencias',
     note_heading:'Mis Notas',
     note_ph:'Agrega tus propias notas para este envío — contactos de proveedores, requisitos del comprador, recordatorios, preguntas para tu agente... (guardado automáticamente en este navegador)',
@@ -1144,6 +1144,7 @@ async function streamClaude(reqBody){
   const decoder=new TextDecoder();
   let buf='';
   let text='';
+  let citations=[];
   let evCount=0;
   while(true){
     const{done,value}=await reader.read();
@@ -1159,18 +1160,26 @@ async function streamClaude(reqBody){
         evCount++;
         if(ev.type==='content_block_delta'&&ev.delta?.type==='text_delta'){
           text+=ev.delta.text;
+          // Collect inline citations from web search results
+          if(ev.delta.citations){
+            ev.delta.citations.forEach(c=>{
+              if(c.type==='web_search_result_location'&&c.url){
+                citations.push({url:c.url,title:c.title||'',cited_text:c.cited_text||''});
+              }
+            });
+          }
         }
       }catch(e){}
     }
   }
-  console.log('streamClaude: parsed',evCount,'SSE events, text length:',text.length);
-  return text;
+  console.log('streamClaude: parsed',evCount,'SSE events, text length:',text.length,'citations:',citations.length);
+  return {text,citations};
 }
 
 // Call Claude API for any corridor not in the local DB
 async function fetchFromClaude(commodity,origin,destination,incoterms){
   const langNote=getLangInstruction();
-  const userPrompt=`${langNote?langNote+'\n\n':''}Generate a complete, expert-level export compliance checklist for this exact trade corridor:
+  const userPrompt=`${langNote?langNote+'\n\n':''}Search the web for current FDA, EU, and destination-country regulations before generating the checklist. Prioritize official government sources (.gov, europa.eu, gov.uk, go.id). Then generate a complete, expert-level export compliance checklist for this exact trade corridor:
 
 Commodity: ${commodity}
 Origin Country: ${origin}
@@ -1255,17 +1264,25 @@ IMPORTANT: Keep each "detail" field under 120 characters. Be specific but concis
 risk_level must be exactly: "recommended", "caution", or "risky" — no other values.
 Return ONLY the JSON. Nothing else.`;
 
-  const rawText=await streamClaude({
+  const result=await streamClaude({
     model:'claude-sonnet-4-6',
     max_tokens:16384,
     system:SYSTEM_PROMPT,
+    tools:[{type:'web_search_20250305',name:'web_search',max_uses:5}],
     messages:[{role:'user',content:userPrompt}]
   });
+  const rawText=result.text;
   if(!rawText) throw new Error('Empty response from Claude');
   console.log('Claude raw (first 500 chars):',rawText.slice(0,500));
   console.log('Claude raw (last 300 chars):',rawText.slice(-300));
   console.log('Claude raw total length:',rawText.length);
-  return extractJSON(rawText);
+  const data=extractJSON(rawText);
+  // Dedupe citations by URL and attach to data
+  if(result.citations.length){
+    const seen=new Set();
+    data._sources=result.citations.filter(c=>{if(seen.has(c.url))return false;seen.add(c.url);return true});
+  }
+  return data;
 }
 
 function runCheck(){
@@ -1461,7 +1478,7 @@ who_pays must be "Shipper" or "Buyer" based on ${incoterms}.
 tips: 3-5 practical tips to reduce costs.
 Return ONLY the JSON. Nothing else.`;
 
-    const rawText=await streamClaude({model:'claude-sonnet-4-6',max_tokens:3000,system:'You are a senior freight forwarder. Return only valid JSON, no markdown or explanation.',messages:[{role:'user',content:prompt}]});
+    const rawText=(await streamClaude({model:'claude-sonnet-4-6',max_tokens:3000,system:'You are a senior freight forwarder. Return only valid JSON, no markdown or explanation.',messages:[{role:'user',content:prompt}]})).text;
     const data=extractJSON(rawText);
     ov.classList.remove('on');
     document.getElementById('loMsg').textContent='Analysing trade corridor...';
@@ -1821,7 +1838,7 @@ Return ONLY the JSON. Nothing else.`
       }
     });
 
-    const rawText=await streamClaude({model:'claude-sonnet-4-6',max_tokens:8096,messages:[{role:'user',content}]});
+    const rawText=(await streamClaude({model:'claude-sonnet-4-6',max_tokens:8096,messages:[{role:'user',content}]})).text;
     console.log('CC raw response:',rawText);
     if(!rawText) throw new Error('Empty response from Claude');
     const data=extractJSON(rawText);
@@ -2252,12 +2269,12 @@ async function sendTara(){
 
   try{
     const msgs=taraHistory.slice(-10); // keep last 10 messages for context
-    const reply=await streamClaude({
+    const reply=(await streamClaude({
       model:'claude-sonnet-4-6',
       max_tokens:1000,
       system:`You are Tara, ShipSafe's AI trade compliance assistant. You help exporters and importers with: Incoterms, customs regulations, document requirements, HS codes, shipping costs, payment terms, and compliance questions. Be concise (2-4 sentences max), specific, and practical. Use **bold** for key terms and bullet lists when listing items. Cite regulation codes when relevant. If you don't know something, say so. Always be friendly and helpful.${getLangInstruction()?' '+getLangInstruction():''}`,
       messages:msgs
-    })||'Sorry, I could not process that.';
+    })).text||'Sorry, I could not process that.';
     typing.remove();
     addTaraMsg(reply,'bot',true);
     taraHistory.push({role:'assistant',content:reply});

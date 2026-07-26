@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 export async function POST(request) {
   try {
@@ -9,13 +9,19 @@ export async function POST(request) {
     // Add stream:true to the request
     body.stream = true;
 
+    // Build headers — add web search beta header if tools include web_search
+    const headers = {
+      'Content-Type': 'application/json',
+      'x-api-key': process.env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    };
+    if (body.tools?.some(t => t.type?.startsWith('web_search'))) {
+      headers['anthropic-beta'] = 'web-search-2025-03-05';
+    }
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
+      headers,
       body: JSON.stringify(body),
     });
 
