@@ -42,7 +42,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 /* HERO */
 /* LANDING PAGE — split layout */
-.landing{background:linear-gradient(170deg,#0F1A2E,var(--nv) 40%,var(--nvm) 80%,#2a5594);padding:56px 32px 48px}
+.landing{background:linear-gradient(170deg,#0F1A2E,var(--nv) 40%,var(--nvm) 80%,#2a5594);min-height:calc(100vh - 52px);display:flex;align-items:center;padding:48px 32px;position:relative;overflow:hidden}
+.landing::before{content:'';position:absolute;top:-30%;right:-15%;width:500px;height:500px;background:radial-gradient(circle,rgba(59,91,219,.12) 0%,transparent 70%);pointer-events:none}
+.landing::after{content:'';position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(34,197,94,.06) 0%,transparent 70%);pointer-events:none}
 .landing-split{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%}
 .landing-left{text-align:left}
 .landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
