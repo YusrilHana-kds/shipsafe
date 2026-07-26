@@ -341,7 +341,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 <body>
 
 <header class="hd">
-  <div class="hd-b">
+  <div class="hd-b" onclick="goLanding()" style="cursor:pointer">
     <div class="hd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
     <span class="hd-nm">ShipSafe</span>
   </div>
@@ -911,6 +911,12 @@ function enterApp(){
   document.getElementById('landingView').style.display='none';
   document.getElementById('appView').style.display='';
   try{localStorage.setItem('ss_entered','1')}catch(e){}
+  window.scrollTo({top:0});
+}
+function goLanding(){
+  document.getElementById('landingView').style.display='';
+  document.getElementById('appView').style.display='none';
+  try{localStorage.removeItem('ss_entered')}catch(e){}
   window.scrollTo({top:0});
 }
 // Skip landing for returning users
