@@ -259,6 +259,34 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 
 .footer{text-align:center;padding:20px;font-size:10px;color:var(--t3)}
 
+/* GLOSSARY */
+.gl-search{width:100%;padding:10px 14px;border:1.5px solid var(--bd);border-radius:var(--r);font-size:13px;font-family:inherit;background:var(--wh);margin-bottom:10px;transition:border-color .15s}
+.gl-search:focus{outline:none;border-color:var(--nv)}
+.gl-cats{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
+.gl-cat{border:1.5px solid var(--bd);background:var(--wh);border-radius:20px;padding:5px 14px;font-size:10px;font-weight:700;font-family:inherit;color:var(--t2);cursor:pointer;transition:all .12s}
+.gl-cat:hover{border-color:var(--nv);color:var(--nv)}
+.gl-cat.active{background:var(--nv);color:#fff;border-color:var(--nv)}
+.gl-item{background:var(--wh);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:8px;overflow:hidden;transition:border-color .12s}
+.gl-item:hover{border-color:var(--nv)}
+.gl-item-hd{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.gl-item-tag{font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.gl-item-tag.ucp{background:rgba(37,99,235,.1);color:#2563EB}
+.gl-item-tag.isbp{background:rgba(16,185,129,.1);color:#059669}
+.gl-item-tag.inco{background:rgba(245,158,11,.1);color:#D97706}
+.gl-item-tag.urc{background:rgba(139,92,246,.1);color:#7C3AED}
+.gl-item-tag.urdg{background:rgba(236,72,153,.1);color:#DB2777}
+.gl-item-t{font-size:13px;font-weight:700;color:var(--t1);flex:1}
+.gl-item-ch{color:var(--t3);transition:transform .2s;font-size:12px}
+.gl-item.open .gl-item-ch{transform:rotate(180deg)}
+.gl-item-bd{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.gl-item.open .gl-item-bd{max-height:800px}
+.gl-item-content{padding:0 16px 14px;font-size:12px;color:var(--t2);line-height:1.7}
+.gl-item-content strong{color:var(--t1)}
+.gl-item-content .gl-key{font-size:10px;font-weight:700;color:var(--nv);text-transform:uppercase;letter-spacing:.3px;margin-top:8px;display:block}
+.gl-item-content ul{margin:4px 0 4px 16px;padding:0}
+.gl-item-content li{margin-bottom:3px}
+.gl-empty{text-align:center;padding:40px 20px;color:var(--t3);font-size:13px}
+
 /* OVERVIEW CARDS */
 .ov-card{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:10px;overflow:hidden;transition:all .2s}
 .ov-card.active-shipment{border-color:var(--ambd);border-width:1.5px}
@@ -430,6 +458,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <span class="tab-step">4</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       <span data-i18n="tab_overview">Shipment Overview</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('glossary')">
+      <span class="tab-step">📖</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      <span data-i18n="tab_glossary">Trade Glossary</span>
     </button>
   </div>
 </section>
@@ -725,6 +758,22 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <div id="cc-history-list"></div>
     </div>
   </div>
+
+  <!-- ═══ GLOSSARY TAB ═══ -->
+  <div class="tab-panel" id="tp-glossary">
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px" data-i18n="gl_title">Trade Glossary</h2>
+    <p style="font-size:12px;color:var(--t3);margin-bottom:12px" data-i18n="gl_sub">ICC rules, Incoterms, and trade finance standards — your reference library.</p>
+    <input type="text" class="gl-search" id="glSearch" placeholder="Search terms..." oninput="filterGlossary(this.value)" data-i18n-ph="gl_search_ph">
+    <div class="gl-cats" id="glCats">
+      <button class="gl-cat active" onclick="filterGlCat('all')">All</button>
+      <button class="gl-cat" onclick="filterGlCat('ucp')">UCP 600</button>
+      <button class="gl-cat" onclick="filterGlCat('isbp')">ISBP 745</button>
+      <button class="gl-cat" onclick="filterGlCat('inco')">Incoterms 2020</button>
+      <button class="gl-cat" onclick="filterGlCat('urc')">URC 522</button>
+      <button class="gl-cat" onclick="filterGlCat('urdg')">URDG 758</button>
+    </div>
+    <div class="gl-list" id="glList"></div>
+  </div>
 </div>
 
 <div class="footer" data-i18n="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
@@ -771,7 +820,8 @@ const T={
     nstep_t:'Next: cross-check your documents',nstep_b:'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.',nstep_cta:'Go to Doc Cross-Checker →',
     landing_h1:'Ship with<br>confidence.',landing_sub:'AI checks every compliance requirement, cross-references your documents, and estimates landed costs — before your shipment leaves port.',landing_note:'No signup required',
     demo_label:'Live preview — Compliance Checker',landing_cta:'Get Started — it\'s free',
-    tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',
+    tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',tab_glossary:'Trade Glossary',
+    gl_title:'Trade Glossary',gl_sub:'ICC rules, Incoterms, and trade finance standards — your reference library.',gl_search_ph:'Search terms...',
     ck_quickstart:'Quick start — click a corridor',
     ck_disclaimer:'AI-powered guidance. Not legal advice.',
     ck_run_btn:'Run Compliance Check',
@@ -808,7 +858,8 @@ const T={
     nstep_t:'Berikutnya: cek silang dokumen Anda',nstep_b:'Anda sudah tahu persyaratannya. Unggah Invoice + Packing List agar AI menemukan ketidakcocokan sebelum bea cukai.',nstep_cta:'Ke Doc Cross-Checker →',
     landing_h1:'Kirim dengan<br>percaya diri.',landing_sub:'AI memeriksa semua persyaratan kepatuhan, mencocokkan dokumen Anda, dan menghitung biaya sampai tujuan — sebelum pengiriman berangkat.',landing_note:'Tanpa perlu daftar',
     demo_label:'Preview langsung — Compliance Checker',landing_cta:'Mulai Sekarang — gratis',
-    tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',
+    tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',tab_glossary:'Glosarium Perdagangan',
+    gl_title:'Glosarium Perdagangan',gl_sub:'Aturan ICC, Incoterms, dan standar pembiayaan perdagangan — perpustakaan referensi Anda.',gl_search_ph:'Cari istilah...',
     ck_quickstart:'Mulai cepat — klik koridor',
     ck_disclaimer:'Panduan berbasis AI. Bukan nasihat hukum.',
     ck_run_btn:'Jalankan Cek Kepatuhan',
@@ -845,7 +896,8 @@ const T={
     nstep_t:'Siguiente: coteja tus documentos',nstep_b:'Ya conoces los requisitos. Sube tu Factura + Lista de Empaque para que la IA detecte discrepancias antes que la aduana.',nstep_cta:'Ir al Verificador de Documentos →',
     landing_h1:'Envía con<br>confianza.',landing_sub:'La IA verifica cada requisito de cumplimiento, coteja tus documentos y estima los costos finales — antes de que tu envío salga del puerto.',landing_note:'Sin registro necesario',
     demo_label:'Vista previa en vivo — Verificador de Cumplimiento',landing_cta:'Comenzar — es gratis',
-    tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',
+    tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',tab_glossary:'Glosario Comercial',
+    gl_title:'Glosario Comercial',gl_sub:'Reglas ICC, Incoterms y estándares de financiamiento comercial — tu biblioteca de referencia.',gl_search_ph:'Buscar términos...',
     ck_quickstart:'Inicio rápido — elige un corredor',
     ck_disclaimer:'Orientación basada en IA. No es asesoría legal.',
     ck_run_btn:'Verificar Cumplimiento',
@@ -965,7 +1017,7 @@ let tot=0,chk=0;
 function fill(i){const e=EX[i];document.getElementById('comSel').value=e.c;document.getElementById('comCust').style.display='none';document.getElementById('orig').value=e.o;document.getElementById('dest').value=e.d;document.getElementById('inco').value=e.i}
 
 // TABS
-const TAB_IDS=['checker','crosscheck','cost','overview'];
+const TAB_IDS=['checker','crosscheck','cost','overview','glossary'];
 function switchTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -2314,6 +2366,94 @@ async function sendTara(){
     console.error('Tara error:',err);
   }
 }
+
+// ═══════════ GLOSSARY ═══════════
+const GLOSSARY=[
+// ── UCP 600 ──
+{cat:'ucp',title:'UCP 600 — Overview',body:'<strong>Uniform Customs and Practice for Documentary Credits</strong> (ICC Publication No. 600, 2007 Revision). The globally accepted set of rules governing Letters of Credit (L/C). Applied by banks in over 175 countries. Superseded UCP 500.<span class="gl-key">Why it matters</span>If your L/C says "Subject to UCP 600" (almost all do), these rules determine whether your documents get paid or rejected.'},
+{cat:'ucp',title:'UCP 600 Art. 1-2 — Application & Definitions',body:'Art. 1: UCP applies when the L/C text expressly indicates it is subject to these rules. Binding on all parties.<br>Art. 2: Key definitions — <strong>Advising Bank</strong>, <strong>Applicant</strong> (buyer), <strong>Beneficiary</strong> (seller), <strong>Complying Presentation</strong>, <strong>Confirmation</strong>, <strong>Issuing Bank</strong>, <strong>Nominated Bank</strong>, <strong>Presenter</strong>.'},
+{cat:'ucp',title:'UCP 600 Art. 5 — Documents, Not Goods',body:'Banks deal with <strong>documents only</strong>, not with goods, services, or performance to which documents may relate. A bank has no obligation to check whether goods actually match what documents describe.<span class="gl-key">Practical impact</span>Your documents ARE your shipment in the eyes of the bank. Even if the goods are perfect, non-compliant documents = no payment.'},
+{cat:'ucp',title:'UCP 600 Art. 7-8 — Issuing & Confirming Bank Obligation',body:'Art. 7: Issuing Bank must honour a complying presentation. This is an irrevocable undertaking from the moment the credit is issued.<br>Art. 8: Confirming Bank adds its own irrevocable undertaking to that of the Issuing Bank — gives the beneficiary a "double guarantee."<span class="gl-key">Key point</span>Once the L/C is issued, the Issuing Bank CANNOT refuse payment if documents comply — regardless of any dispute between buyer and seller.'},
+{cat:'ucp',title:'UCP 600 Art. 14 — Standard for Examination',body:'Art. 14(a): Banks have <strong>max 5 banking days</strong> following presentation to examine and determine if documents comply.<br>Art. 14(b): Banks examine documents on face value — whether they appear compliant.<br>Art. 14(d): Data in a document need not be identical to, but <strong>must not conflict</strong> with data in the same document, other stipulated documents, or the credit itself.<br>Art. 14(e): Non-stipulated documents will not be examined.<br>Art. 14(j): Beneficiary and applicant addresses need not match L/C, but must be in the <strong>same country</strong>.<span class="gl-key">Most common rejection reason</span>Data conflict between documents — e.g. weight on Invoice differs from Packing List. Under Art. 14(d), this is a discrepancy.'},
+{cat:'ucp',title:'UCP 600 Art. 16 — Discrepant Documents',body:'When an Issuing Bank determines documents are discrepant, it may refuse to honour. It must give <strong>single notice</strong> to the presenter stating:<ul><li>The bank is refusing to honour</li><li>Each discrepancy for which it refuses</li><li>Whether it holds documents pending further instructions, or returns them</li></ul><span class="gl-key">Practical impact</span>Once the bank sends a refusal notice, the beneficiary can correct and re-present — but only within the L/C validity and presentation period.'},
+{cat:'ucp',title:'UCP 600 Art. 18 — Commercial Invoice',body:'<ul><li>Must appear to be issued by the <strong>beneficiary</strong></li><li>Must be made out in the name of the <strong>applicant</strong></li><li>Must be in the <strong>same currency</strong> as the credit</li><li>Description of goods must <strong>exactly match</strong> L/C description</li><li>Need not be signed</li></ul><span class="gl-key">Common mistake</span>Invoice goods description using different wording than the L/C — even minor differences like "Cocoa Beans" vs "Raw Cocoa Beans" will be rejected.'},
+{cat:'ucp',title:'UCP 600 Art. 19-25 — Transport Documents',body:'Art. 19: Multimodal transport document<br>Art. 20: <strong>Bill of Lading</strong> — must indicate carrier name, be signed, show goods "shipped on board" a named vessel at the port of loading stated in the credit.<br>Art. 21: Non-negotiable sea waybill<br>Art. 22: Charter party B/L<br>Art. 23: Air transport document<br>Art. 24: Road/rail/inland waterway<br>Art. 25: Courier receipt<span class="gl-key">Key rule (Art. 20)</span>B/L must be "clean" — no clauses declaring defective condition of goods or packaging. "Clean on board" is critical.'},
+{cat:'ucp',title:'UCP 600 Art. 28 — Insurance Document',body:'Required when L/C calls for CIF or CIP terms:<ul><li>Must be in <strong>same currency</strong> as the credit</li><li>Must cover at least <strong>110% of CIF/CIP value</strong></li><li>Must be dated no later than the transport document date</li><li>Must indicate risks covered</li></ul><span class="gl-key">Common error</span>Insuring for exactly 100% of invoice value instead of 110%. Banks will reject this.'},
+{cat:'ucp',title:'UCP 600 Art. 36 — Force Majeure',body:'A bank assumes no liability for consequences arising out of the interruption of its business by Acts of God, riots, civil disturbances, wars, or any other causes beyond its control. This includes expiry of a credit during such interruptions.<span class="gl-key">COVID-19 lesson</span>During the pandemic, many LCs expired while banks were closed. Art. 36 protected banks from liability in these cases.'},
+// ── ISBP 745 ──
+{cat:'isbp',title:'ISBP 745 — Overview',body:'<strong>International Standard Banking Practice for the Examination of Documents under UCP 600</strong> (ICC Publication No. 745E, 2013). A practical companion to UCP 600 — explains HOW banks actually examine documents. Not a separate set of rules, but guidance on applying UCP 600.<span class="gl-key">Why it matters</span>UCP 600 states the rules. ISBP 745 shows how those rules are applied in real-world document examination. If your documents pass ISBP 745, they pass UCP 600.'},
+{cat:'isbp',title:'ISBP 745 — General Principles (Para. A1-A24)',body:'<ul><li><strong>A1-A3</strong>: Abbreviations — generally acceptable if commonly used (e.g. "Ltd" for "Limited")</li><li><strong>A5</strong>: Typos — acceptable if they do not change the meaning (e.g. "Indnesia" for "Indonesia")</li><li><strong>A6</strong>: Addresses — need not match L/C but must be same country (per UCP 600 Art. 14j)</li><li><strong>A14</strong>: Corrections — must appear to be authenticated by the document issuer</li><li><strong>A18</strong>: Signatures — stamps, perforations, or electronic signatures acceptable</li><li><strong>A22</strong>: Original documents — if credit requires "original," document must appear to be original</li></ul>'},
+{cat:'isbp',title:'ISBP 745 — Goods Description (Para. C1-C5)',body:'<strong>C1</strong>: Goods description on the Invoice must <strong>mirror the L/C exactly</strong> — not merely be consistent, but use the same terms.<br><strong>C3</strong>: Other documents (Packing List, B/L, etc.) may use a <strong>general description</strong> of goods not conflicting with the L/C description.<br><strong>C5</strong>: Additional data on Invoice beyond L/C description is acceptable as long as it does not conflict.<span class="gl-key">Example</span>L/C says "Cocoa Beans." Invoice must say "Cocoa Beans" (may add "Grade A, Sulawesi origin"). Packing List can say "Cocoa Beans" or just "agricultural product" — but never "Cocoa Powder" (that conflicts).'},
+{cat:'isbp',title:'ISBP 745 — Quantities & Tolerances (Para. C6-C10)',body:'<strong>C7</strong>: A tolerance of <strong>±5%</strong> in quantity is allowed unless the credit states the quantity must not be exceeded or reduced, or the quantity is stated in terms of packing units or individual items.<br><strong>C8</strong>: Words "about" or "approximately" allow a <strong>±10% tolerance</strong>.<br><strong>C10</strong>: Even when the credit allows partial shipment, each drawing must be within the tolerance of the original credit amount.<span class="gl-key">Trap</span>If L/C says "100 bags" — this is a unit count, NOT a weight. ±5% tolerance does NOT apply to unit counts. You must ship exactly 100 bags.'},
+{cat:'isbp',title:'ISBP 745 — Invoice (Para. D1-D13)',body:'<ul><li><strong>D1</strong>: Must appear issued by the beneficiary (except back-to-back credits)</li><li><strong>D2</strong>: Must be made out to the applicant</li><li><strong>D3</strong>: Goods description must exactly correspond to the credit</li><li><strong>D5</strong>: Must be in the credit currency</li><li><strong>D8</strong>: Invoice amount must not exceed credit amount (but may be less)</li><li><strong>D11</strong>: Need not be signed</li><li><strong>D13</strong>: Trade terms on Invoice must match the credit</li></ul>'},
+{cat:'isbp',title:'ISBP 745 — Transport Docs / B/L (Para. E-K)',body:'<ul><li><strong>E3-E5</strong>: Must identify the carrier by name</li><li><strong>E13</strong>: "Shipped on board" notation — must show date, vessel name, and port of loading</li><li><strong>E16</strong>: Pre-printed "shipped on board" satisfies the requirement if B/L also shows loading date</li><li><strong>E19</strong>: Clean B/L — must bear no clause or notation declaring defective condition. "Clean on board" phrasing not required, but NO negative notations</li><li><strong>E20-E22</strong>: "Said to contain" and "shipper\'s load and count" are acceptable</li></ul><span class="gl-key">Common B/L discrepancies</span>Wrong port name, missing on-board date, consignee not per L/C, carrier not identified, freight status unclear.'},
+{cat:'isbp',title:'ISBP 745 — Insurance (Para. L1-L13)',body:'<ul><li><strong>L2</strong>: Must be issued by insurance company or underwriter — broker certificates NOT acceptable unless L/C allows</li><li><strong>L3</strong>: Cover note is not acceptable unless L/C specifically allows</li><li><strong>L5</strong>: Must be dated no later than transport document date (or show cover effective from that date)</li><li><strong>L8</strong>: Must indicate risks covered as required by L/C</li><li><strong>L9</strong>: Must cover at least 110% of CIF/CIP invoice value</li><li><strong>L10</strong>: Must be in credit currency</li></ul>'},
+{cat:'isbp',title:'ISBP 745 — Certificate of Origin (Para. M1-M6)',body:'<ul><li><strong>M1</strong>: Must appear to be issued by an appropriate authority (chamber of commerce, government body, or as required by L/C)</li><li><strong>M2</strong>: Must indicate the country of origin of goods as required by the credit</li><li><strong>M3</strong>: Goods description may be in general terms but must not conflict with L/C</li><li><strong>M5</strong>: If L/C does not specify who must issue it, any entity may issue (including the beneficiary)</li></ul>'},
+// ── INCOTERMS 2020 ──
+{cat:'inco',title:'Incoterms 2020 — Overview',body:'<strong>International Commercial Terms</strong> published by ICC. Define the responsibilities of buyers and sellers for the delivery of goods. Cover: cost allocation, risk transfer point, and transport/insurance obligations.<span class="gl-key">11 terms in 2 groups</span><strong>Any mode:</strong> EXW, FCA, CPT, CIP, DAP, DPU, DDP<br><strong>Sea/inland waterway only:</strong> FAS, FOB, CFR, CIF'},
+{cat:'inco',title:'EXW — Ex Works',body:'<strong>Risk transfers:</strong> At seller\'s premises<br><strong>Seller pays:</strong> Nothing beyond making goods available at their premises<br><strong>Buyer pays:</strong> Everything — loading, export clearance, transport, insurance, import clearance, duties<span class="gl-key">Caution</span>Seller may not be able to clear goods for export (buyer\'s responsibility). Rarely practical for international trade — use FCA instead.'},
+{cat:'inco',title:'FCA — Free Carrier',body:'<strong>Risk transfers:</strong> When goods are handed to the carrier at the named place<br><strong>Seller pays:</strong> Delivery to carrier, export clearance, loading (if at seller\'s premises)<br><strong>Buyer pays:</strong> Main carriage, insurance (optional), import clearance, duties<span class="gl-key">New in 2020</span>FCA now allows the buyer to instruct their carrier to issue an on-board B/L to the seller — solving the old problem of getting a shipped-on-board B/L under FCA.'},
+{cat:'inco',title:'FAS — Free Alongside Ship',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods are placed alongside the vessel at the port of shipment<br><strong>Seller pays:</strong> Delivery alongside ship, export clearance<br><strong>Buyer pays:</strong> Loading onto vessel, ocean freight, insurance, import clearance<span class="gl-key">Use case</span>Bulk cargoes (grain, minerals) where the buyer charters the vessel.'},
+{cat:'inco',title:'FOB — Free On Board',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods cross the ship\'s rail at the port of shipment<br><strong>Seller pays:</strong> Delivery to port, loading onto vessel, export clearance<br><strong>Buyer pays:</strong> Ocean freight, insurance, import clearance, duties<span class="gl-key">Most popular for exports</span>FOB is the most common Incoterm for agricultural commodity exports. Seller\'s obligation ends once goods are on the ship.'},
+{cat:'inco',title:'CFR — Cost and Freight',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods cross the ship\'s rail at origin port (same as FOB)<br><strong>Seller pays:</strong> Export clearance, loading, ocean freight to destination port<br><strong>Buyer pays:</strong> Insurance, import clearance, duties, unloading<span class="gl-key">Key nuance</span>Risk transfers at ORIGIN even though seller pays freight to DESTINATION. If goods are damaged during voyage, it\'s the buyer\'s loss — so buyer must arrange insurance.'},
+{cat:'inco',title:'CIF — Cost, Insurance & Freight',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods cross the ship\'s rail at origin (same as FOB/CFR)<br><strong>Seller pays:</strong> Export clearance, loading, ocean freight, marine insurance (min. 110% invoice value per ICC Clause C)<br><strong>Buyer pays:</strong> Import clearance, duties, unloading<span class="gl-key">Insurance requirement</span>Seller only needs to provide MINIMUM coverage (ICC Clause C). Buyer should arrange additional insurance if needed. Under UCP 600 Art. 28, insurance must cover ≥110% CIF value.'},
+{cat:'inco',title:'CPT — Carriage Paid To',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> When goods are handed to the first carrier<br><strong>Seller pays:</strong> Export clearance, carriage to named destination<br><strong>Buyer pays:</strong> Insurance (optional), import clearance, duties<span class="gl-key">CPT vs CFR</span>CPT works for any transport mode (truck, rail, air, multimodal). CFR is sea-only. Otherwise similar concept.'},
+{cat:'inco',title:'CIP — Carriage & Insurance Paid To',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> When goods are handed to the first carrier<br><strong>Seller pays:</strong> Export clearance, carriage to destination, insurance<br><strong>Buyer pays:</strong> Import clearance, duties<span class="gl-key">New in 2020</span>CIP now requires ALL RISKS insurance (ICC Clause A) — higher coverage than CIF which only requires Clause C. This is a major change from Incoterms 2010.'},
+{cat:'inco',title:'DAP — Delivered At Place',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> At the named place of destination, ready for unloading<br><strong>Seller pays:</strong> Everything to destination (export, transport, but NOT import clearance)<br><strong>Buyer pays:</strong> Import clearance, duties, unloading<span class="gl-key">Use case</span>When seller wants to deliver to buyer\'s warehouse or inland point but buyer handles customs.'},
+{cat:'inco',title:'DPU — Delivered at Place Unloaded',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> When goods are unloaded at the named destination<br><strong>Seller pays:</strong> Everything to destination INCLUDING unloading<br><strong>Buyer pays:</strong> Import clearance, duties<span class="gl-key">New in 2020</span>Replaced DAT (Delivered at Terminal). Now applies to ANY named place, not just a terminal. Only Incoterm where seller bears unloading risk.'},
+{cat:'inco',title:'DDP — Delivered Duty Paid',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> At buyer\'s named place, cleared for import<br><strong>Seller pays:</strong> EVERYTHING — export, transport, insurance, import clearance, duties, taxes, delivery<br><strong>Buyer pays:</strong> Nothing (just unloading from arriving vehicle)<span class="gl-key">Maximum seller obligation</span>Seller must be able to clear goods for import — this may be impossible in some countries. Check before agreeing to DDP.'},
+// ── URC 522 ──
+{cat:'urc',title:'URC 522 — Overview',body:'<strong>Uniform Rules for Collections</strong> (ICC Publication No. 522, 1995). Governs documentary collections (D/P and D/A) — a payment method where the bank acts as intermediary but does NOT guarantee payment (unlike L/C).<span class="gl-key">D/P vs D/A</span><strong>D/P (Documents against Payment)</strong>: Buyer must pay before receiving documents.<br><strong>D/A (Documents against Acceptance)</strong>: Buyer accepts a time draft (promise to pay later) to receive documents. Riskier for seller.'},
+{cat:'urc',title:'URC 522 Art. 1-3 — Scope & Definitions',body:'Art. 1: Applies to all collections where documents are handled by banks.<br>Art. 2: Defines "Collection" as the handling by banks of documents in accordance with instructions received, for the purpose of obtaining payment/acceptance or delivering documents against payment/acceptance.<br><strong>Principal</strong> = Seller (who sends documents)<br><strong>Remitting Bank</strong> = Seller\'s bank<br><strong>Collecting Bank</strong> = Buyer\'s local bank<br><strong>Drawee</strong> = Buyer (who must pay/accept)'},
+{cat:'urc',title:'URC 522 Art. 4 — Collection Instruction',body:'The collection instruction must include:<ul><li>Details of the bank from which the collection was received</li><li>Details of the principal (seller)</li><li>Details of the drawee (buyer)</li><li>Amount and currency to be collected</li><li>List of documents enclosed</li><li>Terms and conditions for payment/acceptance</li><li>Charges to be collected (who bears bank fees)</li></ul><span class="gl-key">Critical</span>Instructions must be clear. If the remitting bank fails to provide proper instructions, the collecting bank may refuse to handle the collection.'},
+{cat:'urc',title:'URC 522 Art. 7-10 — Responsibilities',body:'Art. 7: Banks must verify that documents received match the collection instruction listing. Banks are NOT obliged to check document content (unlike L/C under UCP 600).<br>Art. 9: Banks act in <strong>good faith and reasonable care</strong> — but have no liability for document authenticity, validity, or sufficiency.<br>Art. 10: Documents vs goods — banks do NOT deal with goods. If goods arrive before documents, bank has no obligation to warehouse or release them.'},
+{cat:'urc',title:'URC 522 Art. 20-21 — Payment & Acceptance',body:'Art. 20: For D/P collections, the collecting bank must release documents to the drawee (buyer) ONLY against <strong>immediate payment</strong>.<br>Art. 21: For D/A collections, documents are released against <strong>acceptance</strong> of a draft — the buyer signs a bill of exchange promising to pay on a future date.<span class="gl-key">Risk comparison</span>D/P is safer for the seller — buyer must pay first. D/A is risky — buyer gets documents (and goods) before actually paying. Seller relies on buyer\'s promise.'},
+// ── URDG 758 ──
+{cat:'urdg',title:'URDG 758 — Overview',body:'<strong>Uniform Rules for Demand Guarantees</strong> (ICC Publication No. 758, 2010). Governs independent guarantees and standby letters of credit issued by banks. Used globally for performance bonds, bid bonds, advance payment guarantees, and similar instruments.<span class="gl-key">Guarantee vs L/C</span>A guarantee is a "pay if something goes wrong" instrument. An L/C is a "pay when documents are presented" instrument. Different purposes.'},
+{cat:'urdg',title:'URDG 758 Art. 1-5 — Scope & Principles',body:'Art. 2: A guarantee is <strong>irrevocable</strong> unless stated otherwise.<br>Art. 4: A guarantee is <strong>independent</strong> of the underlying contract — the bank cannot refuse payment based on disputes between buyer and seller.<br>Art. 5: A guarantee is a <strong>documentary</strong> instrument — the bank only examines documents, not whether the underlying obligation was actually breached.<span class="gl-key">Key principle</span>Independence means the guarantee is a separate obligation from the underlying contract. Even if the seller claims the work is complete, the bank must pay if a complying demand is presented.'},
+{cat:'urdg',title:'URDG 758 Art. 14-15 — Demand & Examination',body:'Art. 14: A demand under the guarantee must:<ul><li>Be a <strong>supported demand</strong> — include a statement indicating in what respect the applicant is in breach</li><li>Be presented at the place of issuance (or as specified in the guarantee)</li><li>Be presented before the expiry date</li></ul>Art. 15: Guarantor has <strong>5 business days</strong> to examine the demand and determine compliance.<span class="gl-key">Complying demand</span>The demand must state HOW the applicant breached. A demand that simply says "please pay" without stating the breach is non-complying and can be rejected.'},
+{cat:'urdg',title:'URDG 758 — Common Guarantee Types',body:'<strong>Bid Bond / Tender Guarantee</strong>: Ensures the bidder does not withdraw their bid. Typically 2-5% of bid value.<br><strong>Performance Guarantee</strong>: Ensures the contractor performs the contract. Typically 10-15% of contract value.<br><strong>Advance Payment Guarantee</strong>: Protects the buyer\'s advance payment if the seller fails to deliver. Amount matches the advance paid.<br><strong>Retention Money Guarantee</strong>: Replaces cash retention held by the buyer during a defects liability period.<br><strong>Payment Guarantee</strong>: Guarantees buyer will pay the seller — used when buyer\'s creditworthiness is uncertain.'},
+{cat:'urdg',title:'URDG 758 Art. 23-25 — Expiry & Extend or Pay',body:'Art. 23: If no expiry is stated, guarantee expires after <strong>3 years</strong> from date of issue.<br>Art. 25: "Extend or Pay" — If the beneficiary demands extension of the guarantee before expiry and the guarantor cannot confirm an extension within the demand examination period, the guarantor must pay.<span class="gl-key">Trap for exporters</span>If you issue a guarantee with unclear expiry terms, it could be called years later. Always specify a clear expiry date and event.'}
+];
+
+function initGlossary(){
+  const list=document.getElementById('glList');
+  if(!list) return;
+  list.innerHTML=GLOSSARY.map((g,i)=>`<div class="gl-item" data-cat="${g.cat}" data-idx="${i}"><div class="gl-item-hd" onclick="this.parentElement.classList.toggle('open')"><span class="gl-item-tag ${g.cat}">${g.cat==='ucp'?'UCP 600':g.cat==='isbp'?'ISBP 745':g.cat==='inco'?'INCOTERMS':g.cat==='urc'?'URC 522':'URDG 758'}</span><span class="gl-item-t">${g.title}</span><span class="gl-item-ch">▼</span></div><div class="gl-item-bd"><div class="gl-item-content">${g.body}</div></div></div>`).join('');
+}
+function filterGlossary(q){
+  q=q.toLowerCase().trim();
+  document.querySelectorAll('.gl-item').forEach(el=>{
+    const idx=+el.dataset.idx;
+    const g=GLOSSARY[idx];
+    const match=!q||g.title.toLowerCase().includes(q)||g.body.toLowerCase().includes(q);
+    const catBtn=document.querySelector('.gl-cat.active');
+    const activeCat=catBtn?catBtn.textContent.trim().toLowerCase():'all';
+    const catMatch=activeCat==='all'||g.cat===activeCat.split(' ')[0].toLowerCase().replace('ucp','ucp').replace('isbp','isbp').replace('incoterms','inco').replace('urc','urc').replace('urdg','urdg');
+    el.style.display=match&&catMatch?'':'none';
+  });
+  const anyVisible=[...document.querySelectorAll('.gl-item')].some(el=>el.style.display!=='none');
+  const empty=document.querySelector('.gl-empty');
+  if(!anyVisible&&!empty){
+    document.getElementById('glList').insertAdjacentHTML('beforeend','<div class="gl-empty">No matching terms found.</div>');
+  }else if(anyVisible&&empty){empty.remove()}
+}
+function filterGlCat(cat){
+  document.querySelectorAll('.gl-cat').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  const q=document.getElementById('glSearch').value;
+  document.querySelectorAll('.gl-item').forEach(el=>{
+    const g=GLOSSARY[+el.dataset.idx];
+    const catMatch=cat==='all'||g.cat===cat;
+    const qMatch=!q||g.title.toLowerCase().includes(q.toLowerCase())||g.body.toLowerCase().includes(q.toLowerCase());
+    el.style.display=catMatch&&qMatch?'':'none';
+  });
+  const anyVisible=[...document.querySelectorAll('.gl-item')].some(el=>el.style.display!=='none');
+  const empty=document.querySelector('.gl-empty');
+  if(!anyVisible&&!empty){document.getElementById('glList').insertAdjacentHTML('beforeend','<div class="gl-empty">No matching terms found.</div>')}
+  else if(anyVisible&&empty){empty.remove()}
+}
+initGlossary();
 
 // ═══════════ HERO DEMO ANIMATION ═══════════
 (function runHeroDemo(){
