@@ -1159,7 +1159,7 @@ UCP 600 (Uniform Customs and Practice for Documentary Credits, ICC Publication 6
 - Art. 20(a)(ii): B/L must indicate goods shipped on board a named vessel at the port of loading stated in the credit.
 - Art. 28: Insurance document must be in the same currency as the credit, cover at least CIF/CIP value + 10%.
 
-ISBP 821 (International Standard Banking Practice, ICC Publication 821):
+ISBP 745 (International Standard Banking Practice, ICC Publication 745):
 - Para. 24-26: Descriptions of goods — Invoice must match LC description exactly. Other docs may use general terms consistent with LC.
 - Para. 27-28: Data not to conflict — misspellings or typos that do not change meaning are acceptable (e.g. "Smith" vs "Smth") but data must not conflict.
 - Para. 29: Commodity quantity tolerance of +/- 5% allowed unless LC prohibits or states exact quantity. Weight tolerance of +/- 5% is standard.
@@ -1177,12 +1177,12 @@ MANDATORY RULES FOR EVERY ITEM:
 1. "task" field: Short, imperative action (e.g. "Register with FDA as a Food Facility via FURLS"). Never vague ("check food safety").
 2. "detail" field: Must include ALL of the following that apply:
    - Exact regulation code (e.g. "FDA 21 CFR Part 1 Subpart H", "EU Regulation (EC) 852/2004", "Japan Food Sanitation Act Article 26")
-   - Reference to UCP 600 / ISBP 821 article where relevant (e.g. "UCP 600 Art. 18 — Invoice must match LC currency")
+   - Reference to UCP 600 / ISBP 745 article where relevant (e.g. "UCP 600 Art. 18 — Invoice must match LC currency")
    - The specific document name (e.g. "Prior Notice of Imported Food", "Certificate of Analysis", "IJEPA Form AJ")
    - Exact issuing authority and how to obtain it (e.g. "Apply at furls.fda.gov", "Request from BKIPM office in your province", "Download form from KADIN Jakarta")
    - Real timeline (e.g. "takes 3-5 business days", "must be submitted 15 days before US arrival")
    - Concrete consequence of skipping (e.g. "FDA will automatically detain shipment without physical examination", "shipment refused at port", "LC bank will reject the document set per UCP 600 Art. 16")
-   - Specific numbers where relevant (e.g. "aflatoxin limit: 20 ppb for US, 10 ppb for Japan/EU", "minimum font size: 10pt", "tolerance: ±5% per ISBP 821 Para. 29")
+   - Specific numbers where relevant (e.g. "aflatoxin limit: 20 ppb for US, 10 ppb for Japan/EU", "minimum font size: 10pt", "tolerance: ±5% per ISBP 745 Para. 29")
 
 BLIND SPOTS must be non-obvious risks that experienced exporters miss — not things already covered in the checklist. Each must end with a specific, pointed question the exporter must ask themselves or their forwarder right now.
 
@@ -1850,54 +1850,73 @@ async function runCC(){
     // Build message content: one text block + one image/doc block per file
     const content=[{
       type:'text',
-      text:`${getLangInstruction()?getLangInstruction()+'\n\n':''}You are a senior ${dirLabel.toLowerCase()} documentation auditor specializing in ICC banking standards (UCP 600, ISBP 821). I am uploading ${ccFiles.length} ${dirLabel.toLowerCase()} documents.${ccInco?' The Incoterms for this shipment is '+ccInco+'.':' Detect the Incoterms from the documents if possible.'} This is an ${dirLabel} transaction — check from the ${tradeDir==='import'?'importer/buyer':'exporter/shipper'} perspective.
+      text:`${getLangInstruction()?getLangInstruction()+'\n\n':''}You are a senior ${dirLabel.toLowerCase()} documentation auditor specializing in ICC banking standards (UCP 600, ISBP 745). I am uploading ${ccFiles.length} ${dirLabel.toLowerCase()} documents.${ccInco?' The Incoterms for this shipment is '+ccInco+'.':' Detect the Incoterms from the documents if possible.'} This is an ${dirLabel} transaction — check from the ${tradeDir==='import'?'importer/buyer':'exporter/shipper'} perspective.
 
-YOUR PRIMARY MISSION: Check PRECISION and CONSISTENCY across all documents. A bank examiner under UCP 600 Art. 14(a) would reject documents for any of these discrepancies. Be extremely precise — flag even minor mismatches.
+YOUR PRIMARY MISSION: Verify these documents belong to the SAME TRANSACTION, then check consistency and precision. Think like a bank examiner under UCP 600 Art. 14(a) — work in strict order.
 
-═══ ICC STANDARDS YOU MUST APPLY ═══
+═══ STEP 1: SUBJECT MATCHING (do this FIRST) ═══
 
-UCP 600:
-- Art. 14(d): Data must not conflict between documents. Not identical required, but no contradictions.
-- Art. 14(j): Beneficiary/applicant addresses need not match LC but must be same country.
-- Art. 18: Invoice must be issued by beneficiary to applicant, same currency as LC, description must EXACTLY match LC terms.
-- Art. 20(a): B/L must name carrier, be signed by carrier/master/agent, indicate port of loading per credit.
-- Art. 28: Insurance must cover min. 110% of CIF/CIP value, same currency.
+Before checking any rules, verify ALL documents refer to the SAME subject matter. Extract and compare these identity fields across every document:
 
-ISBP 821:
-- Para. 24-26: Invoice goods description must mirror LC word-for-word. Other docs may use general description consistent with LC.
-- Para. 27-28: Typos acceptable if meaning unchanged (e.g. "Jakrta" for "Jakarta"). But data must NEVER conflict.
-- Para. 29: Quantity tolerance ±5% allowed unless LC says "about" or "approximately" (then ±10%). Weight tolerance ±5%.
-- Para. 55-58: Invoice specifics — amounts, extensions (unit price × qty = total), currency codes.
-- Para. 98-113: B/L — shipper=beneficiary, consignee per LC, notify party, on-board notation with date and vessel name.
-- Para. 175-177: Certificate of Origin — country must match LC, issuer must be chamber of commerce or authorized body.
-- Para. 185-190: Packing List — weight/quantity/packages must be consistent with Invoice and B/L.
+A. TRANSACTION IDENTITY:
+   - Shipper/Exporter: full name + address → must be the same entity across all docs
+   - Consignee/Importer: full name + address → must be the same entity across all docs
+   - Notify Party: must match across B/L, Invoice, etc.
 
-═══ CONSISTENCY CHECKS (field-by-field, document-by-document) ═══
+B. GOODS IDENTITY:
+   - Commodity/goods description → must refer to the same product
+   - HS Code → must be identical across all docs
+   - Marks & Numbers (shipping marks) → must be identical across Invoice, Packing List, B/L
 
-Extract and compare these EXACT values from every uploaded document. Flag ANY discrepancy:
+C. SHIPMENT IDENTITY:
+   - Port of Loading → must match across all docs
+   - Port of Discharge → must match across all docs
+   - Vessel name (if stated) → must match
+   - Incoterms + named place → must be identical
 
-1. PARTIES: Shipper/Exporter name+address, Consignee/Importer name+address, Notify Party — must match across all docs (per UCP 600 Art. 14d). Even a missing comma, different abbreviation (Co. vs Company), or swapped line order matters.
-2. GOODS DESCRIPTION: Must match EXACTLY on Invoice (per ISBP 821 Para. 24). Other docs may use general terms but must not conflict.
-3. HS CODE: Must be identical across all documents. Verify it matches the described commodity.
-4. QUANTITIES: Number of packages, units, pieces — must match across Invoice, Packing List, B/L. Apply ±5% tolerance per ISBP 821 Para. 29 only if LC allows.
-5. WEIGHTS: Net weight and gross weight — compare across all docs. Flag even 1 kg difference.
-6. VALUES: Unit price × quantity must equal line total. Line totals must sum to grand total. Currency must be consistent (per UCP 600 Art. 18).
-7. INCOTERMS + PLACE: Must be identical across all docs. Named place must match.
-8. PORTS: Port of loading and port of discharge — must match across Invoice, B/L, other docs.
-9. MARKS & NUMBERS: Shipping marks must be identical across Invoice, Packing List, B/L.
-10. DATES: Invoice date ≤ B/L date. B/L on-board date must exist. Certificate dates must be logically ordered. Flag missing dates.
-11. COUNTRY OF ORIGIN: Must be consistent. If Certificate of Origin exists, country must match other docs.
+D. VALUE IDENTITY:
+   - Currency → must be consistent across all docs
+   - Total invoice value → must match where referenced
 
-═══ PRECISION CHECKS (arithmetic & formatting) ═══
+If ANY subject field does not match across documents, flag it as CRITICAL immediately. Quote the EXACT values from each document side by side.
+
+═══ STEP 2: QUANTITY & WEIGHT CONSISTENCY ═══
+
+Only after confirming the documents are about the same transaction, compare:
+
+1. QUANTITIES: packages, units, pieces → must match across Invoice, Packing List, B/L. Tolerance ±5% only if LC states "about" or "approximately" (ISBP 745 Para. 29).
+2. WEIGHTS: Net weight and gross weight → compare across all docs. Flag any difference.
+3. DATES: Invoice date ≤ B/L date. B/L on-board date must exist. Certificate dates logically ordered.
+
+═══ STEP 3: ARITHMETIC & PRECISION ═══
 
 - Unit price × quantity = line total (flag rounding errors beyond $0.01)
 - Sum of line totals = invoice total (must be exact)
 - Net weight + tare = gross weight (if both stated)
-- Package count in Packing List = package count on Invoice = package count on B/L
-- Currency code format (USD not US$, EUR not €)
-- Weight unit consistency (KG vs KGS vs Kilograms — should be uniform)
+- Package count consistency across docs
+- Currency code format consistency (USD not US$, EUR not €)
+- Weight unit consistency (KG vs KGS vs Kilograms)
 
-═══ MISSING DOCUMENTS ═══
+═══ STEP 4: ICC RULE COMPLIANCE ═══
+
+Only after Steps 1-3, apply these rules:
+
+UCP 600:
+- Art. 14(d): Data must not conflict between documents.
+- Art. 14(j): Addresses need not match LC but must be same country.
+- Art. 18: Invoice by beneficiary to applicant, same currency, description matches LC.
+- Art. 20(a): B/L must name carrier, signed, indicate port of loading.
+- Art. 28: Insurance ≥110% of CIF/CIP value, same currency.
+
+ISBP 745:
+- Para. 24-26: Invoice goods description must mirror LC word-for-word.
+- Para. 27-28: Typos OK if meaning unchanged, but data must never conflict.
+- Para. 55-58: Invoice amounts, extensions, currency codes.
+- Para. 98-113: B/L — shipper=beneficiary, consignee per LC, on-board notation.
+- Para. 175-177: Certificate of Origin — country matches, issued by authorized body.
+- Para. 185-190: Packing List — weight/quantity/packages consistent with Invoice and B/L.
+
+═══ STEP 5: MISSING DOCUMENTS ═══
 
 Based on commodity, destination, and Incoterms, flag missing documents:
 - Commercial Invoice, Packing List, B/L (always required)
@@ -1923,12 +1942,21 @@ Return ONLY valid JSON — no markdown, no explanation:
   "issues": [
     {
       "severity": "critical",
-      "category": "Consistency",
+      "category": "Subject Mismatch",
+      "field": "Consignee Name",
+      "finding": "Invoice: 'PT Maju Bersama, Jl. Sudirman 45, Jakarta' vs B/L: 'PT Maju Bersama Trading, Jl. Sudirman No.45, Jakarta' — name and address format differ",
+      "rule": "UCP 600 Art. 14(d) — data in documents must not conflict",
+      "impact": "Bank examiner will flag as discrepancy. Document rejection likely under UCP 600 Art. 16.",
+      "fix": "Ensure consignee name and address are letter-for-letter identical across Invoice, B/L, and Packing List."
+    },
+    {
+      "severity": "critical",
+      "category": "Weight Consistency",
       "field": "Gross Weight",
-      "finding": "Invoice: 5,250 kg vs Packing List: 5,200 kg — 50 kg discrepancy (0.95%), exceeds acceptable tolerance",
-      "rule": "ISBP 821 Para. 185-190 — weight must be consistent across all documents",
-      "impact": "Bank rejection under UCP 600 Art. 16. Customs re-weighing: 3-7 day hold, $1,200-$3,500 demurrage.",
-      "fix": "Align gross weight across Invoice, Packing List, and B/L. Reissue and re-present to bank."
+      "finding": "Invoice: 5,250 kg vs Packing List: 5,200 kg — 50 kg discrepancy (0.95%)",
+      "rule": "ISBP 745 Para. 185-190 — weight must be consistent across all documents",
+      "impact": "Bank rejection under UCP 600 Art. 16. Customs re-weighing: 3-7 day hold.",
+      "fix": "Align gross weight across Invoice, Packing List, and B/L. Reissue and re-present."
     }
   ],
   "missing_docs": [
@@ -1941,19 +1969,22 @@ Return ONLY valid JSON — no markdown, no explanation:
   ],
   "passed": [
     {
-      "category": "Consistency",
-      "field": "Consignee Name & Address",
+      "category": "Subject Match",
+      "field": "Shipper Name & Address",
       "note": "Exact match across Invoice, Packing List, and B/L — compliant with UCP 600 Art. 14(d)"
     }
   ]
 }
 severity: "critical", "warning", or "info" only.
-STRICT LIMITS:
-- Max 6 items in "issues" (prioritize consistency/precision discrepancies).
+category: Use "Subject Mismatch" for Step 1 issues, "Quantity/Weight Consistency" for Step 2, "Arithmetic/Precision" for Step 3, "ICC Rule Compliance" for Step 4. For passed items: "Subject Match", "Quantity Match", "Precision OK", "Rule Compliant".
+STRICT RULES:
+- ALWAYS do Step 1 (Subject Matching) first. If subjects don't match, still continue with other steps.
+- Prioritize subject mismatch and consistency issues over rule compliance issues.
+- Max 8 items in "issues" (at least 3 must be from Step 1 Subject Matching if mismatches exist).
 - Max 4 items in "missing_docs".
-- Max 10 items in "passed" (show every field you verified as matching).
-- Every "finding" must quote the EXACT values found in each document.
-- Every "rule" must cite UCP 600 or ISBP 821 article/paragraph.
+- Max 12 items in "passed" (include every subject field verified as matching).
+- Every "finding" must quote the EXACT values found in EACH document, side by side.
+- Every "rule" must cite UCP 600 or ISBP 745 article/paragraph.
 - Every text field: max 2 sentences.
 Return ONLY the JSON.`
     }];
