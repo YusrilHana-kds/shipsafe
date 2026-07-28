@@ -287,6 +287,21 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .gl-item-content li{margin-bottom:3px}
 .gl-empty{text-align:center;padding:40px 20px;color:var(--t3);font-size:13px}
 
+/* GLOSSARY DRAWER */
+.gl-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:999;opacity:0;pointer-events:none;transition:opacity .25s}
+.gl-overlay.open{opacity:1;pointer-events:auto}
+.gl-drawer{position:fixed;top:0;right:0;width:400px;max-width:92vw;height:100vh;background:var(--bg);z-index:1000;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.12)}
+.gl-drawer.open{transform:translateX(0)}
+.gl-drawer-hd{padding:16px 20px;background:var(--nv);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.gl-drawer-ic{width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gl-drawer-t{font-size:14px;font-weight:800;letter-spacing:.2px}
+.gl-drawer-sub{font-size:10px;opacity:.7;margin-top:1px}
+.gl-drawer-close{background:rgba(255,255,255,.12);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.gl-drawer-close:hover{background:rgba(255,255,255,.25)}
+.gl-drawer-body{flex:1;overflow-y:auto;padding:16px 20px}
+.gl-hd-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-size:10px;font-weight:700;font-family:inherit;padding:5px 10px;border-radius:14px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;letter-spacing:.2px}
+.gl-hd-btn:hover{background:rgba(255,255,255,.18);color:#fff}
+
 /* OVERVIEW CARDS */
 .ov-card{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:10px;overflow:hidden;transition:all .2s}
 .ov-card.active-shipment{border-color:var(--ambd);border-width:1.5px}
@@ -368,7 +383,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .lang-btn.active{background:rgba(255,255,255,.18);color:#fff}
 
 @media(max-width:800px){.landing-split{grid-template-columns:1fr;gap:28px;text-align:center}.landing-left{text-align:center}.landing-sub{margin:0 auto 24px}.landing-btns{justify-content:center}.landing-trust{justify-content:center}.landing-h1{font-size:32px}}
-@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:32px 16px}}
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:32px 16px}.gl-hd-btn span{display:none}.gl-hd-btn{padding:5px 7px}}
 </style>
 </head>
 <body>
@@ -379,6 +394,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     <span class="hd-nm">ShipSafe</span>
   </div>
   <div style="display:flex;align-items:center;gap:14px">
+    <button class="gl-hd-btn" onclick="toggleGlossary()" title="Trade Glossary">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      <span data-i18n="gl_btn">Glossary</span>
+    </button>
     <div class="lang-sw">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
       <button class="lang-btn" onclick="setLang('id')">ID</button>
@@ -458,11 +477,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <span class="tab-step">4</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       <span data-i18n="tab_overview">Shipment Overview</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('glossary')">
-      <span class="tab-step">📖</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      <span data-i18n="tab_glossary">Trade Glossary</span>
     </button>
   </div>
 </section>
@@ -759,21 +773,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
     </div>
   </div>
 
-  <!-- ═══ GLOSSARY TAB ═══ -->
-  <div class="tab-panel" id="tp-glossary">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--nv);margin-bottom:4px" data-i18n="gl_title">Trade Glossary</h2>
-    <p style="font-size:12px;color:var(--t3);margin-bottom:12px" data-i18n="gl_sub">ICC rules, Incoterms, and trade finance standards — your reference library.</p>
-    <input type="text" class="gl-search" id="glSearch" placeholder="Search terms..." oninput="filterGlossary(this.value)" data-i18n-ph="gl_search_ph">
-    <div class="gl-cats" id="glCats">
-      <button class="gl-cat active" onclick="filterGlCat('all')">All</button>
-      <button class="gl-cat" onclick="filterGlCat('ucp')">UCP 600</button>
-      <button class="gl-cat" onclick="filterGlCat('isbp')">ISBP 745</button>
-      <button class="gl-cat" onclick="filterGlCat('inco')">Incoterms 2020</button>
-      <button class="gl-cat" onclick="filterGlCat('urc')">URC 522</button>
-      <button class="gl-cat" onclick="filterGlCat('urdg')">URDG 758</button>
-    </div>
-    <div class="gl-list" id="glList"></div>
-  </div>
 </div>
 
 <div class="footer" data-i18n="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
@@ -804,6 +803,33 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
   </div>
 </div>
 
+<!-- GLOSSARY DRAWER -->
+<div class="gl-overlay" id="glOverlay" onclick="toggleGlossary()"></div>
+<div class="gl-drawer" id="glDrawer">
+  <div class="gl-drawer-hd">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="gl-drawer-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+      <div>
+        <div class="gl-drawer-t" data-i18n="gl_title">Trade Glossary</div>
+        <div class="gl-drawer-sub" data-i18n="gl_sub">ICC rules, Incoterms, and trade finance standards</div>
+      </div>
+    </div>
+    <button class="gl-drawer-close" onclick="toggleGlossary()">✕</button>
+  </div>
+  <div class="gl-drawer-body">
+    <input type="text" class="gl-search" id="glSearch" placeholder="Search terms..." oninput="filterGlossary(this.value)" data-i18n-ph="gl_search_ph">
+    <div class="gl-cats" id="glCats">
+      <button class="gl-cat active" onclick="filterGlCat('all')">All</button>
+      <button class="gl-cat" onclick="filterGlCat('ucp')">UCP 600</button>
+      <button class="gl-cat" onclick="filterGlCat('isbp')">ISBP 745</button>
+      <button class="gl-cat" onclick="filterGlCat('inco')">Incoterms 2020</button>
+      <button class="gl-cat" onclick="filterGlCat('urc')">URC 522</button>
+      <button class="gl-cat" onclick="filterGlCat('urdg')">URDG 758</button>
+    </div>
+    <div class="gl-list" id="glList"></div>
+  </div>
+</div>
+
 <script>
 // ═══════════ MULTILINGUAL ═══════════
 let currentLang='en';
@@ -821,7 +847,7 @@ const T={
     landing_h1:'Ship with<br>confidence.',landing_sub:'AI checks every compliance requirement, cross-references your documents, and estimates landed costs — before your shipment leaves port.',landing_note:'No signup required',
     demo_label:'Live preview — Compliance Checker',landing_cta:'Get Started — it\'s free',
     tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',tab_glossary:'Trade Glossary',
-    gl_title:'Trade Glossary',gl_sub:'ICC rules, Incoterms, and trade finance standards — your reference library.',gl_search_ph:'Search terms...',
+    gl_title:'Trade Glossary',gl_sub:'ICC rules, Incoterms, and trade finance standards — your reference library.',gl_search_ph:'Search terms...',gl_btn:'Glossary',
     ck_quickstart:'Quick start — click a corridor',
     ck_disclaimer:'AI-powered guidance. Not legal advice.',
     ck_run_btn:'Run Compliance Check',
@@ -859,7 +885,7 @@ const T={
     landing_h1:'Kirim dengan<br>percaya diri.',landing_sub:'AI memeriksa semua persyaratan kepatuhan, mencocokkan dokumen Anda, dan menghitung biaya sampai tujuan — sebelum pengiriman berangkat.',landing_note:'Tanpa perlu daftar',
     demo_label:'Preview langsung — Compliance Checker',landing_cta:'Mulai Sekarang — gratis',
     tab_crosscheck:'Pemeriksa Dokumen',tab_start:'MULAI DI SINI',tab_checker:'Cek Kepatuhan',tab_cost:'Kalkulator Biaya',tab_overview:'Ikhtisar Pengiriman',tab_glossary:'Glosarium Perdagangan',
-    gl_title:'Glosarium Perdagangan',gl_sub:'Aturan ICC, Incoterms, dan standar pembiayaan perdagangan — perpustakaan referensi Anda.',gl_search_ph:'Cari istilah...',
+    gl_title:'Glosarium Perdagangan',gl_sub:'Aturan ICC, Incoterms, dan standar pembiayaan perdagangan — perpustakaan referensi Anda.',gl_search_ph:'Cari istilah...',gl_btn:'Glosarium',
     ck_quickstart:'Mulai cepat — klik koridor',
     ck_disclaimer:'Panduan berbasis AI. Bukan nasihat hukum.',
     ck_run_btn:'Jalankan Cek Kepatuhan',
@@ -897,7 +923,7 @@ const T={
     landing_h1:'Envía con<br>confianza.',landing_sub:'La IA verifica cada requisito de cumplimiento, coteja tus documentos y estima los costos finales — antes de que tu envío salga del puerto.',landing_note:'Sin registro necesario',
     demo_label:'Vista previa en vivo — Verificador de Cumplimiento',landing_cta:'Comenzar — es gratis',
     tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',tab_glossary:'Glosario Comercial',
-    gl_title:'Glosario Comercial',gl_sub:'Reglas ICC, Incoterms y estándares de financiamiento comercial — tu biblioteca de referencia.',gl_search_ph:'Buscar términos...',
+    gl_title:'Glosario Comercial',gl_sub:'Reglas ICC, Incoterms y estándares de financiamiento comercial — tu biblioteca de referencia.',gl_search_ph:'Buscar términos...',gl_btn:'Glosario',
     ck_quickstart:'Inicio rápido — elige un corredor',
     ck_disclaimer:'Orientación basada en IA. No es asesoría legal.',
     ck_run_btn:'Verificar Cumplimiento',
@@ -1017,7 +1043,7 @@ let tot=0,chk=0;
 function fill(i){const e=EX[i];document.getElementById('comSel').value=e.c;document.getElementById('comCust').style.display='none';document.getElementById('orig').value=e.o;document.getElementById('dest').value=e.d;document.getElementById('inco').value=e.i}
 
 // TABS
-const TAB_IDS=['checker','crosscheck','cost','overview','glossary'];
+const TAB_IDS=['checker','crosscheck','cost','overview'];
 function switchTab(id){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -2415,6 +2441,15 @@ const GLOSSARY=[
 {cat:'urdg',title:'URDG 758 — Common Guarantee Types',body:'<strong>Bid Bond / Tender Guarantee</strong>: Ensures the bidder does not withdraw their bid. Typically 2-5% of bid value.<br><strong>Performance Guarantee</strong>: Ensures the contractor performs the contract. Typically 10-15% of contract value.<br><strong>Advance Payment Guarantee</strong>: Protects the buyer\'s advance payment if the seller fails to deliver. Amount matches the advance paid.<br><strong>Retention Money Guarantee</strong>: Replaces cash retention held by the buyer during a defects liability period.<br><strong>Payment Guarantee</strong>: Guarantees buyer will pay the seller — used when buyer\'s creditworthiness is uncertain.'},
 {cat:'urdg',title:'URDG 758 Art. 23-25 — Expiry & Extend or Pay',body:'Art. 23: If no expiry is stated, guarantee expires after <strong>3 years</strong> from date of issue.<br>Art. 25: "Extend or Pay" — If the beneficiary demands extension of the guarantee before expiry and the guarantor cannot confirm an extension within the demand examination period, the guarantor must pay.<span class="gl-key">Trap for exporters</span>If you issue a guarantee with unclear expiry terms, it could be called years later. Always specify a clear expiry date and event.'}
 ];
+
+function toggleGlossary(){
+  const drawer=document.getElementById('glDrawer');
+  const overlay=document.getElementById('glOverlay');
+  const isOpen=drawer.classList.contains('open');
+  if(isOpen){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow=''}
+  else{drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden'}
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('glDrawer').classList.contains('open'))toggleGlossary()});
 
 function initGlossary(){
   const list=document.getElementById('glList');
