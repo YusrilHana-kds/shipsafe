@@ -337,8 +337,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 @keyframes taraSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 .tara-btn{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#3B5BDB,#1B2A4A);border:none;color:var(--wh);font-size:20px;font-weight:800;letter-spacing:.5px;box-shadow:0 6px 22px rgba(27,42,74,.34);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
 .tara-btn:hover{transform:scale(1.08)}
-.tara-panel{position:fixed;bottom:94px;right:24px;width:392px;max-height:560px;background:var(--wh);border-radius:18px;box-shadow:0 12px 48px rgba(27,42,74,.22);z-index:101;display:none;flex-direction:column;overflow:hidden}
+.tara-panel{position:fixed;bottom:94px;right:24px;width:392px;height:520px;min-width:300px;min-height:320px;max-width:90vw;max-height:85vh;background:var(--wh);border-radius:18px;box-shadow:0 12px 48px rgba(27,42,74,.22);z-index:101;display:none;flex-direction:column;overflow:hidden}
 .tara-panel.open{display:flex;animation:taraPop .22s cubic-bezier(.16,1,.3,1)}
+.tara-resize{position:absolute;z-index:5}
+.tara-resize-e{top:18px;right:0;width:6px;height:calc(100% - 36px);cursor:e-resize}
+.tara-resize-w{top:18px;left:0;width:6px;height:calc(100% - 36px);cursor:w-resize}
+.tara-resize-s{bottom:0;left:18px;width:calc(100% - 36px);height:6px;cursor:s-resize}
+.tara-resize-n{top:0;left:18px;width:calc(100% - 36px);height:6px;cursor:n-resize}
+.tara-resize-se{bottom:0;right:0;width:16px;height:16px;cursor:se-resize}
+.tara-resize-sw{bottom:0;left:0;width:16px;height:16px;cursor:sw-resize}
+.tara-resize-ne{top:0;right:0;width:16px;height:16px;cursor:ne-resize}
+.tara-resize-nw{top:0;left:0;width:16px;height:16px;cursor:nw-resize}
+.tara-resize-se::after{content:'';position:absolute;bottom:4px;right:4px;width:8px;height:8px;border-right:2px solid rgba(0,0,0,.15);border-bottom:2px solid rgba(0,0,0,.15);border-radius:0 0 3px 0}
 @keyframes taraPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 .tara-hd{background:linear-gradient(135deg,#1B2A4A,#25406E);padding:16px 18px;display:flex;align-items:center;gap:12px;cursor:grab;user-select:none}
 .tara-hd.dragging{cursor:grabbing}
@@ -353,7 +363,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 @keyframes taraPulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 6px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .tara-close{background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
 .tara-close:hover{color:var(--wh)}
-.tara-msgs{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px;max-height:380px;background:var(--sf)}
+.tara-msgs{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px;background:var(--sf);min-height:0}
 .tara-row{display:flex;gap:9px;align-items:flex-end;max-width:90%}
 .tara-row.user{align-self:flex-end;flex-direction:row-reverse}
 .tara-row.bot{align-self:flex-start}
@@ -792,6 +802,14 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 </div>
 
 <div class="tara-panel" id="taraPanel">
+  <div class="tara-resize tara-resize-n" data-dir="n"></div>
+  <div class="tara-resize tara-resize-s" data-dir="s"></div>
+  <div class="tara-resize tara-resize-e" data-dir="e"></div>
+  <div class="tara-resize tara-resize-w" data-dir="w"></div>
+  <div class="tara-resize tara-resize-ne" data-dir="ne"></div>
+  <div class="tara-resize tara-resize-nw" data-dir="nw"></div>
+  <div class="tara-resize tara-resize-se" data-dir="se"></div>
+  <div class="tara-resize tara-resize-sw" data-dir="sw"></div>
   <div class="tara-hd">
     <div class="tara-av">T</div>
     <div style="flex:1">
@@ -2309,6 +2327,11 @@ function toggleTara(){
   if(isOpen){
     if(!_taraSeeded) seedTara();
     document.getElementById('taraInput').focus();
+    // Restore saved size
+    try{
+      const sz=JSON.parse(localStorage.getItem('tara_size'));
+      if(sz&&sz.w&&sz.h){p.style.width=Math.min(sz.w,window.innerWidth*0.9)+'px';p.style.height=Math.min(sz.h,window.innerHeight*0.85)+'px'}
+    }catch(e){}
     // Restore saved drag position
     try{
       const saved=JSON.parse(localStorage.getItem('tara_pos'));
@@ -2367,6 +2390,61 @@ function toggleTara(){
     panel.style.left=clamp(l,0,window.innerWidth-panel.offsetWidth)+'px';
     panel.style.top=clamp(t,0,window.innerHeight-panel.offsetHeight)+'px';
   });
+})();
+
+// ═══════════ TARA RESIZE ═══════════
+(function initTaraResize(){
+  const panel=document.getElementById('taraPanel');
+  const handles=panel.querySelectorAll('.tara-resize');
+  let isResizing=false,dir,startX,startY,startW,startH,startL,startT;
+  const MIN_W=300,MIN_H=320;
+  function clamp(v,mn,mx){return Math.max(mn,Math.min(v,mx))}
+  function ensureDragged(){
+    if(!panel.classList.contains('dragged')){
+      const r=panel.getBoundingClientRect();
+      panel.classList.add('dragged');
+      panel.style.left=r.left+'px';panel.style.top=r.top+'px';
+    }
+  }
+  function onStart(e){
+    isResizing=true;
+    dir=e.currentTarget.dataset.dir;
+    const pt=e.touches?e.touches[0]:e;
+    startX=pt.clientX;startY=pt.clientY;
+    startW=panel.offsetWidth;startH=panel.offsetHeight;
+    ensureDragged();
+    startL=parseInt(panel.style.left)||0;startT=parseInt(panel.style.top)||0;
+    document.body.classList.add('tara-dragging');
+    e.preventDefault();e.stopPropagation();
+  }
+  function onMove(e){
+    if(!isResizing)return;
+    const pt=e.touches?e.touches[0]:e;
+    const dx=pt.clientX-startX,dy=pt.clientY-startY;
+    let w=startW,h=startH,l=startL,t=startT;
+    if(dir.includes('e'))w=clamp(startW+dx,MIN_W,window.innerWidth-l);
+    if(dir.includes('w')){w=clamp(startW-dx,MIN_W,startL+startW);l=startL+startW-w}
+    if(dir.includes('s'))h=clamp(startH+dy,MIN_H,window.innerHeight-t);
+    if(dir.includes('n')){h=clamp(startH-dy,MIN_H,startT+startH);t=startT+startH-h}
+    panel.style.width=w+'px';panel.style.height=h+'px';
+    panel.style.left=l+'px';panel.style.top=t+'px';
+    e.preventDefault();
+  }
+  function onEnd(){
+    if(!isResizing)return;
+    isResizing=false;
+    document.body.classList.remove('tara-dragging');
+    try{localStorage.setItem('tara_size',JSON.stringify({w:panel.offsetWidth,h:panel.offsetHeight}))}catch(e){}
+    try{localStorage.setItem('tara_pos',JSON.stringify({left:parseInt(panel.style.left),top:parseInt(panel.style.top)}))}catch(e){}
+  }
+  handles.forEach(h=>{
+    h.addEventListener('mousedown',onStart);
+    h.addEventListener('touchstart',onStart,{passive:false});
+  });
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onEnd);
+  document.addEventListener('touchmove',onMove,{passive:false});
+  document.addEventListener('touchend',onEnd);
 })();
 
 // Minimal, safe markdown → HTML (bold, inline code, bullet/numbered lists, paragraphs)
