@@ -81,7 +81,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 @keyframes demoIn{to{opacity:1;transform:translateY(0)}}
 .demo-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.35);margin-bottom:10px}
 /* APP VIEW background */
-#appView{min-height:calc(100vh - 56px);background:linear-gradient(180deg,#EDF0F7 0%,#E4E8F2 40%,#EDF0F7 100%)}
+#appView{min-height:calc(100vh - 56px);background:linear-gradient(180deg,#EDF0F7 0%,#E4E8F2 40%,#EDF0F7 100%);transition:margin-right .3s cubic-bezier(.4,0,.2,1)}
+#appView.gl-open{margin-right:380px}
 
 /* APP HERO (compact) */
 .hero{background:linear-gradient(170deg,var(--nv),var(--nvm) 60%,#2a5594);padding:14px 24px 0;text-align:center}
@@ -287,10 +288,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .gl-item-content li{margin-bottom:3px}
 .gl-empty{text-align:center;padding:40px 20px;color:var(--t3);font-size:13px}
 
-/* GLOSSARY DRAWER */
-.gl-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:999;opacity:0;pointer-events:none;transition:opacity .25s}
-.gl-overlay.open{opacity:1;pointer-events:auto}
-.gl-drawer{position:fixed;top:0;right:0;width:400px;max-width:92vw;height:100vh;background:var(--bg);z-index:1000;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.12)}
+/* GLOSSARY DRAWER (non-modal sidebar) */
+.gl-overlay{display:none}
+.gl-drawer{position:fixed;top:56px;right:0;width:380px;max-width:92vw;height:calc(100vh - 56px);background:var(--wh);z-index:50;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.12);border-left:1px solid var(--bdl)}
 .gl-drawer.open{transform:translateX(0)}
 .gl-drawer-hd{padding:16px 20px;background:var(--nv);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
 .gl-drawer-ic{width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -340,7 +340,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .tara-panel{position:fixed;bottom:94px;right:24px;width:392px;max-height:560px;background:var(--wh);border-radius:18px;box-shadow:0 12px 48px rgba(27,42,74,.22);z-index:101;display:none;flex-direction:column;overflow:hidden}
 .tara-panel.open{display:flex;animation:taraPop .22s cubic-bezier(.16,1,.3,1)}
 @keyframes taraPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.tara-hd{background:linear-gradient(135deg,#1B2A4A,#25406E);padding:16px 18px;display:flex;align-items:center;gap:12px}
+.tara-hd{background:linear-gradient(135deg,#1B2A4A,#25406E);padding:16px 18px;display:flex;align-items:center;gap:12px;cursor:grab;user-select:none}
+.tara-hd.dragging{cursor:grabbing}
+.tara-panel.dragged{bottom:auto!important;right:auto!important}
+.tara-panel.dragged.open{animation:none}
+body.tara-dragging{user-select:none;-webkit-user-select:none}
 .tara-hd .tara-av{width:40px;height:40px;border-radius:11px;font-size:17px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .tara-hd-nm{color:var(--wh);font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
 .tara-hd-sub{color:rgba(255,255,255,.6);font-size:11px;margin-top:1px}
@@ -383,7 +387,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
 .lang-btn.active{background:rgba(255,255,255,.18);color:#fff}
 
 @media(max-width:800px){.landing-split{grid-template-columns:1fr;gap:28px;text-align:center}.landing-left{text-align:center}.landing-sub{margin:0 auto 24px}.landing-btns{justify-content:center}.landing-trust{justify-content:center}.landing-h1{font-size:32px}}
-@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel{width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:32px 16px}.gl-hd-btn span{display:none}.gl-hd-btn{padding:5px 7px}}
+@media(max-width:900px){#appView.gl-open{margin-right:0}}
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{display:grid;grid-template-columns:1fr 1fr;gap:3px}.tab-btn{padding:9px 10px;font-size:10px;justify-content:center;border-radius:6px 6px 0 0}.tab-panel{padding:14px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel:not(.dragged){width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:32px 16px}.gl-hd-btn span{display:none}.gl-hd-btn{padding:5px 7px}.gl-drawer{width:100vw;max-width:100vw}}
 </style>
 </head>
 <body>
@@ -793,6 +798,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--sf);color:var(--t
       <div class="tara-hd-nm">Tara <span class="tara-online"><span class="odot"></span><span data-i18n="tara_online">Online</span></span></div>
       <div class="tara-hd-sub" data-i18n="tara_role">Trade Compliance Assistant</div>
     </div>
+    <span style="color:rgba(255,255,255,.3);font-size:14px;padding:0 2px" title="Drag to reposition">⋮⋮</span>
     <button class="tara-close" onclick="toggleTara()">✕</button>
   </div>
   <div class="tara-msgs" id="taraMsgs"></div>
@@ -2303,8 +2309,65 @@ function toggleTara(){
   if(isOpen){
     if(!_taraSeeded) seedTara();
     document.getElementById('taraInput').focus();
+    // Restore saved drag position
+    try{
+      const saved=JSON.parse(localStorage.getItem('tara_pos'));
+      if(saved&&saved.left!=null&&saved.top!=null){
+        p.classList.add('dragged');
+        p.style.left=Math.min(saved.left,window.innerWidth-p.offsetWidth)+'px';
+        p.style.top=Math.min(saved.top,window.innerHeight-p.offsetHeight)+'px';
+      }
+    }catch(e){}
   }
 }
+
+// ═══════════ TARA DRAG ═══════════
+(function initTaraDrag(){
+  const panel=document.getElementById('taraPanel');
+  const header=panel.querySelector('.tara-hd');
+  let isDragging=false,startX,startY,startLeft,startTop;
+  function clamp(v,mn,mx){return Math.max(mn,Math.min(v,mx))}
+  function onStart(e){
+    if(e.target.closest('.tara-close'))return;
+    isDragging=true;
+    const r=panel.getBoundingClientRect();
+    const pt=e.touches?e.touches[0]:e;
+    startX=pt.clientX;startY=pt.clientY;startLeft=r.left;startTop=r.top;
+    panel.classList.add('dragged');
+    panel.style.left=startLeft+'px';panel.style.top=startTop+'px';
+    header.classList.add('dragging');
+    document.body.classList.add('tara-dragging');
+    e.preventDefault();
+  }
+  function onMove(e){
+    if(!isDragging)return;
+    const pt=e.touches?e.touches[0]:e;
+    const dx=pt.clientX-startX,dy=pt.clientY-startY;
+    const pw=panel.offsetWidth,ph=panel.offsetHeight;
+    panel.style.left=clamp(startLeft+dx,0,window.innerWidth-pw)+'px';
+    panel.style.top=clamp(startTop+dy,0,window.innerHeight-ph)+'px';
+    e.preventDefault();
+  }
+  function onEnd(){
+    if(!isDragging)return;
+    isDragging=false;
+    header.classList.remove('dragging');
+    document.body.classList.remove('tara-dragging');
+    try{localStorage.setItem('tara_pos',JSON.stringify({left:parseInt(panel.style.left),top:parseInt(panel.style.top)}))}catch(e){}
+  }
+  header.addEventListener('mousedown',onStart);
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onEnd);
+  header.addEventListener('touchstart',onStart,{passive:false});
+  document.addEventListener('touchmove',onMove,{passive:false});
+  document.addEventListener('touchend',onEnd);
+  window.addEventListener('resize',function(){
+    if(!panel.classList.contains('dragged'))return;
+    const l=parseInt(panel.style.left)||0,t=parseInt(panel.style.top)||0;
+    panel.style.left=clamp(l,0,window.innerWidth-panel.offsetWidth)+'px';
+    panel.style.top=clamp(t,0,window.innerHeight-panel.offsetHeight)+'px';
+  });
+})();
 
 // Minimal, safe markdown → HTML (bold, inline code, bullet/numbered lists, paragraphs)
 function taraMd(raw){
@@ -2444,10 +2507,10 @@ const GLOSSARY=[
 
 function toggleGlossary(){
   const drawer=document.getElementById('glDrawer');
-  const overlay=document.getElementById('glOverlay');
+  const appView=document.getElementById('appView');
   const isOpen=drawer.classList.contains('open');
-  if(isOpen){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow=''}
-  else{drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden'}
+  if(isOpen){drawer.classList.remove('open');if(appView)appView.classList.remove('gl-open')}
+  else{drawer.classList.add('open');if(appView)appView.classList.add('gl-open')}
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('glDrawer').classList.contains('open'))toggleGlossary()});
 
