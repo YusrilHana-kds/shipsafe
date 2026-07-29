@@ -17,6 +17,7 @@
 <meta name="twitter:description" content="Stop losing money to paperwork. ShipSafe catches compliance gaps before customs does.">
 <meta name="twitter:image" content="https://shipsafe-sage.vercel.app/og.png">
 <script defer src="/_vercel/insights/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -790,7 +791,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
       <div class="upload-zone" id="ccDropZone" onclick="document.getElementById('ccFileInput').click()" ondragover="ccDragOver(event)" ondrop="ccDrop(event)">
         <div style="font-size:28px;margin-bottom:8px">📂</div>
         <div style="font-size:13px;font-weight:500;color:var(--t1);margin-bottom:3px" data-i18n="cc_upload_title">Upload Trade Documents</div>
-        <div style="font-size:11px;color:var(--t3);margin-bottom:12px" data-i18n="cc_upload_hint">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Max 3 MB per file.</div>
+        <div style="font-size:11px;color:var(--t3);margin-bottom:12px" data-i18n="cc_upload_hint">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. PDF auto-converted to images for fast processing.</div>
         <button class="btn" onclick="event.stopPropagation();document.getElementById('ccFileInput').click()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <span data-i18n="cc_choose_files">Choose Files</span>
@@ -1409,7 +1410,7 @@ async function streamClaude(reqBody){
   });
   if(!r.ok){
     if(r.status===413){
-      throw new Error('File terlalu besar. Coba kompres PDF-nya atau gunakan gambar resolusi lebih rendah (max ~4.5 MB per file).');
+      throw new Error('Total file terlalu besar untuk dikirim. Coba upload lebih sedikit halaman atau gunakan gambar resolusi lebih rendah.');
     }
     let errMsg=`API returned ${r.status}`;
     try{const e=await r.json();errMsg+=': '+(e.error?.message||JSON.stringify(e))}catch(ex){}
@@ -1928,29 +1929,129 @@ let ccHistory=[]; // saved past results
 function ccDragOver(e){e.preventDefault();e.currentTarget.style.borderColor='var(--t3)'}
 function ccDrop(e){e.preventDefault();e.currentTarget.style.borderColor='';ccFilesAdded(e.dataTransfer.files)}
 
-const CC_MAX_FILE_SIZE=3*1024*1024; // 3 MB per file (~4 MB base64)
-const CC_MAX_TOTAL_SIZE=3*1024*1024; // 3 MB total to stay under Vercel 4.5 MB body limit
+// ── Client-side image compression ──
+function compressImage(dataUrl,maxW,quality){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width,h=img.height;
+      if(w>maxW){h=Math.round(h*(maxW/w));w=maxW}
+      const c=document.createElement('canvas');
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(c.toDataURL('image/jpeg',quality));
+    };
+    img.src=dataUrl;
+  });
+}
+
+// ── PDF to images conversion using PDF.js ──
+async function pdfToImages(arrayBuffer,maxW,quality){
+  if(typeof pdfjsLib==='undefined') throw new Error('PDF.js not loaded');
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
+  const pages=[];
+  const maxPages=Math.min(pdf.numPages,20); // max 20 pages
+  for(let i=1;i<=maxPages;i++){
+    const page=await pdf.getPage(i);
+    const vp=page.getViewport({scale:1});
+    // Scale so width = maxW (or original if smaller)
+    const scale=vp.width>maxW?maxW/vp.width:1.5; // min 1.5x for readability
+    const sv=page.getViewport({scale});
+    const canvas=document.createElement('canvas');
+    canvas.width=sv.width;
+    canvas.height=sv.height;
+    await page.render({canvasContext:canvas.getContext('2d'),viewport:sv}).promise;
+    const dataUrl=canvas.toDataURL('image/jpeg',quality);
+    const b64=dataUrl.split(',')[1];
+    pages.push({b64,size:Math.round(b64.length*3/4),page:i});
+  }
+  if(pdf.numPages>20){
+    console.warn(`PDF has ${pdf.numPages} pages, only first 20 converted`);
+  }
+  return pages;
+}
+
+// ── Show processing indicator in file list ──
+function ccShowProcessing(fileName){
+  const rows=document.getElementById('ccFileRows');
+  const list=document.getElementById('ccFileList');
+  list.style.display='';
+  const existing=rows.innerHTML;
+  rows.innerHTML=existing+`<div class="file-row" id="processing-${fileName.replace(/[^a-z0-9]/gi,'')}">
+    <div class="file-icon" style="background:var(--hover);font-size:18px">⏳</div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:600">${fileName}</div>
+      <div style="font-size:10px;color:var(--ac)">Converting PDF to images...</div>
+    </div>
+  </div>`;
+}
 
 function ccFilesAdded(fileList){
   const allowed=['application/pdf','image/png','image/jpeg'];
   Array.from(fileList).forEach(f=>{
     if(!allowed.includes(f.type)){alert(`${f.name}: only PDF, PNG, JPG supported`);return}
-    if(ccFiles.find(x=>x.name===f.name)) return; // skip duplicates
-    if(f.size>CC_MAX_FILE_SIZE){
-      alert(`⚠️ ${f.name} terlalu besar (${(f.size/1024/1024).toFixed(1)} MB).\n\nMaks ukuran file: 3 MB.\n\nCara kompres:\n• PDF: gunakan ilovepdf.com/compress_pdf\n• Image: gunakan tinypng.com\n• Atau screenshot halaman penting saja`);
-      return;
+    if(ccFiles.find(x=>x.name===f.name)) return;
+
+    if(f.type==='application/pdf'){
+      // Convert PDF to images client-side — supports any size PDF
+      ccShowProcessing(f.name);
+      const reader=new FileReader();
+      reader.onload=async ev=>{
+        try{
+          const pages=await pdfToImages(ev.target.result,1600,0.75);
+          // Remove processing indicator
+          const proc=document.getElementById('processing-'+f.name.replace(/[^a-z0-9]/gi,''));
+          if(proc) proc.remove();
+          // Add each page as a separate image file
+          if(pages.length===1){
+            ccFiles.push({name:f.name,size:pages[0].size,origSize:f.size,type:'image/jpeg',b64:pages[0].b64,fromPdf:true});
+          } else {
+            pages.forEach(p=>{
+              ccFiles.push({name:`${f.name} (p${p.page})`,size:p.size,origSize:f.size,type:'image/jpeg',b64:p.b64,fromPdf:true,pageNum:p.page});
+            });
+          }
+          ccRenderFileList();
+        }catch(e){
+          console.error('PDF conversion failed:',e);
+          const proc=document.getElementById('processing-'+f.name.replace(/[^a-z0-9]/gi,''));
+          if(proc) proc.remove();
+          // Fallback: try sending as raw PDF if small enough
+          if(f.size<=3*1024*1024){
+            const reader2=new FileReader();
+            reader2.onload=ev2=>{
+              const b64=ev2.target.result.split(',')[1];
+              ccFiles.push({name:f.name,size:f.size,origSize:f.size,type:'application/pdf',b64});
+              ccRenderFileList();
+            };
+            reader2.readAsDataURL(f);
+          } else {
+            alert(`⚠️ Gagal konversi ${f.name}.\n\nCoba screenshot halaman pentingnya saja (JPG/PNG).`);
+          }
+        }
+      };
+      reader.readAsArrayBuffer(f);
+    } else {
+      // Image file
+      const reader=new FileReader();
+      reader.onload=async ev=>{
+        let b64=ev.target.result.split(',')[1];
+        let finalType=f.type;
+        let finalSize=f.size;
+        // Auto-compress images >500 KB
+        if(f.size>500*1024){
+          try{
+            const compressed=await compressImage(ev.target.result,1600,0.7);
+            b64=compressed.split(',')[1];
+            finalType='image/jpeg';
+            finalSize=Math.round(b64.length*3/4);
+          }catch(e){console.warn('Compression failed, using original',e)}
+        }
+        ccFiles.push({name:f.name,size:finalSize,origSize:f.size,type:finalType,b64});
+        ccRenderFileList();
+      };
+      reader.readAsDataURL(f);
     }
-    const currentTotal=ccFiles.reduce((sum,x)=>sum+x.size,0);
-    if(currentTotal+f.size>CC_MAX_TOTAL_SIZE){
-      alert(`⚠️ Total file melebihi batas 3 MB.\n\nTotal sekarang: ${(currentTotal/1024/1024).toFixed(1)} MB\nFile baru: ${(f.size/1024/1024).toFixed(1)} MB\n\nHapus file lain dulu atau kompres file.`);
-      return;
-    }
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      ccFiles.push({name:f.name,size:f.size,type:f.type,b64:ev.target.result.split(',')[1]});
-      ccRenderFileList();
-    };
-    reader.readAsDataURL(f);
   });
 }
 
@@ -1959,26 +2060,31 @@ function ccRenderFileList(){
   const rows=document.getElementById('ccFileRows');
   if(!ccFiles.length){list.style.display='none';return}
   list.style.display='';
-  const totalSize=ccFiles.reduce((s,f)=>s+f.size,0);
-  const totalMB=(totalSize/1024/1024).toFixed(1);
-  const totalWarn=totalSize>2.5*1024*1024;
+  // Calculate total based on base64 size (what actually gets sent)
+  const totalB64=ccFiles.reduce((s,f)=>s+f.b64.length,0);
+  const totalPayload=Math.round(totalB64*3/4);
+  const totalMB=(totalPayload/1024/1024).toFixed(1);
+  const totalWarn=totalPayload>3.5*1024*1024;
   rows.innerHTML=ccFiles.map((f,i)=>{
-    const sizeMB=(f.size/1024/1024).toFixed(1);
     const sizeKB=(f.size/1024).toFixed(0);
-    const sizeLabel=f.size>1024*1024?sizeMB+' MB':sizeKB+' KB';
-    const isLarge=f.size>3*1024*1024;
+    const sizeLabel=f.size>1024*1024?(f.size/1024/1024).toFixed(1)+' MB':sizeKB+' KB';
+    const wasCompressed=f.origSize&&f.origSize>f.size;
+    const fromPdf=f.fromPdf;
+    const compLabel=fromPdf?' (from PDF → image)':wasCompressed?` (compressed ${(f.origSize/1024).toFixed(0)}→${sizeKB} KB)`:'';
     return `<div class="file-row">
       <div class="file-icon" style="background:var(--hover);font-size:18px">${f.type==='application/pdf'?'📄':'🖼️'}</div>
       <div style="flex:1">
         <div style="font-size:12px;font-weight:600">${f.name}</div>
-        <div style="font-size:10px;color:${isLarge?'var(--am)':'var(--t3)'}">${sizeLabel}${isLarge?' — large file, may be slow':''}</div>
+        <div style="font-size:10px;color:${fromPdf?'var(--ac)':'var(--t3)'}">${sizeLabel}${compLabel}</div>
       </div>
       <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:3px;font-weight:500;margin-right:8px">Ready</span>
       <button class="btn-outline" style="height:26px;padding:0 8px;font-size:10px" onclick="ccRemove(${i})">✕</button>
     </div>`;
   }).join('');
   if(ccFiles.length>0){
-    rows.innerHTML+=`<div style="font-size:10px;color:${totalWarn?'var(--am)':'var(--t3)'};margin-top:6px;text-align:right">Total: ${totalMB} MB / 3 MB</div>`;
+    rows.innerHTML+=`<div style="font-size:10px;color:${totalWarn?'var(--rd)':'var(--t3)'};margin-top:6px;text-align:right">
+      ${ccFiles.length} file${ccFiles.length>1?'s':''} · ~${totalMB} MB total${totalWarn?' ⚠️ Large payload — may be slow':''}
+    </div>`;
   }
 }
 
@@ -2068,6 +2174,13 @@ function ccGoToChecker(commodity,origin,destination,incoterms){
 
 async function runCC(){
   if(ccFiles.length<1){alert('Please upload at least 1 document.');return}
+  // Check total payload size — Vercel limit is 4.5 MB
+  const totalB64=ccFiles.reduce((s,f)=>s+f.b64.length,0);
+  const totalPayload=Math.round(totalB64*3/4);
+  if(totalPayload>4*1024*1024){
+    alert(`⚠️ Total dokumen terlalu besar (~${(totalPayload/1024/1024).toFixed(1)} MB).\n\nMaks ~4 MB total.\n\nCoba hapus beberapa halaman yang tidak penting dengan tombol ✕.`);
+    return;
+  }
   const btn=document.getElementById('ccBtn');
   const ov=document.getElementById('loader');
   btn.disabled=true;
@@ -2229,13 +2342,13 @@ STRICT RULES:
 Return ONLY the JSON.`
     }];
 
-    // Attach each file as a vision content block
+    // Attach each file as a vision content block (PDFs already converted to images)
     ccFiles.forEach(f=>{
       if(f.type==='application/pdf'){
-        // PDF: send as document block
+        // Fallback: small PDFs that weren't converted
         content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:f.b64}});
       } else {
-        // Image: send as image block
+        // Image (including PDF pages converted to images)
         content.push({type:'image',source:{type:'base64',media_type:f.type,data:f.b64}});
       }
     });
