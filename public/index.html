@@ -1585,7 +1585,7 @@ Return ONLY a JSON object with this exact structure (no text before or after):
 }
 
 Quantity targets: 5-6 pre-shipment items, 4-5 shipment items, 3-4 payment items, 3-4 blind spots, 3 payment methods, 5-7 cost items.
-IMPORTANT: Keep each "detail" field under 120 characters. Be specific but concise.
+IMPORTANT: Each "detail" field should be 1-3 sentences (up to 250 characters). Be specific: name the exact regulation, agency, document, website, timeline, or cost. Don't just say what to do — explain WHERE to get it, HOW LONG it takes, and WHAT HAPPENS if you don't.
 risk_level must be exactly: "recommended", "caution", or "risky" — no other values.
 Return ONLY the JSON. Nothing else.`;
 
@@ -2146,12 +2146,13 @@ function ccRenderFileList(){
 function ccRemove(i){ccFiles.splice(i,1);ccRenderFileList()}
 
 function ccReset(){
-  // Save current results to history before clearing
+  // Save current results to history before clearing (store raw data for re-render in any language)
   const resultsEl=document.getElementById('cc-results');
-  if(resultsEl.innerHTML&&resultsEl.style.display!=='none'){
-    ccHistory.unshift({html:resultsEl.innerHTML,files:ccFiles.map(f=>f.name),time:new Date()});
-    if(ccHistory.length>5) ccHistory.pop(); // keep last 5
+  if(window._ccLastData&&resultsEl.style.display!=='none'){
+    ccHistory.unshift({data:window._ccLastData,files:ccFiles.map(f=>f.name),time:new Date()});
+    if(ccHistory.length>5) ccHistory.pop();
     ccRenderHistory();
+    window._ccLastData=null;
   }
   ccFiles=[];
   ccRenderFileList();
@@ -2182,8 +2183,13 @@ function ccRenderHistory(){
 function ccShowHistory(i){
   const h=ccHistory[i];
   if(!h) return;
-  document.getElementById('cc-results').innerHTML=h.html;
-  document.getElementById('cc-results').style.display='';
+  if(h.data){
+    renderCC(h.data); // re-render with current language
+  } else if(h.html){
+    // Legacy fallback for old cached HTML
+    document.getElementById('cc-results').innerHTML=h.html;
+    document.getElementById('cc-results').style.display='';
+  }
   document.getElementById('cc-results').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -2352,27 +2358,27 @@ Return ONLY valid JSON — no markdown, no explanation:
       "severity": "critical",
       "category": "Subject Mismatch",
       "field": "Consignee Name",
-      "finding": "Invoice: 'PT Maju Bersama, Jl. Sudirman 45, Jakarta' vs B/L: 'PT Maju Bersama Trading, Jl. Sudirman No.45, Jakarta' — name and address format differ",
-      "rule": "UCP 600 Art. 14(d) — data in documents must not conflict",
-      "impact": "Bank examiner will flag as discrepancy. Document rejection likely under UCP 600 Art. 16.",
-      "fix": "Ensure consignee name and address are letter-for-letter identical across Invoice, B/L, and Packing List."
+      "finding": "Invoice shows consignee as 'PT Maju Bersama, Jl. Sudirman 45, Jakarta' but B/L states 'PT Maju Bersama Trading, Jl. Sudirman No.45, Jakarta'. The company name has an extra word 'Trading' and the street number format differs ('45' vs 'No.45'). Under UCP 600, this counts as conflicting data even if referring to the same entity.",
+      "rule": "UCP 600 Art. 14(d) — data in documents must not conflict with each other. Any discrepancy in names or addresses between documents is grounds for refusal.",
+      "impact": "Bank examiner will flag as a discrepancy under UCP 600 Art. 16. The presenting bank has 5 banking days to refuse, and the applicant may not waive this inconsistency. Resubmission typically adds 7-14 days.",
+      "fix": "Ensure consignee name and address are letter-for-letter identical across Invoice, B/L, and Packing List. Ask the issuing party to amend and re-issue with the exact same wording."
     },
     {
       "severity": "critical",
       "category": "Weight Consistency",
       "field": "Gross Weight",
-      "finding": "Invoice: 5,250 kg vs Packing List: 5,200 kg — 50 kg discrepancy (0.95%)",
-      "rule": "ISBP 745 Para. 185-190 — weight must be consistent across all documents",
-      "impact": "Bank rejection under UCP 600 Art. 16. Customs re-weighing: 3-7 day hold.",
-      "fix": "Align gross weight across Invoice, Packing List, and B/L. Reissue and re-present."
+      "finding": "Invoice states gross weight as 5,250 kg but Packing List shows 5,200 kg — a 50 kg discrepancy (0.95%). The B/L shows 5,250 kg matching Invoice. This means Packing List is the outlier. The discrepancy exceeds normal rounding and is not covered by 'about/approximately' tolerance under ISBP.",
+      "rule": "ISBP 745 Para. 185-190 — weight stated in Packing List must be consistent with Invoice and B/L. Tolerance only applies when LC explicitly uses 'about' or 'approximately' (ISBP 745 Para. 29).",
+      "impact": "Bank will likely refuse under UCP 600 Art. 16 since weight data conflicts across documents. If presented to customs, re-weighing may result in 3-7 day hold at destination port.",
+      "fix": "Correct the Packing List to show 5,250 kg gross weight matching Invoice and B/L. If actual weight is 5,200 kg, amend both Invoice and B/L to match. All three documents must show identical weights."
     }
   ],
   "missing_docs": [
     {
       "severity": "critical",
       "document": "FDA Prior Notice",
-      "reason": "Required for all food entering USA — 21 CFR Part 1 Subpart I.",
-      "how_to_obtain": "Submit at furls.fda.gov, 15 days before arrival. Free, takes 30 minutes."
+      "reason": "All food products entering the United States require FDA Prior Notice under 21 CFR Part 1 Subpart I (Bioterrorism Act). Without it, the shipment will be refused entry and held at port until notice is filed and confirmed.",
+      "how_to_obtain": "Submit electronically at furls.fda.gov at least 15 days before the vessel's expected arrival date. Registration is free and takes about 30 minutes. You will need the manufacturer's FDA registration number (FCE/SID), product details, and the US agent or consignee information."
     }
   ],
   "passed": [
@@ -2393,7 +2399,12 @@ STRICT RULES:
 - Max 12 items in "passed" (include every subject field verified as matching).
 - Every "finding" must quote the EXACT values found in EACH document, side by side.
 - Every "rule" must cite UCP 600 or ISBP 745 article/paragraph.
-- Every text field: max 2 sentences.
+- "finding": 2-3 sentences — quote EXACT values from each document side-by-side, explain what's wrong and why it matters.
+- "impact": 1-2 sentences — be specific about real-world consequence (bank rejection, customs hold, delay days, cost).
+- "fix": 1-2 sentences — actionable step to resolve.
+- "rule": cite the specific UCP/ISBP article with a brief explanation.
+- "reason" and "how_to_obtain" in missing_docs: 2-3 sentences with specific agency, website/URL, timeline, and cost.
+- "note" in passed: briefly explain what was checked and confirmed.
 Return ONLY the JSON.`
     }];
 
@@ -2412,6 +2423,7 @@ Return ONLY the JSON.`
     console.log('CC raw response:',rawText);
     if(!rawText) throw new Error('Empty response from Claude');
     const data=extractJSON(rawText);
+    window._ccLastData=data; // store raw data for history re-render
     ov.classList.remove('on');
     btn.disabled=false;
     document.getElementById('loMsg').textContent='Analysing trade corridor...';
