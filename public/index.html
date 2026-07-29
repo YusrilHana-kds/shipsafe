@@ -790,7 +790,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
       <div class="upload-zone" id="ccDropZone" onclick="document.getElementById('ccFileInput').click()" ondragover="ccDragOver(event)" ondrop="ccDrop(event)">
         <div style="font-size:28px;margin-bottom:8px">📂</div>
         <div style="font-size:13px;font-weight:500;color:var(--t1);margin-bottom:3px" data-i18n="cc_upload_title">Upload Trade Documents</div>
-        <div style="font-size:11px;color:var(--t3);margin-bottom:12px" data-i18n="cc_upload_hint">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Drag & drop or click.</div>
+        <div style="font-size:11px;color:var(--t3);margin-bottom:12px" data-i18n="cc_upload_hint">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. Max 3 MB per file.</div>
         <button class="btn" onclick="event.stopPropagation();document.getElementById('ccFileInput').click()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <span data-i18n="cc_choose_files">Choose Files</span>
@@ -1408,8 +1408,11 @@ async function streamClaude(reqBody){
     signal:_abortCtrl.signal
   });
   if(!r.ok){
+    if(r.status===413){
+      throw new Error('File terlalu besar. Coba kompres PDF-nya atau gunakan gambar resolusi lebih rendah (max ~4.5 MB per file).');
+    }
     let errMsg=`API returned ${r.status}`;
-    try{const e=await r.json();errMsg+=': '+JSON.stringify(e)}catch(ex){}
+    try{const e=await r.json();errMsg+=': '+(e.error?.message||JSON.stringify(e))}catch(ex){}
     throw new Error(errMsg);
   }
   const reader=r.body.getReader();
@@ -1925,11 +1928,23 @@ let ccHistory=[]; // saved past results
 function ccDragOver(e){e.preventDefault();e.currentTarget.style.borderColor='var(--t3)'}
 function ccDrop(e){e.preventDefault();e.currentTarget.style.borderColor='';ccFilesAdded(e.dataTransfer.files)}
 
+const CC_MAX_FILE_SIZE=3*1024*1024; // 3 MB per file (~4 MB base64)
+const CC_MAX_TOTAL_SIZE=3*1024*1024; // 3 MB total to stay under Vercel 4.5 MB body limit
+
 function ccFilesAdded(fileList){
   const allowed=['application/pdf','image/png','image/jpeg'];
   Array.from(fileList).forEach(f=>{
     if(!allowed.includes(f.type)){alert(`${f.name}: only PDF, PNG, JPG supported`);return}
     if(ccFiles.find(x=>x.name===f.name)) return; // skip duplicates
+    if(f.size>CC_MAX_FILE_SIZE){
+      alert(`⚠️ ${f.name} terlalu besar (${(f.size/1024/1024).toFixed(1)} MB).\n\nMaks ukuran file: 3 MB.\n\nCara kompres:\n• PDF: gunakan ilovepdf.com/compress_pdf\n• Image: gunakan tinypng.com\n• Atau screenshot halaman penting saja`);
+      return;
+    }
+    const currentTotal=ccFiles.reduce((sum,x)=>sum+x.size,0);
+    if(currentTotal+f.size>CC_MAX_TOTAL_SIZE){
+      alert(`⚠️ Total file melebihi batas 3 MB.\n\nTotal sekarang: ${(currentTotal/1024/1024).toFixed(1)} MB\nFile baru: ${(f.size/1024/1024).toFixed(1)} MB\n\nHapus file lain dulu atau kompres file.`);
+      return;
+    }
     const reader=new FileReader();
     reader.onload=ev=>{
       ccFiles.push({name:f.name,size:f.size,type:f.type,b64:ev.target.result.split(',')[1]});
@@ -1944,16 +1959,27 @@ function ccRenderFileList(){
   const rows=document.getElementById('ccFileRows');
   if(!ccFiles.length){list.style.display='none';return}
   list.style.display='';
-  rows.innerHTML=ccFiles.map((f,i)=>`
-    <div class="file-row">
+  const totalSize=ccFiles.reduce((s,f)=>s+f.size,0);
+  const totalMB=(totalSize/1024/1024).toFixed(1);
+  const totalWarn=totalSize>2.5*1024*1024;
+  rows.innerHTML=ccFiles.map((f,i)=>{
+    const sizeMB=(f.size/1024/1024).toFixed(1);
+    const sizeKB=(f.size/1024).toFixed(0);
+    const sizeLabel=f.size>1024*1024?sizeMB+' MB':sizeKB+' KB';
+    const isLarge=f.size>3*1024*1024;
+    return `<div class="file-row">
       <div class="file-icon" style="background:var(--hover);font-size:18px">${f.type==='application/pdf'?'📄':'🖼️'}</div>
       <div style="flex:1">
         <div style="font-size:12px;font-weight:600">${f.name}</div>
-        <div style="font-size:10px;color:var(--t3)">${(f.size/1024).toFixed(0)} KB</div>
+        <div style="font-size:10px;color:${isLarge?'var(--am)':'var(--t3)'}">${sizeLabel}${isLarge?' — large file, may be slow':''}</div>
       </div>
       <span style="font-size:9px;background:var(--gnbg);color:var(--gn);padding:2px 8px;border-radius:3px;font-weight:500;margin-right:8px">Ready</span>
       <button class="btn-outline" style="height:26px;padding:0 8px;font-size:10px" onclick="ccRemove(${i})">✕</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+  if(ccFiles.length>0){
+    rows.innerHTML+=`<div style="font-size:10px;color:${totalWarn?'var(--am)':'var(--t3)'};margin-top:6px;text-align:right">Total: ${totalMB} MB / 3 MB</div>`;
+  }
 }
 
 function ccRemove(i){ccFiles.splice(i,1);ccRenderFileList()}
