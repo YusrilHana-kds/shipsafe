@@ -22,6 +22,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --nv:#1B2A4A;--nvm:#1B2A4A;--nvl:#25406E;--nvw:#EEF2F9;
+  --ac:#4B7BF5;--acl:#6B93F7;
   --am:#D9730D;--ambg:#FBF3DB;--ambd:#E8D5A3;
   --gn:#0F7B0F;--gnbg:#DBEDDB;
   --rd:#E03E3E;--rdbg:#FBE4E4;
@@ -43,8 +44,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 
 /* LANDING PAGE */
 .landing{background:var(--nv);min-height:calc(100vh - 48px);display:flex;align-items:center;padding:60px 32px;position:relative;overflow:hidden}
-.landing::before{display:none}
-.landing::after{display:none}
+.landing::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(75,123,245,.12) 0%,transparent 70%);top:-120px;right:-100px;pointer-events:none}
+.landing::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(75,123,245,.08) 0%,transparent 70%);bottom:-80px;left:-60px;pointer-events:none}
 .landing-split{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%;position:relative;z-index:1}
 .landing-left{text-align:left}
 .landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:11px;font-weight:500;letter-spacing:0;padding:5px 14px;border-radius:4px;margin-bottom:14px}
@@ -52,7 +53,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .landing-sub{color:rgba(255,255,255,.7);font-size:15px;line-height:1.7;max-width:420px;margin:0 0 24px;font-weight:400}
 .landing-btns{display:flex;align-items:center;gap:14px;margin-bottom:28px}
 .landing-cta{background:#FFFFFF;color:var(--nv);font-family:inherit;font-size:14px;font-weight:600;padding:10px 24px;border-radius:4px;border:none;cursor:pointer;transition:background .1s;box-shadow:none}
-.landing-cta:hover{background:rgba(255,255,255,.9);box-shadow:none;transform:none}
+.landing-cta:hover{background:rgba(255,255,255,.95);box-shadow:0 4px 16px rgba(75,123,245,.25);transform:none}
 .landing-note{color:rgba(255,255,255,.5);font-size:12px;font-weight:400}
 .landing-trust{display:flex;align-items:stretch;gap:0;margin-top:8px}
 .landing-trust-item{padding:0 16px;text-align:left;display:flex;flex-direction:column;justify-content:center}
@@ -62,7 +63,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .landing-trust-sep{width:1px;background:rgba(255,255,255,.15);flex-shrink:0}
 .landing-right{position:relative}
 /* DEMO CARD */
-.demo-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:16px 18px 12px;text-align:left;backdrop-filter:blur(8px)}
+.demo-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:16px 18px 12px;text-align:left;backdrop-filter:blur(10px);box-shadow:0 4px 24px rgba(0,0,0,.15)}
 .demo-hd{margin-bottom:10px}
 .demo-route{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#FFFFFF;flex-wrap:wrap}
 .demo-ar{color:rgba(255,255,255,.4);font-weight:400}
@@ -86,7 +87,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 #appView.gl-open{margin-right:380px}
 
 /* APP HERO (compact) */
-.hero{background:var(--wh);padding:14px 24px 0;text-align:center;border-bottom:1px solid var(--bd)}
+.hero{background:linear-gradient(180deg,var(--wh) 0%,var(--sf) 100%);padding:14px 24px 0;text-align:center;border-bottom:1px solid var(--bd)}
 .hero-in{max-width:900px;margin:0 auto}
 .hero-compact{padding:14px 20px 0}
 .hero-compact .hero-in{padding:14px 20px 0}
@@ -94,7 +95,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .how-s{display:flex;align-items:center;gap:5px;color:var(--t2);font-size:11px;font-weight:500;white-space:nowrap}
 .how-n{width:20px;height:20px;border-radius:50%;background:var(--sf);color:var(--t1);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--bd)}
 .how-ar{color:var(--t3);font-size:12px;font-weight:400}
-@media(max-width:768px){.landing{padding:36px 20px 32px}.landing-split{grid-template-columns:1fr;gap:28px}.landing-left{text-align:center}.landing-sub{margin:0 auto 20px}.landing-btns{justify-content:center;flex-wrap:wrap}.landing-trust{justify-content:center;flex-wrap:wrap;gap:8px}.landing-trust-sep{display:none}.landing-trust-item{padding:0 12px}.landing-h1{font-size:34px}}
+@media(max-width:768px){.landing{padding:36px 20px 32px}.landing-split{grid-template-columns:1fr;gap:28px}.landing-left{text-align:center}.landing-sub{margin:0 auto 20px}.landing-btns{justify-content:center;flex-wrap:wrap}.landing-trust{justify-content:center;flex-wrap:wrap;gap:8px}.landing-trust-sep{display:none}.landing-trust-item{padding:0 12px}.landing-h1{font-size:34px}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}}
 @media(max-width:640px){.how{display:none}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:14px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:background .1s}
@@ -112,13 +113,13 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .tabs-bar{display:flex;justify-content:center;gap:0;padding-bottom:0;margin-bottom:-1px;position:relative;z-index:2}
 .tab-btn{padding:10px 16px;font-size:12px;font-weight:500;color:var(--t3);border:none;background:transparent;cursor:pointer;border-radius:0;transition:all .1s;font-family:inherit;display:flex;align-items:center;gap:6px;border-bottom:2px solid transparent}
 .tab-btn:hover{color:var(--t1);background:transparent}
-.tab-btn.active{background:transparent;color:var(--t1);border-bottom:2px solid var(--t1)}
+.tab-btn.active{background:transparent;color:var(--t1);border-bottom:2px solid var(--ac)}
 .tab-btn svg{display:none}
 .tab-step{width:18px;height:18px;border-radius:50%;background:var(--sf);color:var(--t2);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--bd)}
-.tab-btn.active .tab-step{background:var(--btn);color:var(--btn-tx);border-color:var(--btn)}
+.tab-btn.active .tab-step{background:var(--ac);color:#FFFFFF;border-color:var(--ac)}
 
 /* MAIN CARD */
-.main-card{background:var(--wh);max-width:900px;margin:0 auto;border-radius:0;box-shadow:none;padding:0;min-height:400px;position:relative}
+.main-card{background:var(--wh);max-width:900px;margin:0 auto;border-radius:0;box-shadow:0 2px 12px rgba(27,42,74,.06);padding:0;min-height:400px;position:relative}
 .tab-panel{display:none;padding:28px}
 .tab-panel.active{display:block}
 
@@ -133,13 +134,31 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .fd select,.fd input{height:36px;padding:0 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .1s}
 .fd select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
 .fd select:focus,.fd input:focus{border-color:var(--nv);box-shadow:inset 0 0 0 1px var(--nv)}
-.btn{background:var(--btn);color:var(--btn-tx);border:none;height:36px;padding:0 16px;border-radius:var(--rs);font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:background .1s}
-.btn:hover{background:var(--btn-hv)}
+.btn{background:var(--btn);color:var(--btn-tx);border:none;height:36px;padding:0 16px;border-radius:var(--rs);font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .15s}
+.btn:hover{background:var(--btn-hv);box-shadow:0 2px 8px rgba(27,42,74,.2)}
 .btn:disabled{opacity:.3;cursor:not-allowed}
 .btn-outline{background:transparent;border:1px solid var(--bd);color:var(--t2);height:32px;padding:0 12px;border-radius:var(--rs);font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .1s}
 .btn-outline:hover{background:var(--hover);color:var(--t1)}
 .err{display:none;background:var(--rdbg);border:1px solid #daa;border-radius:var(--rs);padding:10px 14px;margin-top:12px;font-size:12px;color:var(--rd)}
 .err.on{display:block}
+
+/* HS CODE SEARCHABLE DROPDOWN */
+.hs-search{position:relative}
+.hs-search input{height:36px;padding:0 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;transition:border-color .1s}
+.hs-search input:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}
+.hs-dropdown{display:none;position:absolute;top:100%;left:0;right:0;margin-top:4px;background:var(--wh);border:1px solid var(--bd);border-radius:var(--rs);box-shadow:0 8px 24px rgba(27,42,74,.12);max-height:280px;overflow-y:auto;z-index:100}
+.hs-dropdown.open{display:block}
+.hs-group{font-size:10px;font-weight:600;color:var(--t3);padding:8px 12px 4px;position:sticky;top:0;background:var(--wh);border-bottom:1px solid var(--bdl)}
+.hs-item{padding:8px 12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .08s}
+.hs-item:hover{background:var(--hover)}
+.hs-item-name{font-size:13px;color:var(--t1)}
+.hs-item-code{font-size:11px;font-weight:500;color:var(--ac);background:rgba(75,123,245,.08);padding:2px 6px;border-radius:3px}
+.hs-item.other{color:var(--t3);font-style:italic;font-size:12px}
+
+/* DEADLINE NOTICES */
+.dl-notice{background:var(--rdbg);border:1px solid var(--rd);border-radius:var(--rs);padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.dl-notice.warn{background:var(--ambg);border-color:var(--ambd)}
+.dl-notice.ok{background:var(--gnbg);border-color:var(--gn)}
 
 /* RESULTS */
 .route{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
@@ -516,16 +535,12 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
       <div class="xl" data-i18n="ck_quickstart">Quick start — click a corridor</div>
       <div class="xr" id="exRow"></div>
       <div class="fg">
-        <div class="fd"><label>Commodity</label>
-          <select id="comSel"><option value="">Select product</option>
-            <optgroup label="Cocoa"><option>Cocoa Powder (Natural)</option><option>Cocoa Powder (Alkalized)</option><option>Cocoa Butter</option><option>Cocoa Liquor</option><option>Raw Cocoa Beans</option></optgroup>
-            <optgroup label="Coffee"><option>Green Coffee Beans (Arabica)</option><option>Green Coffee Beans (Robusta)</option><option>Roasted Coffee Beans</option></optgroup>
-            <optgroup label="Spices"><option>Ground Turmeric</option><option>Black Pepper (Whole)</option><option>Vanilla Beans</option><option>Cloves (Whole)</option><option>Nutmeg (Whole)</option></optgroup>
-            <optgroup label="Oils"><option>Crude Palm Oil</option><option>Coconut Oil (Virgin)</option></optgroup>
-            <optgroup label="Seafood"><option>Frozen Shrimp</option><option>Canned Tuna</option></optgroup>
-            <optgroup label="Other"><option>Cashew Nuts (Raw)</option><option>Tapioca Starch</option><option value="_o">Other (type below)</option></optgroup>
-          </select>
-          <input type="text" id="comCust" placeholder="Type commodity" style="display:none;margin-top:5px" class="fd" autocomplete="off">
+        <div class="fd"><label>Commodity / HS Code</label>
+          <div class="hs-search" id="hsSearch">
+            <input type="text" id="hsInput" placeholder="Search by commodity or HS Code..." autocomplete="off">
+            <div class="hs-dropdown" id="hsDropdown"></div>
+          </div>
+          <input type="text" id="comCust" placeholder="Type your commodity name" style="display:none;margin-top:5px" autocomplete="off">
         </div>
         <div class="fd"><label>Origin Country</label>
           <select id="orig"><option value="">Select origin</option>
@@ -658,6 +673,12 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
         <div class="fd"><label>Estimated Weight (kg)</label>
           <input type="number" id="costWeight" placeholder="e.g. 5000" autocomplete="off">
         </div>
+        <div class="fd"><label>Product Value (USD)</label>
+          <input type="number" id="costValue" placeholder="e.g. 25000 (total invoice value)" autocomplete="off">
+        </div>
+        <div class="fd"><label>Total COGS (USD)</label>
+          <input type="number" id="costCOGS" placeholder="e.g. 15000 (total cost of goods)" autocomplete="off">
+        </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between">
         <span style="font-size:10px;color:var(--t3)">AI-powered estimates. Get firm quotes from your forwarder.</span>
@@ -719,7 +740,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
     <p style="font-size:12px;color:var(--t3);margin-bottom:12px" data-i18n="cc_subtitle">Upload your trade documents — AI will cross-check everything and catch issues before customs does.</p>
 
     <!-- Trade context selectors -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
       <div class="fd">
         <label>Trade Direction</label>
         <select id="ccDirection">
@@ -737,6 +758,17 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
           <option value="EXW">EXW (Ex Works)</option>
           <option value="FCA">FCA (Free Carrier)</option>
           <option value="DDP">DDP (Delivered Duty Paid)</option>
+        </select>
+      </div>
+      <div class="fd">
+        <label>Container Type</label>
+        <select id="ccContainer">
+          <option value="">Auto-detect from docs</option>
+          <option value="FCL-20ft">FCL — 20ft Standard</option>
+          <option value="FCL-40ft">FCL — 40ft Standard</option>
+          <option value="FCL-20R">FCL — 20ft Reefer</option>
+          <option value="FCL-40R">FCL — 40ft Reefer</option>
+          <option value="LCL">LCL (Less than Container)</option>
         </select>
       </div>
     </div>
@@ -1057,15 +1089,127 @@ const EX=[
 ];
 let tot=0,chk=0;
 
+// ═══════════ HS CODE DATA ═══════════
+const HS_DATA=[
+  {name:'Cocoa Powder (Natural)',hs:'1805.00',group:'Cocoa'},
+  {name:'Cocoa Powder (Alkalized)',hs:'1805.00',group:'Cocoa'},
+  {name:'Cocoa Butter',hs:'1804.00',group:'Cocoa'},
+  {name:'Cocoa Liquor',hs:'1803.10',group:'Cocoa'},
+  {name:'Raw Cocoa Beans',hs:'1801.00',group:'Cocoa'},
+  {name:'Green Coffee Beans (Arabica)',hs:'0901.11',group:'Coffee'},
+  {name:'Green Coffee Beans (Robusta)',hs:'0901.11',group:'Coffee'},
+  {name:'Roasted Coffee Beans',hs:'0901.21',group:'Coffee'},
+  {name:'Ground Turmeric',hs:'0910.30',group:'Spices'},
+  {name:'Black Pepper (Whole)',hs:'0904.11',group:'Spices'},
+  {name:'Vanilla Beans',hs:'0905.10',group:'Spices'},
+  {name:'Cloves (Whole)',hs:'0907.10',group:'Spices'},
+  {name:'Nutmeg (Whole)',hs:'0908.11',group:'Spices'},
+  {name:'Crude Palm Oil',hs:'1511.10',group:'Oils'},
+  {name:'Coconut Oil (Virgin)',hs:'1513.11',group:'Oils'},
+  {name:'Frozen Shrimp',hs:'0306.17',group:'Seafood'},
+  {name:'Canned Tuna',hs:'1604.14',group:'Seafood'},
+  {name:'Cashew Nuts (Raw)',hs:'0801.31',group:'Other'},
+  {name:'Tapioca Starch',hs:'1108.14',group:'Other'}
+];
+let hsSelected=null; // stores {name, hs, group}
+
+function hsRender(items){
+  const dd=document.getElementById('hsDropdown');
+  if(!items.length){dd.innerHTML='<div style="padding:12px;font-size:12px;color:var(--t3);text-align:center">No results found</div>';return}
+  let html='';
+  let lastGroup='';
+  items.forEach(item=>{
+    if(item.group!==lastGroup){
+      lastGroup=item.group;
+      html+=`<div class="hs-group">${item.group}</div>`;
+    }
+    html+=`<div class="hs-item" data-name="${item.name}" data-hs="${item.hs}" onclick="hsSelect(this)">
+      <span class="hs-item-name">${item.name}</span>
+      <span class="hs-item-code">${item.hs}</span>
+    </div>`;
+  });
+  html+=`<div class="hs-item other" data-name="_o" data-hs="" onclick="hsSelect(this)">Other (type below)</div>`;
+  dd.innerHTML=html;
+}
+
+function hsFilter(query){
+  const q=query.toLowerCase().trim();
+  if(!q){hsRender(HS_DATA);return}
+  const filtered=HS_DATA.filter(item=>
+    item.name.toLowerCase().includes(q)||
+    item.hs.includes(q)||
+    item.group.toLowerCase().includes(q)
+  );
+  hsRender(filtered);
+}
+
+function hsSelect(el){
+  const name=el.dataset.name;
+  const hs=el.dataset.hs;
+  const input=document.getElementById('hsInput');
+  const dd=document.getElementById('hsDropdown');
+  const custInput=document.getElementById('comCust');
+  dd.classList.remove('open');
+  if(name==='_o'){
+    input.value='';
+    input.placeholder='Type your commodity name...';
+    custInput.style.display='block';
+    custInput.focus();
+    hsSelected=null;
+  } else {
+    input.value=name+' (HS '+hs+')';
+    custInput.style.display='none';
+    hsSelected={name,hs};
+  }
+}
+
+function getSelectedCommodity(){
+  if(hsSelected) return {commodity:hsSelected.name, hsCode:hsSelected.hs};
+  const custVal=document.getElementById('comCust').value.trim();
+  const hsVal=document.getElementById('hsInput').value.trim();
+  if(custVal) return {commodity:custVal, hsCode:''};
+  // Check if user typed something in hsInput directly
+  if(hsVal&&!hsVal.includes('(HS ')){
+    // Try to match from HS_DATA
+    const match=HS_DATA.find(h=>h.name.toLowerCase()===hsVal.toLowerCase());
+    if(match) return {commodity:match.name, hsCode:match.hs};
+    return {commodity:hsVal, hsCode:''};
+  }
+  return {commodity:'', hsCode:''};
+}
+
 // INIT
 (function(){
   const r=document.getElementById('exRow');
   EX.forEach((e,i)=>{const b=document.createElement('button');b.className='xc';b.textContent=e.l;b.onclick=()=>fill(i);r.appendChild(b)});
-  document.getElementById('comSel').onchange=function(){document.getElementById('comCust').style.display=this.value==='_o'?'block':'none'};
+
+  // HS Code searchable dropdown init
+  const hsInput=document.getElementById('hsInput');
+  const hsDD=document.getElementById('hsDropdown');
+  hsRender(HS_DATA);
+  hsInput.addEventListener('input',()=>{hsFilter(hsInput.value);hsDD.classList.add('open')});
+  hsInput.addEventListener('focus',()=>{hsFilter(hsInput.value);hsDD.classList.add('open')});
+  document.addEventListener('click',(e)=>{if(!document.getElementById('hsSearch').contains(e.target))hsDD.classList.remove('open')});
+
   document.getElementById('costCom').onchange=function(){document.getElementById('costComCust').style.display=this.value==='_o'?'block':'none'};
 })();
 
-function fill(i){const e=EX[i];document.getElementById('comSel').value=e.c;document.getElementById('comCust').style.display='none';document.getElementById('orig').value=e.o;document.getElementById('dest').value=e.d;document.getElementById('inco').value=e.i}
+function fill(i){
+  const e=EX[i];
+  // Find matching HS data
+  const match=HS_DATA.find(h=>h.name===e.c);
+  if(match){
+    document.getElementById('hsInput').value=match.name+' (HS '+match.hs+')';
+    hsSelected={name:match.name,hs:match.hs};
+  } else {
+    document.getElementById('hsInput').value=e.c;
+    hsSelected=null;
+  }
+  document.getElementById('comCust').style.display='none';
+  document.getElementById('orig').value=e.o;
+  document.getElementById('dest').value=e.d;
+  document.getElementById('inco').value=e.i;
+}
 
 // TABS
 const TAB_IDS=['checker','crosscheck','cost','overview'];
@@ -1304,11 +1448,11 @@ async function streamClaude(reqBody){
 }
 
 // Call Claude API for any corridor not in the local DB
-async function fetchFromClaude(commodity,origin,destination,incoterms){
+async function fetchFromClaude(commodity,origin,destination,incoterms,hsCode){
   const langNote=getLangInstruction();
   const userPrompt=`${langNote?langNote+'\n\n':''}Search the web for current FDA, EU, and destination-country regulations before generating the checklist. Prioritize official government sources (.gov, europa.eu, gov.uk, go.id). Then generate a complete, expert-level export compliance checklist for this exact trade corridor:
 
-Commodity: ${commodity}
+Commodity: ${commodity}${hsCode?' (HS Code: '+hsCode+')':''}
 Origin Country: ${origin}
 Destination Country: ${destination}
 Incoterms: ${incoterms}
@@ -1414,8 +1558,8 @@ Return ONLY the JSON. Nothing else.`;
 
 function runCheck(){
   const eb=document.getElementById('errBox');eb.classList.remove('on');eb.style.display='none';
-  const sel=document.getElementById('comSel').value;const cust=document.getElementById('comCust').value.trim();
-  const commodity=sel==='_o'?cust:sel;const origin=document.getElementById('orig').value;
+  const {commodity:_com,hsCode:_hs}=getSelectedCommodity();
+  const commodity=_com;const origin=document.getElementById('orig').value;
   const destination=document.getElementById('dest').value;const incoterms=document.getElementById('inco').value;
   if(!commodity||!origin||!destination||!incoterms){eb.textContent='Please fill in all four fields.';eb.style.display='block';return}
   const key=commodity+'|'+origin+'|'+destination+'|'+incoterms;
@@ -1431,7 +1575,7 @@ function runCheck(){
   // DB miss: panggil Claude API
   document.getElementById('loMsg').textContent=T[currentLang]?.searching_web||'Searching web for latest regulations...';
   goBtn.disabled=true;
-  fetchFromClaude(commodity,origin,destination,incoterms)
+  fetchFromClaude(commodity,origin,destination,incoterms,_hs)
     .then(data=>{
       ov.classList.remove('on');
       document.getElementById('loMsg').textContent='Analysing trade corridor...';
@@ -1564,6 +1708,8 @@ async function runCostCalc(){
   const incoterms=document.getElementById('costInco').value;
   const container=document.getElementById('costContainer').value;
   const weight=document.getElementById('costWeight').value;
+  const productValue=document.getElementById('costValue').value;
+  const cogs=document.getElementById('costCOGS').value;
   if(!commodity||!origin||!destination||!incoterms){alert('Please fill in commodity, origin, destination, and Incoterms.');return}
 
   const btn=document.getElementById('costBtn');
@@ -1571,6 +1717,24 @@ async function runCostCalc(){
   btn.disabled=true;
   document.getElementById('loMsg').textContent='AI is calculating shipment costs...';
   ov.classList.add('on');
+
+  const hasProfitData=productValue&&cogs;
+  const profitSection=hasProfitData?`
+Product Value: $${productValue}
+COGS (Cost of Goods Sold): $${cogs}
+
+IMPORTANT: After calculating shipping costs, also calculate profitability. Add a "profitability" object to your JSON response:
+"profitability": {
+  "product_value": "$${productValue}",
+  "cogs": "$${cogs}",
+  "total_shipping": "[sum of all shipper costs]",
+  "total_cost": "[COGS + total shipping]",
+  "gross_profit": "[product value - total cost]",
+  "margin_pct": "[gross profit / product value * 100]%",
+  "shipping_ratio": "[total shipping / product value * 100]%",
+  "verdict": "[1-2 sentence assessment of profitability and shipping cost ratio]"
+}
+`:'';
 
   try{
     const prompt=`${getLangInstruction()?getLangInstruction()+'\n\n':''}You are a senior freight forwarder and trade cost consultant. Calculate a detailed cost breakdown for this shipment:
@@ -1581,7 +1745,7 @@ Destination: ${destination}
 Incoterms: ${incoterms}
 Container: ${container}
 Weight: ${weight||'not specified'} kg
-
+${profitSection}
 Under ${incoterms}, clearly mark which costs are the shipper's responsibility and which are the buyer's.
 Use realistic market rates for ${origin} → ${destination} in 2024-2025.
 
@@ -1598,7 +1762,7 @@ Return ONLY a valid JSON object:
   "tips": [
     "Negotiate THC directly with shipping line for better rates",
     "Book 3-4 weeks ahead during peak season (Aug-Dec)"
-  ]
+  ]${hasProfitData?',\n  "profitability": { ... }':''}
 }
 Provide 10-16 cost items. Categories: "Origin", "Freight", "Destination", "Documentation", "Insurance", "Finance".
 who_pays must be "Shipper" or "Buyer" based on ${incoterms}.
@@ -1651,6 +1815,42 @@ function renderCostCalc(data){
     html+=`<div style="background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--r);padding:14px 16px;margin-top:4px">
       <div style="font-size:11px;font-weight:500;color:var(--am);margin-bottom:6px">💡 Cost-Saving Tips</div>
       <ul style="font-size:11px;color:var(--t2);padding-left:16px;margin:0;line-height:1.8">${data.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+    </div>`;
+  }
+
+  if(data.profitability){
+    const p=data.profitability;
+    const marginNum=parseFloat(p.margin_pct);
+    const marginColor=marginNum>=20?'var(--gn)':marginNum>=10?'var(--am)':'var(--rd)';
+    const shippingNum=parseFloat(p.shipping_ratio);
+    const shipColor=shippingNum<=15?'var(--gn)':shippingNum<=25?'var(--am)':'var(--rd)';
+    html+=`<div style="background:var(--gnbg);border:1px solid var(--gn);border-radius:var(--r);padding:14px 16px;margin-top:12px">
+      <div style="font-size:11px;font-weight:600;color:var(--gn);margin-bottom:10px">📊 Profitability Analysis</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:10px">
+        <div>
+          <div style="font-size:10px;color:var(--t3)">Product Value</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1)">${p.product_value}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--t3)">Total Cost</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t2)">${p.total_cost}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--t3)">Gross Profit</div>
+          <div style="font-size:14px;font-weight:600;color:${marginColor}">${p.gross_profit}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--t3)">Profit Margin</div>
+          <div style="font-size:14px;font-weight:600;color:${marginColor}">${p.margin_pct}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;padding-top:8px;border-top:1px solid rgba(15,123,15,.15)">
+        <div>
+          <div style="font-size:10px;color:var(--t3)">Shipping / Value</div>
+          <div style="font-size:13px;font-weight:600;color:${shipColor}">${p.shipping_ratio}</div>
+        </div>
+        <div style="flex:1;font-size:11px;color:var(--t2);display:flex;align-items:center">${p.verdict}</div>
+      </div>
     </div>`;
   }
 
@@ -1811,10 +2011,15 @@ function ccGoToChecker(commodity,origin,destination,incoterms){
   switchTab('checker');
   // Auto-fill fields if values detected from docs
   if(commodity){
-    const sel=document.getElementById('comSel');
-    const opt=Array.from(sel.options).find(o=>o.text.toLowerCase().includes(commodity.toLowerCase()));
-    if(opt) sel.value=opt.value;
-    else{sel.value='_o';document.getElementById('comCust').style.display='block';document.getElementById('comCust').value=commodity}
+    const match=HS_DATA.find(h=>h.name.toLowerCase().includes(commodity.toLowerCase()));
+    if(match){
+      document.getElementById('hsInput').value=match.name+' (HS '+match.hs+')';
+      hsSelected={name:match.name,hs:match.hs};
+    } else {
+      document.getElementById('hsInput').value=commodity;
+      hsSelected=null;
+    }
+    document.getElementById('comCust').style.display='none';
   }
   if(origin){
     const sel=document.getElementById('orig');
@@ -1845,13 +2050,20 @@ async function runCC(){
 
   const tradeDir=document.getElementById('ccDirection').value;
   const ccInco=document.getElementById('ccIncoterms').value;
+  const ccCont=document.getElementById('ccContainer').value;
   const dirLabel=tradeDir==='import'?'IMPORT':'EXPORT';
+
+  const containerRules=ccCont?.startsWith('FCL')?
+    '\n\nCONTAINER-SPECIFIC RULES (FCL — Full Container Load):\n- B/L MUST show container number and seal number.\n- Packing list must include container stuffing details (how goods are loaded inside).\n- One B/L per container is standard. Multiple containers may be combined.\n- Verify VGM (Verified Gross Mass) declaration per SOLAS regulation.\n- Check container condition report (clean, dry, odor-free).\n- Seal number on B/L must match physical seal.':
+    ccCont==='LCL'?
+    '\n\nCONTAINER-SPECIFIC RULES (LCL — Less than Container Load):\n- B/L may be a groupage/consolidated B/L — House B/L vs Master B/L distinction is critical.\n- CFS (Container Freight Station) charges apply at origin and destination.\n- Multiple shippers share container — verify cargo identification marks and shipping marks are clear and unique.\n- Weight/measurement basis for freight calculation matters — check if freight is charged per CBM or per ton.\n- Higher risk of cargo damage from co-loaded goods — insurance should cover this.\n- B/L might show "Said to Contain" (STC) rather than "Shipped on Board" for individual lots.':
+    '';
 
   try{
     // Build message content: one text block + one image/doc block per file
     const content=[{
       type:'text',
-      text:`${getLangInstruction()?getLangInstruction()+'\n\n':''}You are a senior ${dirLabel.toLowerCase()} documentation auditor specializing in ICC banking standards (UCP 600, ISBP 745). I am uploading ${ccFiles.length} ${dirLabel.toLowerCase()} documents.${ccInco?' The Incoterms for this shipment is '+ccInco+'.':' Detect the Incoterms from the documents if possible.'} This is an ${dirLabel} transaction — check from the ${tradeDir==='import'?'importer/buyer':'exporter/shipper'} perspective.
+      text:`${getLangInstruction()?getLangInstruction()+'\n\n':''}You are a senior ${dirLabel.toLowerCase()} documentation auditor specializing in ICC banking standards (UCP 600, ISBP 745). I am uploading ${ccFiles.length} ${dirLabel.toLowerCase()} documents.${ccInco?' The Incoterms for this shipment is '+ccInco+'.':' Detect the Incoterms from the documents if possible.'}${ccCont?' Container type: '+ccCont+'.'  :''} This is an ${dirLabel} transaction — check from the ${tradeDir==='import'?'importer/buyer':'exporter/shipper'} perspective.${containerRules}
 
 YOUR PRIMARY MISSION: Verify these documents belong to the SAME TRANSACTION, then check consistency and precision. Think like a bank examiner under UCP 600 Art. 14(a) — work in strict order.
 
@@ -2165,7 +2377,12 @@ const OV_SHIPMENTS=[
       {label:'Customs',date:'~Aug 18',done:false},
       {label:'Delivered',date:'~Aug 22',done:false}
     ],
-    buyer:'Premium Cacao LLC, NY',value:'$17,500',cost:'$2,840',eta:'Aug 22, 2026',payment:null
+    buyer:'Premium Cacao LLC, NY',value:'$17,500',cost:'$2,840',eta:'Aug 22, 2026',payment:null,
+    deadlines:[
+      {doc:'Certificate of Origin',deadline:'2026-08-01',note:'Must be filed at KADIN 21 days before vessel arrival'},
+      {doc:'Phytosanitary Certificate',deadline:'2026-08-05',note:'BKIPM inspection must be done before loading'},
+      {doc:'FDA Prior Notice',deadline:'2026-08-07',note:'Submit at furls.fda.gov 15 days before arrival'}
+    ]
   },
   {
     id:'BK-2026-0039',status:'done',
@@ -2214,7 +2431,27 @@ function renderOV(){
     return true;
   });
 
-  box.innerHTML=ships.map(s=>{
+  // Check for urgent deadlines across all active shipments
+  let urgentCount=0;
+  OV_SHIPMENTS.filter(s=>s.status==='active'&&s.deadlines).forEach(s=>{
+    s.deadlines.forEach(dl=>{
+      const daysLeft=Math.ceil((new Date(dl.deadline)-new Date())/86400000);
+      if(daysLeft<=3) urgentCount++;
+    });
+  });
+
+  let alertBanner='';
+  if(urgentCount>0){
+    alertBanner=`<div style="background:var(--rdbg);border:1px solid var(--rd);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:16px">🚨</span>
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:600;color:var(--rd)">Urgent: ${urgentCount} document deadline${urgentCount>1?'s':''} approaching!</div>
+        <div style="font-size:11px;color:var(--t2)">Review the deadlines below to avoid late submissions and customs delays.</div>
+      </div>
+    </div>`;
+  }
+
+  box.innerHTML=alertBanner+ships.map(s=>{
     const isActive=s.status==='active';
     const statusBg=isActive?'var(--am)':'var(--gn)';
     const statusLabel=isActive?'IN TRANSIT':'DELIVERED';
@@ -2242,6 +2479,29 @@ function renderOV(){
       <span style="font-size:11px;${d.ok?'color:var(--t2)':'color:var(--rd);font-weight:600'}">${d.name}</span>
       ${d.note?'<span style="font-size:9px;color:var(--t3);margin-left:auto">'+d.note+'</span>':''}
     </div>`).join('');
+
+    // Deadline notices
+    const deadlineHTML=isActive&&s.deadlines?.length?(()=>{
+      const items=s.deadlines.map(dl=>{
+        const daysLeft=Math.ceil((new Date(dl.deadline)-new Date())/86400000);
+        const cls=daysLeft<0?'dl-notice':daysLeft<=3?'dl-notice warn':daysLeft<=7?'dl-notice warn':'dl-notice ok';
+        const icon=daysLeft<0?'🚨':daysLeft<=3?'⚠️':'📅';
+        const label=daysLeft<0?`OVERDUE by ${Math.abs(daysLeft)} days`:daysLeft===0?'DUE TODAY':`${daysLeft} days left`;
+        const labelColor=daysLeft<0?'color:var(--rd)':daysLeft<=3?'color:var(--am)':'color:var(--gn)';
+        return `<div class="${cls}">
+          <span style="font-size:14px">${icon}</span>
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:600;color:var(--t1)">${dl.doc}</div>
+            <div style="font-size:10px;color:var(--t2)">${dl.note}</div>
+          </div>
+          <div style="font-size:10px;font-weight:600;${labelColor}">${label}</div>
+        </div>`;
+      }).join('');
+      return `<div style="margin-bottom:12px">
+        <div style="font-size:10px;font-weight:500;color:var(--t3);margin-bottom:6px">📋 Document Deadlines</div>
+        ${items}
+      </div>`;
+    })():'';
 
     return `<div class="ov-card${isActive?' active-shipment open':''}" id="ov-${s.id}">
       <div class="ov-head" onclick="toggleOV('${s.id}')">
@@ -2280,6 +2540,8 @@ function renderOV(){
           <div style="font-size:10px;font-weight:500;color:var(--t3);margin-bottom:6px">Document Status</div>
           ${docsHTML}
         </div>
+
+        ${deadlineHTML}
 
         <div style="margin-bottom:12px">
           <div style="font-size:10px;color:var(--t3);margin-bottom:8px">Shipment Timeline</div>
