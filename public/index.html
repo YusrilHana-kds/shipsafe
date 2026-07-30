@@ -27,10 +27,11 @@
   --am:#D9730D;--ambg:#FBF3DB;--ambd:#E8D5A3;
   --gn:#0F7B0F;--gnbg:#DBEDDB;
   --rd:#E03E3E;--rdbg:#FBE4E4;
-  --sf:#F5F6F8;--wh:#FFFFFF;
+  --sf:#F7F8FA;--wh:#FFFFFF;
   --t1:#1A1E2C;--t2:#4A5068;--t3:#7A8099;
   --bd:#D8DCE6;--bdl:#E8ECF2;
-  --r:6px;--rs:4px;
+  --r:10px;--rs:6px;
+  --sh-sm:0 1px 3px rgba(0,0,0,.06);--sh-md:0 4px 12px rgba(0,0,0,.08);--sh-lg:0 8px 24px rgba(0,0,0,.12);
   --hover:rgba(27,42,74,0.04);--active:rgba(27,42,74,0.08);
   --btn:#1B2A4A;--btn-tx:#FFFFFF;--btn-hv:#25406E;
 }
@@ -100,7 +101,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .how-n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);color:#FFFFFF;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
 .how-ar{color:rgba(255,255,255,.3);font-size:12px;font-weight:400}
 @media(max-width:768px){.landing{padding:36px 20px 32px}.landing-split{grid-template-columns:1fr;gap:28px}.landing-left{text-align:center}.landing-sub{margin:0 auto 20px}.landing-btns{justify-content:center;flex-wrap:wrap}.landing-trust{justify-content:center;flex-wrap:wrap;gap:8px}.landing-trust-sep{display:none}.landing-trust-item{padding:0 12px}.landing-h1{font-size:36px}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}}
-@media(max-width:640px){.how{display:none}}
+@media(max-width:640px){.how{display:none}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 8px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;flex-shrink:0;padding:10px 12px;font-size:11px}.hero-stats{flex-direction:column;gap:8px}.hero-stat{max-width:100%}.route-pill{font-size:11px;padding:5px 12px}.tara-panel.open{width:100vw!important;height:100vh!important;border-radius:0!important;bottom:0!important;right:0!important;left:0!important;top:0!important}.gauge-wrap{flex-direction:column;align-items:center;text-align:center}.ov-summary{flex-wrap:wrap;gap:10px}.ov-summary-stat{min-width:80px}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,rgba(75,123,245,.06),rgba(75,123,245,.02));border:1px solid rgba(75,123,245,.15);border-radius:8px;padding:14px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s}
 .welcome-banner:hover{border-color:rgba(75,123,245,.25);box-shadow:0 2px 8px rgba(75,123,245,.08)}
@@ -124,7 +125,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .tab-btn.active .tab-step{background:var(--ac);color:#FFFFFF;border-color:var(--ac);box-shadow:0 0 8px rgba(75,123,245,.4)}
 
 /* MAIN CARD */
-.main-card{background:var(--wh);max-width:900px;margin:0 auto;border-radius:0 0 8px 8px;box-shadow:0 4px 20px rgba(27,42,74,.08);padding:0;min-height:400px;position:relative}
+.main-card{background:var(--wh);max-width:900px;margin:0 auto;border-radius:0 0 10px 10px;box-shadow:var(--sh-lg);padding:0;min-height:400px;position:relative}
 .tab-panel{display:none;padding:28px}
 .tab-panel.active{display:block}
 
@@ -140,7 +141,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .fd select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
 .fd select:focus,.fd input:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}
 .btn{background:var(--btn);color:var(--btn-tx);border:none;height:36px;padding:0 16px;border-radius:var(--rs);font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .15s}
-.btn:hover{background:var(--btn-hv);box-shadow:0 2px 8px rgba(27,42,74,.2)}
+.btn:hover{background:var(--btn-hv);box-shadow:var(--sh-md)}
 .btn:disabled{opacity:.3;cursor:not-allowed}
 .btn-outline{background:transparent;border:1px solid var(--bd);color:var(--t2);height:32px;padding:0 12px;border-radius:var(--rs);font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .1s}
 .btn-outline:hover{background:var(--hover);color:var(--t1)}
@@ -164,6 +165,93 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .dl-notice{background:var(--rdbg);border:1px solid var(--rd);border-radius:var(--rs);padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
 .dl-notice.warn{background:var(--ambg);border-color:var(--ambd)}
 .dl-notice.ok{background:var(--gnbg);border-color:var(--gn)}
+
+/* STICKY TABS */
+.tabs-sticky{position:sticky;top:48px;z-index:10;background:linear-gradient(135deg,var(--nv) 0%,#1E3A6E 100%)}
+/* TAB DONE STATE */
+.tab-btn.done .tab-step{background:var(--gn);color:#fff;border-color:var(--gn);font-size:0}
+.tab-btn.done .tab-step::after{content:'✓';font-size:10px}
+.tab-btn.done{color:rgba(255,255,255,.65)}
+
+/* ROUTE PREVIEW PILL */
+.route-pill{display:none;background:rgba(255,255,255,.04);border:1px solid rgba(75,123,245,.2);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--t1);margin-bottom:14px;text-align:center;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;animation:fadeIn .3s ease}
+.route-pill.visible{display:flex}
+.route-pill .rp-sep{color:var(--t3);margin:0 2px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+
+/* GREEN CTA BUTTON */
+.btn-cta{background:var(--gn);color:#fff;border:none;height:42px;padding:0 24px;border-radius:var(--rs);font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:all .2s;width:100%}
+.btn-cta:hover{background:#0a6a0a;box-shadow:0 4px 16px rgba(15,123,15,.3)}
+.btn-cta:disabled{opacity:.4;cursor:not-allowed}
+.btn-cta.pulse{animation:ctaPulse 2s ease-in-out infinite}
+@keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(15,123,15,.3)}50%{box-shadow:0 0 0 8px rgba(15,123,15,0)}}
+
+/* SVG CIRCULAR GAUGE */
+.gauge-wrap{display:flex;align-items:center;gap:20px;margin-bottom:8px}
+.gauge-svg{width:100px;height:100px;flex-shrink:0}
+.gauge-bg{fill:none;stroke:var(--bdl);stroke-width:8}
+.gauge-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .8s ease,stroke .3s}
+.gauge-text{font-family:'DM Serif Display',serif;font-size:24px;fill:var(--t1);text-anchor:middle;dominant-baseline:central}
+.gauge-stats{flex:1}
+.gauge-stat{font-size:11px;color:var(--t2);margin-bottom:4px}
+.gauge-stat b{color:var(--t1);font-weight:600}
+
+/* STATUS BADGES */
+.status-badge{font-size:9px;font-weight:600;padding:2px 7px;border-radius:3px;white-space:nowrap;margin-left:auto;flex-shrink:0}
+.status-badge.ready{background:var(--gnbg);color:var(--gn)}
+.status-badge.review{background:var(--ambg);color:var(--am)}
+.status-badge.missing{background:var(--rdbg);color:var(--rd)}
+
+/* EMPTY STATES */
+.empty-state{text-align:center;padding:48px 20px;color:var(--t3)}
+.empty-state-icon{font-size:36px;margin-bottom:10px;opacity:.5}
+.empty-state-text{font-size:13px;line-height:1.6;margin-bottom:14px}
+.empty-state .btn{margin-top:4px}
+
+/* HERO STAT CARDS */
+.hero-stats{display:flex;justify-content:center;gap:14px;margin-bottom:16px}
+.hero-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 18px;text-align:center;flex:1;max-width:180px;backdrop-filter:blur(8px)}
+.hero-stat-icon{font-size:20px;margin-bottom:4px}
+.hero-stat-num{font-family:'DM Serif Display',serif;font-size:20px;color:#fff;line-height:1.2}
+.hero-stat-label{font-size:10px;color:rgba(255,255,255,.55);font-weight:500;margin-top:2px}
+
+/* OV SUMMARY BANNER */
+.ov-summary{background:linear-gradient(135deg,var(--nv),#1E3A6E);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;color:#fff}
+.ov-summary-stat{text-align:center;flex:1}
+.ov-summary-num{font-family:'DM Serif Display',serif;font-size:22px;line-height:1.2}
+.ov-summary-label{font-size:10px;color:rgba(255,255,255,.55);font-weight:500;margin-top:2px}
+.ov-summary-sep{width:1px;height:36px;background:rgba(255,255,255,.15)}
+
+/* MINI GAUGE (40px) for overview cards */
+.mini-gauge{width:40px;height:40px;flex-shrink:0}
+.mini-gauge .gauge-bg{stroke-width:5}
+.mini-gauge .gauge-fill{stroke-width:5}
+.mini-gauge .gauge-text{font-size:11px}
+
+/* TARA NOTIFICATION DOT */
+.tara-fab .tara-dot{display:none;position:absolute;top:4px;right:4px;width:10px;height:10px;background:var(--rd);border-radius:50%;border:2px solid var(--nv);animation:dotPulse 1.5s ease infinite}
+.tara-fab .tara-dot.show{display:block}
+@keyframes dotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+
+/* TARA TIMESTAMPS */
+.tara-time{font-size:9px;color:var(--t3);margin-top:2px;opacity:.7}
+
+/* PRINT STYLES */
+@media print{
+  .hd,.tara-fab,.tara-panel,.gl-drawer,.tabs-sticky,.hero,.welcome-banner,.btn,.btn-outline,.btn-cta,button,.nstep,.landing{display:none!important}
+  .main-card{box-shadow:none;max-width:100%;margin:0}
+  .tab-panel{display:block!important;padding:20px}
+  .ph{break-inside:avoid}
+  .conf{background:#f5f5f5}
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* EXPECTED DOCS CHECKLIST */
+.expected-docs{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);padding:14px 16px;margin-bottom:16px}
+.expected-docs-title{font-size:11px;font-weight:600;color:var(--t2);margin-bottom:8px}
+.expected-doc{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;color:var(--t2)}
+.expected-doc.uploaded{color:var(--gn)}
+.expected-doc-icon{font-size:14px}
 
 /* RESULTS */
 .route{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
@@ -485,41 +573,34 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 <!-- ═══ APP VIEW (hidden until Get Started) ═══ -->
 <div id="appView" style="display:none">
 <section class="hero hero-compact">
-  <div class="hero-in" style="padding:20px 20px 0">
-    <div class="how">
-      <div class="how-s"><span class="how-n">1</span> <span data-i18n="how1">Check requirements</span></div>
-      <span class="how-ar">→</span>
-      <div class="how-s"><span class="how-n">2</span> <span data-i18n="how2">Cross-check your docs</span></div>
-      <span class="how-ar">→</span>
-      <div class="how-s"><span class="how-n">3</span> <span data-i18n="how3">Estimate landed cost</span></div>
-      <span class="how-ar">→</span>
-      <div class="how-s"><span class="how-n">4</span> <span data-i18n="how4">Track &amp; ship</span></div>
+  <div class="hero-in" style="padding:16px 20px 0">
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-icon">📋</div><div class="hero-stat-num">150+</div><div class="hero-stat-label" data-i18n="hs_regulations">Regulations checked</div></div>
+      <div class="hero-stat"><div class="hero-stat-icon">🌍</div><div class="hero-stat-num">50+</div><div class="hero-stat-label" data-i18n="hs_corridors">Trade corridors</div></div>
+      <div class="hero-stat"><div class="hero-stat-icon">⚡</div><div class="hero-stat-num">30s</div><div class="hero-stat-label" data-i18n="hs_analysis">AI analysis time</div></div>
     </div>
   </div>
+</section>
+<div class="tabs-sticky">
   <div class="tabs-bar" style="max-width:900px;margin:0 auto">
     <button class="tab-btn active" onclick="switchTab('checker')">
       <span class="tab-step">1</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
       <span data-i18n="tab_checker">Compliance Checker</span>
-      <span style="font-size:8px;background:var(--ac);color:#FFFFFF;padding:2px 6px;border-radius:3px;margin-left:4px;font-weight:500" data-i18n="tab_start">START HERE</span>
     </button>
     <button class="tab-btn" onclick="switchTab('crosscheck')">
       <span class="tab-step">2</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
       <span data-i18n="tab_crosscheck">Doc Cross-Checker</span>
     </button>
     <button class="tab-btn" onclick="switchTab('cost')">
       <span class="tab-step">3</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
       <span data-i18n="tab_cost">Cost Calculator</span>
     </button>
     <button class="tab-btn" onclick="switchTab('overview')">
       <span class="tab-step">4</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       <span data-i18n="tab_overview">Shipment Overview</span>
     </button>
   </div>
-</section>
+</div>
 
 <!-- WELCOME BANNER -->
 <div class="welcome-banner" id="welcomeBanner">
@@ -569,23 +650,28 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
           </select>
         </div>
       </div>
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <span style="font-size:10px;color:var(--t3)" data-i18n="ck_disclaimer">AI-powered guidance. Not legal advice.</span>
-        <button class="btn" onclick="runCheck()" id="goBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          <span data-i18n="ck_run_btn">Run Compliance Check</span>
-        </button>
-      </div>
+      <div class="route-pill" id="routePill"></div>
+      <button class="btn-cta" onclick="runCheck()" id="goBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span data-i18n="ck_run_btn">Check My Route — Free</span>
+      </button>
+      <div style="text-align:center;margin-top:6px"><span style="font-size:10px;color:var(--t3)" data-i18n="ck_disclaimer">AI-powered guidance. Not legal advice.</span></div>
       <div class="err" id="errBox"></div>
     </div>
 
     <div id="ck-results" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div id="routeBar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"></div>
-        <button class="btn-outline" onclick="ckConfirmReset()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
-          New Check
-        </button>
+        <div style="display:flex;gap:6px">
+          <button class="btn-outline" onclick="window.print()" title="Download PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            PDF
+          </button>
+          <button class="btn-outline" onclick="ckConfirmReset()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 105.64-11.36L1 10"/></svg>
+            New Check
+          </button>
+        </div>
       </div>
       <div id="ckConfirmBar" style="display:none;background:var(--ambg);border:1.5px solid var(--ambd);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;display:none">
         <div style="display:flex;align-items:center;gap:10px">
@@ -602,9 +688,20 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
       </div>
       <div id="aiDisc"></div>
       <div class="conf">
-        <div class="conf-top"><span class="conf-lb">Shipment Readiness</span><span class="conf-p" id="cPct">0%</span></div>
-        <div class="conf-tr"><div class="conf-fl" id="cBar"></div></div>
-        <div class="conf-st" id="cSt">Complete the checklist below to track readiness</div>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 120">
+            <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+            <circle class="gauge-fill" id="cGauge" cx="60" cy="60" r="50" stroke="var(--gn)" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)"/>
+            <text class="gauge-text" x="60" y="60" id="cPct">0%</text>
+          </svg>
+          <div class="gauge-stats">
+            <div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px" data-i18n="ck_readiness">Shipment Readiness</div>
+            <div class="gauge-stat" id="cSummary"></div>
+            <div class="conf-st" id="cSt" style="margin-top:4px">Complete the checklist below to track readiness</div>
+          </div>
+        </div>
+        <!-- Keep hidden bar for data binding -->
+        <div class="conf-tr" style="display:none"><div class="conf-fl" id="cBar"></div></div>
       </div>
       <div id="phBox"></div>
       <div id="alBox" style="margin-top:12px"></div>
@@ -730,12 +827,19 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
         <h2 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--t1);margin-bottom:2px">Shipment Overview</h2>
         <p style="font-size:12px;color:var(--t3)">Track your active shipments and compliance progress.</p>
       </div>
-      <div style="display:flex;gap:6px" id="ovFilterBtns">
-        <button class="btn-outline ovf active" onclick="ovFilter('all')" style="height:28px;font-size:10px">All (2)</button>
-        <button class="btn-outline ovf" onclick="ovFilter('active')" style="height:28px;font-size:10px">Active (1)</button>
-        <button class="btn-outline ovf" onclick="ovFilter('done')" style="height:28px;font-size:10px">Completed (1)</button>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button class="btn" style="height:28px;font-size:10px;background:var(--gn)" onclick="switchTab('checker')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Shipment
+        </button>
+        <div style="display:flex;gap:4px" id="ovFilterBtns">
+          <button class="btn-outline ovf active" onclick="ovFilter('all')" style="height:28px;font-size:10px">All</button>
+          <button class="btn-outline ovf" onclick="ovFilter('active')" style="height:28px;font-size:10px">Active</button>
+          <button class="btn-outline ovf" onclick="ovFilter('done')" style="height:28px;font-size:10px">Done</button>
+        </div>
       </div>
     </div>
+    <div id="ovSummary"></div>
     <div id="ovCards"></div>
   </div>
 
@@ -784,6 +888,12 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
         <div style="font-size:11px;font-weight:500;color:var(--t1);margin-bottom:2px">Upload any document — PDF or photo</div>
         <div style="font-size:11px;color:var(--t2)">Works with Invoice, Packing List, Bill of Lading, COO, Health Certificate, LC, and more. Upload 1 file or multiple.</div>
       </div>
+    </div>
+
+    <!-- Expected documents checklist -->
+    <div class="expected-docs" id="expectedDocs" style="display:none">
+      <div class="expected-docs-title" data-i18n="cc_expected_title">📋 Expected Documents for This Shipment</div>
+      <div id="expectedDocsList"></div>
     </div>
 
     <!-- Upload zone -->
@@ -837,6 +947,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 <div class="tara-fab" onclick="toggleTara()">
   <div class="tara-cta" data-i18n="tara_cta">Ask Tara anything about trade compliance</div>
   <button class="tara-btn" id="taraFabBtn">T</button>
+  <div class="tara-dot" id="taraDot"></div>
 </div>
 
 <div class="tara-panel" id="taraPanel">
@@ -912,7 +1023,7 @@ const T={
     gl_title:'Trade Glossary',gl_sub:'ICC rules, Incoterms, and trade finance standards — your reference library.',gl_search_ph:'Search terms...',gl_btn:'Glossary',
     ck_quickstart:'Quick start — click a corridor',
     ck_disclaimer:'AI-powered guidance. Not legal advice.',
-    ck_run_btn:'Run Compliance Check',
+    ck_run_btn:'Check My Route — Free',
     cc_title:'Document Checker',
     cc_subtitle:'Upload your trade documents — AI will cross-check everything and catch issues before customs does.',
     cc_upload_title:'Upload Trade Documents',
@@ -933,6 +1044,11 @@ const T={
     note_saving:'Saving...',
     note_saved:'Saved',
     cancel_btn:'Cancel',
+    hs_regulations:'Regulations checked',hs_corridors:'Trade corridors',hs_analysis:'AI analysis time',
+    ck_readiness:'Shipment Readiness',
+    ck_run_btn_full:'Check My Route — Free',
+    cc_expected_title:'📋 Expected Documents for This Shipment',
+    tara_chip4:'What\'s the cost to ship to US?',
     lang_instruction:'',
   },
   id:{
@@ -950,7 +1066,7 @@ const T={
     gl_title:'Glosarium Perdagangan',gl_sub:'Istilah ICC, Incoterms, dan standar perdagangan internasional — referensi lengkap.',gl_search_ph:'Cari istilah...',gl_btn:'Glosarium',
     ck_quickstart:'Mulai cepat — klik koridor',
     ck_disclaimer:'Panduan berbasis AI. Bukan nasihat hukum.',
-    ck_run_btn:'Cek Sekarang',
+    ck_run_btn:'Cek Rute Saya — Gratis',
     cc_title:'Cek Dokumen',
     cc_subtitle:'Upload dokumen perdagangan kamu — AI akan periksa semuanya dan temukan masalah sebelum bea cukai.',
     cc_upload_title:'Upload Dokumen',
@@ -987,6 +1103,11 @@ const T={
     cost_total:'Total Estimasi',cost_note_label:'Catatan',cost_who_pays:'Ditanggung',
     cost_tips:'Tips Hemat Biaya',cost_profit_title:'Analisis Profitabilitas',
     cost_gross:'Laba Kotor',cost_margin:'Margin Laba',cost_ship_ratio:'Rasio Ongkir/Nilai',
+    hs_regulations:'Regulasi dicek',hs_corridors:'Koridor perdagangan',hs_analysis:'Waktu analisis AI',
+    ck_readiness:'Kesiapan Pengiriman',
+    ck_run_btn_full:'Cek Rute Saya — Gratis',
+    cc_expected_title:'📋 Dokumen yang Dibutuhkan',
+    tara_chip4:'Berapa ongkos kirim ke AS?',
     lang_instruction:`CRITICAL LANGUAGE RULE: You MUST write ALL text content in Bahasa Indonesia yang natural dan alami — seperti orang Indonesia yang berpengalaman di bidang ekspor-impor sedang menjelaskan ke rekannya.
 
 ATURAN BAHASA:
@@ -1013,7 +1134,7 @@ ATURAN BAHASA:
     gl_title:'Glosario Comercial',gl_sub:'Reglas ICC, Incoterms y estándares de financiamiento comercial — tu biblioteca de referencia.',gl_search_ph:'Buscar términos...',gl_btn:'Glosario',
     ck_quickstart:'Inicio rápido — elige un corredor',
     ck_disclaimer:'Orientación basada en IA. No es asesoría legal.',
-    ck_run_btn:'Verificar Cumplimiento',
+    ck_run_btn:'Verificar Mi Ruta — Gratis',
     cc_title:'Verificador de Documentos',
     cc_subtitle:'Sube tus documentos comerciales — la IA verificará todo y detectará problemas antes de la aduana.',
     cc_upload_title:'Subir Documentos Comerciales',
@@ -1050,6 +1171,11 @@ ATURAN BAHASA:
     cost_total:'Estimación Total',cost_note_label:'Nota',cost_who_pays:'Pagado por',
     cost_tips:'Consejos para Ahorrar',cost_profit_title:'Análisis de Rentabilidad',
     cost_gross:'Ganancia Bruta',cost_margin:'Margen de Ganancia',cost_ship_ratio:'Ratio Envío/Valor',
+    hs_regulations:'Regulaciones verificadas',hs_corridors:'Corredores comerciales',hs_analysis:'Tiempo de análisis IA',
+    ck_readiness:'Preparación del Envío',
+    ck_run_btn_full:'Verificar Mi Ruta — Gratis',
+    cc_expected_title:'📋 Documentos Esperados',
+    tara_chip4:'¿Cuánto cuesta enviar a EE.UU.?',
     lang_instruction:`CRITICAL LANGUAGE RULE: You MUST write ALL text content in natural, fluent Spanish (Español).
 
 REGLAS DE IDIOMA:
@@ -1166,6 +1292,83 @@ const HS_DATA=[
   {name:'Tapioca Starch',hs:'1108.14',group:'Other'}
 ];
 let hsSelected=null; // stores {name, hs, group}
+
+// COUNTRY FLAGS LOOKUP
+const COUNTRY_FLAGS={'Indonesia':'🇮🇩','United States':'🇺🇸','China':'🇨🇳','Japan':'🇯🇵','Germany':'🇩🇪','Netherlands':'🇳🇱','France':'🇫🇷','Belgium':'🇧🇪','Italy':'🇮🇹','Spain':'🇪🇸','United Kingdom':'🇬🇧','Australia':'🇦🇺','Canada':'🇨🇦','UAE':'🇦🇪','Saudi Arabia':'🇸🇦','India':'🇮🇳','South Korea':'🇰🇷','Vietnam':'🇻🇳','Thailand':'🇹🇭','Malaysia':'🇲🇾','Philippines':'🇵🇭','Brazil':'🇧🇷','Mexico':'🇲🇽','Turkey':'🇹🇷','Egypt':'🇪🇬','Singapore':'🇸🇬','Taiwan':'🇹🇼','New Zealand':'🇳🇿','Russia':'🇷🇺','Ghana':'🇬🇭','Nigeria':'🇳🇬','South Africa':'🇿🇦','European Union':'🇪🇺'};
+
+// ROUTE PREVIEW PILL
+function updateRoutePill(){
+  const pill=document.getElementById('routePill');
+  if(!pill) return;
+  const {commodity}=getSelectedCommodity();
+  const orig=document.getElementById('orig').value;
+  const dest=document.getElementById('dest').value;
+  const inco=document.getElementById('inco').value;
+  if(commodity&&orig&&dest&&inco){
+    const oFlag=COUNTRY_FLAGS[orig]||'📦';
+    const dFlag=COUNTRY_FLAGS[dest]||'📦';
+    pill.innerHTML=`${oFlag} ${orig} <span class="rp-sep">→</span> ${dFlag} ${dest} <span class="rp-sep">·</span> ${commodity} <span class="rp-sep">·</span> ${inco}`;
+    pill.classList.add('visible');
+    document.getElementById('goBtn').classList.add('pulse');
+  } else {
+    pill.classList.remove('visible');
+    document.getElementById('goBtn').classList.remove('pulse');
+  }
+}
+// Attach to form fields
+document.querySelectorAll('#orig,#dest,#inco').forEach(el=>el.addEventListener('change',updateRoutePill));
+document.getElementById('hsInput')?.addEventListener('input',()=>setTimeout(updateRoutePill,100));
+
+// TAB COMPLETION TRACKING
+const tabCompleted={checker:false,crosscheck:false,cost:false,overview:false};
+function markTabDone(tabId){
+  tabCompleted[tabId]=true;
+  const idx=TAB_IDS.indexOf(tabId);
+  if(idx>=0){
+    const btn=document.querySelectorAll('.tab-btn')[idx];
+    if(btn) btn.classList.add('done');
+  }
+}
+
+// EXPECTED DOCS CHECKLIST
+const EXPECTED_DOCS={
+  export:{
+    always:['Commercial Invoice','Packing List','Bill of Lading'],
+    FOB:['Certificate of Origin'],
+    CIF:['Certificate of Origin','Insurance Certificate'],
+    CFR:['Certificate of Origin'],
+    DDP:['Certificate of Origin','Insurance Certificate','Import License'],
+    food:['Phytosanitary Certificate','Certificate of Analysis','Health Certificate'],
+    us:['FDA Prior Notice','FDA Facility Registration'],
+    eu:['EUR.1 or GSP Form A','Health Certificate'],
+    japan:['Certificate of Analysis','Fumigation Certificate']
+  },
+  import:{
+    always:['Commercial Invoice','Packing List','Bill of Lading','Import License'],
+    food:['Health Certificate','Certificate of Analysis'],
+  }
+};
+function updateExpectedDocs(){
+  const dir=document.getElementById('ccDirection')?.value||'export';
+  const inco=document.getElementById('ccIncoterms')?.value||'';
+  const box=document.getElementById('expectedDocs');
+  const list=document.getElementById('expectedDocsList');
+  if(!box||!list) return;
+  const docs=new Set(EXPECTED_DOCS[dir]?.always||[]);
+  if(inco&&EXPECTED_DOCS[dir]?.[inco]) EXPECTED_DOCS[dir][inco].forEach(d=>docs.add(d));
+  // Add food docs by default (this app is for food/agri)
+  (EXPECTED_DOCS[dir]?.food||[]).forEach(d=>docs.add(d));
+  if(docs.size===0){box.style.display='none';return}
+  box.style.display='';
+  list.innerHTML=[...docs].map(d=>{
+    const uploaded=ccFiles.some(f=>f.name.toLowerCase().includes(d.toLowerCase().split(' ')[0].toLowerCase()));
+    return `<div class="expected-doc${uploaded?' uploaded':''}"><span class="expected-doc-icon">${uploaded?'✅':'☐'}</span>${d}</div>`;
+  }).join('');
+}
+// Update expected docs when direction/incoterms change
+document.getElementById('ccDirection')?.addEventListener('change',updateExpectedDocs);
+document.getElementById('ccIncoterms')?.addEventListener('change',updateExpectedDocs);
+setTimeout(updateExpectedDocs,200);
 
 function hsRender(items){
   const dd=document.getElementById('hsDropdown');
@@ -1756,7 +1959,28 @@ function tgl(el){
   }
   upd();
 }
-function upd(){const p=tot>0?Math.round(chk/tot*100):0;document.getElementById('cPct').textContent=p+'%';document.getElementById('cBar').style.width=p+'%';const s=document.getElementById('cSt');if(p===0){s.textContent='Complete the checklist below to track readiness';s.className='conf-st'}else if(p<50){s.textContent='Getting started. Keep going.';s.className='conf-st'}else if(p<90){s.textContent='Good progress. Check blind spots too.';s.className='conf-st'}else if(p<100){s.textContent='Nearly ready. A few items left.';s.className='conf-st'}else{s.textContent='All done. Ready to ship.';s.className='conf-st rdy'}}
+function upd(){
+  const p=tot>0?Math.round(chk/tot*100):0;
+  document.getElementById('cPct').textContent=p+'%';
+  document.getElementById('cBar').style.width=p+'%';
+  // SVG gauge
+  const gauge=document.getElementById('cGauge');
+  if(gauge){
+    const circ=2*Math.PI*50; // 314.16
+    gauge.setAttribute('stroke-dashoffset',circ-(circ*p/100));
+    gauge.setAttribute('stroke',p<50?'var(--rd)':p<80?'var(--am)':'var(--gn)');
+  }
+  // Summary stat
+  const sumEl=document.getElementById('cSummary');
+  if(sumEl) sumEl.innerHTML=`<b>${chk}</b> of <b>${tot}</b> completed · <b>${tot-chk}</b> remaining`;
+  // Status text
+  const s=document.getElementById('cSt');
+  if(p===0){s.textContent='Complete the checklist below to track readiness';s.className='conf-st'}
+  else if(p<50){s.textContent='Getting started. Keep going.';s.className='conf-st'}
+  else if(p<90){s.textContent='Good progress. Check blind spots too.';s.className='conf-st'}
+  else if(p<100){s.textContent='Nearly ready. A few items left.';s.className='conf-st'}
+  else{s.textContent='All done. Ready to ship.';s.className='conf-st rdy';markTabDone('checker')}
+}
 
 // ═══════════ COST CALCULATOR ═══════════
 async function runCostCalc(){
@@ -2637,6 +2861,23 @@ function renderOV(){
     if(ovFilterMode==='done') return s.status==='done';
     return true;
   });
+  // Summary banner
+  const sumEl=document.getElementById('ovSummary');
+  if(sumEl){
+    const activeCount=OV_SHIPMENTS.filter(s=>s.status==='active').length;
+    const doneCount=OV_SHIPMENTS.filter(s=>s.status==='done').length;
+    const avgComp=OV_SHIPMENTS.length?Math.round(OV_SHIPMENTS.reduce((s,sh)=>s+sh.compliance,0)/OV_SHIPMENTS.length):0;
+    const pendingDocs=OV_SHIPMENTS.reduce((s,sh)=>s+(sh.docsTotal-sh.docsVerified),0);
+    sumEl.innerHTML=`<div class="ov-summary">
+      <div class="ov-summary-stat"><div class="ov-summary-num">${activeCount}</div><div class="ov-summary-label">Active</div></div>
+      <div class="ov-summary-sep"></div>
+      <div class="ov-summary-stat"><div class="ov-summary-num">${doneCount}</div><div class="ov-summary-label">Completed</div></div>
+      <div class="ov-summary-sep"></div>
+      <div class="ov-summary-stat"><div class="ov-summary-num">${avgComp}%</div><div class="ov-summary-label">Avg Readiness</div></div>
+      <div class="ov-summary-sep"></div>
+      <div class="ov-summary-stat"><div class="ov-summary-num" style="${pendingDocs>0?'color:var(--am)':''}">${pendingDocs}</div><div class="ov-summary-label">Docs Pending</div></div>
+    </div>`;
+  }
 
   // Check for urgent deadlines across all active shipments
   let urgentCount=0;
@@ -2721,10 +2962,7 @@ function renderOV(){
             <div style="font-size:10px;color:var(--t3)">${s.id} · BL ${s.bl} · ${s.vessel} · ${s.container}</div>
           </div>
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="text-align:right">
-              <div style="font-family:'DM Serif Display',serif;font-size:18px;color:${compColor}">${s.compliance}%</div>
-              <div style="font-size:8px;color:var(--t3)">Compliance</div>
-            </div>
+            <svg class="mini-gauge" viewBox="0 0 50 50"><circle class="gauge-bg" cx="25" cy="25" r="20"/><circle class="gauge-fill" cx="25" cy="25" r="20" stroke="${compColor}" stroke-dasharray="${Math.round(2*Math.PI*20)}" stroke-dashoffset="${Math.round(2*Math.PI*20*(1-s.compliance/100))}" transform="rotate(-90 25 25)"/><text class="gauge-text" x="25" y="25" style="font-size:11px">${s.compliance}%</text></svg>
             <div class="ov-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
           </div>
         </div>
@@ -2781,7 +3019,7 @@ function renderOV(){
     </div>`;
   }).join('');
 
-  if(!ships.length) box.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3);font-size:12px">No shipments match this filter.</div>';
+  if(!ships.length) box.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📦</div><div class="empty-state-text">${ovFilterMode==='all'?'No shipments yet. Run a compliance check to get started!':'No shipments match this filter.'}</div>${ovFilterMode==='all'?'<button class="btn" style="background:var(--gn)" onclick="switchTab(\'checker\')">Start Compliance Check</button>':''}</div>`;
 }
 
 function ovUpdateTimeline(shipId,stepIdx){
@@ -2833,15 +3071,14 @@ function toggleTara(){
       const sz=JSON.parse(localStorage.getItem('tara_size'));
       if(sz&&sz.w&&sz.h){p.style.width=Math.min(sz.w,window.innerWidth*0.9)+'px';p.style.height=Math.min(sz.h,window.innerHeight*0.85)+'px'}
     }catch(e){}
-    // Restore saved drag position
-    try{
-      const saved=JSON.parse(localStorage.getItem('tara_pos'));
-      if(saved&&saved.left!=null&&saved.top!=null){
-        p.classList.add('dragged');
-        p.style.left=Math.min(saved.left,window.innerWidth-p.offsetWidth)+'px';
-        p.style.top=Math.min(saved.top,window.innerHeight-p.offsetHeight)+'px';
-      }
-    }catch(e){}
+    // Always reset to default bottom-right position when opening
+    p.classList.remove('dragged');
+    p.style.left='';p.style.top='';p.style.right='';p.style.bottom='';
+  } else {
+    // On close: reset position and clear saved drag position
+    p.classList.remove('dragged');
+    p.style.left='';p.style.top='';p.style.right='';p.style.bottom='';
+    try{localStorage.removeItem('tara_pos')}catch(e){}
   }
 }
 
@@ -3176,6 +3413,97 @@ initGlossary();
   // Start after page loads
   setTimeout(runCycle,1200);
 })();
+
+// ═══════════ TARA PROACTIVE MESSAGE ═══════════
+let _taraProactiveTimer=null;
+function startTaraProactive(){
+  clearTimeout(_taraProactiveTimer);
+  _taraProactiveTimer=setTimeout(()=>{
+    const panel=document.getElementById('taraPanel');
+    if(panel&&!panel.classList.contains('open')&&!_taraSeeded){
+      const dot=document.getElementById('taraDot');
+      if(dot) dot.classList.add('show');
+    }
+  },10000); // 10 seconds
+}
+// Patch enterApp to trigger proactive
+const _origEnterApp=window.enterApp;
+if(typeof _origEnterApp==='function'){
+  window.enterApp=function(){_origEnterApp();startTaraProactive()};
+}
+// Clear dot when Tara is opened
+const _origToggleTara=window.toggleTara;
+window.toggleTara=function(){
+  _origToggleTara();
+  const dot=document.getElementById('taraDot');
+  if(dot) dot.classList.remove('show');
+  clearTimeout(_taraProactiveTimer);
+};
+
+// ═══════════ TARA TIMESTAMPS ═══════════
+const _origAddTaraMsg=window.addTaraMsg;
+window.addTaraMsg=function(text,role,isMd){
+  const row=_origAddTaraMsg(text,role,isMd);
+  if(row){
+    const timeDiv=document.createElement('div');
+    timeDiv.className='tara-time';
+    const now=new Date();
+    timeDiv.textContent=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    const msgEl=row.querySelector('.tara-msg');
+    if(msgEl) msgEl.after(timeDiv);
+  }
+  return row;
+};
+
+// ═══════════ TARA 4th CHIP ═══════════
+const _origSeedTara=window.seedTara;
+window.seedTara=function(){
+  _origSeedTara();
+  // Add 4th chip if not already there
+  const cb=document.getElementById('taraChips');
+  if(cb&&cb.children.length<4){
+    const extraChip=T[currentLang]?.tara_chip4||'What\'s the cost to ship to US?';
+    const btn=document.createElement('button');
+    btn.className='tara-chip';
+    btn.textContent=extraChip;
+    btn.addEventListener('click',()=>{
+      document.getElementById('taraInput').value=extraChip;
+      sendTara();
+    });
+    cb.appendChild(btn);
+  }
+};
+
+// ═══════════ EMPTY STATE FOR HISTORY ═══════════
+const _origCkRenderHistory=window.ckRenderHistory;
+window.ckRenderHistory=function(){
+  _origCkRenderHistory();
+  const box=document.getElementById('ck-history');
+  if(box&&box.style.display==='none'){
+    // No history items — already hidden, which is fine
+  }
+};
+
+// ═══════════ MARK CC TAB DONE AFTER CROSS-CHECK ═══════════
+const _origRenderCC=window.renderCC;
+window.renderCC=function(data){
+  _origRenderCC(data);
+  markTabDone('crosscheck');
+};
+
+// ═══════════ MARK COST TAB DONE AFTER COST CALC ═══════════
+const _origRenderCostCalc=window.renderCostCalc;
+window.renderCostCalc=function(data){
+  _origRenderCostCalc(data);
+  markTabDone('cost');
+};
+
+// ═══════════ UPDATE EXPECTED DOCS WHEN FILES ADDED ═══════════
+const _origCcRenderFileList=window.ccRenderFileList;
+window.ccRenderFileList=function(){
+  _origCcRenderFileList();
+  updateExpectedDocs();
+};
 </script>
 </body>
 </html>
