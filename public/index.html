@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShipSafe — AI Trade Compliance</title>
+<title>ShipSafe — Trade Compliance</title>
 <meta name="description" content="AI-powered compliance tool for food & agri exporters and importers. Catch customs issues before they cost you $8,500 and 23 days.">
-<meta property="og:title" content="ShipSafe — AI Trade Compliance">
+<meta property="og:title" content="ShipSafe — Trade Compliance">
 <meta property="og:description" content="Stop losing money to paperwork. ShipSafe catches compliance gaps before customs does — upload your docs and get an instant AI audit.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shipsafe-sage.vercel.app">
@@ -13,7 +13,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ShipSafe — AI Trade Compliance">
+<meta name="twitter:title" content="ShipSafe — Trade Compliance">
 <meta name="twitter:description" content="Stop losing money to paperwork. ShipSafe catches compliance gaps before customs does.">
 <meta name="twitter:image" content="https://shipsafe-sage.vercel.app/og.png">
 <script defer src="/_vercel/insights/script.js"></script>
@@ -35,28 +35,27 @@
   --hover:rgba(27,42,74,0.04);--active:rgba(27,42,74,0.08);
   --btn:#1B2A4A;--btn-tx:#FFFFFF;--btn-hv:#25406E;
 }
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf);color:var(--t1);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:15px}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf);color:var(--t1);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px}
 
 /* HEADER */
-.hd{background:var(--nv);padding:0 24px;height:48px;display:flex;align-items:center;justify-content:space-between;border-bottom:none}
+.hd{background:var(--nv);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;border-bottom:none}
 .hd-b{display:flex;align-items:center;gap:10px}
 .hd-ic{width:24px;height:24px;background:rgba(255,255,255,.15);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hd-nm{font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:16px}
-.hd-tg{color:rgba(255,255,255,.6);font-size:11px;font-weight:500;letter-spacing:.3px}
+.hd-nm{font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:18px}
+.hd-tg{color:rgba(255,255,255,.5);font-size:12px;font-weight:400;letter-spacing:.2px}
 
 /* LANDING PAGE */
-.landing{background:linear-gradient(135deg,#0F1B33 0%,var(--nv) 40%,#1E3A6E 100%);min-height:calc(100vh - 48px);display:flex;align-items:center;padding:60px 32px;position:relative;overflow:hidden}
-.landing::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(75,123,245,.18) 0%,rgba(75,123,245,.06) 40%,transparent 70%);top:-200px;right:-150px;pointer-events:none;animation:orbFloat 8s ease-in-out infinite}
-.landing::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(217,115,13,.1) 0%,rgba(75,123,245,.05) 40%,transparent 70%);bottom:-150px;left:-100px;pointer-events:none;animation:orbFloat 10s ease-in-out infinite reverse}
-@keyframes orbFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
+.landing{background:var(--nv);min-height:calc(100vh - 52px);display:flex;align-items:center;padding:60px 32px;position:relative;overflow:hidden}
+.landing::before{display:none}
+.landing::after{display:none}
 .landing-split{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%;position:relative;z-index:1}
 .landing-left{text-align:left}
-.landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(75,123,245,.15);border:1px solid rgba(75,123,245,.25);color:rgba(255,255,255,.8);font-size:11px;font-weight:500;letter-spacing:0;padding:5px 14px;border-radius:20px;margin-bottom:14px}
+.landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-size:12px;font-weight:500;letter-spacing:0;padding:5px 14px;border-radius:20px;margin-bottom:14px}
 .landing-h1{font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:46px;line-height:1.12;margin:0 0 16px;letter-spacing:-.5px;font-weight:400}
 .landing-sub{color:rgba(255,255,255,.7);font-size:15px;line-height:1.7;max-width:420px;margin:0 0 24px;font-weight:400}
 .landing-btns{display:flex;align-items:center;gap:14px;margin-bottom:28px}
-.landing-cta{background:linear-gradient(135deg,#4B7BF5,#6B93F7);color:#FFFFFF;font-family:inherit;font-size:14px;font-weight:600;padding:12px 28px;border-radius:6px;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(75,123,245,.3)}
-.landing-cta:hover{box-shadow:0 6px 24px rgba(75,123,245,.45);transform:translateY(-1px)}
+.landing-cta{background:#FFFFFF;color:var(--nv);font-family:inherit;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.landing-cta:hover{box-shadow:0 4px 16px rgba(0,0,0,.2);transform:translateY(-1px)}
 .landing-note{color:rgba(255,255,255,.5);font-size:12px;font-weight:400}
 .landing-trust{display:flex;align-items:stretch;gap:0;margin-top:8px}
 .landing-trust-item{padding:0 16px;text-align:left;display:flex;flex-direction:column;justify-content:center}
@@ -65,7 +64,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .landing-trust-l{font-size:11px;color:rgba(255,255,255,.5);font-weight:500;margin-top:2px;display:block;line-height:1.3}
 .landing-trust-sep{width:1px;background:rgba(255,255,255,.15);flex-shrink:0}
 .landing-right{position:relative}
-.landing-right::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(75,123,245,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;filter:blur(40px)}
+.landing-right::before{display:none}
 /* DEMO CARD */
 .demo-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:18px 20px 14px;text-align:left;backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.08)}
 .demo-hd{margin-bottom:10px}
@@ -108,16 +107,16 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .welcome-banner.hidden{display:none}
 .welcome-icon{width:36px;height:36px;background:rgba(75,123,245,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
 .welcome-text{flex:1}
-.welcome-title{font-size:15px;font-weight:600;color:var(--t1);margin-bottom:2px}
-.welcome-sub{font-size:13px;color:var(--t2)}
-.welcome-cta{background:var(--ac);color:#FFFFFF;border:none;padding:8px 16px;border-radius:5px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all .15s}
+.welcome-title{font-size:16px;font-weight:600;color:var(--t1);margin-bottom:2px}
+.welcome-sub{font-size:14px;color:var(--t2)}
+.welcome-cta{background:var(--ac);color:#FFFFFF;border:none;padding:8px 16px;border-radius:5px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all .15s}
 .welcome-cta:hover{background:var(--acl);box-shadow:0 2px 8px rgba(75,123,245,.25)}
 .welcome-close{background:none;border:none;color:var(--t3);font-size:16px;cursor:pointer;padding:0 4px;margin-left:4px}
 .welcome-close:hover{color:var(--t1)}
 
 /* FEATURE TABS */
 .tabs-bar{display:flex;justify-content:center;gap:0;padding-bottom:0;margin-bottom:0;position:relative;z-index:2}
-.tab-btn{padding:11px 18px;font-size:13px;font-weight:500;color:rgba(255,255,255,.5);border:none;background:transparent;cursor:pointer;border-radius:0;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:6px;border-bottom:2px solid transparent}
+.tab-btn{padding:12px 20px;font-size:14px;font-weight:500;color:rgba(255,255,255,.5);border:none;background:transparent;cursor:pointer;border-radius:0;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:6px;border-bottom:2px solid transparent}
 .tab-btn:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
 .tab-btn.active{background:transparent;color:#FFFFFF;border-bottom:2px solid var(--ac)}
 .tab-btn svg{display:none}
@@ -130,34 +129,34 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .tab-panel.active{display:block}
 
 /* FORM ELEMENTS */
-.xl{font-size:13px;font-weight:500;color:var(--t2);margin-bottom:8px}
+.xl{font-size:15px;font-weight:500;color:var(--t2);margin-bottom:8px}
 .xr{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.xc{background:transparent;border:1px solid var(--bd);border-radius:4px;padding:6px 14px;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:background .1s;white-space:nowrap;font-family:inherit}
+.xc{background:transparent;border:1px solid var(--bd);border-radius:4px;padding:7px 16px;font-size:14px;font-weight:500;color:var(--t2);cursor:pointer;transition:background .1s;white-space:nowrap;font-family:inherit}
 .xc:hover{background:var(--hover);color:var(--t1)}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 .fd{display:flex;flex-direction:column;gap:4px}
-.fd label{font-size:13px;font-weight:500;color:var(--t2)}
-.fd select,.fd input{height:36px;padding:0 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .1s}
+.fd label{font-size:14px;font-weight:500;color:var(--t2)}
+.fd select,.fd input{height:40px;padding:0 14px;border:1px solid var(--bd);border-radius:var(--rs);font-size:15px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .1s}
 .fd select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
 .fd select:focus,.fd input:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}
-.btn{background:var(--btn);color:var(--btn-tx);border:none;height:38px;padding:0 18px;border-radius:var(--rs);font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .15s}
+.btn{background:var(--btn);color:var(--btn-tx);border:none;height:42px;padding:0 20px;border-radius:var(--rs);font-size:15px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .15s}
 .btn:hover{background:var(--btn-hv);box-shadow:var(--sh-md)}
 .btn:disabled{opacity:.3;cursor:not-allowed}
-.btn-outline{background:transparent;border:1px solid var(--bd);color:var(--t2);height:34px;padding:0 14px;border-radius:var(--rs);font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .1s}
+.btn-outline{background:transparent;border:1px solid var(--bd);color:var(--t2);height:38px;padding:0 16px;border-radius:var(--rs);font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .1s}
 .btn-outline:hover{background:var(--hover);color:var(--t1)}
-.err{display:none;background:var(--rdbg);border:1px solid #daa;border-radius:var(--rs);padding:10px 14px;margin-top:12px;font-size:12px;color:var(--rd)}
+.err{display:none;background:var(--rdbg);border:1px solid #daa;border-radius:var(--rs);padding:10px 14px;margin-top:12px;font-size:14px;color:var(--rd)}
 .err.on{display:block}
 
 /* HS CODE SEARCHABLE DROPDOWN */
 .hs-search{position:relative}
-.hs-search input{height:36px;padding:0 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;transition:border-color .1s}
+.hs-search input{height:40px;padding:0 14px;border:1px solid var(--bd);border-radius:var(--rs);font-size:15px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;transition:border-color .1s}
 .hs-search input:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}
 .hs-dropdown{display:none;position:absolute;top:100%;left:0;right:0;margin-top:4px;background:var(--wh);border:1px solid var(--bd);border-radius:var(--rs);box-shadow:0 8px 24px rgba(27,42,74,.12);max-height:280px;overflow-y:auto;z-index:100}
 .hs-dropdown.open{display:block}
 .hs-group{font-size:11px;font-weight:600;color:var(--t3);padding:8px 12px 4px;position:sticky;top:0;background:var(--wh);border-bottom:1px solid var(--bdl)}
 .hs-item{padding:8px 12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .08s}
 .hs-item:hover{background:var(--hover)}
-.hs-item-name{font-size:13px;color:var(--t1)}
+.hs-item-name{font-size:14px;color:var(--t1)}
 .hs-item-code{font-size:11px;font-weight:500;color:var(--ac);background:rgba(75,123,245,.08);padding:2px 6px;border-radius:3px}
 .hs-item.other{color:var(--t3);font-style:italic;font-size:12px}
 
@@ -167,7 +166,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .dl-notice.ok{background:var(--gnbg);border-color:var(--gn)}
 
 /* STICKY TABS */
-.tabs-sticky{position:sticky;top:48px;z-index:10;background:linear-gradient(135deg,var(--nv) 0%,#1E3A6E 100%)}
+.tabs-sticky{position:sticky;top:52px;z-index:10;background:var(--nv)}
 /* TAB DONE STATE */
 .tab-btn.done .tab-step{background:var(--gn);color:#fff;border-color:var(--gn);font-size:0}
 .tab-btn.done .tab-step::after{content:'✓';font-size:10px}
@@ -180,7 +179,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 
 /* GREEN CTA BUTTON */
-.btn-cta{background:var(--gn);color:#fff;border:none;height:42px;padding:0 24px;border-radius:var(--rs);font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:all .2s;width:100%}
+.btn-cta{background:var(--gn);color:#fff;border:none;height:48px;padding:0 28px;border-radius:var(--rs);font-size:16px;font-weight:600;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:all .2s;width:100%}
 .btn-cta:hover{background:#0a6a0a;box-shadow:0 4px 16px rgba(15,123,15,.3)}
 .btn-cta:disabled{opacity:.4;cursor:not-allowed}
 .btn-cta.pulse{animation:ctaPulse 2s ease-in-out infinite}
@@ -188,16 +187,16 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 
 /* SVG CIRCULAR GAUGE */
 .gauge-wrap{display:flex;align-items:center;gap:20px;margin-bottom:8px}
-.gauge-svg{width:100px;height:100px;flex-shrink:0}
+.gauge-svg{width:110px;height:110px;flex-shrink:0}
 .gauge-bg{fill:none;stroke:var(--bdl);stroke-width:8}
 .gauge-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .8s ease,stroke .3s}
 .gauge-text{font-family:'DM Serif Display',serif;font-size:24px;fill:var(--t1);text-anchor:middle;dominant-baseline:central}
 .gauge-stats{flex:1}
-.gauge-stat{font-size:14px;color:var(--t2);margin-bottom:4px}
+.gauge-stat{font-size:15px;color:var(--t2);margin-bottom:4px}
 .gauge-stat b{color:var(--t1);font-weight:600}
 
 /* STATUS BADGES */
-.status-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap;margin-left:auto;flex-shrink:0}
+.status-badge{font-size:12px;font-weight:600;padding:3px 10px;border-radius:4px;white-space:nowrap;margin-left:auto;flex-shrink:0}
 .status-badge.ready{background:var(--gnbg);color:var(--gn)}
 .status-badge.review{background:var(--ambg);color:var(--am)}
 .status-badge.missing{background:var(--rdbg);color:var(--rd)}
@@ -205,7 +204,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 /* EMPTY STATES */
 .empty-state{text-align:center;padding:48px 20px;color:var(--t3)}
 .empty-state-icon{font-size:36px;margin-bottom:10px;opacity:.5}
-.empty-state-text{font-size:14px;line-height:1.6;margin-bottom:14px}
+.empty-state-text{font-size:15px;line-height:1.6;margin-bottom:14px}
 .empty-state .btn{margin-top:4px}
 
 /* HERO STAT CARDS — hidden, kept for compat */
@@ -245,24 +244,24 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 
 /* EXPECTED DOCS CHECKLIST */
 .expected-docs{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);padding:14px 16px;margin-bottom:16px}
-.expected-docs-title{font-size:13px;font-weight:600;color:var(--t2);margin-bottom:8px}
-.expected-doc{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px;color:var(--t2)}
+.expected-docs-title{font-size:14px;font-weight:600;color:var(--t2);margin-bottom:8px}
+.expected-doc{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:14px;color:var(--t2)}
 .expected-doc.uploaded{color:var(--gn)}
 .expected-doc-icon{font-size:14px}
 
 /* RESULTS */
 .route{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.rt{background:var(--wh);color:var(--t2);font-size:12px;font-weight:500;padding:4px 10px;border-radius:4px;border:1px solid var(--bd)}
+.rt{background:var(--wh);color:var(--t2);font-size:13px;font-weight:500;padding:4px 10px;border-radius:4px;border:1px solid var(--bd)}
 .rt b{color:var(--t1)}
 .ra{color:var(--t3);font-size:14px}
 
 .conf{background:var(--sf);border-radius:var(--r);padding:16px 20px;margin-bottom:16px}
 .conf-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.conf-lb{font-size:11px;font-weight:500;color:var(--t3)}
+.conf-lb{font-size:13px;font-weight:500;color:var(--t3)}
 .conf-p{font-family:'DM Serif Display',serif;font-size:26px;color:var(--t1)}
 .conf-tr{height:6px;background:var(--bdl);border-radius:3px;overflow:hidden;margin-bottom:6px}
 .conf-fl{height:100%;background:var(--gn);border-radius:3px;transition:width .5s;width:0%}
-.conf-st{font-size:13px;font-weight:500;color:var(--t3)}
+.conf-st{font-size:14px;font-weight:500;color:var(--t3)}
 .conf-st.rdy{color:var(--gn);font-weight:600}
 
 .ph{background:var(--wh);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
@@ -271,8 +270,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .ph-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
 .ph-ic.pre{background:#EAF0FF}.ph-ic.ship{background:#E8F8EE}.ph-ic.pay{background:var(--ambg)}
 .ph-nf{flex:1}
-.ph-t{font-size:15px;font-weight:600}
-.ph-ct{font-size:12px;color:var(--t3);margin-top:2px}
+.ph-t{font-size:16px;font-weight:600}
+.ph-ct{font-size:13px;color:var(--t3);margin-top:2px}
 .ph-ch{color:var(--t3);transition:transform .2s}
 .ph.open .ph-ch{transform:rotate(180deg)}
 .ph-bd{max-height:0;overflow:hidden;transition:max-height .35s ease}
@@ -286,28 +285,28 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .cb{width:18px;height:18px;border:2px solid var(--bd);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;background:var(--wh);transition:all .15s}
 .ci.done .cb{background:var(--gn);border-color:var(--gn)}
 .cb svg{opacity:0}.ci.done .cb svg{opacity:1}
-.ci-t{font-size:14px;font-weight:600;line-height:1.45}
-.ci-d{font-size:13px;color:var(--t3);margin-top:2px;line-height:1.55}
+.ci-t{font-size:15px;font-weight:600;line-height:1.45}
+.ci-d{font-size:14px;color:var(--t3);margin-top:2px;line-height:1.55}
 
-.sh{font-family:'DM Serif Display',serif;font-size:20px;color:var(--t1);margin-bottom:12px}
+.sh{font-family:'DM Serif Display',serif;font-size:22px;color:var(--t1);margin-bottom:12px}
 .al{background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--r);padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
 .al-ic{width:28px;height:28px;background:var(--am);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;color:#fff;font-size:13px}
-.al-t{font-size:14px;font-weight:600;color:var(--am);margin-bottom:2px}
-.al-tx{font-size:13px;color:var(--t1);line-height:1.6}
+.al-t{font-size:15px;font-weight:600;color:var(--am);margin-bottom:2px}
+.al-tx{font-size:14px;color:var(--t1);line-height:1.6}
 
 .ai-disc{background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--rs);padding:10px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
 .ai-disc-ic{width:24px;height:24px;background:var(--am);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:12px}
-.ai-disc-t{font-size:13px;font-weight:600;color:var(--am);margin-bottom:2px}
-.ai-disc-b{font-size:13px;color:var(--t2);line-height:1.55}
+.ai-disc-t{font-size:14px;font-weight:600;color:var(--am);margin-bottom:2px}
+.ai-disc-b{font-size:14px;color:var(--t2);line-height:1.55}
 
 .src-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
 .src-itm{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--wh);border:1px solid var(--bdl);border-radius:var(--rs);text-decoration:none;color:var(--t1);transition:all .1s}
 .src-itm:hover{border-color:var(--t3);background:var(--sf)}
 .src-n{width:20px;height:20px;background:var(--sf);color:var(--t2);border:1px solid var(--bd);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0}
-.src-t{font-size:13px;font-weight:600;line-height:1.35}
-.src-u{font-size:11px;color:var(--t3);margin-top:2px;text-transform:lowercase}
+.src-t{font-size:14px;font-weight:600;line-height:1.35}
+.src-u{font-size:12px;color:var(--t3);margin-top:2px;text-transform:lowercase}
 .note-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.note-ta{width:100%;min-height:90px;border:1px solid var(--bdl);border-radius:var(--rs);padding:12px 14px;font-family:inherit;font-size:13px;line-height:1.55;color:var(--t1);background:var(--wh);resize:vertical;transition:border-color .1s}
+.note-ta{width:100%;min-height:90px;border:1px solid var(--bdl);border-radius:var(--rs);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.55;color:var(--t1);background:var(--wh);resize:vertical;transition:border-color .1s}
 .note-ta:focus{outline:none;border-color:var(--nv)}
 .note-ta::placeholder{color:var(--t3)}
 .note-sv{font-size:11px;color:var(--t3);font-weight:600;display:flex;align-items:center;gap:5px}
@@ -319,8 +318,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .nstep-ic{width:28px;height:28px;border-radius:4px;background:var(--sf);color:var(--t2);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nstep-ic svg{width:17px;height:17px}
 .nstep-tx{flex:1}
-.nstep-t{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:2px}
-.nstep-b{font-size:13px;color:var(--t2);line-height:1.5}
+.nstep-t{font-size:15px;font-weight:600;color:var(--t1);margin-bottom:2px}
+.nstep-b{font-size:14px;color:var(--t2);line-height:1.5}
 .nstep-cta{background:var(--btn);color:var(--btn-tx);border:none;font-family:inherit;font-size:12px;font-weight:500;padding:8px 12px;border-radius:var(--rs);cursor:pointer;white-space:nowrap;transition:background .1s}
 .nstep-cta:hover{background:var(--btn-hv)}
 
@@ -330,14 +329,14 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .pc.recommended{border-color:var(--gn);background:var(--gnbg)}
 .pc.caution{border-color:var(--ambd);background:var(--ambg)}
 .pc.risky{border-color:#E8A0A0;background:var(--rdbg)}
-.pc-m{font-size:14px;font-weight:600;margin-bottom:3px}
+.pc-m{font-size:15px;font-weight:600;margin-bottom:3px}
 .pc-tg{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:3px;margin-bottom:5px;color:#fff}
 .pc.recommended .pc-tg{background:var(--gn)}.pc.caution .pc-tg{background:var(--am)}.pc.risky .pc-tg{background:var(--rd)}
-.pc-ds{font-size:13px;color:var(--t2);line-height:1.55}
+.pc-ds{font-size:14px;color:var(--t2);line-height:1.55}
 .ctb{width:100%;margin-top:10px;border-collapse:collapse}
 .ctb tr{border-bottom:1px solid var(--bdl)}.ctb tr:last-child{border-bottom:2px solid var(--bd)}
-.ctb td{padding:10px 6px;font-size:13px}.ctb td:first-child{color:var(--t2)}.ctb td:last-child{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
-.ct-n{font-size:12px;color:var(--t3);margin-top:8px;font-style:italic}
+.ctb td{padding:10px 6px;font-size:14px}.ctb td:first-child{color:var(--t2)}.ctb td:last-child{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.ct-n{font-size:13px;color:var(--t3);margin-top:8px;font-style:italic}
 
 /* SHARED: UPLOAD & FINDINGS */
 .upload-zone{border:2px dashed var(--bd);border-radius:var(--r);padding:40px;text-align:center;cursor:pointer;transition:border-color .15s}
@@ -349,7 +348,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .tag-high{background:var(--rdbg);color:var(--rd);font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px}
 .tag-med{background:var(--ambg);color:var(--am);font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px}
 .tag-pass{background:var(--gnbg);color:var(--gn);font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px}
-.suggestion{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;margin-top:8px;font-size:12px;color:var(--t2);line-height:1.5}
+.suggestion{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;margin-top:8px;font-size:13px;color:var(--t2);line-height:1.5}
 
 /* CROSSCHECK */
 .file-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--sf);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:8px}
@@ -371,7 +370,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .footer{text-align:center;padding:20px;font-size:11px;color:var(--t3)}
 
 /* GLOSSARY */
-.gl-search{width:100%;padding:8px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:13px;font-family:inherit;background:var(--wh);margin-bottom:10px;transition:border-color .15s}
+.gl-search{width:100%;padding:8px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:inherit;background:var(--wh);margin-bottom:10px;transition:border-color .15s}
 .gl-search:focus{outline:none;border-color:var(--nv);box-shadow:inset 0 0 0 1px var(--nv)}
 .gl-cats{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
 .gl-cat{border:1px solid var(--bd);background:var(--wh);border-radius:4px;padding:4px 10px;font-size:11px;font-weight:500;font-family:inherit;color:var(--t2);cursor:pointer;transition:all .12s}
@@ -386,12 +385,12 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--sf)
 .gl-item-tag.inco{background:rgba(245,158,11,.1);color:#D97706}
 .gl-item-tag.urc{background:rgba(139,92,246,.1);color:#7C3AED}
 .gl-item-tag.urdg{background:rgba(236,72,153,.1);color:#DB2777}
-.gl-item-t{font-size:13px;font-weight:500;color:var(--t1);flex:1}
+.gl-item-t{font-size:14px;font-weight:500;color:var(--t1);flex:1}
 .gl-item-ch{color:var(--t3);transition:transform .2s;font-size:12px}
 .gl-item.open .gl-item-ch{transform:rotate(180deg)}
 .gl-item-bd{max-height:0;overflow:hidden;transition:max-height .3s ease}
 .gl-item.open .gl-item-bd{max-height:800px}
-.gl-item-content{padding:0 16px 14px;font-size:13px;color:var(--t2);line-height:1.7}
+.gl-item-content{padding:0 16px 14px;font-size:14px;color:var(--t2);line-height:1.7}
 .gl-item-content strong{color:var(--t1)}
 .gl-item-content .gl-key{font-size:11px;font-weight:600;color:var(--t1);margin-top:8px;display:block}
 .gl-item-content ul{margin:4px 0 4px 16px;padding:0}
@@ -478,7 +477,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .tara-row.user{align-self:flex-end;flex-direction:row-reverse}
 .tara-row.bot{align-self:flex-start}
 .tara-row .tara-av{width:28px;height:28px;border-radius:8px;font-size:12px}
-.tara-msg{padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.6}
+.tara-msg{padding:12px 16px;border-radius:14px;font-size:14.5px;line-height:1.6}
 .tara-msg.bot{background:var(--wh);color:var(--t1);border:1px solid var(--bdl);border-bottom-left-radius:5px;box-shadow:0 1px 2px rgba(27,42,74,.04)}
 .tara-msg.user{background:var(--nv);color:#FFFFFF;border-bottom-right-radius:5px}
 .tara-msg p{margin:0 0 8px}.tara-msg p:last-child{margin:0}
@@ -495,7 +494,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .tara-chip{background:var(--wh);border:1px solid var(--bd);color:var(--t1);font-family:inherit;font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all .12s}
 .tara-chip:hover{background:var(--hover);color:var(--t1)}
 .tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--bdl);background:var(--wh)}
-.tara-input input{flex:1;height:36px;border:1px solid var(--bd);border-radius:4px;padding:0 12px;font-size:13px;font-family:inherit;outline:none;transition:border-color .12s}
+.tara-input input{flex:1;height:40px;border:1px solid var(--bd);border-radius:4px;padding:0 14px;font-size:14px;font-family:inherit;outline:none;transition:border-color .12s}
 .tara-input input:focus{border-color:var(--nv);box-shadow:inset 0 0 0 1px var(--nv)}
 .tara-input button{width:36px;height:36px;border-radius:4px;background:var(--btn);border:none;color:var(--btn-tx);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .1s}
 .tara-input button:hover{background:var(--btn-hv)}
@@ -515,7 +514,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 
 <header class="hd">
   <div class="hd-b" onclick="goLanding()" style="cursor:pointer">
-    <div class="hd-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2" fill="#fff" stroke="none"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/><line x1="12" y1="2" x2="12" y2="5" stroke="#fff" stroke-width="2.5"/></svg></div>
+    <div class="hd-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21l1-4h18l1 4"/><path d="M4 17V9l8-5 8 5v8"/><path d="M7 17v-5h4v5"/><rect x="14" y="12" width="3" height="5"/></svg></div>
     <span class="hd-nm">ShipSafe</span>
   </div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -528,7 +527,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
       <button class="lang-btn" onclick="setLang('id')">ID</button>
       <button class="lang-btn" onclick="setLang('es')">ES</button>
     </div>
-    <span class="hd-tg" data-i18n="tagline">AI Compliance Agent</span>
+    <span class="hd-tg" data-i18n="tagline">Trade Compliance</span>
   </div>
 </header>
 
@@ -540,7 +539,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
     <div class="landing-left">
       <div class="landing-badge" data-i18n="hero_badge">For food &amp; agri exporters &amp; importers worldwide</div>
       <h1 class="landing-h1" data-i18n="landing_h1">Ship with<br>confidence.</h1>
-      <p class="landing-sub" data-i18n="landing_sub">AI checks every compliance requirement, cross-references your documents, and estimates landed costs — before your shipment leaves port.</p>
+      <p class="landing-sub" data-i18n="landing_sub">Check compliance requirements, cross-reference your documents, and estimate landed costs — before your shipment leaves port.</p>
       <div class="landing-btns">
         <button class="landing-cta" onclick="enterApp()" data-i18n="landing_cta">Get Started — it's free</button>
         <span class="landing-note" data-i18n="landing_note">No signup required</span>
@@ -607,8 +606,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
   <!-- ═══ CHECKER TAB ═══ -->
   <div class="tab-panel active" id="tp-checker">
     <div id="ck-input">
-      <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--t1);margin-bottom:6px">Compliance Checker</h2>
-      <p style="font-size:14px;color:var(--t3);margin-bottom:18px">Select your trade corridor below — we'll generate a compliance checklist in seconds.</p>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--t1);margin-bottom:6px">Compliance Checker</h2>
+      <p style="font-size:15px;color:var(--t3);margin-bottom:18px">Select your trade corridor below — we'll generate a compliance checklist in seconds.</p>
       <div class="fg">
         <div class="fd"><label>Commodity / HS Code</label>
           <div class="hs-search" id="hsSearch">
@@ -710,8 +709,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 
   <!-- ═══ COST CALCULATOR TAB ═══ -->
   <div class="tab-panel" id="tp-cost">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--t1);margin-bottom:6px">Cost Calculator</h2>
-    <p style="font-size:14px;color:var(--t3);margin-bottom:14px">Estimate your total shipment cost — freight, insurance, customs, certificates, and hidden fees.</p>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--t1);margin-bottom:6px">Cost Calculator</h2>
+    <p style="font-size:15px;color:var(--t3);margin-bottom:14px">Estimate your total shipment cost — freight, insurance, customs, certificates, and hidden fees.</p>
 
     <!-- Mode toggle -->
     <div style="display:flex;gap:4px;margin-bottom:16px;background:var(--sf);border-radius:8px;padding:3px;border:1px solid var(--bdl)">
@@ -813,7 +812,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
   <div class="tab-panel" id="tp-overview">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <div>
-        <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--t1);margin-bottom:4px">Shipment Overview</h2>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--t1);margin-bottom:4px">Shipment Overview</h2>
         <p style="font-size:14px;color:var(--t3)">Track your active shipments and compliance progress.</p>
       </div>
       <div style="display:flex;gap:6px;align-items:center">
@@ -834,8 +833,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 
   <!-- ═══ CROSSCHECK TAB ═══ -->
   <div class="tab-panel" id="tp-crosscheck">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--t1);margin-bottom:6px" data-i18n="cc_title">Document Checker</h2>
-    <p style="font-size:14px;color:var(--t3);margin-bottom:14px" data-i18n="cc_subtitle">Upload your trade documents to cross-check everything and catch issues before customs does.</p>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--t1);margin-bottom:6px" data-i18n="cc_title">Document Checker</h2>
+    <p style="font-size:15px;color:var(--t3);margin-bottom:14px" data-i18n="cc_subtitle">Upload your trade documents to cross-check everything and catch issues before customs does.</p>
 
     <!-- Trade context selectors -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
@@ -874,8 +873,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
     <div style="background:var(--hover);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px">
       <div style="font-size:16px">💡</div>
       <div>
-        <div style="font-size:11px;font-weight:500;color:var(--t1);margin-bottom:2px">Upload any document — PDF or photo</div>
-        <div style="font-size:11px;color:var(--t2)">Works with Invoice, Packing List, Bill of Lading, COO, Health Certificate, LC, and more. Upload 1 file or multiple.</div>
+        <div style="font-size:13px;font-weight:500;color:var(--t1);margin-bottom:2px">Upload any document — PDF or photo</div>
+        <div style="font-size:13px;color:var(--t2)">Works with Invoice, Packing List, Bill of Lading, COO, Health Certificate, LC, and more. Upload 1 file or multiple.</div>
       </div>
     </div>
 
@@ -927,7 +926,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 
 </div>
 
-<div class="footer" data-i18n="footer">ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
+<div class="footer" data-i18n="footer">ShipSafe · Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
 </div><!-- /appView -->
 
 <div class="lov" id="loader"><div class="lo-c"><div class="lo-sp"></div><div class="lo-m" id="loMsg">Analysing trade corridor...</div><div class="lo-s">This takes a few seconds</div><button class="lo-cancel" onclick="cancelAnalysis()" data-i18n="cancel_btn">Cancel</button></div></div>
@@ -935,7 +934,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 <!-- TARA FLOATING CHAT -->
 <div class="tara-fab" onclick="toggleTara()">
   <div class="tara-cta" data-i18n="tara_cta">Ask Tara anything about trade compliance</div>
-  <button class="tara-btn" id="taraFabBtn">T</button>
+  <button class="tara-btn" id="taraFabBtn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
   <div class="tara-dot" id="taraDot"></div>
 </div>
 
@@ -998,7 +997,7 @@ let currentLang='en';
 
 const T={
   en:{
-    tagline:'AI Compliance Agent',
+    tagline:'Trade Compliance',
     hero_badge:'For food &amp; agri exporters &amp; importers worldwide',
     hero_h1:'Stop guessing.<br>Ship with confidence.',
     hero_p:'Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.',
@@ -1006,7 +1005,7 @@ const T={
     wb_title:'First time here? Start with the Compliance Checker.',wb_sub:'Pick your product + route. In seconds you\'ll see exactly what customs requires — then follow the steps.',wb_cta:'Start step 1 →',
     how1:'Check requirements',how2:'Cross-check your docs',how3:'Estimate landed cost',how4:'Track &amp; ship',
     nstep_t:'Next: cross-check your documents',nstep_b:'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.',nstep_cta:'Go to Doc Cross-Checker →',
-    landing_h1:'Ship with<br>confidence.',landing_sub:'AI checks every compliance requirement, cross-references your documents, and estimates landed costs — before your shipment leaves port.',landing_note:'No signup required',
+    landing_h1:'Ship with<br>confidence.',landing_sub:'Check compliance requirements, cross-reference your documents, and estimate landed costs — before your shipment leaves port.',landing_note:'No signup required',
     demo_label:'Live preview — Compliance Checker',landing_cta:'Get Started — it\'s free',
     tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',tab_glossary:'Trade Glossary',
     gl_title:'Trade Glossary',gl_sub:'ICC rules, Incoterms, and trade finance standards — your reference library.',gl_search_ph:'Search terms...',gl_btn:'Glossary',
@@ -1023,7 +1022,7 @@ const T={
     tara_role:'Trade Compliance Assistant',tara_online:'Online',tara_ph:'Ask about trade compliance...',
     tara_intro:"Hi! I'm **Tara**, your trade compliance assistant. Ask me anything — Incoterms, customs rules, document requirements, HS codes, or shipping costs. What can I help with?",
     tara_chips:['What documents do I need to export?','Explain FOB vs CIF','How do I find my HS code?'],
-    footer:'ShipSafe · AI Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
+    footer:'ShipSafe · Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
     ai_disc_t:'AI Reasoning — Needs Verification',
     ai_disc_b:'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.',
     searching_web:'Searching web for latest regulations...',
@@ -1041,7 +1040,7 @@ const T={
     lang_instruction:'',
   },
   id:{
-    tagline:'Asisten Ekspor-Impor AI',
+    tagline:'Kepatuhan Perdagangan',
     hero_badge:'Untuk eksportir &amp; importir pangan &amp; agri',
     hero_h1:'Jangan tebak-tebak.<br>Kirim dengan pasti.',
     hero_p:'Masukkan detail pengiriman kamu. AI langsung cek semua syarat ekspor-impor, tandai risiko, dan kasih tahu apa yang harus disiapkan.',
@@ -1049,7 +1048,7 @@ const T={
     wb_title:'Baru pertama kali? Mulai dari sini.',wb_sub:'Pilih produk dan tujuan. Dalam hitungan detik kamu tahu persis syarat bea cukai — tinggal ikuti langkahnya.',wb_cta:'Mulai langkah 1 →',
     how1:'Cek persyaratan',how2:'Cek silang dokumen',how3:'Hitung total biaya',how4:'Pantau &amp; kirim',
     nstep_t:'Selanjutnya: cek silang dokumen kamu',nstep_b:'Kamu sudah tahu persyaratannya. Upload Invoice + Packing List supaya AI bisa temukan ketidakcocokan sebelum bea cukai.',nstep_cta:'Ke Cek Dokumen →',
-    landing_h1:'Kirim dengan<br>pasti.',landing_sub:'AI cek semua syarat ekspor-impor, cocokkan dokumen, dan hitung total biaya — sebelum barang berangkat.',landing_note:'Gratis, tanpa daftar',
+    landing_h1:'Kirim dengan<br>pasti.',landing_sub:'Cek semua syarat ekspor-impor, cocokkan dokumen, dan hitung total biaya — sebelum barang berangkat.',landing_note:'Gratis, tanpa daftar',
     demo_label:'Preview langsung — Cek Kepatuhan',landing_cta:'Mulai Sekarang — Gratis',
     tab_crosscheck:'Cek Dokumen',tab_start:'MULAI',tab_checker:'Cek Kepatuhan',tab_cost:'Hitung Biaya',tab_overview:'Ikhtisar Pengiriman',tab_glossary:'Glosarium',
     gl_title:'Glosarium Perdagangan',gl_sub:'Istilah ICC, Incoterms, dan standar perdagangan internasional — referensi lengkap.',gl_search_ph:'Cari istilah...',gl_btn:'Glosarium',
@@ -1109,7 +1108,7 @@ ATURAN BAHASA:
 - Nama lembaga Indonesia pakai nama resminya: BKIPM, Kemendag, Karantina Pertanian, KADIN, Bea Cukai, dll.`,
   },
   es:{
-    tagline:'Agente de Cumplimiento IA',
+    tagline:'Cumplimiento Comercial',
     hero_badge:'Para exportadores e importadores de alimentos y agro en todo el mundo',
     hero_h1:'Deja de adivinar.<br>Exporta con confianza.',
     hero_p:'Ingresa los detalles de tu operación. La IA verifica los requisitos de cumplimiento, detecta riesgos ocultos y te dice exactamente qué preparar antes de enviar.',
