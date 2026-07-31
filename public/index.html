@@ -234,7 +234,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 
 /* PRINT STYLES */
 @media print{
-  .hd,.tara-fab,.tara-panel,.gl-drawer,.tabs-sticky,.hero,.welcome-banner,.btn,.btn-outline,.btn-cta,button,.nstep,.landing{display:none!important}
+  .hd,.tara-fab,.tara-panel,.gl-drawer,.tabs-sticky,.hero,.welcome-banner,.btn,.btn-outline,.btn-cta,button,.nstep,.landing,.disclaimer-bar{display:none!important}
   .main-card{box-shadow:none;max-width:100%;margin:0}
   .tab-panel{display:block!important;padding:20px}
   .ph{break-inside:avoid}
@@ -367,7 +367,9 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 .lo-cancel{margin-top:14px;background:none;border:1.5px solid var(--bd);color:var(--t2);font-family:inherit;font-size:12px;font-weight:600;padding:7px 20px;border-radius:var(--rs);cursor:pointer;transition:all .12s}
 .lo-cancel:hover{border-color:var(--er);color:var(--er)}
 
-.footer{text-align:center;padding:20px;font-size:11px;color:var(--t3)}
+.footer{text-align:center;padding:20px 20px 44px;font-size:11px;color:var(--t3)}
+.disclaimer-bar{position:fixed;bottom:0;left:0;right:0;background:var(--wh);border-top:1px solid var(--bdl);padding:8px 16px;font-size:11px;color:var(--t3);text-align:center;z-index:100;line-height:1.5}
+.ai-disclaimer{background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--rs);padding:10px 14px;font-size:12px;color:var(--am);margin-bottom:16px;line-height:1.5}
 
 /* GLOSSARY */
 .gl-search{width:100%;padding:8px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:14px;font-family:inherit;background:var(--wh);margin-bottom:10px;transition:border-color .15s}
@@ -929,6 +931,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 <div class="footer" data-i18n="footer">ShipSafe · Trade Compliance v2.0 · Not legal advice · Final human sign-off required</div>
 </div><!-- /appView -->
 
+<div class="disclaimer-bar" id="disclaimerBar" style="display:none">ShipSafe is an AI-powered decision support tool, not a licensed customs broker. Always verify compliance requirements with a qualified trade compliance professional before shipping.</div>
+
 <div class="lov" id="loader"><div class="lo-c"><div class="lo-sp"></div><div class="lo-m" id="loMsg">Analysing trade corridor...</div><div class="lo-s">This takes a few seconds</div><button class="lo-cancel" onclick="cancelAnalysis()" data-i18n="cancel_btn">Cancel</button></div></div>
 
 <!-- TARA FLOATING CHAT -->
@@ -1220,6 +1224,7 @@ function dismissWelcome(){
 function enterApp(){
   document.getElementById('landingView').style.display='none';
   document.getElementById('appView').style.display='';
+  document.getElementById('disclaimerBar').style.display='';
   document.body.style.background='var(--sf)';
   try{localStorage.setItem('ss_entered','1')}catch(e){}
   window.scrollTo({top:0});
@@ -1227,6 +1232,7 @@ function enterApp(){
 function goLanding(){
   document.getElementById('landingView').style.display='';
   document.getElementById('appView').style.display='none';
+  document.getElementById('disclaimerBar').style.display='none';
   document.body.style.background='var(--nv)';
   try{localStorage.removeItem('ss_entered')}catch(e){}
   window.scrollTo({top:0});
@@ -1237,6 +1243,7 @@ function goLanding(){
     if(localStorage.getItem('ss_entered')){
       const lv=document.getElementById('landingView');if(lv)lv.style.display='none';
       const av=document.getElementById('appView');if(av)av.style.display='';
+      const db=document.getElementById('disclaimerBar');if(db)db.style.display='';
       document.body.style.background='var(--sf)';
     }
   }catch(e){}
@@ -1848,7 +1855,7 @@ function render(data,commodity,origin,destination,incoterms){
   document.getElementById('ck-input').style.display='none';
   document.getElementById('ck-results').style.display='';
   document.getElementById('routeBar').innerHTML=`<span class="rt">📦 <b>${commodity}</b></span><span class="ra">→</span><span class="rt">🏭 <b>${origin}</b></span><span class="ra">→</span><span class="rt">🚢 <b>${destination}</b></span><span class="ra">·</span><span class="rt">📋 <b>${incoterms}</b></span>`;
-  document.getElementById('aiDisc').innerHTML=`<div class="ai-disc"><div class="ai-disc-ic">⚡</div><div><div class="ai-disc-t">${T[currentLang]?.ai_disc_t||'AI Reasoning — Needs Verification'}</div><div class="ai-disc-b">${T[currentLang]?.ai_disc_b||'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.'}</div></div></div>`;
+  document.getElementById('aiDisc').innerHTML=`<div class="ai-disclaimer">⚠️ This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div><div class="ai-disc"><div class="ai-disc-ic">⚡</div><div><div class="ai-disc-t">${T[currentLang]?.ai_disc_t||'AI Reasoning — Needs Verification'}</div><div class="ai-disc-b">${T[currentLang]?.ai_disc_b||'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.'}</div></div></div>`;
   tot=0;chk=0;
 
   // Save current corridor key for save/restore operations
@@ -2676,6 +2683,7 @@ function renderCC(data){
   const verdict=data.summary?.verdict||'';
 
   let html=`
+    <div class="ai-disclaimer">⚠️ This audit is AI-generated based on document images. It does not replace professional document examination by your bank or customs broker.</div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <div><h2 style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--t1)">${T[currentLang]?.cc_results_title||'Cross-Check Results'}</h2>
       <p style="font-size:12px;color:var(--t3)">${(data.summary?.docs||ccFiles.map(f=>f.name)).join(' · ')}${data.summary?.commodity?' · '+data.summary.commodity:''}</p></div>
@@ -3222,8 +3230,9 @@ function addTaraTyping(){
 
 function seedTara(){
   _taraSeeded=true;
+  const disclaimer='*Tara is an AI assistant. Her responses are informational only and do not constitute legal or professional trade compliance advice.*';
   const intro=T[currentLang]?.tara_intro||"Hi! I'm **Tara**, your trade compliance assistant. Ask me anything — Incoterms, customs rules, document requirements, HS codes, or shipping costs. What can I help with?";
-  addTaraMsg(intro,'bot',true);
+  addTaraMsg(disclaimer+'\n\n'+intro,'bot',true);
   const chips=T[currentLang]?.tara_chips||['What documents do I need to export?','Explain FOB vs CIF','How do I find my HS code?'];
   const cb=document.getElementById('taraChips');
   cb.innerHTML=chips.map(c=>`<button class="tara-chip">${c.replace(/</g,'&lt;')}</button>`).join('');
