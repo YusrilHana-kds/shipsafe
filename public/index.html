@@ -661,7 +661,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
       </div>
       <div class="route-pill" id="routePill"></div>
       <button class="btn-cta" onclick="runCheck()" id="goBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <span data-i18n="ck_run_btn">Check My Route — Free</span>
       </button>
       <div style="text-align:center;margin-top:6px"><span style="font-size:11px;color:var(--t3)" data-i18n="ck_disclaimer">AI-powered guidance. Not legal advice.</span></div>
@@ -737,8 +737,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
     <!-- Mode toggle -->
     <div style="display:flex;gap:4px;margin-bottom:16px;background:var(--sf);border-radius:8px;padding:3px;border:1px solid var(--bdl)">
       <button class="cost-mode-btn active" id="costModeAI" onclick="switchCostMode('ai')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        AI Estimate
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Auto Estimate
       </button>
       <button class="cost-mode-btn" id="costModeManual" onclick="switchCostMode('manual')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="10" y1="4" x2="10" y2="20"/></svg>
@@ -1047,8 +1047,8 @@ const T={
     tara_intro:"Hi! I'm **Tara**, your trade compliance assistant. Ask me anything — Incoterms, customs rules, document requirements, HS codes, or shipping costs. What can I help with?",
     tara_chips:['What documents do I need to export?','Explain FOB vs CIF','How do I find my HS code?'],
     footer:'ShipSafe · Trade Compliance v2.0 · Not legal advice · Final human sign-off required',
-    ai_disc_t:'AI Reasoning — Needs Verification',
-    ai_disc_b:'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.',
+    ai_disc_t:'Auto-Generated — Needs Verification',
+    ai_disc_b:'These recommendations are auto-generated using web search data. Cross-check with a licensed customs broker before shipping.',
     searching_web:'Searching web for latest regulations...',
     sources_heading:'Sources & References',
     note_heading:'My Notes',
@@ -1090,8 +1090,8 @@ const T={
     tara_intro:"Hai! Saya **Tara**, asisten ekspor-impor kamu. Tanya apa aja — soal Incoterms, aturan bea cukai, syarat dokumen, kode HS, atau ongkos kirim. Mau tanya apa?",
     tara_chips:['Dokumen apa aja yang perlu untuk ekspor?','Bedanya FOB sama CIF apa?','Gimana cara cari kode HS?'],
     footer:'ShipSafe · Asisten Ekspor-Impor AI v2.0 · Bukan nasihat hukum · Tetap konsultasi ahli',
-    ai_disc_t:'Hasil AI — Perlu Diverifikasi',
-    ai_disc_b:'Rekomendasi ini pakai AI + pencarian web. Pastikan verifikasi dengan customs broker sebelum kirim.',
+    ai_disc_t:'Hasil Otomatis — Perlu Diverifikasi',
+    ai_disc_b:'Rekomendasi ini dibuat otomatis berdasarkan pencarian web. Pastikan verifikasi dengan customs broker sebelum kirim.',
     searching_web:'Mencari regulasi terbaru...',
     sources_heading:'Sumber & Referensi',
     note_heading:'Catatan Saya',
@@ -1158,8 +1158,8 @@ ATURAN BAHASA:
     tara_intro:"¡Hola! Soy **Tara**, tu asistente de cumplimiento comercial. Pregúntame lo que sea — Incoterms, reglas aduaneras, requisitos de documentos, códigos HS o costos de envío. ¿En qué te ayudo?",
     tara_chips:['¿Qué documentos necesito para exportar?','Explica FOB vs CIF','¿Cómo encuentro mi código HS?'],
     footer:'ShipSafe · Cumplimiento Comercial IA v2.0 · No es asesoría legal · Se requiere revisión humana',
-    ai_disc_t:'Razonamiento IA — Requiere Verificación',
-    ai_disc_b:'Estas recomendaciones usan razonamiento IA + búsqueda web en vivo. Verifique con un agente aduanal licenciado antes de enviar.',
+    ai_disc_t:'Generado Automáticamente — Requiere Verificación',
+    ai_disc_b:'Estas recomendaciones son generadas automáticamente usando datos de búsqueda web. Verifique con un agente aduanal licenciado antes de enviar.',
     searching_web:'Buscando regulaciones más recientes en la web...',
     sources_heading:'Fuentes y Referencias',
     note_heading:'Mis Notas',
@@ -1875,7 +1875,7 @@ function render(data,commodity,origin,destination,incoterms){
   document.getElementById('ck-input').style.display='none';
   document.getElementById('ck-results').style.display='';
   document.getElementById('routeBar').innerHTML=`<span class="rt">📦 <b>${commodity}</b></span><span class="ra">→</span><span class="rt">🏭 <b>${origin}</b></span><span class="ra">→</span><span class="rt">🚢 <b>${destination}</b></span><span class="ra">·</span><span class="rt">📋 <b>${incoterms}</b></span>`;
-  document.getElementById('aiDisc').innerHTML=`<div class="ai-disclaimer">⚠️ This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div><div class="ai-disc"><div class="ai-disc-ic">⚡</div><div><div class="ai-disc-t">${T[currentLang]?.ai_disc_t||'AI Reasoning — Needs Verification'}</div><div class="ai-disc-b">${T[currentLang]?.ai_disc_b||'These recommendations use AI reasoning + live web search. Cross-check with a licensed customs broker before shipping.'}</div></div></div>`;
+  document.getElementById('aiDisc').innerHTML=`<div class="ai-disclaimer">⚠️ This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div><div class="ai-disc"><div class="ai-disc-ic">ℹ</div><div><div class="ai-disc-t">${T[currentLang]?.ai_disc_t||'Auto-Generated — Needs Verification'}</div><div class="ai-disc-b">${T[currentLang]?.ai_disc_b||'These recommendations are auto-generated using web search data. Cross-check with a licensed customs broker before shipping.'}</div></div></div>`;
   tot=0;chk=0;
 
   // Save current corridor key for save/restore operations
