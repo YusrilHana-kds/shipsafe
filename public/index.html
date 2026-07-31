@@ -287,6 +287,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 .cb svg{opacity:0}.ci.done .cb svg{opacity:1}
 .ci-t{font-size:15px;font-weight:600;line-height:1.45}
 .ci-d{font-size:14px;color:var(--t3);margin-top:2px;line-height:1.55}
+.ci-conf-low{background:var(--ambg);color:var(--am);font-size:10px;padding:2px 6px;border-radius:3px;margin-left:6px;font-weight:500;display:inline}
+.ci-unv-note{background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--rs);padding:8px 14px;font-size:11px;color:var(--am);margin-bottom:10px;line-height:1.5}
 .ci-fb{display:flex;align-items:center;gap:6px;margin-top:4px}
 .ci-fb-btn{background:none;border:1px solid var(--bdl);border-radius:4px;padding:1px 6px;font-size:11px;cursor:pointer;color:var(--t3);transition:all .15s;line-height:1.4}
 .ci-fb-btn:hover{background:var(--sf)}
@@ -1607,7 +1609,18 @@ PAYMENT GUIDANCE must be corridor-specific: consider the buyer country's banking
 
 COST ESTIMATION must reflect real market rates for the specific origin country and commodity, with notes on which costs are fixed vs variable, and flag any costs that commonly surprise first-time exporters.
 
-You must return ONLY a valid JSON object — no markdown, no code fences, no explanation, no text before or after the JSON.`;
+You must return ONLY a valid JSON object — no markdown, no code fences, no explanation, no text before or after the JSON.
+
+SOURCE HIERARCHY (always follow this order):
+1. Official government sources: FDA.gov, EUR-Lex (europa.eu), BKIPM (karantina.pertanian.go.id), KEMENDAG (kemendag.go.id), MHLW Japan (mhlw.go.jp), DEFRA UK (gov.uk), GACC China (gacc.gov.cn)
+2. International bodies: ICC (iccwbo.org), Codex Alimentarius (fao.org/fao-who-codexalimentarius)
+3. If no official source found for a specific rule, output the rule but add a flag: "confidence": "low" instead of omitting it
+
+CONSISTENCY RULES:
+- Always output checklist items in the same order: registration → lab testing → certificates → packaging/labelling → booking → payment docs
+- Always include exactly the same fields per item with no variation in structure
+- Never use phrases like "you may need" or "consider" — every item is either Required, Conditional, or Not Applicable. State which one clearly at the start of every task field like this: "[Required]" or "[Conditional: if LC payment]"
+- For contaminant limits always state the number: never say "within acceptable limits", always say the actual ppb/ppm value`;
 
 // Extract JSON from Claude response — handles raw JSON or accidental markdown fences
 function extractJSON(text){
@@ -1725,7 +1738,9 @@ async function streamClaude(reqBody){
 // Call Claude API for any corridor not in the local DB
 async function fetchFromClaude(commodity,origin,destination,incoterms,hsCode){
   const langNote=getLangInstruction();
-  const userPrompt=`${langNote?langNote+'\n\n':''}Search the web for current FDA, EU, and destination-country regulations before generating the checklist. Prioritize official government sources (.gov, europa.eu, gov.uk, go.id). Then generate a complete, expert-level export compliance checklist for this exact trade corridor:
+  const userPrompt=`${langNote?langNote+'\n\n':''}Search the web for regulations from OFFICIAL GOVERNMENT SOURCES ONLY (.gov, europa.eu, gov.uk, mhlw.go.jp, karantina.pertanian.go.id, gacc.gov.cn). Do not use trade blogs, freight forwarder websites, or aggregator sites as primary sources. If you cannot find an official source for a specific rule, still include the rule but mark it with confidence: "low" in the JSON. Search at least 3 official sources before generating the checklist.
+
+Generate a complete, expert-level export compliance checklist for this exact trade corridor:
 
 Commodity: ${commodity}${hsCode?' (HS Code: '+hsCode+')':''}
 Origin Country: ${origin}
@@ -1773,7 +1788,8 @@ Return ONLY a JSON object with this exact structure (no text before or after):
       "items": [
         {
           "task": "Short imperative action with specific agency/document name",
-          "detail": "Exact regulation code. Document name. Where to get it (agency + URL/office). Processing time. Deadline. Consequence if missed. Specific numbers/limits."
+          "detail": "Exact regulation code. Document name. Where to get it (agency + URL/office). Processing time. Deadline. Consequence if missed. Specific numbers/limits.",
+          "confidence": "high or low — use low only when no official government source confirms this rule"
         }
       ]
     },
@@ -1886,13 +1902,17 @@ function render(data,commodity,origin,destination,incoterms){
   let savedState={};
   try{savedState=JSON.parse(localStorage.getItem('ck:'+ckKey)||'{}')}catch(e){}
 
+  // Check if any items have low confidence and show note
+  const hasLowConf=data.phases?.some(p=>p.items?.some(it=>it.confidence==='low'));
+  const unvNote=hasLowConf?'<div class="ci-unv-note">Items marked <b>Unverified</b> could not be confirmed from official government sources. Double-check these with your freight forwarder.</div>':'';
+
   const icons={pre_shipment:{c:'pre',e:'📋'},shipment:{c:'ship',e:'🚢'},payment:{c:'pay',e:'💳'}};
-  const box=document.getElementById('phBox');box.innerHTML='';
+  const box=document.getElementById('phBox');box.innerHTML=unvNote;
   data.phases.forEach((p,pi)=>{const ic=icons[p.id]||icons.pre_shipment;tot+=p.items.length;
     const el=document.createElement('div');el.className='ph'+(pi===0?' open':'');
     const ofWord=T[currentLang]?.sec_completed_of||'of';
     const doneWord=T[currentLang]?.sec_completed_done||'completed';
-    el.innerHTML=`<div class="ph-hd" onclick="this.parentElement.classList.toggle('open')"><div class="ph-ic ${ic.c}" style="font-size:16px">${ic.e}</div><div class="ph-nf"><div class="ph-t">${p.title}</div><div class="ph-ct"><span class="pdc">0</span> ${ofWord} ${p.items.length} ${doneWord}</div></div><div class="ph-ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="ph-bd"><div class="ph-it">${p.items.map((it,ii)=>`<div class="ci" onclick="tgl(this)" data-id="${p.id}:${ii}" data-task="${(it.task||'').replace(/"/g,'&quot;')}"><div class="cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="ci-t">${it.task}</div><div class="ci-d">${it.detail}</div><div class="ci-fb"><button class="ci-fb-btn" data-dir="up" onclick="event.stopPropagation();fbRate(this,'up')">👍</button><button class="ci-fb-btn" data-dir="down" onclick="event.stopPropagation();fbRate(this,'down')">👎</button></div></div></div>`).join('')}</div></div>`;
+    el.innerHTML=`<div class="ph-hd" onclick="this.parentElement.classList.toggle('open')"><div class="ph-ic ${ic.c}" style="font-size:16px">${ic.e}</div><div class="ph-nf"><div class="ph-t">${p.title}</div><div class="ph-ct"><span class="pdc">0</span> ${ofWord} ${p.items.length} ${doneWord}</div></div><div class="ph-ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="ph-bd"><div class="ph-it">${p.items.map((it,ii)=>`<div class="ci" onclick="tgl(this)" data-id="${p.id}:${ii}" data-task="${(it.task||'').replace(/"/g,'&quot;')}"><div class="cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="ci-t">${it.task}${it.confidence==='low'?'<span class="ci-conf-low">Unverified</span>':''}</div><div class="ci-d">${it.detail}</div><div class="ci-fb"><button class="ci-fb-btn" data-dir="up" onclick="event.stopPropagation();fbRate(this,'up')">👍</button><button class="ci-fb-btn" data-dir="down" onclick="event.stopPropagation();fbRate(this,'down')">👎</button></div></div></div>`).join('')}</div></div>`;
     box.appendChild(el)});
 
   // Restore saved checked state
