@@ -287,6 +287,25 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 .cb svg{opacity:0}.ci.done .cb svg{opacity:1}
 .ci-t{font-size:15px;font-weight:600;line-height:1.45}
 .ci-d{font-size:14px;color:var(--t3);margin-top:2px;line-height:1.55}
+.ci-fb{display:flex;align-items:center;gap:6px;margin-top:4px}
+.ci-fb-btn{background:none;border:1px solid var(--bdl);border-radius:4px;padding:1px 6px;font-size:11px;cursor:pointer;color:var(--t3);transition:all .15s;line-height:1.4}
+.ci-fb-btn:hover{background:var(--sf)}
+.ci-fb-btn.fb-up{border-color:var(--gn);color:var(--gn);background:rgba(15,123,15,.06)}
+.ci-fb-btn.fb-down{border-color:var(--rd);color:var(--rd);background:rgba(220,38,38,.06)}
+.ci-fb-cmt{display:flex;align-items:center;gap:4px;margin-top:4px}
+.ci-fb-cmt input{border:1px solid var(--bdl);border-radius:4px;padding:3px 8px;font-size:11px;flex:1;max-width:200px;outline:none;font-family:inherit;color:var(--t1)}
+.ci-fb-cmt input:focus{border-color:var(--t3)}
+.ci-fb-cmt button{background:var(--rd);color:#fff;border:none;border-radius:4px;padding:3px 8px;font-size:11px;cursor:pointer}
+.fb-summary{background:var(--wh);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.fb-summary-hd{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.fb-summary-hd:hover{background:var(--sf)}
+.fb-summary-t{font-size:14px;font-weight:600;color:var(--t2)}
+.fb-summary-bd{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 18px}
+.fb-summary.open .fb-summary-bd{max-height:400px;padding:0 18px 14px}
+.fb-summary-stats{display:flex;gap:16px;margin-bottom:10px;font-size:13px;color:var(--t2)}
+.fb-summary-stats span{display:flex;align-items:center;gap:4px}
+.fb-export-btn{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--rs);padding:6px 14px;font-size:12px;color:var(--t2);cursor:pointer;font-family:inherit}
+.fb-export-btn:hover{background:var(--bdl)}
 
 .sh{font-family:'DM Serif Display',serif;font-size:22px;color:var(--t1);margin-bottom:12px}
 .al{background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--r);padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
@@ -694,6 +713,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
         <div class="conf-tr" style="display:none"><div class="conf-fl" id="cBar"></div></div>
       </div>
       <div id="phBox"></div>
+      <div id="fbSummaryBox" style="margin-top:10px"></div>
       <div id="alBox" style="margin-top:12px"></div>
       <div id="payBox" style="display:none;margin-top:12px"></div>
       <div id="costBox" style="display:none;margin-top:12px"></div>
@@ -1872,7 +1892,7 @@ function render(data,commodity,origin,destination,incoterms){
     const el=document.createElement('div');el.className='ph'+(pi===0?' open':'');
     const ofWord=T[currentLang]?.sec_completed_of||'of';
     const doneWord=T[currentLang]?.sec_completed_done||'completed';
-    el.innerHTML=`<div class="ph-hd" onclick="this.parentElement.classList.toggle('open')"><div class="ph-ic ${ic.c}" style="font-size:16px">${ic.e}</div><div class="ph-nf"><div class="ph-t">${p.title}</div><div class="ph-ct"><span class="pdc">0</span> ${ofWord} ${p.items.length} ${doneWord}</div></div><div class="ph-ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="ph-bd"><div class="ph-it">${p.items.map((it,ii)=>`<div class="ci" onclick="tgl(this)" data-id="${p.id}:${ii}"><div class="cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="ci-t">${it.task}</div><div class="ci-d">${it.detail}</div></div></div>`).join('')}</div></div>`;
+    el.innerHTML=`<div class="ph-hd" onclick="this.parentElement.classList.toggle('open')"><div class="ph-ic ${ic.c}" style="font-size:16px">${ic.e}</div><div class="ph-nf"><div class="ph-t">${p.title}</div><div class="ph-ct"><span class="pdc">0</span> ${ofWord} ${p.items.length} ${doneWord}</div></div><div class="ph-ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="ph-bd"><div class="ph-it">${p.items.map((it,ii)=>`<div class="ci" onclick="tgl(this)" data-id="${p.id}:${ii}" data-task="${(it.task||'').replace(/"/g,'&quot;')}"><div class="cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="ci-t">${it.task}</div><div class="ci-d">${it.detail}</div><div class="ci-fb"><button class="ci-fb-btn" data-dir="up" onclick="event.stopPropagation();fbRate(this,'up')">👍</button><button class="ci-fb-btn" data-dir="down" onclick="event.stopPropagation();fbRate(this,'down')">👎</button></div></div></div>`).join('')}</div></div>`;
     box.appendChild(el)});
 
   // Restore saved checked state
@@ -1882,6 +1902,10 @@ function render(data,commodity,origin,destination,incoterms){
   // Restore per-phase counters
   box.querySelectorAll('.ph').forEach(ph=>{ph.querySelector('.pdc').textContent=ph.querySelectorAll('.ci.done').length});
   upd();
+
+  // Restore feedback state & render summary
+  fbRestore(box,ckKey);
+  fbRenderSummary(ckKey);
 
   document.getElementById('alBox').innerHTML=data.blind_spots?.length?`<div class="sh">${T[currentLang]?.sec_blind_spots||'⚠ Blind Spot Alerts'}</div>${data.blind_spots.map(a=>`<div class="al"><div class="al-ic">⚠</div><div><div class="al-t">${a.title||''}</div><div class="al-tx">${a.description||a.body||a.text||a.detail||''}</div></div></div>`).join('')}`:'';
 
@@ -1978,6 +2002,138 @@ function upd(){
   else if(p<90){s.textContent='Good progress. Check blind spots too.';s.className='conf-st'}
   else if(p<100){s.textContent='Nearly ready. A few items left.';s.className='conf-st'}
   else{s.textContent='All done. Ready to ship.';s.className='conf-st rdy';markTabDone('checker')}
+}
+
+// ═══════════ FEEDBACK MECHANISM ═══════════
+function _fbSlug(s){return(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,80)}
+function _fbKey(ci){
+  if(!window._ckKey) return null;
+  const parts=window._ckKey.split('|');
+  const task=ci.dataset.task||ci.querySelector('.ci-t')?.textContent||'';
+  return 'ss_feedback_'+_fbSlug(parts[0]+'_'+parts[2]+'_'+task);
+}
+
+function fbRate(btn,dir){
+  const ci=btn.closest('.ci');
+  if(!ci||!window._ckKey) return;
+  const key=_fbKey(ci);if(!key) return;
+  const upBtn=ci.querySelector('.ci-fb-btn[data-dir="up"]');
+  const downBtn=ci.querySelector('.ci-fb-btn[data-dir="down"]');
+  const wasSelected=btn.classList.contains(dir==='up'?'fb-up':'fb-down');
+  // Reset both
+  upBtn.classList.remove('fb-up');downBtn.classList.remove('fb-down');
+  // Remove existing comment input
+  const existCmt=ci.querySelector('.ci-fb-cmt');if(existCmt) existCmt.remove();
+  if(wasSelected){
+    // Unselect — remove from localStorage
+    try{localStorage.removeItem(key)}catch(e){}
+    fbRenderSummary(window._ckKey);
+    return;
+  }
+  // Set the new selection
+  if(dir==='up'){
+    upBtn.classList.add('fb-up');
+    _fbSave(key,{rating:'up',comment:'',timestamp:new Date().toISOString(),corridor:window._ckKey});
+  }else{
+    downBtn.classList.add('fb-down');
+    _fbSave(key,{rating:'down',comment:'',timestamp:new Date().toISOString(),corridor:window._ckKey});
+    // Show comment input
+    const cmtDiv=document.createElement('div');cmtDiv.className='ci-fb-cmt';
+    cmtDiv.innerHTML='<input type="text" maxlength="100" placeholder="What was wrong? (optional)">'
+      +'<button onclick="event.stopPropagation();fbSaveCmt(this)">Send</button>';
+    cmtDiv.querySelector('input').addEventListener('keydown',function(e){
+      if(e.key==='Enter'){e.stopPropagation();fbSaveCmt(cmtDiv.querySelector('button'))}
+    });
+    cmtDiv.querySelector('input').addEventListener('click',function(e){e.stopPropagation()});
+    downBtn.parentElement.appendChild(cmtDiv);
+    cmtDiv.querySelector('input').focus();
+  }
+  fbRenderSummary(window._ckKey);
+}
+
+function fbSaveCmt(sendBtn){
+  const ci=sendBtn.closest('.ci');
+  if(!ci) return;
+  const key=_fbKey(ci);if(!key) return;
+  const input=ci.querySelector('.ci-fb-cmt input');
+  const comment=(input?.value||'').trim().slice(0,100);
+  try{
+    const existing=JSON.parse(localStorage.getItem(key)||'{}');
+    existing.comment=comment;
+    localStorage.setItem(key,JSON.stringify(existing));
+  }catch(e){}
+  // Replace input with "Saved" text
+  const cmtDiv=ci.querySelector('.ci-fb-cmt');
+  if(cmtDiv) cmtDiv.innerHTML='<span style="font-size:11px;color:var(--gn)">✓ Saved</span>';
+  setTimeout(()=>{const cd=ci.querySelector('.ci-fb-cmt');if(cd) cd.remove()},1500);
+}
+
+function _fbSave(key,val){
+  try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}
+}
+
+function fbRestore(box,ckKey){
+  if(!box) return;
+  box.querySelectorAll('.ci').forEach(ci=>{
+    const key=_fbKey(ci);if(!key) return;
+    try{
+      const saved=JSON.parse(localStorage.getItem(key)||'null');
+      if(!saved) return;
+      const upBtn=ci.querySelector('.ci-fb-btn[data-dir="up"]');
+      const downBtn=ci.querySelector('.ci-fb-btn[data-dir="down"]');
+      if(saved.rating==='up'&&upBtn) upBtn.classList.add('fb-up');
+      if(saved.rating==='down'&&downBtn) downBtn.classList.add('fb-down');
+    }catch(e){}
+  });
+}
+
+function fbRenderSummary(ckKey){
+  const sb=document.getElementById('fbSummaryBox');if(!sb) return;
+  // Count all ss_feedback_* entries for this corridor
+  let ups=0,downs=0,total=0;
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(!k.startsWith('ss_feedback_')) continue;
+      const v=JSON.parse(localStorage.getItem(k)||'{}');
+      if(v.corridor!==ckKey) continue;
+      total++;
+      if(v.rating==='up') ups++;
+      else if(v.rating==='down') downs++;
+    }
+  }catch(e){}
+  if(total===0){sb.innerHTML='';return;}
+  sb.innerHTML=`<div class="fb-summary" id="fbSummaryPanel">
+    <div class="fb-summary-hd" onclick="this.parentElement.classList.toggle('open')">
+      <div class="fb-summary-t">Your Feedback (${total} item${total!==1?'s':''} rated)</div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="2" style="transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="fb-summary-bd">
+      <div class="fb-summary-stats">
+        <span style="color:var(--gn)">👍 ${ups} helpful</span>
+        <span style="color:var(--rd)">👎 ${downs} not helpful</span>
+      </div>
+      <button class="fb-export-btn" onclick="fbExport()">Export Feedback (JSON)</button>
+    </div>
+  </div>`;
+}
+
+function fbExport(){
+  const entries={};
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(!k.startsWith('ss_feedback_')) continue;
+      entries[k]=JSON.parse(localStorage.getItem(k)||'{}');
+    }
+  }catch(e){}
+  const json=JSON.stringify(entries,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='shipsafe-feedback-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // ═══════════ COST CALCULATOR ═══════════
