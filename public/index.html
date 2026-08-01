@@ -100,7 +100,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 .how-n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);color:#FFFFFF;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
 .how-ar{color:rgba(255,255,255,.3);font-size:12px;font-weight:400}
 @media(max-width:960px){.main-card{max-width:100%;margin:0 16px;border-radius:0 0 8px 8px}.welcome-banner{max-width:100%;margin:12px 16px 0}.tabs-bar{max-width:100%;padding:0 16px}}
-@media(max-width:768px){.landing{padding:0 20px}.landing-hero{min-height:calc(100dvh - 52px)}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-split{grid-template-columns:1fr!important;text-align:center!important;gap:32px}.landing-left{text-align:center!important}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-right{display:none!important}.landing-stats-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}}
+@media(max-width:768px){.landing{padding:0 20px}.landing-hero{min-height:calc(100dvh - 52px)}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-split{grid-template-columns:1fr!important;text-align:center!important;gap:32px}.landing-left{text-align:center!important}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-right{display:none!important}.landing-stats-grid{grid-template-columns:1fr!important}.landing-cards-grid{grid-template-columns:1fr!important}.landing-compare-card{grid-template-columns:1fr!important}.landing-steps-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}}
 @media(max-width:640px){.how{display:none}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 8px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;flex-shrink:0;padding:10px 12px;font-size:11px}.hero-stats{flex-direction:column;gap:8px}.hero-stat{max-width:100%}.route-pill{font-size:11px;padding:5px 12px}.tara-panel.open{width:100vw!important;height:100vh!important;border-radius:0!important;bottom:0!important;right:0!important;left:0!important;top:0!important}.gauge-wrap{flex-direction:column;align-items:center;text-align:center}.ov-summary{flex-wrap:wrap;gap:10px}.ov-summary-stat{min-width:80px}.fg{grid-template-columns:1fr}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,rgba(75,123,245,.06),rgba(75,123,245,.02));border:1px solid rgba(75,123,245,.15);border-radius:8px;padding:14px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s}
@@ -607,28 +607,127 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
   </div><!-- /landing-hero -->
 
   <div class="landing-problem" style="max-width:800px;margin:80px auto 0;text-align:center;padding:0 20px 80px;position:relative;z-index:1">
-    <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px">Why this matters</div>
-    <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:36px;font-weight:400;line-height:1.2;margin-bottom:20px">Your shipment is ready. Your documents are not.</h2>
-    <p style="color:rgba(255,255,255,.5);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px">Most food exporters don't lose shipments because their product is bad. They lose them because one document is wrong, one weight figure doesn't match, or one FDA rule wasn't followed. ShipSafe catches these before customs does.</p>
+    <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px" data-i18n="lp_label">Why this matters</div>
+    <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:36px;font-weight:400;line-height:1.2;margin-bottom:20px" data-i18n="lp_h2">Your shipment is ready. Your documents are not.</h2>
+    <p style="color:rgba(255,255,255,.5);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px" data-i18n="lp_body">Most food exporters don't lose shipments because their product is bad. They lose them because one document is wrong, one weight figure doesn't match, or one FDA rule wasn't followed. ShipSafe catches these before customs does.</p>
     <div class="landing-stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left">
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
         <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">$8,500</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average cost of one FDA detention. Doesn't count the buyer you lost.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5" data-i18n="lp_stat1_d">Average cost of one FDA detention. Doesn't count the buyer you lost.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
         <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">23 days</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average hold at US port of entry. Your buyer is waiting. Your LC deadline is not.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5" data-i18n="lp_stat2_d">Average hold at US port of entry. Your buyer is waiting. Your LC deadline is not.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
         <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">1 in 3</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">First-attempt customs failures for food shipments from Southeast Asia.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5" data-i18n="lp_stat3_d">First-attempt customs failures for food shipments from Southeast Asia.</div>
       </div>
     </div>
     <div style="margin-top:40px">
-      <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 36px">Run a free compliance check →</button>
-      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">No signup required. Results in under 30 seconds.</div>
+      <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 36px" data-i18n="lp_cta2">Run a free compliance check →</button>
+      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)" data-i18n="lp_cta2_sub">No signup required. Results in under 30 seconds.</div>
     </div>
   </div>
+
+  <!-- Section A: What ShipSafe checks -->
+  <div style="max-width:1000px;margin:0 auto 100px;padding:0 20px;position:relative;z-index:1">
+    <div style="text-align:center;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lc_label">What ShipSafe covers</div>
+      <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:34px;font-weight:400;line-height:1.25;margin-bottom:16px" data-i18n="lc_h2">Every layer of compliance — <span style="color:rgba(75,123,245,.9)">not just the checklist</span></h2>
+      <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;max-width:540px;margin:0 auto" data-i18n="lc_body">Most tools give you a generic list. ShipSafe works corridor by corridor — specific to your product, your origin country, and your destination market.</p>
+    </div>
+    <div class="landing-cards-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
+        <div style="font-size:22px;margin-bottom:12px">📋</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c1_t">Compliance checklist</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c1_d">Pre-shipment, during shipment, and payment — every step with the exact regulation code, agency, and deadline. Not generic advice.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
+        <div style="font-size:22px;margin-bottom:12px">🔍</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c2_t">Document cross-checker</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c2_d">Upload your Invoice, Packing List, and Bill of Lading. AI audits every field against UCP 600 and ISBP 745 — catches what banks reject.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
+        <div style="font-size:22px;margin-bottom:12px">💰</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c3_t">Cost calculator</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c3_d">Landed cost broken down by Incoterms — freight, insurance, lab testing, certificates, bank charges. Real numbers, not estimates.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
+        <div style="font-size:22px;margin-bottom:12px">🏦</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c4_t">Payment risk guidance</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c4_d">LC, TT, DP, DA — which payment method is safe for your buyer's country. Corridor-specific, not textbook theory.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
+        <div style="font-size:22px;margin-bottom:12px">⚠️</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c5_t">Blind spot alerts</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c5_d">Non-obvious risks that catch experienced exporters off guard — aflatoxin increases during transit, VGM deadlines, forex controls.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
+        <div style="font-size:22px;margin-bottom:12px">🌐</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c6_t">Any corridor, any commodity</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c6_d">Cocoa, coffee, spices, palm oil — to US, EU, Japan, UAE, China, and beyond. Web-searched from official sources every time.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section B: The honest part -->
+  <div style="max-width:800px;margin:0 auto 100px;padding:0 20px;position:relative;z-index:1">
+    <div style="text-align:center;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lh_label">The honest part</div>
+      <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:34px;font-weight:400;line-height:1.25;margin-bottom:16px" data-i18n="lh_h2">Your checklist passed.<br>Your bank still rejected it.</h2>
+      <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;max-width:560px;margin:0 auto" data-i18n="lh_body">A generic compliance checklist tells you what documents to get. It doesn't tell you that the consignee name on your Bill of Lading has one extra word compared to your Invoice — which is exactly what banks reject under UCP 600 Art. 14(d).</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="landing-compare-card" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_other">What other tools say</div>
+          <div style="background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.2);border-radius:8px;padding:14px;font-size:13px;color:rgba(255,255,255,.5);line-height:1.6" data-i18n="lh_other1">"Get a Bill of Lading from your shipping line."</div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(75,123,245,.8);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_ss">What ShipSafe says</div>
+          <div style="background:rgba(75,123,245,.08);border:1px solid rgba(75,123,245,.2);border-radius:8px;padding:14px;font-size:13px;color:rgba(255,255,255,.7);line-height:1.6" data-i18n="lh_ss1">"Your BL shows consignee as 'PT Maju Bersama Trading' but your LC says 'PT Maju Bersama'. Under UCP 600 Art. 14(d), this is a discrepancy. Bank will reject. Fix before sailing."</div>
+        </div>
+      </div>
+      <div class="landing-compare-card" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_other">What other tools say</div>
+          <div style="background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.2);border-radius:8px;padding:14px;font-size:13px;color:rgba(255,255,255,.5);line-height:1.6" data-i18n="lh_other2">"Lab test your cocoa for aflatoxin."</div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:rgba(75,123,245,.8);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_ss">What ShipSafe says</div>
+          <div style="background:rgba(75,123,245,.08);border:1px solid rgba(75,123,245,.2);border-radius:8px;padding:14px;font-size:13px;color:rgba(255,255,255,.7);line-height:1.6" data-i18n="lh_ss2">"FDA limit is 20 ppb. Japan limit is 10 ppb. Test 3 weeks before sailing — Sucofindo or SGS. Aflatoxin rises during transit in humid containers. Add desiccants."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section C: How it works -->
+  <div style="max-width:800px;margin:0 auto 100px;padding:0 20px;position:relative;z-index:1;text-align:center">
+    <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="ls_label">Getting started</div>
+    <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:34px;font-weight:400;line-height:1.25;margin-bottom:12px" data-i18n="ls_h2">Three inputs. Under 30 seconds.</h2>
+    <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;margin-bottom:48px" data-i18n="ls_body">No account. No freight forwarder. No waiting.</p>
+    <div class="landing-steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:48px">
+      <div style="position:relative">
+        <div style="font-family:'DM Serif Display',serif;font-size:48px;color:rgba(75,123,245,.2);line-height:1;margin-bottom:12px">1</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="ls_s1_t">Pick your corridor</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="ls_s1_d">Select commodity, origin country, destination, and Incoterms. That's it — no account needed.</div>
+      </div>
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:48px;color:rgba(75,123,245,.2);line-height:1;margin-bottom:12px">2</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="ls_s2_t">Get your checklist</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="ls_s2_d">AI searches official sources — FDA.gov, EUR-Lex, BKIPM — and returns a checklist with exact regulation codes and deadlines.</div>
+      </div>
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:48px;color:rgba(75,123,245,.2);line-height:1;margin-bottom:12px">3</div>
+        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="ls_s3_t">Cross-check your docs</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="ls_s3_d">Upload your trade documents. AI audits every field for consistency — catches discrepancies banks will reject before you submit.</div>
+      </div>
+    </div>
+    <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 40px" data-i18n="landing_cta">Run a compliance check — free →</button>
+    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)" data-i18n="ls_social">Used by food exporters shipping cocoa, coffee, and spices from Indonesia to 20+ countries.</div>
+  </div>
+
 </section>
 
 <!-- ═══ APP VIEW (hidden until Get Started) ═══ -->
@@ -1106,6 +1205,25 @@ const T={
     cc_expected_title:'📋 Expected Documents for This Shipment',
     tara_chip4:'What\'s the cost to ship to US?',
     lang_instruction:'',
+    lp_label:'Why this matters',lp_h2:'Your shipment is ready. Your documents are not.',lp_body:'Most food exporters don\'t lose shipments because their product is bad. They lose them because one document is wrong, one weight figure doesn\'t match, or one FDA rule wasn\'t followed. ShipSafe catches these before customs does.',
+    lp_stat1_d:'Average cost of one FDA detention. Doesn\'t count the buyer you lost.',lp_stat2_d:'Average hold at US port of entry. Your buyer is waiting. Your LC deadline is not.',lp_stat3_d:'First-attempt customs failures for food shipments from Southeast Asia.',
+    lp_cta2:'Run a free compliance check →',lp_cta2_sub:'No signup required. Results in under 30 seconds.',
+    lc_label:'What ShipSafe covers',lc_h2:'Every layer of compliance — <span style="color:rgba(75,123,245,.9)">not just the checklist</span>',lc_body:'Most tools give you a generic list. ShipSafe works corridor by corridor — specific to your product, your origin country, and your destination market.',
+    lc_c1_t:'Compliance checklist',lc_c1_d:'Pre-shipment, during shipment, and payment — every step with the exact regulation code, agency, and deadline. Not generic advice.',
+    lc_c2_t:'Document cross-checker',lc_c2_d:'Upload your Invoice, Packing List, and Bill of Lading. AI audits every field against UCP 600 and ISBP 745 — catches what banks reject.',
+    lc_c3_t:'Cost calculator',lc_c3_d:'Landed cost broken down by Incoterms — freight, insurance, lab testing, certificates, bank charges. Real numbers, not estimates.',
+    lc_c4_t:'Payment risk guidance',lc_c4_d:'LC, TT, DP, DA — which payment method is safe for your buyer\'s country. Corridor-specific, not textbook theory.',
+    lc_c5_t:'Blind spot alerts',lc_c5_d:'Non-obvious risks that catch experienced exporters off guard — aflatoxin increases during transit, VGM deadlines, forex controls.',
+    lc_c6_t:'Any corridor, any commodity',lc_c6_d:'Cocoa, coffee, spices, palm oil — to US, EU, Japan, UAE, China, and beyond. Web-searched from official sources every time.',
+    lh_label:'The honest part',lh_h2:'Your checklist passed.<br>Your bank still rejected it.',lh_body:'A generic compliance checklist tells you what documents to get. It doesn\'t tell you that the consignee name on your Bill of Lading has one extra word compared to your Invoice — which is exactly what banks reject under UCP 600 Art. 14(d).',
+    lh_other:'What other tools say',lh_ss:'What ShipSafe says',
+    lh_other1:'"Get a Bill of Lading from your shipping line."',lh_ss1:'"Your BL shows consignee as \'PT Maju Bersama Trading\' but your LC says \'PT Maju Bersama\'. Under UCP 600 Art. 14(d), this is a discrepancy. Bank will reject. Fix before sailing."',
+    lh_other2:'"Lab test your cocoa for aflatoxin."',lh_ss2:'"FDA limit is 20 ppb. Japan limit is 10 ppb. Test 3 weeks before sailing — Sucofindo or SGS. Aflatoxin rises during transit in humid containers. Add desiccants."',
+    ls_label:'Getting started',ls_h2:'Three inputs. Under 30 seconds.',ls_body:'No account. No freight forwarder. No waiting.',
+    ls_s1_t:'Pick your corridor',ls_s1_d:'Select commodity, origin country, destination, and Incoterms. That\'s it — no account needed.',
+    ls_s2_t:'Get your checklist',ls_s2_d:'AI searches official sources — FDA.gov, EUR-Lex, BKIPM — and returns a checklist with exact regulation codes and deadlines.',
+    ls_s3_t:'Cross-check your docs',ls_s3_d:'Upload your trade documents. AI audits every field for consistency — catches discrepancies banks will reject before you submit.',
+    ls_social:'Used by food exporters shipping cocoa, coffee, and spices from Indonesia to 20+ countries.',
   },
   id:{
     tagline:'Kepatuhan Perdagangan',
@@ -1164,6 +1282,25 @@ const T={
     ck_run_btn_full:'Cek Rute Saya — Gratis',
     cc_expected_title:'📋 Dokumen yang Dibutuhkan',
     tara_chip4:'Berapa ongkos kirim ke AS?',
+    lp_label:'Kenapa ini penting',lp_h2:'Barang kamu siap. Dokumen kamu belum.',lp_body:'Kebanyakan eksportir pangan kehilangan kiriman bukan karena produknya jelek. Tapi karena satu dokumen salah, satu angka berat tidak cocok, atau satu aturan FDA tidak diikuti. ShipSafe menangkap ini sebelum bea cukai.',
+    lp_stat1_d:'Rata-rata biaya satu kali penahanan FDA. Belum termasuk buyer yang hilang.',lp_stat2_d:'Rata-rata ditahan di pelabuhan AS. Buyer kamu menunggu. Deadline LC kamu tidak.',lp_stat3_d:'Kegagalan bea cukai percobaan pertama untuk kiriman pangan dari Asia Tenggara.',
+    lp_cta2:'Cek kepatuhan gratis →',lp_cta2_sub:'Tanpa daftar. Hasil dalam 30 detik.',
+    lc_label:'Apa yang ShipSafe periksa',lc_h2:'Setiap lapisan kepatuhan — <span style="color:rgba(75,123,245,.9)">bukan cuma checklist</span>',lc_body:'Kebanyakan tools cuma kasih daftar generik. ShipSafe bekerja per koridor — spesifik untuk produk, negara asal, dan pasar tujuan kamu.',
+    lc_c1_t:'Checklist kepatuhan',lc_c1_d:'Pra-pengiriman, saat pengiriman, dan pembayaran — setiap langkah dengan kode regulasi, lembaga, dan tenggat yang tepat. Bukan saran generik.',
+    lc_c2_t:'Cek silang dokumen',lc_c2_d:'Upload Invoice, Packing List, dan Bill of Lading. AI audit setiap field terhadap UCP 600 dan ISBP 745 — tangkap yang bank tolak.',
+    lc_c3_t:'Kalkulator biaya',lc_c3_d:'Biaya landing dirinci per Incoterms — freight, asuransi, tes lab, sertifikat, biaya bank. Angka nyata, bukan estimasi.',
+    lc_c4_t:'Panduan risiko pembayaran',lc_c4_d:'LC, TT, DP, DA — metode pembayaran mana yang aman untuk negara buyer kamu. Spesifik per koridor, bukan teori buku teks.',
+    lc_c5_t:'Peringatan blind spot',lc_c5_d:'Risiko tersembunyi yang menjebak eksportir berpengalaman — aflatoksin naik saat transit, tenggat VGM, kontrol forex.',
+    lc_c6_t:'Semua koridor, semua komoditas',lc_c6_d:'Kakao, kopi, rempah, minyak sawit — ke AS, EU, Jepang, UAE, China, dan lainnya. Dicari dari sumber resmi setiap kali.',
+    lh_label:'Bagian jujurnya',lh_h2:'Checklist kamu lolos.<br>Bank tetap menolak.',lh_body:'Checklist kepatuhan generik cuma bilang dokumen apa yang perlu. Tidak bilang bahwa nama consignee di Bill of Lading kamu beda satu kata dengan Invoice — yang persis itulah yang bank tolak berdasarkan UCP 600 Art. 14(d).',
+    lh_other:'Yang tools lain bilang',lh_ss:'Yang ShipSafe bilang',
+    lh_other1:'"Dapatkan Bill of Lading dari shipping line."',lh_ss1:'"BL kamu tulis consignee \'PT Maju Bersama Trading\' tapi LC tulis \'PT Maju Bersama\'. Menurut UCP 600 Art. 14(d), ini diskrepansi. Bank akan tolak. Perbaiki sebelum kapal berangkat."',
+    lh_other2:'"Tes lab kakao untuk aflatoksin."',lh_ss2:'"Batas FDA 20 ppb. Batas Jepang 10 ppb. Tes 3 minggu sebelum kapal berangkat — Sucofindo atau SGS. Aflatoksin naik selama transit di kontainer lembap. Tambahkan desiccant."',
+    ls_label:'Cara mulai',ls_h2:'Tiga input. Kurang dari 30 detik.',ls_body:'Tanpa akun. Tanpa forwarder. Tanpa menunggu.',
+    ls_s1_t:'Pilih koridor',ls_s1_d:'Pilih komoditas, negara asal, tujuan, dan Incoterms. Itu saja — tanpa perlu akun.',
+    ls_s2_t:'Dapatkan checklist',ls_s2_d:'AI cari sumber resmi — FDA.gov, EUR-Lex, BKIPM — dan kembalikan checklist dengan kode regulasi dan tenggat yang tepat.',
+    ls_s3_t:'Cek silang dokumen',ls_s3_d:'Upload dokumen perdagangan kamu. AI audit setiap field untuk konsistensi — tangkap diskrepansi yang bank tolak sebelum kamu submit.',
+    ls_social:'Digunakan eksportir pangan yang kirim kakao, kopi, dan rempah dari Indonesia ke 20+ negara.',
     lang_instruction:`CRITICAL LANGUAGE RULE: You MUST write ALL text content in Bahasa Indonesia yang natural dan alami — seperti orang Indonesia yang berpengalaman di bidang ekspor-impor sedang menjelaskan ke rekannya.
 
 ATURAN BAHASA:
@@ -1232,6 +1369,25 @@ ATURAN BAHASA:
     ck_run_btn_full:'Verificar Mi Ruta — Gratis',
     cc_expected_title:'📋 Documentos Esperados',
     tara_chip4:'¿Cuánto cuesta enviar a EE.UU.?',
+    lp_label:'Por qué importa',lp_h2:'Tu envío está listo. Tus documentos no.',lp_body:'La mayoría de los exportadores de alimentos no pierden envíos porque su producto sea malo. Los pierden porque un documento está mal, una cifra de peso no coincide o una regla de la FDA no se cumplió. ShipSafe detecta esto antes que la aduana.',
+    lp_stat1_d:'Costo promedio de una retención FDA. Sin contar al comprador que perdiste.',lp_stat2_d:'Retención promedio en puerto de EE.UU. Tu comprador espera. Tu plazo LC no.',lp_stat3_d:'Fallos aduaneros en el primer intento para envíos de alimentos desde el Sudeste Asiático.',
+    lp_cta2:'Verificar cumplimiento gratis →',lp_cta2_sub:'Sin registro. Resultados en menos de 30 segundos.',
+    lc_label:'Qué cubre ShipSafe',lc_h2:'Cada capa de cumplimiento — <span style="color:rgba(75,123,245,.9)">no solo la checklist</span>',lc_body:'La mayoría de herramientas te dan una lista genérica. ShipSafe trabaja corredor por corredor — específico para tu producto, tu país de origen y tu mercado destino.',
+    lc_c1_t:'Checklist de cumplimiento',lc_c1_d:'Pre-embarque, durante el envío y pago — cada paso con el código de regulación, agencia y plazo exacto. No consejos genéricos.',
+    lc_c2_t:'Verificador de documentos',lc_c2_d:'Sube tu Factura, Lista de Empaque y Bill of Lading. La IA audita cada campo contra UCP 600 e ISBP 745 — detecta lo que los bancos rechazan.',
+    lc_c3_t:'Calculadora de costos',lc_c3_d:'Costo final desglosado por Incoterms — flete, seguro, pruebas de laboratorio, certificados, cargos bancarios. Cifras reales, no estimaciones.',
+    lc_c4_t:'Guía de riesgo de pago',lc_c4_d:'LC, TT, DP, DA — qué método de pago es seguro para el país de tu comprador. Específico por corredor, no teoría de libro.',
+    lc_c5_t:'Alertas de puntos ciegos',lc_c5_d:'Riesgos no obvios que atrapan a exportadores experimentados — aumento de aflatoxina en tránsito, plazos VGM, controles de divisas.',
+    lc_c6_t:'Cualquier corredor, cualquier producto',lc_c6_d:'Cacao, café, especias, aceite de palma — a EE.UU., UE, Japón, EAU, China y más. Buscado en fuentes oficiales cada vez.',
+    lh_label:'La parte honesta',lh_h2:'Tu checklist pasó.<br>Tu banco aún lo rechazó.',lh_body:'Una checklist de cumplimiento genérica te dice qué documentos obtener. No te dice que el nombre del consignatario en tu Bill of Lading tiene una palabra extra comparado con tu Factura — que es exactamente lo que los bancos rechazan según UCP 600 Art. 14(d).',
+    lh_other:'Lo que dicen otras herramientas',lh_ss:'Lo que dice ShipSafe',
+    lh_other1:'"Obtén un Bill of Lading de tu línea naviera."',lh_ss1:'"Tu BL muestra consignatario como \'PT Maju Bersama Trading\' pero tu LC dice \'PT Maju Bersama\'. Según UCP 600 Art. 14(d), esto es una discrepancia. El banco rechazará. Corrige antes de zarpar."',
+    lh_other2:'"Analiza tu cacao para aflatoxina."',lh_ss2:'"El límite FDA es 20 ppb. El límite de Japón es 10 ppb. Analiza 3 semanas antes de zarpar — Sucofindo o SGS. La aflatoxina sube durante el tránsito en contenedores húmedos. Agrega desecantes."',
+    ls_label:'Cómo empezar',ls_h2:'Tres datos. Menos de 30 segundos.',ls_body:'Sin cuenta. Sin freight forwarder. Sin esperar.',
+    ls_s1_t:'Elige tu corredor',ls_s1_d:'Selecciona producto, país de origen, destino e Incoterms. Eso es todo — sin cuenta necesaria.',
+    ls_s2_t:'Obtén tu checklist',ls_s2_d:'La IA busca fuentes oficiales — FDA.gov, EUR-Lex, BKIPM — y devuelve una checklist con códigos de regulación y plazos exactos.',
+    ls_s3_t:'Coteja tus documentos',ls_s3_d:'Sube tus documentos comerciales. La IA audita cada campo por consistencia — detecta discrepancias que los bancos rechazarán antes de que envíes.',
+    ls_social:'Usado por exportadores de alimentos que envían cacao, café y especias desde Indonesia a más de 20 países.',
     lang_instruction:`CRITICAL LANGUAGE RULE: You MUST write ALL text content in natural, fluent Spanish (Español).
 
 REGLAS DE IDIOMA:
