@@ -171,7 +171,7 @@ button,select,input,label{
 .hs-item.other{color:var(--t3);font-style:italic;font-size:12px}
 
 /* DEADLINE NOTICES */
-.dl-notice{background:var(--rdbg);border:1px solid var(--rd);border-radius:var(--rs);padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.dl-notice{background:#F1F6F4;border:1px solid var(--rd);border-radius:var(--rs);padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:8px;color:#172B36}
 .dl-notice.warn{background:var(--ambg);border-color:var(--ambd)}
 .dl-notice.ok{background:var(--gnbg);border-color:var(--gn)}
 
@@ -479,7 +479,7 @@ button,select,input,label{
 @keyframes taraSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 .tara-btn{width:48px;height:48px;border-radius:50%;background:var(--btn);border:none;color:var(--btn-tx);font-size:18px;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.12);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .tara-btn:hover{background:var(--btn-hv)}
-.tara-panel{position:fixed;bottom:84px;right:24px;width:380px;height:520px;min-width:300px;min-height:320px;max-width:90vw;max-height:85vh;background:var(--wh-solid);border-radius:6px;box-shadow:0 4px 24px rgba(27,42,74,.15);border:1px solid var(--bd);z-index:101;display:none;flex-direction:column;overflow:hidden}
+.tara-panel{position:fixed;bottom:84px;right:24px;width:380px;height:520px;min-width:300px;min-height:320px;max-width:90vw;max-height:85vh;background:#114C5A;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);z-index:101;display:none;flex-direction:column;overflow:hidden}
 .tara-panel.open{display:flex;animation:taraPop .22s cubic-bezier(.16,1,.3,1)}
 .tara-resize{position:absolute;z-index:5}
 .tara-resize-e{top:18px;right:0;width:6px;height:calc(100% - 36px);cursor:e-resize}
@@ -492,12 +492,12 @@ button,select,input,label{
 .tara-resize-nw{top:0;left:0;width:16px;height:16px;cursor:nw-resize}
 .tara-resize-se::after{content:'';position:absolute;bottom:4px;right:4px;width:8px;height:8px;border-right:2px solid rgba(0,0,0,.15);border-bottom:2px solid rgba(0,0,0,.15);border-radius:0 0 3px 0}
 @keyframes taraPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.tara-hd{background:var(--nv);padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:grab;user-select:none;border-bottom:none}
+.tara-hd{background:rgba(255,255,255,.04);padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:grab;user-select:none;border-bottom:1px solid rgba(255,255,255,.06)}
 .tara-hd.dragging{cursor:grabbing}
 .tara-panel.dragged{bottom:auto!important;right:auto!important}
 .tara-panel.dragged.open{animation:none}
 body.tara-dragging{user-select:none;-webkit-user-select:none}
-.tara-hd .tara-av{width:32px;height:32px;border-radius:6px;font-size:14px;box-shadow:none;background:rgba(255,255,255,.15)}
+.tara-hd .tara-av{width:32px;height:32px;border-radius:6px;font-size:14px;box-shadow:none;background:rgba(220,180,80,.15)}
 .tara-hd-nm{color:#FFFFFF;font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px}
 .tara-hd-sub{color:rgba(255,255,255,.6);font-size:11px;margin-top:1px}
 .tara-online{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;color:var(--gn)}
@@ -505,7 +505,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 @keyframes taraPulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 6px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .tara-close{background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;border-radius:4px}
 .tara-close:hover{color:#FFFFFF;background:rgba(255,255,255,.1)}
-.tara-msgs{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px;background:var(--sf);min-height:0}
+.tara-msgs{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px;background:transparent;min-height:0}
 .tara-row{display:flex;gap:9px;align-items:flex-end;max-width:90%}
 .tara-row.user{align-self:flex-end;flex-direction:row-reverse}
 .tara-row.bot{align-self:flex-start}
@@ -523,10 +523,10 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .tara-typing span{width:7px;height:7px;border-radius:50%;background:var(--t3);animation:taraDot 1.3s infinite}
 .tara-typing span:nth-child(2){animation-delay:.2s}.tara-typing span:nth-child(3){animation-delay:.4s}
 @keyframes taraDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
-.tara-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 12px;background:#172B36}
+.tara-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 12px;background:transparent}
 .tara-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#F1F6F4;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all .12s}
 .tara-chip:hover{background:var(--hover);color:var(--t1)}
-.tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.07);background:#172B36}
+.tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.04)}
 .tara-input input{flex:1;height:40px;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:0 14px;font-size:14px;font-family:inherit;outline:none;transition:border-color .12s;color:#F1F6F4;background:rgba(255,255,255,.07)}
 .tara-input input:focus{border-color:var(--nv);box-shadow:inset 0 0 0 1px var(--nv)}
 .tara-input button{width:36px;height:36px;border-radius:4px;background:var(--btn);border:none;color:var(--btn-tx);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .1s}
@@ -602,17 +602,10 @@ label{font-size:10px;letter-spacing:.3px}
             <span class="demo-ar">·</span>
             <span>CIF · Robusta Coffee</span>
           </div>
-          <div class="demo-prog"><div class="demo-prog-bar" style="width:100%"></div></div>
-          <div class="demo-pct">7 of 7 items verified</div>
+          <div class="demo-prog"><div class="demo-prog-bar" id="demoBar" style="width:0%"></div></div>
+          <div class="demo-pct" id="demoPct">0%</div>
         </div>
-        <div class="demo-items" style="opacity:1">
-          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] EU TRACES Health Certificate — Reg. 2019/628</span><span class="demo-it-st ok">Done</span></div>
-          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] Phytosanitary Certificate — MARD Vietnam</span><span class="demo-it-st ok">Done</span></div>
-          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] Ochratoxin A test ≤5 ppb — EU Reg. 2023/915</span><span class="demo-it-st ok">Done</span></div>
-          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] Certificate of Origin — Form A (GSP)</span><span class="demo-it-st ok">Done</span></div>
-          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] EUR-Lex deforestation due diligence — Reg. 2023/1115</span><span class="demo-it-st ok">Done</span></div>
-          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Conditional: LC payment] UCP 600 Art. 18 invoice match</span><span class="demo-it-st warn">Check</span></div>
-          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] CIF insurance policy — ICC(A) minimum</span><span class="demo-it-st ok">Done</span></div>
+        <div class="demo-items" id="demoItems">
         </div>
         <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:rgba(255,255,255,.3);text-align:center">Sample output · Not real data · Run your own corridor for live results</div>
       </div>
@@ -3277,11 +3270,11 @@ function renderOV(){
 
   let alertBanner='';
   if(urgentCount>0){
-    alertBanner=`<div style="background:var(--rdbg);border:1px solid var(--rd);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+    alertBanner=`<div style="background:#F1F6F4;border:1px solid var(--rd);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
       <span style="font-size:16px">🚨</span>
       <div style="flex:1">
         <div style="font-size:12px;font-weight:600;color:var(--rd)">Urgent: ${urgentCount} document deadline${urgentCount>1?'s':''} approaching!</div>
-        <div style="font-size:11px;color:var(--t2)">Review the deadlines below to avoid late submissions and customs delays.</div>
+        <div style="font-size:11px;color:#3A4F5C">Review the deadlines below to avoid late submissions and customs delays.</div>
       </div>
     </div>`;
   }
@@ -3760,12 +3753,13 @@ initGlossary();
 // ═══════════ HERO DEMO ANIMATION ═══════════
 (function runHeroDemo(){
   const DEMO_ITEMS=[
-    {text:'Phytosanitary Certificate (USDA APHIS PPQ 578)',status:'ok',label:'Required'},
-    {text:'FDA Prior Notice (food import)',status:'ok',label:'Required'},
-    {text:'Fumigation Certificate — methyl bromide treatment',status:'warn',label:'Check'},
-    {text:'ICO Certificate of Origin (coffee/cocoa)',status:'ok',label:'Required'},
-    {text:'Bill of Lading — clean on-board',status:'ok',label:'Ready'},
-    {text:'Commercial Invoice — FOB terms',status:'ok',label:'Ready'},
+    {text:'EU TRACES Health Certificate — Reg. 2019/628',status:'ok',label:'Required'},
+    {text:'Phytosanitary Certificate — MARD Vietnam',status:'ok',label:'Required'},
+    {text:'Ochratoxin A test ≤5 ppb — EU Reg. 2023/915',status:'ok',label:'Required'},
+    {text:'Certificate of Origin — Form A (GSP)',status:'ok',label:'Required'},
+    {text:'EUR-Lex deforestation due diligence — Reg. 2023/1115',status:'ok',label:'Required'},
+    {text:'UCP 600 Art. 18 invoice match',status:'warn',label:'Check'},
+    {text:'CIF insurance policy — ICC(A) minimum',status:'ok',label:'Required'},
   ];
   const box=document.getElementById('demoItems');
   const bar=document.getElementById('demoBar');
