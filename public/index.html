@@ -46,26 +46,27 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 .hd-tg{color:rgba(255,255,255,.5);font-size:12px;font-weight:400;letter-spacing:.2px}
 
 /* LANDING PAGE */
-.landing{background:linear-gradient(160deg,#16223a 0%,var(--nv) 40%,#1e3158 100%);min-height:calc(100dvh - 52px);display:flex;align-items:center;justify-content:center;padding:60px 32px;position:relative}
+.landing{background:linear-gradient(160deg,#16223a 0%,var(--nv) 40%,#1e3158 100%);min-height:calc(100dvh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 32px;position:relative}
+.landing-hero{min-height:calc(100dvh - 52px);display:flex;align-items:center;justify-content:center;width:100%}
 .landing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:32px 32px;pointer-events:none}
 .landing::after{content:'';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(75,123,245,.08) 0%,transparent 70%);pointer-events:none}
-.landing-split{max-width:600px;margin:0 auto;text-align:center;width:100%;position:relative;z-index:1}
-.landing-left{text-align:center}
-.landing-badge{display:none}
+.landing-split{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;text-align:left;width:100%;position:relative;z-index:1}
+.landing-left{text-align:left}
+.landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(75,123,245,.15);border:1px solid rgba(75,123,245,.3);color:rgba(255,255,255,.8);font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;margin-bottom:20px}
 .landing-h1{font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:52px;line-height:1.1;margin:0 0 20px;letter-spacing:-.5px;font-weight:400}
-.landing-sub{color:rgba(255,255,255,.55);font-size:17px;line-height:1.7;max-width:480px;margin:0 auto 32px;font-weight:400}
-.landing-btns{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px}
+.landing-sub{color:rgba(255,255,255,.55);font-size:17px;line-height:1.7;max-width:480px;margin:0 0 32px;font-weight:400}
+.landing-btns{display:flex;align-items:center;justify-content:flex-start;gap:16px;margin-bottom:40px}
 .landing-cta{background:#FFFFFF;color:var(--nv);font-family:inherit;font-size:16px;font-weight:600;padding:16px 40px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .landing-cta:hover{box-shadow:0 4px 16px rgba(0,0,0,.2);transform:translateY(-1px)}
 .landing-note{color:rgba(255,255,255,.4);font-size:13px;font-weight:400}
-.landing-trust{display:flex;align-items:center;justify-content:center;gap:24px}
+.landing-trust{display:flex;align-items:center;justify-content:flex-start;gap:24px}
 .landing-trust-item{text-align:center}
 .landing-trust-n{display:block;font-family:'DM Serif Display',serif;font-size:22px;color:#FFFFFF;font-weight:400;line-height:1.2}
 .landing-trust-l{display:block;font-size:11px;color:rgba(255,255,255,.35);font-weight:400;margin-top:2px}
 .landing-trust-sep{width:1px;height:28px;background:rgba(255,255,255,.1)}
-.landing-right{display:none}
+.landing-right{display:block}
 /* DEMO CARD — hidden */
-.demo-card{display:none}
+.demo-card{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px;backdrop-filter:blur(10px)}
 .demo-hd{margin-bottom:10px}
 .demo-route{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#FFFFFF;flex-wrap:wrap}
 .demo-ar{color:rgba(255,255,255,.4);font-weight:400}
@@ -99,7 +100,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 .how-n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);color:#FFFFFF;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
 .how-ar{color:rgba(255,255,255,.3);font-size:12px;font-weight:400}
 @media(max-width:960px){.main-card{max-width:100%;margin:0 16px;border-radius:0 0 8px 8px}.welcome-banner{max-width:100%;margin:12px 16px 0}.tabs-bar{max-width:100%;padding:0 16px}}
-@media(max-width:768px){.landing{padding:36px 20px 32px}.landing-h1{font-size:36px}.landing-sub{font-size:15px}.landing-btns{flex-wrap:wrap;margin-bottom:28px}.landing-trust{gap:16px}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}}
+@media(max-width:768px){.landing{padding:0 20px}.landing-hero{min-height:calc(100dvh - 52px)}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-split{grid-template-columns:1fr!important;text-align:center!important;gap:32px}.landing-left{text-align:center!important}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-right{display:none!important}.landing-stats-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}}
 @media(max-width:640px){.how{display:none}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 8px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;flex-shrink:0;padding:10px 12px;font-size:11px}.hero-stats{flex-direction:column;gap:8px}.hero-stat{max-width:100%}.route-pill{font-size:11px;padding:5px 12px}.tara-panel.open{width:100vw!important;height:100vh!important;border-radius:0!important;bottom:0!important;right:0!important;left:0!important;top:0!important}.gauge-wrap{flex-direction:column;align-items:center;text-align:center}.ov-summary{flex-wrap:wrap;gap:10px}.ov-summary-stat{min-width:80px}.fg{grid-template-columns:1fr}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:linear-gradient(135deg,rgba(75,123,245,.06),rgba(75,123,245,.02));border:1px solid rgba(75,123,245,.15);border-radius:8px;padding:14px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s}
@@ -529,8 +530,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .lang-btn.active{background:rgba(255,255,255,.15);color:#FFFFFF;box-shadow:none}
 
 @media(max-width:900px){#appView.gl-open{margin-right:0}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr 1fr 1fr;gap:8px}}
-@media(max-width:800px){.landing-h1{font-size:36px}.landing-sub{font-size:15px}.landing-btns{flex-wrap:wrap}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}}
-@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 4px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{padding:9px 10px;font-size:11px;white-space:nowrap;flex-shrink:0}.tab-panel{padding:16px 14px 24px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel:not(.dragged){width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:32px 16px}.gl-hd-btn span{display:none}.gl-hd-btn{padding:5px 7px}.gl-drawer{width:100vw;max-width:100vw}}
+@media(max-width:800px){.landing-h1{font-size:36px}.landing-sub{font-size:15px}.landing-btns{flex-wrap:wrap}.landing-split{gap:32px}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}}
+@media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 4px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{padding:9px 10px;font-size:11px;white-space:nowrap;flex-shrink:0}.tab-panel{padding:16px 14px 24px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel:not(.dragged){width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:0 16px}.landing-problem h2{font-size:26px!important}.gl-hd-btn span{display:none}.gl-hd-btn{padding:5px 7px}.gl-drawer{width:100vw;max-width:100vw}}
 </style>
 </head>
 <body>
@@ -558,6 +559,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 <section class="landing" id="landingView">
   <!-- Background: container ship silhouette -->
   <!-- Background: container ship -->
+  <div class="landing-hero">
   <div class="landing-split">
     <div class="landing-left">
       <div class="landing-badge" data-i18n="hero_badge">For food &amp; agri exporters &amp; importers worldwide</div>
@@ -576,15 +578,55 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
       </div>
     </div>
     <div class="landing-right">
+      <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Sample output · Cocoa Powder → United States</div>
       <div class="demo-card" id="demoCard">
-        <div class="demo-label" data-i18n="demo_label">Live preview — Compliance Checker</div>
         <div class="demo-hd">
-          <div class="demo-route"><span>Cocoa Beans</span><span class="demo-ar">→</span><span>Indonesia → US</span><span class="demo-ar">·</span><span>FOB</span></div>
-          <div class="demo-prog"><div class="demo-prog-bar" id="demoBar"></div></div>
-          <div class="demo-pct" id="demoPct">0%</div>
+          <div class="demo-route">
+            <span>🇮🇩 Indonesia</span>
+            <span class="demo-ar">→</span>
+            <span>🇺🇸 United States</span>
+            <span class="demo-ar">·</span>
+            <span>FOB · Cocoa Powder</span>
+          </div>
+          <div class="demo-prog"><div class="demo-prog-bar" style="width:100%"></div></div>
+          <div class="demo-pct">7 of 7 items verified</div>
         </div>
-        <div class="demo-items" id="demoItems"></div>
+        <div class="demo-items" style="opacity:1">
+          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] FDA Facility Registration — furls.fda.gov</span><span class="demo-it-st ok">Done</span></div>
+          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] FDA Prior Notice — 15 days before arrival</span><span class="demo-it-st ok">Done</span></div>
+          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] Aflatoxin test ≤20 ppb — SGS or Sucofindo</span><span class="demo-it-st ok">Done</span></div>
+          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] Phytosanitary Certificate — BKIPM</span><span class="demo-it-st ok">Done</span></div>
+          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] Certificate of Origin — KADIN Jakarta</span><span class="demo-it-st ok">Done</span></div>
+          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Conditional: LC payment] UCP 600 Art. 18 invoice match</span><span class="demo-it-st warn">Check</span></div>
+          <div class="demo-it" style="opacity:1;transform:none"><div class="demo-it-ck on"><svg viewBox="0 0 10 10"><polyline points="2,5 4,7 8,3" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div><span class="demo-it-tx">[Required] FDA FSMA Preventive Controls — 21 CFR 117</span><span class="demo-it-st ok">Done</span></div>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:rgba(255,255,255,.3);text-align:center">Sample output · Not real data · Run your own corridor for live results</div>
       </div>
+    </div>
+  </div>
+  </div><!-- /landing-hero -->
+
+  <div class="landing-problem" style="max-width:800px;margin:80px auto 0;text-align:center;padding:0 20px 80px;position:relative;z-index:1">
+    <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px">Why this matters</div>
+    <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:36px;font-weight:400;line-height:1.2;margin-bottom:20px">One wrong document can cost you everything.</h2>
+    <p style="color:rgba(255,255,255,.5);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px">Most Indonesian UMKM exporters lose shipments not because their product is bad — but because a single document is missing, a weight figure doesn't match, or an FDA rule wasn't followed. ShipSafe catches these before your container leaves port.</p>
+    <div class="landing-stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
+        <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">$8,500</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average FDA detention cost per shipment. Doesn't include lost buyer trust.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
+        <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">23 days</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average hold time at US port of entry. Your buyer is waiting. Your LC is expiring.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
+        <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">1 in 3</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Food shipments from Indonesia face customs issues on the first attempt.</div>
+      </div>
+    </div>
+    <div style="margin-top:40px">
+      <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 36px">Check my shipment for free →</button>
+      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">No signup. No credit card. Takes 30 seconds.</div>
     </div>
   </div>
 </section>
