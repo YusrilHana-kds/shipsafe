@@ -18,7 +18,7 @@
 <meta name="twitter:image" content="https://shipsafe-sage.vercel.app/og.png">
 <script defer src="/_vercel/insights/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -36,13 +36,13 @@
   --btn:#DCB450;--btn-tx:#172B36;--btn-hv:#E8C96A;
 }
 html{overflow-x:hidden}
-body{font-family:'Libre Baskerville',Georgia,serif;background:#172B36;color:var(--t1);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px;overflow-x:hidden}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t1);line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px;overflow-x:hidden}
 
 /* HEADER */
 .hd{background:#172B36;border-bottom:1px solid rgba(255,255,255,.07);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;border-bottom:none}
 .hd-b{display:flex;align-items:center;gap:10px}
 .hd-ic{width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hd-nm{font-family:'Libre Baskerville',Georgia,serif;color:#FFFFFF;font-size:18px}
+.hd-nm{font-family:'Libre Baskerville',Georgia,serif;color:#FFFFFF;font-size:18px;font-weight:700;letter-spacing:-.3px}
 .hd-tg{color:rgba(255,255,255,.5);font-size:12px;font-weight:400;letter-spacing:.2px}
 
 /* LANDING PAGE */
@@ -53,7 +53,7 @@ body{font-family:'Libre Baskerville',Georgia,serif;background:#172B36;color:var(
 .landing-split{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;text-align:left;width:100%;position:relative;z-index:1}
 .landing-left{text-align:left}
 .landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(220,180,80,.07);border:1px solid rgba(220,180,80,.15);color:rgba(220,180,80,.55);font-family:'IBM Plex Mono',monospace;letter-spacing:1px;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;margin-bottom:20px}
-.landing-h1{font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;letter-spacing:-.4px;font-size:52px;line-height:1.1;margin:0 0 20px;letter-spacing:-.5px;font-weight:400}
+.landing-h1{font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:52px;line-height:1.05;margin:0 0 20px;letter-spacing:-.5px;font-weight:700}
 .landing-sub{color:rgba(241,246,244,.35);font-style:italic;font-size:17px;line-height:1.7;max-width:480px;margin:0 0 32px;font-weight:400}
 .landing-btns{display:flex;align-items:center;justify-content:flex-start;gap:16px;margin-bottom:40px}
 .landing-cta{background:#DCB450;color:#172B36;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;padding:13px 28px;border-radius:3px;border:none;cursor:pointer;transition:all .2s;letter-spacing:.8px}
@@ -61,7 +61,7 @@ body{font-family:'Libre Baskerville',Georgia,serif;background:#172B36;color:var(
 .landing-note{color:rgba(255,255,255,.4);font-size:13px;font-weight:400}
 .landing-trust{display:flex;align-items:center;justify-content:flex-start;gap:24px}
 .landing-trust-item{text-align:center}
-.landing-trust-n{display:block;font-family:'Libre Baskerville',Georgia,serif;font-size:22px;color:#F1F6F4;font-weight:400;line-height:1.2}
+.landing-trust-n{display:block;font-family:'Libre Baskerville',Georgia,serif;font-size:22px;color:#F1F6F4;font-weight:700;line-height:1.2}
 .landing-trust-l{display:block;font-size:10px;color:rgba(241,246,244,.22);font-family:'IBM Plex Mono',monospace;letter-spacing:.5px;font-weight:400;margin-top:2px}
 .landing-trust-sep{width:1px;height:28px;background:rgba(255,255,255,.1)}
 .landing-right{display:block}
@@ -110,7 +110,7 @@ body{font-family:'Libre Baskerville',Georgia,serif;background:#172B36;color:var(
 .welcome-text{flex:1}
 .welcome-title{font-size:16px;font-weight:600;color:var(--t1);margin-bottom:2px}
 .welcome-sub{font-size:14px;color:var(--t2)}
-.welcome-cta{background:var(--ac);color:#FFFFFF;border:none;padding:8px 16px;border-radius:5px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all .15s}
+.welcome-cta{background:#DCB450;color:#172B36;border:none;padding:8px 16px;border-radius:4px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all .15s}
 .welcome-cta:hover{background:var(--acl);box-shadow:0 2px 8px rgba(75,123,245,.25)}
 .welcome-close{background:none;border:none;color:var(--t3);font-size:16px;cursor:pointer;padding:0 4px;margin-left:4px}
 .welcome-close:hover{color:var(--t1)}
@@ -119,18 +119,19 @@ body{font-family:'Libre Baskerville',Georgia,serif;background:#172B36;color:var(
 .tabs-bar{display:flex;justify-content:center;gap:0;padding-bottom:0;margin-bottom:0;position:relative;z-index:2}
 .tab-btn{padding:12px 20px;font-size:14px;font-weight:500;color:rgba(255,255,255,.5);border:none;background:transparent;cursor:pointer;border-radius:0;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:6px;border-bottom:2px solid transparent}
 .demo-it,.demo-it-tx,.demo-route,.demo-label,.demo-it-st,
-.tab-btn,.hd-nm,.hd-tg,.lang-btn,.gl-hd-btn,
+.tab-btn,.hd-tg,.lang-btn,.gl-hd-btn,
 .how-s,.how-n,.route-pill,.landing-badge,
-.landing-note,.landing-trust-l,.landing-trust-sep,
-.welcome-title,.welcome-sub,.welcome-cta,
-button,select,input,label{
+.landing-note,.landing-trust-l{
   font-family:'IBM Plex Mono',monospace!important;
+}
+button,select,input,label{
+  font-family:'DM Sans',system-ui,sans-serif!important;
 }
 .tab-btn:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
 .tab-btn.active{background:transparent;color:#FFFFFF;border-bottom:2px solid var(--ac)}
 .tab-btn svg{display:none}
 .tab-step{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
-.tab-btn.active .tab-step{background:var(--ac);color:#FFFFFF;border-color:var(--ac);box-shadow:0 0 8px rgba(75,123,245,.4)}
+.tab-btn.active .tab-step{background:var(--ac);color:#172B36;border-color:var(--ac);box-shadow:0 0 8px rgba(220,180,80,.2)}
 
 /* MAIN CARD */
 .main-card{background:#114C5A;border:1px solid rgba(255,255,255,.07);max-width:900px;margin:0 auto;border-radius:0 0 10px 10px;box-shadow:var(--sh-lg);padding:0;position:relative}
@@ -145,7 +146,7 @@ button,select,input,label{
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 .fd{display:flex;flex-direction:column;gap:4px}
 .fd label{font-size:14px;font-weight:500;color:var(--t2)}
-.fd select,.fd input{height:40px;padding:0 14px;border:1px solid var(--bd);border-radius:var(--rs);font-size:15px;font-family:inherit;color:var(--t1);background:var(--wh);outline:none;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .1s}
+.fd select,.fd input{height:40px;padding:0 14px;border:1px solid rgba(255,255,255,.12);border-radius:var(--rs);font-size:15px;font-family:'DM Sans',sans-serif;color:#F1F6F4;background:rgba(255,255,255,.07);outline:none;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .1s}
 .fd select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
 .fd select:focus,.fd input:focus{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}
 .btn{background:var(--btn);color:var(--btn-tx);border:none;height:42px;padding:0 20px;border-radius:var(--rs);font-size:15px;font-weight:500;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .15s}
@@ -188,8 +189,8 @@ button,select,input,label{
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 
 /* GREEN CTA BUTTON */
-.btn-cta{background:var(--gn);color:#fff;border:none;height:48px;padding:0 28px;border-radius:var(--rs);font-size:16px;font-weight:600;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:all .2s;width:100%}
-.btn-cta:hover{background:#0a6a0a;box-shadow:0 4px 16px rgba(15,123,15,.3)}
+.btn-cta{background:#DCB450;color:#172B36;border:none;height:48px;padding:0 28px;border-radius:var(--rs);font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:all .2s;width:100%}
+.btn-cta:hover{background:#E8C96A;box-shadow:0 4px 16px rgba(220,180,80,.2)}
 .btn-cta:disabled{opacity:.4;cursor:not-allowed}
 .btn-cta.pulse{animation:ctaPulse 2s ease-in-out infinite}
 @keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(15,123,15,.3)}50%{box-shadow:0 0 0 8px rgba(15,123,15,0)}}
@@ -199,7 +200,7 @@ button,select,input,label{
 .gauge-svg{width:110px;height:110px;flex-shrink:0}
 .gauge-bg{fill:none;stroke:var(--bdl);stroke-width:8}
 .gauge-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .8s ease,stroke .3s}
-.gauge-text{font-family:'Libre Baskerville',Georgia,serif;font-size:24px;fill:var(--t1);text-anchor:middle;dominant-baseline:central}
+.gauge-text{font-family:'DM Sans',system-ui,sans-serif;font-size:24px;font-weight:700;fill:var(--t1);text-anchor:middle;dominant-baseline:central}
 .gauge-stats{flex:1}
 .gauge-stat{font-size:15px;color:var(--t2);margin-bottom:4px}
 .gauge-stat b{color:var(--t1);font-weight:600}
@@ -221,9 +222,9 @@ button,select,input,label{
 .hero-stat{display:none}
 
 /* OV SUMMARY BANNER */
-.ov-summary{background:linear-gradient(135deg,var(--nv),#1E3A6E);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;color:#fff}
+.ov-summary{background:linear-gradient(135deg,#0E3F4C,#172B36);border-radius:var(--r);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;color:#fff}
 .ov-summary-stat{text-align:center;flex:1}
-.ov-summary-num{font-family:'Libre Baskerville',Georgia,serif;font-size:22px;line-height:1.2}
+.ov-summary-num{font-family:'Libre Baskerville',Georgia,serif;font-size:22px;font-weight:700;line-height:1.2}
 .ov-summary-label{font-size:11px;color:rgba(255,255,255,.55);font-weight:500;margin-top:2px}
 .ov-summary-sep{width:1px;height:36px;background:rgba(255,255,255,.15)}
 
@@ -267,7 +268,7 @@ button,select,input,label{
 .conf{background:var(--sf);border-radius:var(--r);padding:16px 20px;margin-bottom:16px}
 .conf-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .conf-lb{font-size:13px;font-weight:500;color:var(--t3)}
-.conf-p{font-family:'Libre Baskerville',Georgia,serif;font-size:26px;color:var(--t1)}
+.conf-p{font-family:'DM Sans',system-ui,sans-serif;font-size:26px;font-weight:700;color:var(--t1)}
 .conf-tr{height:6px;background:var(--bdl);border-radius:3px;overflow:hidden;margin-bottom:6px}
 .conf-fl{height:100%;background:var(--gn);border-radius:3px;transition:width .5s;width:0%}
 .conf-st{font-size:14px;font-weight:500;color:var(--t3)}
@@ -277,7 +278,7 @@ button,select,input,label{
 .ph-hd{padding:14px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .1s}
 .ph-hd:hover{background:var(--sf)}
 .ph-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
-.ph-ic.pre{background:#EAF0FF}.ph-ic.ship{background:#E8F8EE}.ph-ic.pay{background:var(--ambg)}
+.ph-ic.pre{background:rgba(220,180,80,.1)}.ph-ic.ship{background:rgba(217,232,226,.1)}.ph-ic.pay{background:rgba(220,180,80,.08)}
 .ph-nf{flex:1}
 .ph-t{font-size:16px;font-weight:600}
 .ph-ct{font-size:13px;color:var(--t3);margin-top:2px}
@@ -304,7 +305,7 @@ button,select,input,label{
 .ci-fb-btn.fb-up{border-color:var(--gn);color:var(--gn);background:rgba(15,123,15,.06)}
 .ci-fb-btn.fb-down{border-color:var(--rd);color:var(--rd);background:rgba(220,38,38,.06)}
 .ci-fb-cmt{display:flex;align-items:center;gap:4px;margin-top:4px}
-.ci-fb-cmt input{border:1px solid var(--bdl);border-radius:4px;padding:3px 8px;font-size:11px;flex:1;max-width:200px;outline:none;font-family:inherit;color:var(--t1)}
+.ci-fb-cmt input{border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:3px 8px;font-size:11px;flex:1;max-width:200px;outline:none;font-family:'DM Sans',sans-serif;color:#F1F6F4;background:rgba(255,255,255,.07)}
 .ci-fb-cmt input:focus{border-color:var(--t3)}
 .ci-fb-cmt button{background:var(--rd);color:#fff;border:none;border-radius:4px;padding:3px 8px;font-size:11px;cursor:pointer}
 .fb-summary{background:var(--wh);border:1px solid var(--bdl);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
@@ -318,7 +319,7 @@ button,select,input,label{
 .fb-export-btn{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--rs);padding:6px 14px;font-size:12px;color:var(--t2);cursor:pointer;font-family:inherit}
 .fb-export-btn:hover{background:var(--bdl)}
 
-.sh{font-family:'Libre Baskerville',Georgia,serif;font-size:22px;color:var(--t1);margin-bottom:12px}
+.sh{font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:12px}
 .al{background:var(--ambg);border:1px solid var(--ambd);border-radius:var(--r);padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
 .al-ic{width:28px;height:28px;background:var(--am);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;color:#fff;font-size:13px}
 .al-t{font-size:15px;font-weight:600;color:var(--am);margin-bottom:2px}
@@ -336,7 +337,7 @@ button,select,input,label{
 .src-t{font-size:14px;font-weight:600;line-height:1.35}
 .src-u{font-size:12px;color:var(--t3);margin-top:2px;text-transform:lowercase}
 .note-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.note-ta{width:100%;min-height:90px;border:1px solid var(--bdl);border-radius:var(--rs);padding:12px 14px;font-family:inherit;font-size:14px;line-height:1.55;color:var(--t1);background:var(--wh);resize:vertical;transition:border-color .1s}
+.note-ta{width:100%;min-height:90px;border:1px solid rgba(255,255,255,.1);border-radius:var(--rs);padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;color:#F1F6F4;background:rgba(255,255,255,.07);resize:vertical;transition:border-color .1s}
 .note-ta:focus{outline:none;border-color:var(--nv)}
 .note-ta::placeholder{color:var(--t3)}
 .note-sv{font-size:11px;color:var(--t3);font-weight:600;display:flex;align-items:center;gap:5px}
@@ -412,11 +413,11 @@ button,select,input,label{
 .gl-item:hover{border-color:var(--t3)}
 .gl-item-hd{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px}
 .gl-item-tag{font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px;flex-shrink:0}
-.gl-item-tag.ucp{background:rgba(37,99,235,.1);color:#2563EB}
-.gl-item-tag.isbp{background:rgba(16,185,129,.1);color:#059669}
-.gl-item-tag.inco{background:rgba(245,158,11,.1);color:#D97706}
-.gl-item-tag.urc{background:rgba(139,92,246,.1);color:#7C3AED}
-.gl-item-tag.urdg{background:rgba(236,72,153,.1);color:#DB2777}
+.gl-item-tag.ucp{background:rgba(220,180,80,.12);color:#DCB450}
+.gl-item-tag.isbp{background:rgba(217,232,226,.1);color:#D9E8E2}
+.gl-item-tag.inco{background:rgba(220,180,80,.08);color:#E8C96A}
+.gl-item-tag.urc{background:rgba(241,246,244,.08);color:rgba(241,246,244,.5)}
+.gl-item-tag.urdg{background:rgba(220,180,80,.06);color:rgba(220,180,80,.6)}
 .gl-item-t{font-size:14px;font-weight:500;color:var(--t1);flex:1}
 .gl-item-ch{color:var(--t3);transition:transform .2s;font-size:12px}
 .gl-item.open .gl-item-ch{transform:rotate(180deg)}
@@ -464,10 +465,10 @@ button,select,input,label{
 .cost-mode-btn:hover{color:var(--t1)}
 .cost-mode-btn.active{background:var(--hover);color:var(--t1);box-shadow:none}
 .manual-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.manual-row input[type="text"]{flex:1;height:36px;padding:0 10px;border:1px solid var(--bd);border-radius:var(--rs);font-size:12px;font-family:inherit;outline:none}
-.manual-row input[type="number"]{width:120px;height:36px;padding:0 10px;border:1px solid var(--bd);border-radius:var(--rs);font-size:12px;font-family:inherit;outline:none;text-align:right}
+.manual-row input[type="text"]{flex:1;height:36px;padding:0 10px;border:1px solid rgba(255,255,255,.12);border-radius:var(--rs);font-size:12px;font-family:'DM Sans',sans-serif;outline:none;background:rgba(255,255,255,.07);color:#F1F6F4}
+.manual-row input[type="number"]{width:120px;height:36px;padding:0 10px;border:1px solid rgba(255,255,255,.12);border-radius:var(--rs);font-size:12px;font-family:'DM Sans',sans-serif;outline:none;text-align:right;background:rgba(255,255,255,.07);color:#F1F6F4}
 .manual-row input:focus{border-color:var(--nv)}
-.manual-row select{height:36px;padding:0 8px;border:1.5px solid var(--bd);border-radius:var(--rs);font-size:11px;font-family:inherit;outline:none;width:100px}
+.manual-row select{height:36px;padding:0 8px;border:1.5px solid rgba(255,255,255,.12);border-radius:var(--rs);font-size:11px;font-family:'DM Sans',sans-serif;outline:none;width:100px;background:rgba(255,255,255,.07);color:#F1F6F4}
 .manual-del{width:28px;height:28px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px}
 .manual-del:hover{background:var(--rdbg);color:var(--rd)}
 
@@ -510,23 +511,23 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .tara-row.bot{align-self:flex-start}
 .tara-row .tara-av{width:28px;height:28px;border-radius:8px;font-size:12px}
 .tara-msg{padding:12px 16px;border-radius:14px;font-size:14.5px;line-height:1.6}
-.tara-msg.bot{background:var(--wh);color:var(--t1);border:1px solid var(--bdl);border-bottom-left-radius:5px;box-shadow:0 1px 2px rgba(27,42,74,.04)}
-.tara-msg.user{background:var(--nv);color:#FFFFFF;border-bottom-right-radius:5px}
+.tara-msg.bot{background:rgba(255,255,255,.07);color:#F1F6F4;border:1px solid rgba(255,255,255,.1);border-bottom-left-radius:5px}
+.tara-msg.user{background:#DCB450;color:#172B36;border-bottom-right-radius:5px}
 .tara-msg p{margin:0 0 8px}.tara-msg p:last-child{margin:0}
 .tara-msg ul,.tara-msg ol{margin:6px 0;padding-left:18px}
 .tara-msg li{margin:3px 0}
 .tara-msg strong{font-weight:600}
 .tara-msg code{background:var(--sf);padding:1px 5px;border-radius:4px;font-size:12px;font-family:ui-monospace,monospace}
 .tara-msg.bot code{background:var(--sf)}
-.tara-typing{display:flex;gap:4px;padding:13px 15px;background:var(--wh);border:1px solid var(--bdl);border-radius:14px;border-bottom-left-radius:5px;width:fit-content}
+.tara-typing{display:flex;gap:4px;padding:13px 15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;border-bottom-left-radius:5px;width:fit-content}
 .tara-typing span{width:7px;height:7px;border-radius:50%;background:var(--t3);animation:taraDot 1.3s infinite}
 .tara-typing span:nth-child(2){animation-delay:.2s}.tara-typing span:nth-child(3){animation-delay:.4s}
 @keyframes taraDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
-.tara-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 12px;background:var(--sf)}
-.tara-chip{background:var(--wh);border:1px solid var(--bd);color:var(--t1);font-family:inherit;font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all .12s}
+.tara-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 12px;background:#172B36}
+.tara-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#F1F6F4;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 12px;border-radius:4px;cursor:pointer;transition:all .12s}
 .tara-chip:hover{background:var(--hover);color:var(--t1)}
-.tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--bdl);background:var(--wh)}
-.tara-input input{flex:1;height:40px;border:1px solid var(--bd);border-radius:4px;padding:0 14px;font-size:14px;font-family:inherit;outline:none;transition:border-color .12s;color:var(--t1);background:var(--wh)}
+.tara-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.07);background:#172B36}
+.tara-input input{flex:1;height:40px;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:0 14px;font-size:14px;font-family:inherit;outline:none;transition:border-color .12s;color:#F1F6F4;background:rgba(255,255,255,.07)}
 .tara-input input:focus{border-color:var(--nv);box-shadow:inset 0 0 0 1px var(--nv)}
 .tara-input button{width:36px;height:36px;border-radius:4px;background:var(--btn);border:none;color:var(--btn-tx);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .1s}
 .tara-input button:hover{background:var(--btn-hv)}
@@ -540,7 +541,7 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 @media(max-width:900px){#appView.gl-open{margin-right:0}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr 1fr 1fr;gap:8px}}
 @media(max-width:800px){.landing-h1{font-size:36px}.landing-sub{font-size:15px}.landing-btns{flex-wrap:wrap}.landing-split{gap:32px}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}}
 @media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 4px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{padding:9px 10px;font-size:11px;white-space:nowrap;flex-shrink:0}.tab-panel{padding:16px 14px 24px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel:not(.dragged){width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:0 16px}.landing-problem h2{font-size:26px!important}.gl-hd-btn span{display:none}.gl-hd-btn{padding:5px 7px}.gl-drawer{width:100vw;max-width:100vw}}
-h2,h3{font-family:'Libre Baskerville',Georgia,serif}
+h2,h3{font-family:'DM Sans',system-ui,sans-serif;font-weight:600}
 .landing-h1{letter-spacing:-.3px}
 .tab-btn{letter-spacing:.3px;font-size:10px;text-transform:uppercase}
 label{font-size:10px;letter-spacing:.3px}
@@ -621,7 +622,7 @@ label{font-size:10px;letter-spacing:.3px}
 
   <div class="landing-problem" style="max-width:800px;margin:80px auto 0;text-align:center;padding:0 20px 80px;position:relative;z-index:1">
     <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px" data-i18n="lp_label">Why this matters</div>
-    <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#FFFFFF;font-size:36px;font-weight:400;line-height:1.2;margin-bottom:20px" data-i18n="lp_h2">Your shipment is ready. Your documents are not.</h2>
+    <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:36px;font-weight:700;line-height:1.2;margin-bottom:20px" data-i18n="lp_h2">Your shipment is ready. Your documents are not.</h2>
     <p style="color:rgba(255,255,255,.5);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px" data-i18n="lp_body">Most food exporters don't lose shipments because their product is bad. They lose them because one document is wrong, one weight figure doesn't match, or one FDA rule wasn't followed. ShipSafe catches these before customs does.</p>
     <div class="landing-stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left">
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
@@ -647,7 +648,7 @@ label{font-size:10px;letter-spacing:.3px}
   <div style="max-width:1000px;margin:0 auto 100px;padding:0 20px;position:relative;z-index:1">
     <div style="text-align:center;margin-bottom:48px">
       <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lc_label">What ShipSafe covers</div>
-      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#FFFFFF;font-size:34px;font-weight:400;line-height:1.25;margin-bottom:16px" data-i18n="lc_h2">Every layer of compliance — <span style="color:rgba(75,123,245,.9)">not just the checklist</span></h2>
+      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:16px" data-i18n="lc_h2">Every layer of compliance — <span style="color:#DCB450">not just the checklist</span></h2>
       <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;max-width:540px;margin:0 auto" data-i18n="lc_body">Most tools give you a generic list. ShipSafe works corridor by corridor — specific to your product, your origin country, and your destination market.</p>
     </div>
     <div class="landing-cards-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
@@ -688,7 +689,7 @@ label{font-size:10px;letter-spacing:.3px}
   <div style="max-width:800px;margin:0 auto 100px;padding:0 20px;position:relative;z-index:1">
     <div style="text-align:center;margin-bottom:48px">
       <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lh_label">The honest part</div>
-      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#FFFFFF;font-size:34px;font-weight:400;line-height:1.25;margin-bottom:16px" data-i18n="lh_h2">Your checklist passed.<br>Your bank still rejected it.</h2>
+      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:16px" data-i18n="lh_h2">Your checklist passed.<br>Your bank still rejected it.</h2>
       <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;max-width:560px;margin:0 auto" data-i18n="lh_body">A generic compliance checklist tells you what documents to get. It doesn't tell you that the consignee name on your Bill of Lading has one extra word compared to your Invoice — which is exactly what banks reject under UCP 600 Art. 14(d).</p>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
@@ -718,21 +719,21 @@ label{font-size:10px;letter-spacing:.3px}
   <!-- Section C: How it works -->
   <div style="max-width:800px;margin:0 auto 100px;padding:0 20px;position:relative;z-index:1;text-align:center">
     <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="ls_label">Getting started</div>
-    <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#FFFFFF;font-size:34px;font-weight:400;line-height:1.25;margin-bottom:12px" data-i18n="ls_h2">Three inputs. Under 30 seconds.</h2>
+    <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:12px" data-i18n="ls_h2">Three inputs. Under 30 seconds.</h2>
     <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;margin-bottom:48px" data-i18n="ls_body">No account. No freight forwarder. No waiting.</p>
     <div class="landing-steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;margin-bottom:48px">
       <div style="position:relative">
-        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:48px;color:rgba(75,123,245,.2);line-height:1;margin-bottom:12px">1</div>
+        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:48px;color:rgba(220,180,80,.15);line-height:1;margin-bottom:12px">1</div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="ls_s1_t">Pick your corridor</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="ls_s1_d">Select commodity, origin country, destination, and Incoterms. That's it — no account needed.</div>
       </div>
       <div>
-        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:48px;color:rgba(75,123,245,.2);line-height:1;margin-bottom:12px">2</div>
+        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:48px;color:rgba(220,180,80,.15);line-height:1;margin-bottom:12px">2</div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="ls_s2_t">Get your checklist</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="ls_s2_d">AI searches official sources — FDA.gov, EUR-Lex, BKIPM — and returns a checklist with exact regulation codes and deadlines.</div>
       </div>
       <div>
-        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:48px;color:rgba(75,123,245,.2);line-height:1;margin-bottom:12px">3</div>
+        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:48px;color:rgba(220,180,80,.15);line-height:1;margin-bottom:12px">3</div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="ls_s3_t">Cross-check your docs</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="ls_s3_d">Upload your trade documents. AI audits every field for consistency — catches discrepancies banks will reject before you submit.</div>
       </div>
@@ -783,7 +784,7 @@ label{font-size:10px;letter-spacing:.3px}
   <!-- ═══ CHECKER TAB ═══ -->
   <div class="tab-panel active" id="tp-checker">
     <div id="ck-input">
-      <h2 style="font-family:'Libre Baskerville',Georgia,serif;font-size:24px;color:var(--t1);margin-bottom:6px">Compliance Checker</h2>
+      <h2 style="font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:6px">Compliance Checker</h2>
       <p style="font-size:15px;color:var(--t3);margin-bottom:18px">Select your trade corridor below — we'll generate a compliance checklist in seconds.</p>
       <div class="fg">
         <div class="fd"><label>Commodity / HS Code</label>
@@ -887,7 +888,7 @@ label{font-size:10px;letter-spacing:.3px}
 
   <!-- ═══ COST CALCULATOR TAB ═══ -->
   <div class="tab-panel" id="tp-cost">
-    <h2 style="font-family:'Libre Baskerville',Georgia,serif;font-size:24px;color:var(--t1);margin-bottom:6px">Cost Calculator</h2>
+    <h2 style="font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:6px">Cost Calculator</h2>
     <p style="font-size:15px;color:var(--t3);margin-bottom:14px">Estimate your total shipment cost — freight, insurance, customs, certificates, and hidden fees.</p>
 
     <!-- Mode toggle -->
@@ -979,7 +980,7 @@ label{font-size:10px;letter-spacing:.3px}
 
       <div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 18px;margin-top:16px;display:flex;align-items:center;justify-content:space-between">
         <div style="font-size:12px;font-weight:500;color:var(--t2)">Total Estimated Cost</div>
-        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:24px;color:var(--t1)" id="manualTotal">$0</div>
+        <div style="font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1)" id="manualTotal">$0</div>
       </div>
 
       <div class="ct-n" style="margin-top:8px">Use this to track your own quotes and build a custom cost sheet.</div>
@@ -990,7 +991,7 @@ label{font-size:10px;letter-spacing:.3px}
   <div class="tab-panel" id="tp-overview">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <div>
-        <h2 style="font-family:'Libre Baskerville',Georgia,serif;font-size:24px;color:var(--t1);margin-bottom:4px">Shipment Overview</h2>
+        <h2 style="font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:4px">Shipment Overview</h2>
         <p style="font-size:14px;color:var(--t3)">Track your active shipments and compliance progress.</p>
       </div>
       <div style="display:flex;gap:6px;align-items:center">
@@ -1011,7 +1012,7 @@ label{font-size:10px;letter-spacing:.3px}
 
   <!-- ═══ CROSSCHECK TAB ═══ -->
   <div class="tab-panel" id="tp-crosscheck">
-    <h2 style="font-family:'Libre Baskerville',Georgia,serif;font-size:24px;color:var(--t1);margin-bottom:6px" data-i18n="cc_title">Document Checker</h2>
+    <h2 style="font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:6px" data-i18n="cc_title">Document Checker</h2>
     <p style="font-size:15px;color:var(--t3);margin-bottom:14px" data-i18n="cc_subtitle">Upload your trade documents to cross-check everything and catch issues before customs does.</p>
 
     <!-- Trade context selectors -->
@@ -1221,7 +1222,7 @@ const T={
     lp_label:'Why this matters',lp_h2:'Your shipment is ready. Your documents are not.',lp_body:'Most food exporters don\'t lose shipments because their product is bad. They lose them because one document is wrong, one weight figure doesn\'t match, or one FDA rule wasn\'t followed. ShipSafe catches these before customs does.',
     lp_stat1_d:'Average cost of one FDA detention. Doesn\'t count the buyer you lost.',lp_stat2_d:'Average hold at US port of entry. Your buyer is waiting. Your LC deadline is not.',lp_stat3_d:'First-attempt customs failures for food shipments worldwide.',
     lp_cta2:'Run a free compliance check →',lp_cta2_sub:'No signup required. Results in under 30 seconds.',
-    lc_label:'What ShipSafe covers',lc_h2:'Every layer of compliance — <span style="color:rgba(75,123,245,.9)">not just the checklist</span>',lc_body:'Most tools give you a generic list. ShipSafe works corridor by corridor — specific to your product, your origin country, and your destination market.',
+    lc_label:'What ShipSafe covers',lc_h2:'Every layer of compliance — <span style="color:#DCB450">not just the checklist</span>',lc_body:'Most tools give you a generic list. ShipSafe works corridor by corridor — specific to your product, your origin country, and your destination market.',
     lc_c1_t:'Compliance checklist',lc_c1_d:'Pre-shipment, during shipment, and payment — every step with the exact regulation code, agency, and deadline. Not generic advice.',
     lc_c2_t:'Document cross-checker',lc_c2_d:'Upload your Invoice, Packing List, and Bill of Lading. AI audits every field against UCP 600 and ISBP 745 — catches what banks reject.',
     lc_c3_t:'Cost calculator',lc_c3_d:'Landed cost broken down by Incoterms — freight, insurance, lab testing, certificates, bank charges. Real numbers, not estimates.',
@@ -1298,7 +1299,7 @@ const T={
     lp_label:'Kenapa ini penting',lp_h2:'Barang kamu siap. Dokumen kamu belum.',lp_body:'Kebanyakan eksportir pangan kehilangan kiriman bukan karena produknya jelek. Tapi karena satu dokumen salah, satu angka berat tidak cocok, atau satu aturan FDA tidak diikuti. ShipSafe menangkap ini sebelum bea cukai.',
     lp_stat1_d:'Rata-rata biaya satu kali penahanan FDA. Belum termasuk buyer yang hilang.',lp_stat2_d:'Rata-rata ditahan di pelabuhan AS. Buyer kamu menunggu. Deadline LC kamu tidak.',lp_stat3_d:'Kegagalan bea cukai percobaan pertama untuk kiriman pangan di seluruh dunia.',
     lp_cta2:'Cek kepatuhan gratis →',lp_cta2_sub:'Tanpa daftar. Hasil dalam 30 detik.',
-    lc_label:'Apa yang ShipSafe periksa',lc_h2:'Setiap lapisan kepatuhan — <span style="color:rgba(75,123,245,.9)">bukan cuma checklist</span>',lc_body:'Kebanyakan tools cuma kasih daftar generik. ShipSafe bekerja per koridor — spesifik untuk produk, negara asal, dan pasar tujuan kamu.',
+    lc_label:'Apa yang ShipSafe periksa',lc_h2:'Setiap lapisan kepatuhan — <span style="color:#DCB450">bukan cuma checklist</span>',lc_body:'Kebanyakan tools cuma kasih daftar generik. ShipSafe bekerja per koridor — spesifik untuk produk, negara asal, dan pasar tujuan kamu.',
     lc_c1_t:'Checklist kepatuhan',lc_c1_d:'Pra-pengiriman, saat pengiriman, dan pembayaran — setiap langkah dengan kode regulasi, lembaga, dan tenggat yang tepat. Bukan saran generik.',
     lc_c2_t:'Cek silang dokumen',lc_c2_d:'Upload Invoice, Packing List, dan Bill of Lading. AI audit setiap field terhadap UCP 600 dan ISBP 745 — tangkap yang bank tolak.',
     lc_c3_t:'Kalkulator biaya',lc_c3_d:'Biaya landing dirinci per Incoterms — freight, asuransi, tes lab, sertifikat, biaya bank. Angka nyata, bukan estimasi.',
@@ -1385,7 +1386,7 @@ ATURAN BAHASA:
     lp_label:'Por qué importa',lp_h2:'Tu envío está listo. Tus documentos no.',lp_body:'La mayoría de los exportadores de alimentos no pierden envíos porque su producto sea malo. Los pierden porque un documento está mal, una cifra de peso no coincide o una regla de la FDA no se cumplió. ShipSafe detecta esto antes que la aduana.',
     lp_stat1_d:'Costo promedio de una retención FDA. Sin contar al comprador que perdiste.',lp_stat2_d:'Retención promedio en puerto de EE.UU. Tu comprador espera. Tu plazo LC no.',lp_stat3_d:'Fallos aduaneros en el primer intento para envíos de alimentos a nivel mundial.',
     lp_cta2:'Verificar cumplimiento gratis →',lp_cta2_sub:'Sin registro. Resultados en menos de 30 segundos.',
-    lc_label:'Qué cubre ShipSafe',lc_h2:'Cada capa de cumplimiento — <span style="color:rgba(75,123,245,.9)">no solo la checklist</span>',lc_body:'La mayoría de herramientas te dan una lista genérica. ShipSafe trabaja corredor por corredor — específico para tu producto, tu país de origen y tu mercado destino.',
+    lc_label:'Qué cubre ShipSafe',lc_h2:'Cada capa de cumplimiento — <span style="color:#DCB450">no solo la checklist</span>',lc_body:'La mayoría de herramientas te dan una lista genérica. ShipSafe trabaja corredor por corredor — específico para tu producto, tu país de origen y tu mercado destino.',
     lc_c1_t:'Checklist de cumplimiento',lc_c1_d:'Pre-embarque, durante el envío y pago — cada paso con el código de regulación, agencia y plazo exacto. No consejos genéricos.',
     lc_c2_t:'Verificador de documentos',lc_c2_d:'Sube tu Factura, Lista de Empaque y Bill of Lading. La IA audita cada campo contra UCP 600 e ISBP 745 — detecta lo que los bancos rechazan.',
     lc_c3_t:'Calculadora de costos',lc_c3_d:'Costo final desglosado por Incoterms — flete, seguro, pruebas de laboratorio, certificados, cargos bancarios. Cifras reales, no estimaciones.',
@@ -3367,7 +3368,7 @@ function renderOV(){
             <div style="font-size:11px;font-weight:500;color:${docColor};margin-top:2px">${s.docsVerified} of ${s.docsTotal} verified</div></div>
         </div>
 
-        <div style="background:var(--wh);border:1px solid var(--bdl);border-radius:var(--rs);padding:10px 12px;margin-bottom:12px">
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--rs);padding:10px 12px;margin-bottom:12px">
           <div style="font-size:11px;font-weight:500;color:var(--t3);margin-bottom:6px">Document Status</div>
           ${docsHTML}
         </div>
