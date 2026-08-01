@@ -66,20 +66,20 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--nv)
 .landing-trust-sep{width:1px;height:28px;background:rgba(255,255,255,.1)}
 .landing-right{display:block}
 /* DEMO CARD — hidden */
-.demo-card{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px;backdrop-filter:blur(10px)}
+.demo-card{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px;backdrop-filter:blur(10px)}
 .demo-hd{margin-bottom:10px}
 .demo-route{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#FFFFFF;flex-wrap:wrap}
 .demo-ar{color:rgba(255,255,255,.4);font-weight:400}
 .demo-prog{height:4px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:8px;overflow:hidden}
 .demo-prog-bar{height:100%;width:0%;background:var(--gn);border-radius:3px;transition:width .4s ease}
 .demo-pct{font-size:11px;font-weight:600;color:var(--gn);margin-top:4px;text-align:right}
-.demo-items{display:flex;flex-direction:column;gap:5px;min-height:120px}
-.demo-it{display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.05);border-radius:4px;font-size:11px;color:rgba(255,255,255,.7);opacity:0;transform:translateY(6px);animation:demoIn .35s ease forwards}
+.demo-items{display:flex;flex-direction:column;gap:8px;min-height:120px}
+.demo-it{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.05);border-radius:4px;font-size:11px;color:rgba(255,255,255,.7);opacity:0;transform:translateY(6px);animation:demoIn .35s ease forwards}
 .demo-it-ck{width:16px;height:16px;border-radius:3px;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
 .demo-it-ck.on{background:var(--gn);border-color:var(--gn)}
 .demo-it-ck svg{width:10px;height:10px;opacity:0;transition:opacity .2s}
 .demo-it-ck.on svg{opacity:1}
-.demo-it-tx{flex:1;line-height:1.4}
+.demo-it-tx{flex:1;line-height:1.4;font-size:13px}
 .demo-it-st{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;flex-shrink:0}
 .demo-it-st.ok{background:rgba(15,123,15,.08);color:var(--gn)}
 .demo-it-st.warn{background:rgba(217,115,13,.08);color:var(--am)}
@@ -562,11 +562,11 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
   <div class="landing-hero">
   <div class="landing-split">
     <div class="landing-left">
-      <div class="landing-badge" data-i18n="hero_badge">For food &amp; agri exporters &amp; importers worldwide</div>
+      <div class="landing-badge" data-i18n="hero_badge">For food &amp; agri exporters — Indonesia to the world</div>
       <h1 class="landing-h1" data-i18n="landing_h1">Ship with<br>confidence.</h1>
-      <p class="landing-sub" data-i18n="landing_sub">Check compliance requirements, cross-reference your documents, and estimate landed costs — before your shipment leaves port.</p>
+      <p class="landing-sub" data-i18n="landing_sub">Know exactly what customs requires — certificates, tests, filings, and deadlines — before your container leaves port.</p>
       <div class="landing-btns">
-        <button class="landing-cta" onclick="enterApp()" data-i18n="landing_cta">Get Started — it's free</button>
+        <button class="landing-cta" onclick="enterApp()" data-i18n="landing_cta">Run a compliance check — free →</button>
         <span class="landing-note" data-i18n="landing_note">No signup required</span>
       </div>
       <div class="landing-trust">
@@ -608,25 +608,25 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 
   <div class="landing-problem" style="max-width:800px;margin:80px auto 0;text-align:center;padding:0 20px 80px;position:relative;z-index:1">
     <div style="font-size:11px;font-weight:600;color:rgba(75,123,245,.8);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px">Why this matters</div>
-    <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:36px;font-weight:400;line-height:1.2;margin-bottom:20px">One wrong document can cost you everything.</h2>
-    <p style="color:rgba(255,255,255,.5);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px">Most Indonesian UMKM exporters lose shipments not because their product is bad — but because a single document is missing, a weight figure doesn't match, or an FDA rule wasn't followed. ShipSafe catches these before your container leaves port.</p>
+    <h2 style="font-family:'DM Serif Display',serif;color:#FFFFFF;font-size:36px;font-weight:400;line-height:1.2;margin-bottom:20px">Your shipment is ready. Your documents are not.</h2>
+    <p style="color:rgba(255,255,255,.5);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px">Most food exporters don't lose shipments because their product is bad. They lose them because one document is wrong, one weight figure doesn't match, or one FDA rule wasn't followed. ShipSafe catches these before customs does.</p>
     <div class="landing-stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left">
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
         <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">$8,500</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average FDA detention cost per shipment. Doesn't include lost buyer trust.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average cost of one FDA detention. Doesn't count the buyer you lost.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
         <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">23 days</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average hold time at US port of entry. Your buyer is waiting. Your LC is expiring.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Average hold at US port of entry. Your buyer is waiting. Your LC deadline is not.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px">
         <div style="font-size:28px;font-family:'DM Serif Display',serif;color:#FFFFFF;margin-bottom:6px">1 in 3</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">Food shipments from Indonesia face customs issues on the first attempt.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.5">First-attempt customs failures for food shipments from Southeast Asia.</div>
       </div>
     </div>
     <div style="margin-top:40px">
-      <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 36px">Check my shipment for free →</button>
-      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">No signup. No credit card. Takes 30 seconds.</div>
+      <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 36px">Run a free compliance check →</button>
+      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">No signup required. Results in under 30 seconds.</div>
     </div>
   </div>
 </section>
@@ -1066,15 +1066,15 @@ let currentLang='en';
 const T={
   en:{
     tagline:'Trade Compliance',
-    hero_badge:'For food &amp; agri exporters &amp; importers worldwide',
+    hero_badge:'For food &amp; agri exporters — Indonesia to the world',
     hero_h1:'Stop guessing.<br>Ship with confidence.',
     hero_p:'Enter your trade details. The AI checks compliance requirements, flags hidden risks, and tells you exactly what to prepare before you ship.',
     stat1:'Avg detention cost',stat2:'Avg hold time',stat3:'Shipments face issues',
     wb_title:'First time here? Start with the Compliance Checker.',wb_sub:'Pick your product + route. In seconds you\'ll see exactly what customs requires — then follow the steps.',wb_cta:'Start step 1 →',
     how1:'Check requirements',how2:'Cross-check your docs',how3:'Estimate landed cost',how4:'Track &amp; ship',
     nstep_t:'Next: cross-check your documents',nstep_b:'You know the requirements now. Upload your Invoice + Packing List so AI can catch mismatches before customs does.',nstep_cta:'Go to Doc Cross-Checker →',
-    landing_h1:'Ship with<br>confidence.',landing_sub:'Check compliance requirements, cross-reference your documents, and estimate landed costs — before your shipment leaves port.',landing_note:'No signup required',
-    demo_label:'Live preview — Compliance Checker',landing_cta:'Get Started — it\'s free',
+    landing_h1:'Ship with<br>confidence.',landing_sub:'Know exactly what customs requires — certificates, tests, filings, and deadlines — before your container leaves port.',landing_note:'No signup required',
+    demo_label:'Live preview — Compliance Checker',landing_cta:'Run a compliance check — free →',
     tab_crosscheck:'Doc Cross-Checker',tab_start:'START HERE',tab_checker:'Compliance Checker',tab_cost:'Cost Calculator',tab_overview:'Shipment Overview',tab_glossary:'Trade Glossary',
     gl_title:'Trade Glossary',gl_sub:'ICC rules, Incoterms, and trade finance standards — your reference library.',gl_search_ph:'Search terms...',gl_btn:'Glossary',
     ck_quickstart:'Quick start — click a corridor',
@@ -1109,15 +1109,15 @@ const T={
   },
   id:{
     tagline:'Kepatuhan Perdagangan',
-    hero_badge:'Untuk eksportir &amp; importir pangan &amp; agri',
+    hero_badge:'Untuk eksportir pangan &amp; agri — Indonesia ke dunia',
     hero_h1:'Jangan tebak-tebak.<br>Kirim dengan pasti.',
     hero_p:'Masukkan detail pengiriman kamu. AI langsung cek semua syarat ekspor-impor, tandai risiko, dan kasih tahu apa yang harus disiapkan.',
     stat1:'Biaya rata-rata ditahan',stat2:'Rata-rata waktu ditahan',stat3:'Pengiriman kena masalah',
     wb_title:'Baru pertama kali? Mulai dari sini.',wb_sub:'Pilih produk dan tujuan. Dalam hitungan detik kamu tahu persis syarat bea cukai — tinggal ikuti langkahnya.',wb_cta:'Mulai langkah 1 →',
     how1:'Cek persyaratan',how2:'Cek silang dokumen',how3:'Hitung total biaya',how4:'Pantau &amp; kirim',
     nstep_t:'Selanjutnya: cek silang dokumen kamu',nstep_b:'Kamu sudah tahu persyaratannya. Upload Invoice + Packing List supaya AI bisa temukan ketidakcocokan sebelum bea cukai.',nstep_cta:'Ke Cek Dokumen →',
-    landing_h1:'Kirim dengan<br>pasti.',landing_sub:'Cek semua syarat ekspor-impor, cocokkan dokumen, dan hitung total biaya — sebelum barang berangkat.',landing_note:'Gratis, tanpa daftar',
-    demo_label:'Preview langsung — Cek Kepatuhan',landing_cta:'Mulai Sekarang — Gratis',
+    landing_h1:'Kirim dengan<br>pasti.',landing_sub:'Ketahui persis syarat bea cukai — sertifikat, tes, izin, dan tenggat — sebelum kontainer berangkat.',landing_note:'Gratis, tanpa daftar',
+    demo_label:'Preview langsung — Cek Kepatuhan',landing_cta:'Cek kepatuhan sekarang — gratis →',
     tab_crosscheck:'Cek Dokumen',tab_start:'MULAI',tab_checker:'Cek Kepatuhan',tab_cost:'Hitung Biaya',tab_overview:'Ikhtisar Pengiriman',tab_glossary:'Glosarium',
     gl_title:'Glosarium Perdagangan',gl_sub:'Istilah ICC, Incoterms, dan standar perdagangan internasional — referensi lengkap.',gl_search_ph:'Cari istilah...',gl_btn:'Glosarium',
     ck_quickstart:'Mulai cepat — klik koridor',
@@ -1177,15 +1177,15 @@ ATURAN BAHASA:
   },
   es:{
     tagline:'Cumplimiento Comercial',
-    hero_badge:'Para exportadores e importadores de alimentos y agro en todo el mundo',
+    hero_badge:'Para exportadores de alimentos y agro — de Indonesia al mundo',
     hero_h1:'Deja de adivinar.<br>Exporta con confianza.',
     hero_p:'Ingresa los detalles de tu operación. La IA verifica los requisitos de cumplimiento, detecta riesgos ocultos y te dice exactamente qué preparar antes de enviar.',
     stat1:'Costo promedio de retención',stat2:'Tiempo promedio de retención',stat3:'Envíos con problemas',
     wb_title:'¿Primera vez? Empieza con el Verificador de Cumplimiento.',wb_sub:'Elige tu producto + ruta. En segundos verás qué exige la aduana — luego sigue los pasos.',wb_cta:'Empezar paso 1 →',
     how1:'Verifica requisitos',how2:'Coteja tus documentos',how3:'Estima el costo total',how4:'Rastrea &amp; envía',
     nstep_t:'Siguiente: coteja tus documentos',nstep_b:'Ya conoces los requisitos. Sube tu Factura + Lista de Empaque para que la IA detecte discrepancias antes que la aduana.',nstep_cta:'Ir al Verificador de Documentos →',
-    landing_h1:'Envía con<br>confianza.',landing_sub:'La IA verifica cada requisito de cumplimiento, coteja tus documentos y estima los costos finales — antes de que tu envío salga del puerto.',landing_note:'Sin registro necesario',
-    demo_label:'Vista previa en vivo — Verificador de Cumplimiento',landing_cta:'Comenzar — es gratis',
+    landing_h1:'Envía con<br>confianza.',landing_sub:'Conoce exactamente lo que aduanas requiere — certificados, pruebas, trámites y plazos — antes de que tu contenedor salga del puerto.',landing_note:'Sin registro necesario',
+    demo_label:'Vista previa en vivo — Verificador de Cumplimiento',landing_cta:'Verificar cumplimiento — gratis →',
     tab_crosscheck:'Verificador de Documentos',tab_start:'EMPIEZA AQUÍ',tab_checker:'Verificación de Cumplimiento',tab_cost:'Calculadora de Costos',tab_overview:'Resumen de Envíos',tab_glossary:'Glosario Comercial',
     gl_title:'Glosario Comercial',gl_sub:'Reglas ICC, Incoterms y estándares de financiamiento comercial — tu biblioteca de referencia.',gl_search_ph:'Buscar términos...',gl_btn:'Glosario',
     ck_quickstart:'Inicio rápido — elige un corredor',
