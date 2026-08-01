@@ -75,9 +75,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 .demo-pct{font-size:11px;font-weight:600;color:var(--gn);margin-top:4px;text-align:right}
 .demo-items{display:flex;flex-direction:column;gap:8px;min-height:120px}
 .demo-it{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.05);border-radius:4px;font-size:11px;color:rgba(255,255,255,.7);opacity:0;transform:translateY(6px);animation:demoIn .35s ease forwards}
-.demo-it-ck{width:16px;height:16px;border-radius:3px;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
-.demo-it-ck.on{background:var(--gn);border-color:var(--gn)}
-.demo-it-ck svg{width:10px;height:10px;opacity:0;transition:opacity .2s}
+.demo-it-ck{width:22px;height:22px;border-radius:5px;border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.demo-it-ck.on{background:#DCB450;border-color:#DCB450;box-shadow:0 0 8px rgba(220,180,80,.4)}
+.demo-it-ck svg{width:14px;height:14px;opacity:0;transition:opacity .2s}
 .demo-it-ck.on svg{opacity:1}
 .demo-it-tx{flex:1;line-height:1.4;font-size:13px}
 .demo-it-st{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;flex-shrink:0}
@@ -3780,7 +3780,7 @@ initGlossary();
       const div=document.createElement('div');
       div.className='demo-it';
       div.style.animationDelay='0s';
-      div.innerHTML=`<div class="demo-it-ck"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><polyline points="2 6 5 9 10 3"/></svg></div><div class="demo-it-tx">${it.text}</div><span class="demo-it-st ${it.status}">${it.label}</span>`;
+      div.innerHTML=`<div class="demo-it-ck"><svg viewBox="0 0 12 12" fill="none" stroke="#172B36" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><div class="demo-it-tx">${it.text}</div><span class="demo-it-st ${it.status}">${it.label}</span>`;
       box.appendChild(div);
       // Animate check after a moment
       setTimeout(()=>{div.querySelector('.demo-it-ck').classList.add('on')},300);
