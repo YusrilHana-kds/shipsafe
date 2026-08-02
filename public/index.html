@@ -172,8 +172,8 @@ button,select,input,label{
 
 /* DEADLINE NOTICES */
 .dl-notice{background:#F1F6F4;border:1px solid var(--rd);border-radius:var(--rs);padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:8px;color:#172B36}
-.dl-notice.warn{background:var(--ambg);border-color:var(--ambd)}
-.dl-notice.ok{background:var(--gnbg);border-color:var(--gn)}
+.dl-notice.warn{background:#FFF8E7;border-color:#DCB450}
+.dl-notice.ok{background:#EDF6F0;border-color:#B8D9C5}
 
 /* STICKY TABS */
 .tabs-sticky{position:sticky;top:52px;z-index:10;background:var(--nv)}
@@ -768,7 +768,7 @@ label{font-size:10px;letter-spacing:.3px}
 </div>
 
 <!-- WELCOME BANNER -->
-<div class="welcome-banner" id="welcomeBanner">
+<div class="welcome-banner hidden" id="welcomeBanner" style="display:none">
   <div class="welcome-icon">👋</div>
   <div class="welcome-text">
     <div class="welcome-title" data-i18n="wb_title">First time here? Start with the Compliance Checker.</div>
@@ -1462,11 +1462,6 @@ function enterApp(){
   document.body.style.background='var(--sf)';
   try{localStorage.setItem('ss_entered','1')}catch(e){}
   window.scrollTo({top:0});
-  setTimeout(function(){
-    if(!document.getElementById('taraPanel').classList.contains('open')){
-      toggleTara();
-    }
-  }, 800);
 }
 function goLanding(){
   document.getElementById('landingView').style.display='';
@@ -3327,8 +3322,8 @@ function renderOV(){
         return `<div class="${cls}">
           <span style="font-size:14px">${icon}</span>
           <div style="flex:1">
-            <div style="font-size:12px;font-weight:600;color:var(--t1)">${dl.doc}</div>
-            <div style="font-size:11px;color:var(--t2)">${dl.note}</div>
+            <div style="font-size:12px;font-weight:600;color:#172B36">${dl.doc}</div>
+            <div style="font-size:11px;color:#3A4F5C">${dl.note}</div>
           </div>
           <div style="font-size:11px;font-weight:600;${labelColor}">${label}</div>
         </div>`;
