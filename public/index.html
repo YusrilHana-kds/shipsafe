@@ -3841,8 +3841,8 @@ window.addTaraMsg=function(text,role,isMd){
 
 // ═══════════ TARA 4th CHIP ═══════════
 const _origSeedTara=window.seedTara;
-window.seedTara=function(){
-  _origSeedTara();
+window.seedTara=function(fromAutoOpen){
+  _origSeedTara(fromAutoOpen);
   // Add 4th chip if not already there
   const cb=document.getElementById('taraChips');
   if(cb&&cb.children.length<4){
