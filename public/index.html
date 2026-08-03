@@ -583,12 +583,6 @@ label{font-size:10px;letter-spacing:.3px}
         <button class="landing-cta" onclick="enterApp()" data-i18n="landing_cta">Run a compliance check — free →</button>
         <span class="landing-note" data-i18n="landing_note">No signup required</span>
       </div>
-      <div style="margin-top:14px">
-        <button onclick="enterApp();setTimeout(function(){toggleGlossary()},900)" style="background:none;border:1px solid rgba(220,180,80,.3);color:rgba(220,180,80,.8);padding:8px 18px;border-radius:6px;font-size:12px;font-family:'DM Sans',system-ui,sans-serif;cursor:pointer;transition:all .15s;letter-spacing:.3px" onmouseover="this.style.borderColor='rgba(220,180,80,.6)';this.style.color='#DCB450'" onmouseout="this.style.borderColor='rgba(220,180,80,.3)';this.style.color='rgba(220,180,80,.8)'">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:5px"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          <span data-i18n="gl_landing_btn">Browse Trade Glossary</span>
-        </button>
-      </div>
       <div class="landing-trust">
         <div class="landing-trust-item"><span class="landing-trust-n">$8,500</span><span class="landing-trust-l" data-i18n="stat1">Avg detention cost</span></div>
         <div class="landing-trust-sep"></div>
@@ -3273,11 +3267,11 @@ function renderOV(){
 
   let alertBanner='';
   if(urgentCount>0){
-    alertBanner=`<div style="background:#F1F6F4;border:1px solid var(--rd);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+    alertBanner=`<div style="background:rgba(224,92,82,.1);border:1px solid rgba(224,92,82,.25);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
       <span style="font-size:16px">🚨</span>
       <div style="flex:1">
-        <div style="font-size:12px;font-weight:600;color:var(--rd)">Urgent: ${urgentCount} document deadline${urgentCount>1?'s':''} approaching!</div>
-        <div style="font-size:11px;color:#3A4F5C">Review the deadlines below to avoid late submissions and customs delays.</div>
+        <div style="font-size:12px;font-weight:600;color:#F08080">Urgent: ${urgentCount} document deadline${urgentCount>1?'s':''} approaching!</div>
+        <div style="font-size:11px;color:rgba(241,246,244,.55)">Review the deadlines below to avoid late submissions and customs delays.</div>
       </div>
     </div>`;
   }
@@ -3323,7 +3317,7 @@ function renderOV(){
           <span style="font-size:14px">${icon}</span>
           <div style="flex:1">
             <div style="font-size:12px;font-weight:600;color:inherit">${dl.doc}</div>
-            <div style="font-size:11px;color:inherit;opacity:.7">${dl.note}</div>
+            <div style="font-size:11px;color:inherit;opacity:.85">${dl.note}</div>
           </div>
           <div style="font-size:11px;font-weight:600;${labelColor}">${label}</div>
         </div>`;
