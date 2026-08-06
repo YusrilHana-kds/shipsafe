@@ -98,9 +98,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 .how{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:nowrap}
 .how-s{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.7);font-size:11px;font-weight:500;white-space:nowrap}
 .how-n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);color:#FFFFFF;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
-.how-ar{color:rgba(255,255,255,.3);font-size:12px;font-weight:400}
+.how-ar{color:rgba(255,255,255,.45);font-size:12px;font-weight:400}
 @media(max-width:960px){.main-card{max-width:100%;margin:0 16px;border-radius:0 0 8px 8px}.welcome-banner{max-width:100%;margin:12px 16px 0}.tabs-bar{max-width:100%;padding:0 16px}}
-@media(max-width:768px){.landing{padding:0 20px}.landing-hero{min-height:calc(100dvh - 52px)}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-split{grid-template-columns:1fr!important;text-align:center!important;gap:32px}.landing-left{text-align:center!important}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-right{display:none!important}.landing{padding:0}.landing-hero{padding:40px 20px 32px}.landing-badge{font-size:8px;padding:4px 8px}.landing-stats-grid{grid-template-columns:1fr!important}.landing-cards-grid{grid-template-columns:1fr!important}.landing-compare-card{grid-template-columns:1fr!important}.landing-steps-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}}
+@media(max-width:768px){.landing{padding:0 20px}.landing-hero{min-height:calc(100dvh - 52px)}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-split{grid-template-columns:1fr!important;text-align:center!important;gap:32px}.landing-left{text-align:center!important}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-right{display:none!important}.landing{padding:0}.landing-hero{padding:40px 20px 32px}.landing-badge{font-size:8px;padding:4px 8px}.landing-stats-grid{grid-template-columns:1fr!important}.landing-cards-grid{grid-template-columns:1fr!important}.landing-compare-card{grid-template-columns:1fr!important}.landing-steps-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}.entry-card{padding:20px!important}}
 @media(max-width:640px){.how{display:none}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 8px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;flex-shrink:0;padding:10px 12px;font-size:11px}.hero-stats{flex-direction:column;gap:8px}.hero-stat{max-width:100%}.route-pill{font-size:11px;padding:5px 12px}.tara-panel.open{width:100vw!important;height:100vh!important;border-radius:0!important;bottom:0!important;right:0!important;left:0!important;top:0!important}.gauge-wrap{flex-direction:column;align-items:center;text-align:center}.ov-summary{flex-wrap:wrap;gap:10px}.ov-summary-stat{min-width:80px}.fg{grid-template-columns:1fr}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:rgba(220,180,80,.05);border:1px solid rgba(220,180,80,.15);border-radius:5px;padding:14px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s}
@@ -353,6 +353,7 @@ button,select,input,label{
 .nstep-b{font-size:12px;color:rgba(241,246,244,.45);line-height:1.5;font-family:'DM Sans',sans-serif}
 .nstep-cta{background:#DCB450;color:#172B36;border:none;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:9px 14px;border-radius:3px;cursor:pointer;white-space:nowrap;transition:background .1s;letter-spacing:.5px;text-transform:uppercase}
 .nstep-cta:hover{background:var(--btn-hv)}
+.entry-card:hover{border-color:rgba(220,180,80,.4)!important;background:rgba(220,180,80,.08)!important}
 
 .sec{background:transparent;border-top:1px solid rgba(255,255,255,.07);padding:24px 0 16px;margin-bottom:0}
 .pg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
@@ -607,11 +608,38 @@ label{font-size:10px;letter-spacing:.3px}
         </div>
         <div class="demo-items" id="demoItems">
         </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:rgba(255,255,255,.3);text-align:center">Sample output · Not real data · Run your own corridor for live results</div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:rgba(255,255,255,.45);text-align:center">Sample output · Not real data · Run your own corridor for live results</div>
       </div>
     </div>
   </div>
   </div><!-- /landing-hero -->
+
+  <div style="max-width:900px;margin:60px auto 0;padding:0 20px;position:relative;z-index:1">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(220,180,80,.55);text-transform:uppercase;margin-bottom:12px">Choose your path</div>
+      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:28px;font-weight:700;line-height:1.2">Two ways to start</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="entry-card" onclick="enterApp()" style="cursor:pointer;border-radius:8px;padding:28px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);transition:border-color .15s">
+        <div style="width:38px;height:38px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:rgba(241,246,244,.7)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;border-radius:2px;margin-bottom:10px;background:rgba(255,255,255,.05);color:rgba(241,246,244,.5);border:1px solid rgba(255,255,255,.08);display:inline-block">FREE · NO SIGNUP</div>
+        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:19px;font-weight:700;color:#F1F6F4;margin-bottom:8px">Quick check</div>
+        <div style="font-size:13px;color:rgba(241,246,244,.6);line-height:1.65;margin-bottom:18px">Pick your commodity and destination. Get a compliance checklist in 30 seconds. No account needed.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;color:rgba(241,246,244,.7);display:flex;align-items:center;gap:6px">CHECK MY CORRIDOR →</div>
+      </div>
+      <div class="entry-card" onclick="enterApp()" style="cursor:pointer;border-radius:8px;padding:28px;border:1px solid rgba(220,180,80,.25);background:rgba(220,180,80,.06);transition:border-color .15s">
+        <div style="width:38px;height:38px;border-radius:6px;background:rgba(220,180,80,.12);border:1px solid rgba(220,180,80,.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#DCB450">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 012-2h4l2 3h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/></svg>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;border-radius:2px;margin-bottom:10px;background:rgba(220,180,80,.12);color:#DCB450;border:1px solid rgba(220,180,80,.2);display:inline-block">GUIDED · SAVE PROGRESS</div>
+        <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:19px;font-weight:700;color:#F1F6F4;margin-bottom:8px">Manage a shipment</div>
+        <div style="font-size:13px;color:rgba(241,246,244,.65);line-height:1.65;margin-bottom:18px">Have a real shipment? We'll guide you through the checklist, document verification, cost, and tracking.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;color:#DCB450;display:flex;align-items:center;gap:6px">START MY SHIPMENT →</div>
+      </div>
+    </div>
+  </div>
 
   <div class="landing-problem" style="max-width:800px;margin:80px auto 0;text-align:center;padding:0 20px 80px;position:relative;z-index:1">
     <div style="font-size:11px;font-weight:600;color:rgba(220,180,80,.6);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px" data-i18n="lp_label">Why this matters</div>
@@ -633,7 +661,7 @@ label{font-size:10px;letter-spacing:.3px}
     </div>
     <div style="margin-top:40px">
       <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 36px" data-i18n="lp_cta2">Run a free compliance check →</button>
-      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)" data-i18n="lp_cta2_sub">No signup required. Results in under 30 seconds.</div>
+      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.45)" data-i18n="lp_cta2_sub">No signup required. Results in under 30 seconds.</div>
     </div>
   </div>
 
@@ -646,32 +674,32 @@ label{font-size:10px;letter-spacing:.3px}
     </div>
     <div class="landing-cards-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="font-size:22px;margin-bottom:12px">📋</div>
+        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c1_t">Compliance checklist</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c1_d">Pre-shipment, during shipment, and payment — every step with the exact regulation code, agency, and deadline. Not generic advice.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="font-size:22px;margin-bottom:12px">🔍</div>
+        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c2_t">Document cross-checker</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c2_d">Upload your Invoice, Packing List, and Bill of Lading. AI audits every field against UCP 600 and ISBP 745 — catches what banks reject.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="font-size:22px;margin-bottom:12px">💰</div>
+        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c3_t">Cost calculator</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c3_d">Landed cost broken down by Incoterms — freight, insurance, lab testing, certificates, bank charges. Real numbers, not estimates.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="font-size:22px;margin-bottom:12px">🏦</div>
+        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c4_t">Payment risk guidance</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c4_d">LC, TT, DP, DA — which payment method is safe for your buyer's country. Corridor-specific, not textbook theory.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="font-size:22px;margin-bottom:12px">⚠️</div>
+        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c5_t">Blind spot alerts</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c5_d">Non-obvious risks that catch experienced exporters off guard — aflatoxin increases during transit, VGM deadlines, forex controls.</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="font-size:22px;margin-bottom:12px">🌐</div>
+        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
         <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c6_t">Any corridor, any commodity</div>
         <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c6_d">Cocoa, coffee, spices, palm oil — to US, EU, Japan, UAE, China, and beyond. Web-searched from official sources every time.</div>
       </div>
@@ -732,7 +760,7 @@ label{font-size:10px;letter-spacing:.3px}
       </div>
     </div>
     <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 40px" data-i18n="landing_cta">Run a compliance check — free →</button>
-    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)" data-i18n="ls_social">Used by food exporters shipping to 20+ countries across 5 continents.</div>
+    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.45)" data-i18n="ls_social">Used by food exporters shipping to 20+ countries across 5 continents.</div>
   </div>
 
 </section>
@@ -834,7 +862,7 @@ label{font-size:10px;letter-spacing:.3px}
       </div>
       <div id="ckConfirmBar" style="display:none;background:var(--ambg);border:1.5px solid var(--ambd);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;display:none">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="font-size:18px">⚠️</div>
+          <div style="color:var(--am)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div style="flex:1">
             <div style="font-size:12px;font-weight:500;color:var(--am)">Start a new compliance check?</div>
             <div style="font-size:11px;color:var(--t2)">Your current progress will be saved to history.</div>
@@ -955,7 +983,7 @@ label{font-size:10px;letter-spacing:.3px}
     <!-- MANUAL CALCULATE MODE -->
     <div id="costManualPanel" style="display:none">
       <div style="background:var(--hover);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px">
-        <div style="font-size:16px">📝</div>
+        <div style="color:var(--t2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
         <div>
           <div style="font-size:11px;font-weight:500;color:var(--t1);margin-bottom:2px">Build your own cost breakdown</div>
           <div style="font-size:11px;color:var(--t2)">Add each cost item and amount. The total updates automatically.</div>
@@ -1052,14 +1080,14 @@ label{font-size:10px;letter-spacing:.3px}
 
     <!-- Expected documents checklist -->
     <div class="expected-docs" id="expectedDocs" style="display:none">
-      <div class="expected-docs-title" data-i18n="cc_expected_title">📋 Expected Documents for This Shipment</div>
+      <div class="expected-docs-title" data-i18n="cc_expected_title">Expected Documents for This Shipment</div>
       <div id="expectedDocsList"></div>
     </div>
 
     <!-- Upload zone -->
     <div id="cc-upload">
       <div class="upload-zone" id="ccDropZone" onclick="document.getElementById('ccFileInput').click()" ondragover="ccDragOver(event)" ondrop="ccDrop(event)">
-        <div style="font-size:28px;margin-bottom:8px">📂</div>
+        <div style="margin-bottom:8px;color:var(--t2)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
         <div style="font-size:13px;font-weight:500;color:var(--t1);margin-bottom:3px" data-i18n="cc_upload_title">Upload Trade Documents</div>
         <div style="font-size:11px;color:var(--t3);margin-bottom:12px" data-i18n="cc_upload_hint">Invoice, Packing List, Bill of Lading, COO, etc. — PDF or images. PDF auto-converted to images for fast processing.</div>
         <button class="btn" onclick="event.stopPropagation();document.getElementById('ccFileInput').click()">
@@ -1122,7 +1150,7 @@ label{font-size:10px;letter-spacing:.3px}
   <div class="tara-resize tara-resize-se" data-dir="se"></div>
   <div class="tara-resize tara-resize-sw" data-dir="sw"></div>
   <div class="tara-hd">
-    <div class="tara-av">💬</div>
+    <div class="tara-av" style="display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
     <div style="flex:1">
       <div class="tara-hd-nm">Tara <span class="tara-online"><span class="odot"></span><span data-i18n="tara_online">Online</span></span></div>
       <div class="tara-hd-sub" data-i18n="tara_role">Trade Compliance Assistant</div>
@@ -1209,7 +1237,7 @@ const T={
     hs_regulations:'Regulations checked',hs_corridors:'Trade corridors',hs_analysis:'AI analysis time',
     ck_readiness:'Shipment Readiness',
     ck_run_btn_full:'Check My Route — Free',
-    cc_expected_title:'📋 Expected Documents for This Shipment',
+    cc_expected_title:'Expected Documents for This Shipment',
     tara_chip4:'What\'s the cost to ship to US?',
     lang_instruction:'',
     lp_label:'Why this matters',lp_h2:'Your shipment is ready. Your documents are not.',lp_body:'Most food exporters don\'t lose shipments because their product is bad. They lose them because one document is wrong, one weight figure doesn\'t match, or one FDA rule wasn\'t followed. ShipSafe catches these before customs does.',
@@ -1268,7 +1296,7 @@ const T={
     note_saving:'Menyimpan...',
     note_saved:'Tersimpan',
     cancel_btn:'Batal',
-    sec_blind_spots:'⚠ Peringatan Risiko Tersembunyi',
+    sec_blind_spots:'Peringatan Risiko Tersembunyi',
     sec_payment:'Panduan Metode Pembayaran',
     sec_cost_hidden:'Rincian Biaya Tersembunyi',
     sec_cost_note:'Estimasi kasar. Minta penawaran resmi dari forwarder dan bank Anda.',
@@ -1287,7 +1315,7 @@ const T={
     hs_regulations:'Regulasi dicek',hs_corridors:'Koridor perdagangan',hs_analysis:'Waktu analisis AI',
     ck_readiness:'Kesiapan Pengiriman',
     ck_run_btn_full:'Cek Rute Saya — Gratis',
-    cc_expected_title:'📋 Dokumen yang Dibutuhkan',
+    cc_expected_title:'Dokumen yang Dibutuhkan',
     tara_chip4:'Berapa ongkos kirim ke AS?',
     lp_label:'Kenapa ini penting',lp_h2:'Barang kamu siap. Dokumen kamu belum.',lp_body:'Kebanyakan eksportir pangan kehilangan kiriman bukan karena produknya jelek. Tapi karena satu dokumen salah, satu angka berat tidak cocok, atau satu aturan FDA tidak diikuti. ShipSafe menangkap ini sebelum bea cukai.',
     lp_stat1_d:'Rata-rata biaya satu kali penahanan FDA. Belum termasuk buyer yang hilang.',lp_stat2_d:'Rata-rata ditahan di pelabuhan AS. Buyer kamu menunggu. Deadline LC kamu tidak.',lp_stat3_d:'Kegagalan bea cukai percobaan pertama untuk kiriman pangan di seluruh dunia.',
@@ -1355,7 +1383,7 @@ ATURAN BAHASA:
     note_saving:'Guardando...',
     note_saved:'Guardado',
     cancel_btn:'Cancelar',
-    sec_blind_spots:'⚠ Alertas de Riesgos Ocultos',
+    sec_blind_spots:'Alertas de Riesgos Ocultos',
     sec_payment:'Guía de Métodos de Pago',
     sec_cost_hidden:'Desglose de Costos Ocultos',
     sec_cost_note:'Estimaciones aproximadas. Solicite cotizaciones formales a su agente y banco.',
@@ -1374,7 +1402,7 @@ ATURAN BAHASA:
     hs_regulations:'Regulaciones verificadas',hs_corridors:'Corredores comerciales',hs_analysis:'Tiempo de análisis IA',
     ck_readiness:'Preparación del Envío',
     ck_run_btn_full:'Verificar Mi Ruta — Gratis',
-    cc_expected_title:'📋 Documentos Esperados',
+    cc_expected_title:'Documentos Esperados',
     tara_chip4:'¿Cuánto cuesta enviar a EE.UU.?',
     lp_label:'Por qué importa',lp_h2:'Tu envío está listo. Tus documentos no.',lp_body:'La mayoría de los exportadores de alimentos no pierden envíos porque su producto sea malo. Los pierden porque un documento está mal, una cifra de peso no coincide o una regla de la FDA no se cumplió. ShipSafe detecta esto antes que la aduana.',
     lp_stat1_d:'Costo promedio de una retención FDA. Sin contar al comprador que perdiste.',lp_stat2_d:'Retención promedio en puerto de EE.UU. Tu comprador espera. Tu plazo LC no.',lp_stat3_d:'Fallos aduaneros en el primer intento para envíos de alimentos a nivel mundial.',
@@ -1527,8 +1555,8 @@ function updateRoutePill(){
   const dest=document.getElementById('dest').value;
   const inco=document.getElementById('inco').value;
   if(commodity&&orig&&dest&&inco){
-    const oFlag=COUNTRY_FLAGS[orig]||'📦';
-    const dFlag=COUNTRY_FLAGS[dest]||'📦';
+    const oFlag=COUNTRY_FLAGS[orig]||'•';
+    const dFlag=COUNTRY_FLAGS[dest]||'•';
     pill.innerHTML=`${oFlag} ${orig} <span class="rp-sep">→</span> ${dFlag} ${dest} <span class="rp-sep">·</span> ${commodity} <span class="rp-sep">·</span> ${inco}`;
     pill.classList.add('visible');
     document.getElementById('goBtn').classList.add('pulse');
@@ -1584,7 +1612,7 @@ function updateExpectedDocs(){
   box.style.display='';
   list.innerHTML=[...docs].map(d=>{
     const uploaded=ccFiles.some(f=>f.name.toLowerCase().includes(d.toLowerCase().split(' ')[0].toLowerCase()));
-    return `<div class="expected-doc${uploaded?' uploaded':''}"><span class="expected-doc-icon">${uploaded?'✅':'☐'}</span>${d}</div>`;
+    return `<div class="expected-doc${uploaded?' uploaded':''}"><span class="expected-doc-icon">${uploaded?'<span style="color:var(--gn)">&#10003;</span>':'&#9744;'}</span>${d}</div>`;
   }).join('');
 }
 // Update expected docs when direction/incoterms change
@@ -2092,8 +2120,8 @@ function runCheck(){
 function render(data,commodity,origin,destination,incoterms){
   document.getElementById('ck-input').style.display='none';
   document.getElementById('ck-results').style.display='';
-  document.getElementById('routeBar').innerHTML=`<span class="rt">📦 <b>${commodity}</b></span><span class="ra">→</span><span class="rt">🏭 <b>${origin}</b></span><span class="ra">→</span><span class="rt">🚢 <b>${destination}</b></span><span class="ra">·</span><span class="rt">📋 <b>${incoterms}</b></span>`;
-  document.getElementById('aiDisc').innerHTML=`<div class="ai-disclaimer">⚠️ This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div><div class="ai-disc"><div class="ai-disc-ic">ℹ</div><div><div class="ai-disc-t">${T[currentLang]?.ai_disc_t||'Auto-Generated — Needs Verification'}</div><div class="ai-disc-b">${T[currentLang]?.ai_disc_b||'These recommendations are auto-generated using web search data. Cross-check with a licensed customs broker before shipping.'}</div></div></div>`;
+  document.getElementById('routeBar').innerHTML=`<span class="rt"><b>${commodity}</b></span><span class="ra">→</span><span class="rt"><b>${origin}</b></span><span class="ra">→</span><span class="rt"><b>${destination}</b></span><span class="ra">·</span><span class="rt"><b>${incoterms}</b></span>`;
+  document.getElementById('aiDisc').innerHTML=`<div class="ai-disclaimer">This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div><div class="ai-disc"><div class="ai-disc-ic">ℹ</div><div><div class="ai-disc-t">${T[currentLang]?.ai_disc_t||'Auto-Generated — Needs Verification'}</div><div class="ai-disc-b">${T[currentLang]?.ai_disc_b||'These recommendations are auto-generated using web search data. Cross-check with a licensed customs broker before shipping.'}</div></div></div>`;
   tot=0;chk=0;
 
   // Save current corridor key for save/restore operations
@@ -2108,13 +2136,13 @@ function render(data,commodity,origin,destination,incoterms){
   const hasLowConf=data.phases?.some(p=>p.items?.some(it=>it.confidence==='low'));
   const unvNote=hasLowConf?'<div class="ci-unv-note">Items marked <b>Unverified</b> could not be confirmed from official government sources. Double-check these with your freight forwarder.</div>':'';
 
-  const icons={pre_shipment:{c:'pre',e:'📋'},shipment:{c:'ship',e:'🚢'},payment:{c:'pay',e:'💳'}};
+  const icons={pre_shipment:{c:'pre',e:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>'},shipment:{c:'ship',e:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l1.5-6h15L21 18M6 12V8h12v4M9 8V5h6v3"/><path d="M2 21h20"/></svg>'},payment:{c:'pay',e:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>'}};
   const box=document.getElementById('phBox');box.innerHTML=unvNote;
   data.phases.forEach((p,pi)=>{const ic=icons[p.id]||icons.pre_shipment;tot+=p.items.length;
     const el=document.createElement('div');el.className='ph'+(pi===0?' open':'');
     const ofWord=T[currentLang]?.sec_completed_of||'of';
     const doneWord=T[currentLang]?.sec_completed_done||'completed';
-    el.innerHTML=`<div class="ph-hd" onclick="this.parentElement.classList.toggle('open')"><div class="ph-ic ${ic.c}" style="font-size:16px">${ic.e}</div><div class="ph-nf"><div class="ph-t">${p.title}</div><div class="ph-ct"><span class="pdc">0</span> ${ofWord} ${p.items.length} ${doneWord}</div></div><div class="ph-ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="ph-bd"><div class="ph-it">${p.items.map((it,ii)=>`<div class="ci" onclick="tgl(this)" data-id="${p.id}:${ii}" data-task="${(it.task||'').replace(/"/g,'&quot;')}"><div class="cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="ci-t">${it.task}${it.confidence==='low'?'<span class="ci-conf-low">Unverified</span>':''}</div><div class="ci-d">${it.detail}</div><div class="ci-fb"><button class="ci-fb-btn" data-dir="up" onclick="event.stopPropagation();fbRate(this,'up')">👍</button><button class="ci-fb-btn" data-dir="down" onclick="event.stopPropagation();fbRate(this,'down')">👎</button></div></div></div>`).join('')}</div></div>`;
+    el.innerHTML=`<div class="ph-hd" onclick="this.parentElement.classList.toggle('open')"><div class="ph-ic ${ic.c}" style="font-size:16px">${ic.e}</div><div class="ph-nf"><div class="ph-t">${p.title}</div><div class="ph-ct"><span class="pdc">0</span> ${ofWord} ${p.items.length} ${doneWord}</div></div><div class="ph-ch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="ph-bd"><div class="ph-it">${p.items.map((it,ii)=>`<div class="ci" onclick="tgl(this)" data-id="${p.id}:${ii}" data-task="${(it.task||'').replace(/"/g,'&quot;')}"><div class="cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="ci-t">${it.task}${it.confidence==='low'?'<span class="ci-conf-low">Unverified</span>':''}</div><div class="ci-d">${it.detail}</div><div class="ci-fb"><button class="ci-fb-btn" data-dir="up" onclick="event.stopPropagation();fbRate(this,'up')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg></button><button class="ci-fb-btn" data-dir="down" onclick="event.stopPropagation();fbRate(this,'down')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z"/><path d="M17 2h3a2 2 0 012 2v7a2 2 0 01-2 2h-3"/></svg></button></div></div></div>`).join('')}</div></div>`;
     box.appendChild(el)});
 
   // Restore saved checked state
@@ -2129,7 +2157,7 @@ function render(data,commodity,origin,destination,incoterms){
   fbRestore(box,ckKey);
   fbRenderSummary(ckKey);
 
-  document.getElementById('alBox').innerHTML=data.blind_spots?.length?`<div class="sh">Blind Spot Alerts</div>${data.blind_spots.map(a=>`<div class="al"><div class="al-ic">⚠</div><div><div class="al-t">${a.title||''}</div><div class="al-tx">${a.description||a.body||a.text||a.detail||''}</div></div></div>`).join('')}`:'';
+  document.getElementById('alBox').innerHTML=data.blind_spots?.length?`<div class="sh">Blind Spot Alerts</div>${data.blind_spots.map(a=>`<div class="al"><div class="al-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><div class="al-t">${a.title||''}</div><div class="al-tx">${a.description||a.body||a.text||a.detail||''}</div></div></div>`).join('')}`:'';
 
   const pb=document.getElementById('payBox');
   if(data.payment_guidance?.length){
@@ -2332,8 +2360,8 @@ function fbRenderSummary(ckKey){
     </div>
     <div class="fb-summary-bd">
       <div class="fb-summary-stats">
-        <span style="color:var(--gn)">👍 ${ups} helpful</span>
-        <span style="color:var(--rd)">👎 ${downs} not helpful</span>
+        <span style="color:var(--gn)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:3px"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>${ups} helpful</span>
+        <span style="color:var(--rd)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:3px"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z"/><path d="M17 2h3a2 2 0 012 2v7a2 2 0 01-2 2h-3"/></svg>${downs} not helpful</span>
       </div>
       <button class="fb-export-btn" onclick="fbExport()">Export Feedback (JSON)</button>
     </div>
@@ -2681,7 +2709,7 @@ function ccFilesAdded(fileList){
             };
             reader2.readAsDataURL(f);
           } else {
-            alert(`⚠️ Gagal konversi ${f.name}.\n\nCoba screenshot halaman pentingnya saja (JPG/PNG).`);
+            alert(`Gagal konversi ${f.name}.\n\nCoba screenshot halaman pentingnya saja (JPG/PNG).`);
           }
         }
       };
@@ -2738,7 +2766,7 @@ function ccRenderFileList(){
   }).join('');
   if(ccFiles.length>0){
     rows.innerHTML+=`<div style="font-size:11px;color:${totalWarn?'var(--rd)':'var(--t3)'};margin-top:6px;text-align:right">
-      ${ccFiles.length} file${ccFiles.length>1?'s':''} · ~${totalMB} MB total${totalWarn?' ⚠️ Large payload — may be slow':''}
+      ${ccFiles.length} file${ccFiles.length>1?'s':''} · ~${totalMB} MB total${totalWarn?' — Large payload, may be slow':''}
     </div>`;
   }
 }
@@ -2839,7 +2867,7 @@ async function runCC(){
   const totalB64=ccFiles.reduce((s,f)=>s+f.b64.length,0);
   const totalPayload=Math.round(totalB64*3/4);
   if(totalPayload>4*1024*1024){
-    alert(`⚠️ Total dokumen terlalu besar (~${(totalPayload/1024/1024).toFixed(1)} MB).\n\nMaks ~4 MB total.\n\nCoba hapus beberapa halaman yang tidak penting dengan tombol ✕.`);
+    alert(`Total dokumen terlalu besar (~${(totalPayload/1024/1024).toFixed(1)} MB).\n\nMaks ~4 MB total.\n\nCoba hapus beberapa halaman yang tidak penting dengan tombol ✕.`);
     return;
   }
   const btn=document.getElementById('ccBtn');
@@ -3055,13 +3083,13 @@ function renderCC(data){
   // Summary banner
   const bannerBg=totalCritical?'var(--rdbg)':totalWarning?'var(--ambg)':'var(--gnbg)';
   const bannerBd=totalCritical?'#E8A0A0':totalWarning?'var(--ambd)':'#A3DFB8';
-  const bannerIcon=totalCritical?'🚨':totalWarning?'⚠️':'✅';
+  const bannerIcon=totalCritical?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>':totalWarning?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="8 12 11 15 16 9"/></svg>';
   const bannerTitle=totalCritical?`${totalCritical} ${T[currentLang]?.cc_critical_found||('Critical Issue'+(totalCritical>1?'s':'')+' Found')}`:totalWarning?`${totalWarning} ${T[currentLang]?.cc_warning_found||('Warning'+(totalWarning>1?'s':'')+' Found')}`:(T[currentLang]?.cc_all_passed||'All Checks Passed');
   const bannerColor=totalCritical?'var(--rd)':totalWarning?'var(--am)':'var(--gn)';
   const verdict=data.summary?.verdict||'';
 
   let html=`
-    <div class="ai-disclaimer">⚠️ This audit is AI-generated based on document images. It does not replace professional document examination by your bank or customs broker.</div>
+    <div class="ai-disclaimer">This audit is AI-generated based on document images. It does not replace professional document examination by your bank or customs broker.</div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <div><h2 style="font-family:'Libre Baskerville',Georgia,serif;font-size:18px;color:var(--t1)">${T[currentLang]?.cc_results_title||'Cross-Check Results'}</h2>
       <p style="font-size:12px;color:var(--t3)">${(data.summary?.docs||ccFiles.map(f=>f.name)).join(' · ')}${data.summary?.commodity?' · '+data.summary.commodity:''}</p></div>
@@ -3109,7 +3137,7 @@ function renderCC(data){
         </div>
         <div class="finding-bd">
           <div style="background:var(--sf);border-radius:var(--rs);padding:8px 10px;font-size:12px;color:var(--t2);margin-bottom:6px">${doc.reason}</div>
-          ${doc.how_to_obtain?`<div class="suggestion">📋 ${doc.how_to_obtain}</div>`:''}
+          ${doc.how_to_obtain?`<div class="suggestion">${doc.how_to_obtain}</div>`:''}
         </div>
       </div>`;
     });
@@ -3120,7 +3148,7 @@ function renderCC(data){
     html+=`<div class="pass-list">
       <div style="font-size:13px;font-weight:500;color:var(--t3);margin-bottom:8px">${T[currentLang]?.cc_checks_passed||'Checks Passed'}</div>
       <div style="font-size:13px;color:var(--t2);line-height:2">
-        ${data.passed.map(p=>`✅ <b>${p.field||p.category}</b>${p.note?' — '+p.note:''}`).join('<br>')}
+        ${data.passed.map(p=>`<span style="color:var(--gn)">&#10003;</span> <b>${p.field||p.category}</b>${p.note?' — '+p.note:''}`).join('<br>')}
       </div>
     </div>`;
   }
@@ -3268,7 +3296,7 @@ function renderOV(){
   let alertBanner='';
   if(urgentCount>0){
     alertBanner=`<div style="background:rgba(224,92,82,.1);border:1px solid rgba(224,92,82,.25);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
-      <span style="font-size:16px">🚨</span>
+      <span style="color:var(--rd)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
       <div style="flex:1">
         <div style="font-size:12px;font-weight:600;color:#F08080">Urgent: ${urgentCount} document deadline${urgentCount>1?'s':''} approaching!</div>
         <div style="font-size:11px;color:rgba(241,246,244,.55)">Review the deadlines below to avoid late submissions and customs delays.</div>
@@ -3300,7 +3328,7 @@ function renderOV(){
     }).join('');
 
     const docsHTML=s.docs.map(d=>`<div style="display:flex;align-items:center;gap:6px;padding:4px 0">
-      <span style="font-size:12px">${d.ok?'✅':'❌'}</span>
+      <span style="font-size:12px;color:${d.ok?'var(--gn)':'var(--rd)'}">${d.ok?'&#10003;':'&#10007;'}</span>
       <span style="font-size:11px;${d.ok?'color:var(--t2)':'color:var(--rd);font-weight:600'}">${d.name}</span>
       ${d.note?'<span style="font-size:10px;color:var(--t3);margin-left:auto">'+d.note+'</span>':''}
     </div>`).join('');
@@ -3310,7 +3338,7 @@ function renderOV(){
       const items=s.deadlines.map(dl=>{
         const daysLeft=Math.ceil((new Date(dl.deadline)-new Date())/86400000);
         const cls=daysLeft<0?'dl-notice':daysLeft<=3?'dl-notice warn':daysLeft<=7?'dl-notice warn':'dl-notice ok';
-        const icon=daysLeft<0?'🚨':daysLeft<=3?'⚠️':'📅';
+        const icon=daysLeft<0?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>':daysLeft<=3?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
         const label=daysLeft<0?`OVERDUE by ${Math.abs(daysLeft)} days`:daysLeft===0?'DUE TODAY':`${daysLeft} days left`;
         const labelColor=daysLeft<0?'color:var(--rd)':daysLeft<=3?'color:var(--am)':'color:var(--gn)';
         return `<div class="${cls}">
@@ -3323,7 +3351,7 @@ function renderOV(){
         </div>`;
       }).join('');
       return `<div style="margin-bottom:12px">
-        <div style="font-size:11px;font-weight:500;color:var(--t3);margin-bottom:6px">📋 Document Deadlines</div>
+        <div style="font-size:11px;font-weight:500;color:var(--t3);margin-bottom:6px">Document Deadlines</div>
         ${items}
       </div>`;
     })():'';
@@ -3396,7 +3424,7 @@ function renderOV(){
     </div>`;
   }).join('');
 
-  if(!ships.length) box.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📦</div><div class="empty-state-text">${ovFilterMode==='all'?'No shipments yet. Run a compliance check to get started!':'No shipments match this filter.'}</div>${ovFilterMode==='all'?'<button class="btn" style="background:var(--gn)" onclick="switchTab(\'checker\')">Start Compliance Check</button>':''}</div>`;
+  if(!ships.length) box.innerHTML=`<div class="empty-state"><div class="empty-state-icon" style="color:var(--t3)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="empty-state-text">${ovFilterMode==='all'?'No shipments yet. Run a compliance check to get started!':'No shipments match this filter.'}</div>${ovFilterMode==='all'?'<button class="btn" style="background:var(--gn)" onclick="switchTab(\'checker\')">Start Compliance Check</button>':''}</div>`;
 }
 
 function ovUpdateTimeline(shipId,stepIdx){
@@ -3588,7 +3616,7 @@ function addTaraMsg(text,role,isMd){
   const box=document.getElementById('taraMsgs');
   const row=document.createElement('div');
   row.className='tara-row '+(role==='user'?'user':'bot');
-  const av=role==='user'?'':`<div class="tara-av">💬</div>`;
+  const av=role==='user'?'':`<div class="tara-av" style="display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>`;
   const body=isMd?taraMd(text):text;
   row.innerHTML=`${av}<div class="tara-msg ${role==='user'?'user':'bot'}">${body}</div>`;
   box.appendChild(row);
