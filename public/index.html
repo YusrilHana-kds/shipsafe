@@ -538,6 +538,8 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .lang-btn{border:none;background:transparent;color:rgba(255,255,255,.5);font-size:11px;font-weight:600;font-family:inherit;padding:3px 8px;border-radius:3px;cursor:pointer;transition:all .1s}
 .lang-btn:hover{color:#FFFFFF}
 .lang-btn.active{background:rgba(255,255,255,.15);color:#FFFFFF;box-shadow:none}
+.corridor-banner{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(220,180,80,.6);background:rgba(220,180,80,.06);border:1px solid rgba(220,180,80,.15);border-radius:4px;padding:8px 12px;margin-bottom:14px;display:none;align-items:center;gap:6px;letter-spacing:.3px}
+.corridor-banner.show{display:flex}
 
 @media(max-width:900px){#appView.gl-open{margin-right:0}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr 1fr 1fr;gap:8px}}
 @media(max-width:800px){.landing-h1{font-size:36px}.landing-sub{font-size:15px}.landing-btns{flex-wrap:wrap}.landing-split{gap:32px}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}}
@@ -911,6 +913,7 @@ label{font-size:10px;letter-spacing:.3px}
   <div class="tab-panel" id="tp-cost">
     <h2 style="font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:6px">Cost Calculator</h2>
     <p style="font-size:15px;color:var(--t3);margin-bottom:14px">Estimate your total shipment cost — freight, insurance, customs, certificates, and hidden fees.</p>
+    <div class="corridor-banner"></div>
 
     <!-- Mode toggle -->
     <div style="display:flex;gap:4px;margin-bottom:16px;background:var(--sf);border-radius:8px;padding:3px;border:1px solid var(--bdl)">
@@ -1035,6 +1038,7 @@ label{font-size:10px;letter-spacing:.3px}
   <div class="tab-panel" id="tp-crosscheck">
     <h2 style="font-family:'DM Sans',system-ui,sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:6px" data-i18n="cc_title">Document Checker</h2>
     <p style="font-size:15px;color:var(--t3);margin-bottom:14px" data-i18n="cc_subtitle">Upload your trade documents to cross-check everything and catch issues before customs does.</p>
+    <div class="corridor-banner"></div>
 
     <!-- Trade context selectors -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
@@ -1196,6 +1200,7 @@ label{font-size:10px;letter-spacing:.3px}
 <script>
 // ═══════════ MULTILINGUAL ═══════════
 let currentLang='en';
+let sharedCorridor={commodity:'',origin:'',destination:'',incoterms:'',hs:''};
 
 const T={
   en:{
@@ -1723,6 +1728,7 @@ function switchTab(id){
   document.getElementById('tp-'+id).classList.add('active');
   const idx=TAB_IDS.indexOf(id);
   if(idx>=0) document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  applyCorridor();
 }
 
 // CHECKER
@@ -2080,6 +2086,12 @@ Return ONLY the JSON. Nothing else.`;
 function runCheck(){
   const eb=document.getElementById('errBox');eb.classList.remove('on');eb.style.display='none';
   const {commodity:_com,hsCode:_hs}=getSelectedCommodity();
+  sharedCorridor.commodity=_com||'';
+  sharedCorridor.origin=document.getElementById('orig').value||'';
+  sharedCorridor.destination=document.getElementById('dest').value||'';
+  sharedCorridor.incoterms=document.getElementById('inco').value||'';
+  sharedCorridor.hs=_hs||'';
+  applyCorridor();
   const commodity=_com;const origin=document.getElementById('orig').value;
   const destination=document.getElementById('dest').value;const incoterms=document.getElementById('inco').value;
   if(!commodity||!origin||!destination||!incoterms){eb.textContent='Please fill in all four fields.';eb.style.display='block';return}
@@ -3914,6 +3926,35 @@ window.ccRenderFileList=function(){
   _origCcRenderFileList();
   updateExpectedDocs();
 };
+
+function applyCorridor(){
+  if(!sharedCorridor.commodity&&!sharedCorridor.destination) return;
+  // Tab 2 — Doc Cross-Checker
+  const ccInco=document.getElementById('ccIncoterms');
+  if(ccInco&&sharedCorridor.incoterms){for(let o of ccInco.options){if(o.value===sharedCorridor.incoterms){ccInco.value=o.value;break}}}
+  const ccDir=document.getElementById('ccDirection');
+  if(ccDir&&sharedCorridor.origin){for(let o of ccDir.options){if(o.text.toLowerCase().includes('export')){ccDir.value=o.value;break}}}
+  // Tab 3 — Cost Calculator
+  const costCom=document.getElementById('costCom');
+  if(costCom&&sharedCorridor.commodity){
+    let matched=false;
+    for(let o of costCom.options){if(o.value.toLowerCase()===sharedCorridor.commodity.toLowerCase()){costCom.value=o.value;matched=true;break}}
+    if(!matched){const custIn=document.getElementById('costComCust');if(custIn){costCom.value='other';costCom.dispatchEvent(new Event('change'));custIn.value=sharedCorridor.commodity}}
+  }
+  const costOrig=document.getElementById('costOrig');
+  if(costOrig&&sharedCorridor.origin){for(let o of costOrig.options){if(o.value===sharedCorridor.origin){costOrig.value=o.value;break}}}
+  const costDest=document.getElementById('costDest');
+  if(costDest&&sharedCorridor.destination){for(let o of costDest.options){if(o.value===sharedCorridor.destination){costDest.value=o.value;break}}}
+  const costInco=document.getElementById('costInco');
+  if(costInco&&sharedCorridor.incoterms){for(let o of costInco.options){if(o.value===sharedCorridor.incoterms){costInco.value=o.value;break}}}
+  // Corridor banners
+  document.querySelectorAll('.corridor-banner').forEach(b=>{
+    if(sharedCorridor.commodity&&sharedCorridor.destination){
+      b.textContent='Corridor: '+sharedCorridor.commodity+' \u2192 '+sharedCorridor.destination+' \u00b7 '+sharedCorridor.incoterms;
+      b.classList.add('show');
+    }
+  });
+}
 </script>
 </body>
 </html>
