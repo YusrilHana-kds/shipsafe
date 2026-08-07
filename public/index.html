@@ -556,6 +556,13 @@ label{font-size:10px;letter-spacing:.3px}
 .nudge-desc{font-size:12px;color:rgba(241,246,244,.45);font-family:'DM Sans',sans-serif;line-height:1.5}
 .nudge-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;color:#172B36;background:#DCB450;padding:10px 16px;border-radius:3px;border:none;cursor:pointer;white-space:nowrap;transition:background .15s;text-transform:uppercase}
 .nudge-btn:hover{background:#E8C96A}
+.tab-btn.step-done .tab-step{background:rgba(123,200,164,.15);border-color:rgba(123,200,164,.3);color:#7BC8A4}
+.tab-btn.step-done{color:rgba(241,246,244,.5)}
+.tab-btn.step-done [data-i18n]{text-decoration:line-through;text-decoration-color:rgba(241,246,244,.2)}
+.tab-btn.step-active .tab-step{background:#DCB450;border-color:#DCB450;color:#172B36}
+.tab-btn.step-active{color:#F1F6F4}
+.tab-btn.step-upcoming .tab-step{background:transparent;border-color:rgba(255,255,255,.1);color:rgba(241,246,244,.25)}
+.tab-btn.step-upcoming{color:rgba(241,246,244,.3)}
 </style>
 </head>
 <body>
@@ -1208,6 +1215,7 @@ label{font-size:10px;letter-spacing:.3px}
 // ═══════════ MULTILINGUAL ═══════════
 let currentLang='en';
 let sharedCorridor={commodity:'',origin:'',destination:'',incoterms:'',hs:''};
+let stepProgress={1:false,2:false,3:false,4:false};
 
 const T={
   en:{
@@ -1736,6 +1744,7 @@ function switchTab(id){
   const idx=TAB_IDS.indexOf(id);
   if(idx>=0) document.querySelectorAll('.tab-btn')[idx].classList.add('active');
   applyCorridor();
+  updateTabProgress();
 }
 
 // CHECKER
@@ -2224,6 +2233,8 @@ function render(data,commodity,origin,destination,incoterms){
   const nudgeHTML=`<div class="nudge"><div class="nudge-left"><div class="nudge-step">Next step \u2014 2 of 4</div><div class="nudge-title">Cross-check your documents</div><div class="nudge-desc">Upload your Invoice, Packing List, and B/L to catch discrepancies before your bank does.</div></div><button class="nudge-btn" onclick="switchTab('crosscheck');window.scrollTo({top:0,behavior:'smooth'})">Verify docs \u2192</button></div>`;
   const ckWrap=document.getElementById('ck-results');
   if(ckWrap){ckWrap.insertAdjacentHTML('beforeend',nudgeHTML);}
+  stepProgress[1]=true;
+  updateTabProgress();
 
   document.querySelector('.main-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -2569,6 +2580,8 @@ function renderCostCalc(data){
 
   html+=`<div class="ct-n" style="margin-top:10px">${currentLang==='id'?'Estimasi AI berdasarkan data pasar. Minta penawaran resmi dari freight forwarder dan bank Anda.':currentLang==='es'?'Estimaciones de IA basadas en datos de mercado. Solicite cotizaciones formales a su agente y banco.':'AI estimates based on market data. Get firm quotes from your freight forwarder and bank.'}</div>`;
   box.innerHTML=html;
+  stepProgress[3]=true;
+  updateTabProgress();
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -3215,6 +3228,8 @@ function renderCC(data){
   html+=`<div class="nudge"><div class="nudge-left"><div class="nudge-step">Next step \u2014 3 of 4</div><div class="nudge-title">Calculate your landed cost</div><div class="nudge-desc">See the full cost breakdown for this shipment \u2014 freight, insurance, certificates, and bank charges.</div></div><button class="nudge-btn" onclick="switchTab('cost');window.scrollTo({top:0,behavior:'smooth'})">Calculate cost \u2192</button></div>`;
 
   box.innerHTML=html;
+  stepProgress[2]=true;
+  updateTabProgress();
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -3968,6 +3983,24 @@ function applyCorridor(){
     if(sharedCorridor.commodity&&sharedCorridor.destination){
       b.textContent='Corridor: '+sharedCorridor.commodity+' \u2192 '+sharedCorridor.destination+' \u00b7 '+sharedCorridor.incoterms;
       b.classList.add('show');
+    }
+  });
+}
+
+function updateTabProgress(){
+  document.querySelectorAll('.tab-btn').forEach(function(btn,i){
+    const step=i+1;
+    const stepEl=btn.querySelector('.tab-step');
+    btn.classList.remove('step-done','step-active','step-upcoming');
+    if(stepProgress[step]){
+      btn.classList.add('step-done');
+      if(stepEl) stepEl.innerHTML='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else if(btn.classList.contains('active')){
+      btn.classList.add('step-active');
+      if(stepEl) stepEl.textContent=step;
+    } else {
+      btn.classList.add('step-upcoming');
+      if(stepEl) stepEl.textContent=step;
     }
   });
 }
