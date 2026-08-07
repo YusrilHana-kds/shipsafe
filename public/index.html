@@ -2219,7 +2219,8 @@ function render(data,commodity,origin,destination,incoterms){
     ns.innerHTML=`<div class="nstep"><div class="nstep-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div><div class="nstep-tx"><div class="nstep-t">${nsT}</div><div class="nstep-b">${nsB}</div></div><button class="nstep-cta" onclick="switchTab('crosscheck');window.scrollTo({top:0,behavior:'smooth'})">${nsC}</button></div>`;
   }
 
-  // Next-step nudge → guide user to Tab 2 (Doc Cross-Checker)
+  // Next-step nudge → replace old nstep with new .nudge design
+  if(ns) ns.style.display='none';
   const nudgeHTML=`<div class="nudge"><div class="nudge-left"><div class="nudge-step">Next step \u2014 2 of 4</div><div class="nudge-title">Cross-check your documents</div><div class="nudge-desc">Upload your Invoice, Packing List, and B/L to catch discrepancies before your bank does.</div></div><button class="nudge-btn" onclick="switchTab('crosscheck');window.scrollTo({top:0,behavior:'smooth'})">Verify docs \u2192</button></div>`;
   const ckWrap=document.getElementById('ck-results');
   if(ckWrap){ckWrap.insertAdjacentHTML('beforeend',nudgeHTML);}
