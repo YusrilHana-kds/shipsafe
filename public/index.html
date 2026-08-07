@@ -549,6 +549,13 @@ h2,h3{font-family:'DM Sans',system-ui,sans-serif;font-weight:600}
 .tab-btn{letter-spacing:.3px;font-size:10px;text-transform:uppercase}
 label{font-size:10px;letter-spacing:.3px}
 .section-eyebrow,[class*="eyebrow"]{font-family:'IBM Plex Mono',monospace!important;letter-spacing:2px;font-size:9px;text-transform:uppercase;color:rgba(220,180,80,.45)!important}
+.nudge{background:rgba(220,180,80,.06);border:1px solid rgba(220,180,80,.2);border-radius:5px;padding:16px 18px;margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nudge-left{flex:1}
+.nudge-step{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1.5px;color:rgba(220,180,80,.5);text-transform:uppercase;margin-bottom:5px}
+.nudge-title{font-size:14px;font-weight:600;color:#F1F6F4;font-family:'DM Sans',sans-serif;margin-bottom:3px}
+.nudge-desc{font-size:12px;color:rgba(241,246,244,.45);font-family:'DM Sans',sans-serif;line-height:1.5}
+.nudge-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.8px;color:#172B36;background:#DCB450;padding:10px 16px;border-radius:3px;border:none;cursor:pointer;white-space:nowrap;transition:background .15s;text-transform:uppercase}
+.nudge-btn:hover{background:#E8C96A}
 </style>
 </head>
 <body>
@@ -2212,6 +2219,11 @@ function render(data,commodity,origin,destination,incoterms){
     ns.innerHTML=`<div class="nstep"><div class="nstep-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div><div class="nstep-tx"><div class="nstep-t">${nsT}</div><div class="nstep-b">${nsB}</div></div><button class="nstep-cta" onclick="switchTab('crosscheck');window.scrollTo({top:0,behavior:'smooth'})">${nsC}</button></div>`;
   }
 
+  // Next-step nudge → guide user to Tab 2 (Doc Cross-Checker)
+  const nudgeHTML=`<div class="nudge"><div class="nudge-left"><div class="nudge-step">Next step \u2014 2 of 4</div><div class="nudge-title">Cross-check your documents</div><div class="nudge-desc">Upload your Invoice, Packing List, and B/L to catch discrepancies before your bank does.</div></div><button class="nudge-btn" onclick="switchTab('crosscheck');window.scrollTo({top:0,behavior:'smooth'})">Verify docs \u2192</button></div>`;
+  const ckWrap=document.getElementById('ck-results');
+  if(ckWrap){ckWrap.insertAdjacentHTML('beforeend',nudgeHTML);}
+
   document.querySelector('.main-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -3197,6 +3209,9 @@ function renderCC(data){
       </button>
     </div>
   </div>`;
+
+  // Next-step nudge → guide user to Tab 3 (Cost Calculator)
+  html+=`<div class="nudge"><div class="nudge-left"><div class="nudge-step">Next step \u2014 3 of 4</div><div class="nudge-title">Calculate your landed cost</div><div class="nudge-desc">See the full cost breakdown for this shipment \u2014 freight, insurance, certificates, and bank charges.</div></div><button class="nudge-btn" onclick="switchTab('cost');window.scrollTo({top:0,behavior:'smooth'})">Calculate cost \u2192</button></div>`;
 
   box.innerHTML=html;
   box.scrollIntoView({behavior:'smooth',block:'start'});
