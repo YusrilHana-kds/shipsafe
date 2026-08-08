@@ -47,8 +47,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 
 /* LANDING PAGE */
 .landing{background:#172B36;min-height:calc(100dvh - 52px);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;position:relative;overflow-x:hidden}
-.landing-hero{min-height:calc(100dvh - 52px);padding:0 32px;display:flex;flex-direction:column;align-items:stretch;width:100%}
-.landing-hero-inner{flex:1;display:flex;align-items:center;justify-content:center;padding:0}
+.landing-hero{height:calc(100dvh - 52px);min-height:600px;padding:0 32px;display:flex;flex-direction:column;align-items:stretch;width:100%}
+.landing-hero-inner{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 0 24px}
 .landing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(220,180,80,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
 .landing-split{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;text-align:left;width:100%;position:relative;z-index:1}
 .landing-left{text-align:left}
@@ -563,17 +563,17 @@ label{font-size:10px;letter-spacing:.3px}
 .tab-btn.step-active{color:#F1F6F4}
 .tab-btn.step-upcoming .tab-step{background:transparent;border-color:rgba(255,255,255,.1);color:rgba(241,246,244,.25)}
 .tab-btn.step-upcoming{color:rgba(241,246,244,.3)}
-.hd-nav{font-family:'IBM Plex Mono',monospace;display:flex;align-items:center;gap:24px}
-.hd-nav-link{color:rgba(255,255,255,.55);text-decoration:none;font-size:13px;letter-spacing:.8px;transition:color .2s;font-weight:500}
-.hd-nav-link:hover{color:#FFFFFF}
-.hd-nav-n{color:#DCB450;margin-right:5px;font-weight:700;font-size:13px}
+.hd-nav{font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+.hd-nav-link{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;letter-spacing:.1px;transition:color .2s;font-weight:400;padding:4px 10px;border-radius:4px}
+.hd-nav-link:hover{color:#FFFFFF;background:rgba(255,255,255,.06)}
+.hd-nav-sep{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0}
 @media(max-width:640px){.hd-nav{display:none!important}}
 .ticker-wrap{width:100%;overflow:hidden;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.15);position:relative;z-index:1}
 .ticker-track{display:flex;gap:8px;width:max-content;animation:tickerScroll 36s linear infinite;padding:0 8px}
 .ticker-wrap:hover .ticker-track{animation-play-state:paused}
 @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.ticker-item{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(241,246,244,.55);letter-spacing:.5px;white-space:nowrap;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px}
-.ticker-item::before{content:'';width:5px;height:5px;border-radius:50%;background:#DCB450;opacity:.6;flex-shrink:0}
+.ticker-item{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(241,246,244,.55);letter-spacing:.5px;white-space:nowrap;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px}
+.ticker-icon{font-size:13px;line-height:1;flex-shrink:0;filter:saturate(0.7) brightness(0.9)}
 .section-light{background:#F4F1EA;color:#1A1916;padding:80px 32px;width:100%;position:relative}
 .section-light::before{content:'';position:absolute;top:0;left:0;right:0;height:64px;background:linear-gradient(to bottom,#172B36,#F4F1EA);pointer-events:none}
 .section-light::after{content:'';position:absolute;bottom:0;left:0;right:0;height:64px;background:linear-gradient(to bottom,#F4F1EA,#172B36);pointer-events:none}
@@ -599,13 +599,15 @@ label{font-size:10px;letter-spacing:.3px}
     <div class="hd-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l2-2h14l2 2"/><path d="M5 16V8h14v8"/><rect x="7" y="10" width="4" height="4" rx="0.5"/><rect x="13" y="10" width="4" height="4" rx="0.5"/><path d="M12 4v4"/><path d="M8 4h8"/></svg></div>
     <span class="hd-nm">ShipSafe</span>
   </div>
-  <nav class="hd-nav" id="landingNav" style="display:flex;align-items:center;gap:24px">
-    <a href="#landing-what" class="hd-nav-link" onclick="smoothScroll(event,'landing-what')"><span class="hd-nav-n">01</span> What</a>
-    <a href="#landing-how" class="hd-nav-link" onclick="smoothScroll(event,'landing-how')"><span class="hd-nav-n">02</span> How</a>
-    <a href="#landing-trust" class="hd-nav-link" onclick="smoothScroll(event,'landing-trust')"><span class="hd-nav-n">03</span> Trust</a>
+  <nav class="hd-nav" id="landingNav" style="display:flex;align-items:center;gap:6px">
+    <a href="#landing-what" class="hd-nav-link" onclick="smoothScroll(event,'landing-what')">Features</a>
+    <span class="hd-nav-sep"></span>
+    <a href="#landing-how" class="hd-nav-link" onclick="smoothScroll(event,'landing-how')">How it works</a>
+    <span class="hd-nav-sep"></span>
+    <a href="#landing-trust" class="hd-nav-link" onclick="smoothScroll(event,'landing-trust')">Why trust us</a>
   </nav>
   <div style="display:flex;align-items:center;gap:14px">
-    <button class="gl-hd-btn" onclick="toggleGlossary()" title="Trade Glossary">
+    <button class="gl-hd-btn" id="glossaryBtn" onclick="toggleGlossary()" title="Trade Glossary" style="display:none">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
       <span data-i18n="gl_btn">Glossary</span>
     </button>
@@ -664,34 +666,34 @@ label{font-size:10px;letter-spacing:.3px}
   </div><!-- /landing-hero-inner -->
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <div class="ticker-item">Cocoa Powder</div>
-      <div class="ticker-item">Cocoa Butter</div>
-      <div class="ticker-item">Coffee</div>
-      <div class="ticker-item">Cinnamon</div>
-      <div class="ticker-item">Cassava</div>
-      <div class="ticker-item">Coconut</div>
-      <div class="ticker-item">Pepper</div>
-      <div class="ticker-item">Cloves</div>
-      <div class="ticker-item">Nutmeg</div>
-      <div class="ticker-item">Vanilla</div>
-      <div class="ticker-item">Palm Oil</div>
-      <div class="ticker-item">Rubber</div>
-      <div class="ticker-item">Seafood</div>
-      <div class="ticker-item">Rice</div>
-      <div class="ticker-item">Cocoa Powder</div>
-      <div class="ticker-item">Cocoa Butter</div>
-      <div class="ticker-item">Coffee</div>
-      <div class="ticker-item">Cinnamon</div>
-      <div class="ticker-item">Cassava</div>
-      <div class="ticker-item">Coconut</div>
-      <div class="ticker-item">Pepper</div>
-      <div class="ticker-item">Cloves</div>
-      <div class="ticker-item">Nutmeg</div>
-      <div class="ticker-item">Vanilla</div>
-      <div class="ticker-item">Palm Oil</div>
-      <div class="ticker-item">Rubber</div>
-      <div class="ticker-item">Seafood</div>
-      <div class="ticker-item">Rice</div>
+      <div class="ticker-item"><span class="ticker-icon">🍫</span>Cocoa Powder</div>
+      <div class="ticker-item"><span class="ticker-icon">🧈</span>Cocoa Butter</div>
+      <div class="ticker-item"><span class="ticker-icon">☕</span>Coffee</div>
+      <div class="ticker-item"><span class="ticker-icon">🌿</span>Cinnamon</div>
+      <div class="ticker-item"><span class="ticker-icon">🌱</span>Cassava</div>
+      <div class="ticker-item"><span class="ticker-icon">🥥</span>Coconut</div>
+      <div class="ticker-item"><span class="ticker-icon">🌶️</span>Pepper</div>
+      <div class="ticker-item"><span class="ticker-icon">🌸</span>Cloves</div>
+      <div class="ticker-item"><span class="ticker-icon">🌰</span>Nutmeg</div>
+      <div class="ticker-item"><span class="ticker-icon">🌺</span>Vanilla</div>
+      <div class="ticker-item"><span class="ticker-icon">🫙</span>Palm Oil</div>
+      <div class="ticker-item"><span class="ticker-icon">🌳</span>Rubber</div>
+      <div class="ticker-item"><span class="ticker-icon">🦐</span>Seafood</div>
+      <div class="ticker-item"><span class="ticker-icon">🌾</span>Rice</div>
+      <div class="ticker-item"><span class="ticker-icon">🍫</span>Cocoa Powder</div>
+      <div class="ticker-item"><span class="ticker-icon">🧈</span>Cocoa Butter</div>
+      <div class="ticker-item"><span class="ticker-icon">☕</span>Coffee</div>
+      <div class="ticker-item"><span class="ticker-icon">🌿</span>Cinnamon</div>
+      <div class="ticker-item"><span class="ticker-icon">🌱</span>Cassava</div>
+      <div class="ticker-item"><span class="ticker-icon">🥥</span>Coconut</div>
+      <div class="ticker-item"><span class="ticker-icon">🌶️</span>Pepper</div>
+      <div class="ticker-item"><span class="ticker-icon">🌸</span>Cloves</div>
+      <div class="ticker-item"><span class="ticker-icon">🌰</span>Nutmeg</div>
+      <div class="ticker-item"><span class="ticker-icon">🌺</span>Vanilla</div>
+      <div class="ticker-item"><span class="ticker-icon">🫙</span>Palm Oil</div>
+      <div class="ticker-item"><span class="ticker-icon">🌳</span>Rubber</div>
+      <div class="ticker-item"><span class="ticker-icon">🦐</span>Seafood</div>
+      <div class="ticker-item"><span class="ticker-icon">🌾</span>Rice</div>
     </div>
   </div>
   </div><!-- /landing-hero -->
@@ -1588,6 +1590,7 @@ function enterApp(){
   document.querySelector('.tara-fab').style.display='';
   document.body.style.background='#114C5A';
   const ln=document.getElementById('landingNav');if(ln)ln.style.display='none';
+  const gb=document.getElementById('glossaryBtn');if(gb)gb.style.display='flex';
   const wrap=document.getElementById('scrollProgressWrap');if(wrap)wrap.style.opacity='0';
   try{localStorage.setItem('ss_entered','1')}catch(e){}
   window.scrollTo({top:0});
@@ -1599,6 +1602,7 @@ function goLanding(){
   document.querySelector('.tara-fab').style.display='none';
   document.body.style.background='#172B36';
   const ln=document.getElementById('landingNav');if(ln)ln.style.display='flex';
+  const gb=document.getElementById('glossaryBtn');if(gb)gb.style.display='none';
   const wrap=document.getElementById('scrollProgressWrap');if(wrap)wrap.style.opacity='1';
   try{localStorage.removeItem('ss_entered')}catch(e){}
   window.scrollTo({top:0});
