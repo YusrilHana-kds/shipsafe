@@ -47,7 +47,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 
 /* LANDING PAGE */
 .landing{background:#172B36;min-height:calc(100dvh - 52px);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;position:relative;overflow-x:hidden}
-.landing-hero{min-height:calc(100dvh - 52px);padding:60px 32px 0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;width:100%;gap:40px}
+.landing-hero{min-height:calc(100dvh - 52px);padding:0 32px;display:flex;flex-direction:column;align-items:stretch;justify-content:center;width:100%}
+.landing-hero-inner{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 0 40px}
 .landing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(220,180,80,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
 .landing-split{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;text-align:left;width:100%;position:relative;z-index:1}
 .landing-left{text-align:left}
@@ -99,7 +100,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 .how-n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);color:#FFFFFF;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
 .how-ar{color:rgba(255,255,255,.45);font-size:12px;font-weight:400}
 @media(max-width:960px){.main-card{max-width:100%;margin:0 16px;border-radius:0 0 8px 8px}.welcome-banner{max-width:100%;margin:12px 16px 0}.tabs-bar{max-width:100%;padding:0 16px}}
-@media(max-width:768px){.landing{padding:0}.landing-hero{min-height:calc(100dvh - 52px);padding:40px 20px 0;gap:24px}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-badge{font-size:8px;padding:4px 8px}.section-light{padding:60px 20px}.landing-stats-grid{grid-template-columns:1fr!important}.landing-cards-grid{grid-template-columns:1fr!important}.landing-compare-card{grid-template-columns:1fr!important}.landing-steps-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}.entry-card{padding:20px!important}}
+@media(max-width:768px){.landing{padding:0}.landing-hero{min-height:calc(100dvh - 52px);padding:0 20px}.landing-hero-inner{padding:40px 0 24px}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-badge{font-size:8px;padding:4px 8px}.section-light{padding:60px 20px}.landing-stats-grid{grid-template-columns:1fr!important}.landing-cards-grid{grid-template-columns:1fr!important}.landing-compare-card{grid-template-columns:1fr!important}.landing-steps-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}.entry-card{padding:20px!important}}
 @media(max-width:640px){.how{display:none}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 8px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;flex-shrink:0;padding:10px 12px;font-size:11px}.hero-stats{flex-direction:column;gap:8px}.hero-stat{max-width:100%}.route-pill{font-size:11px;padding:5px 12px}.tara-panel.open{width:100vw!important;height:100vh!important;border-radius:0!important;bottom:0!important;right:0!important;left:0!important;top:0!important}.gauge-wrap{flex-direction:column;align-items:center;text-align:center}.ov-summary{flex-wrap:wrap;gap:10px}.ov-summary-stat{min-width:80px}.fg{grid-template-columns:1fr}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:rgba(220,180,80,.05);border:1px solid rgba(220,180,80,.15);border-radius:5px;padding:14px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s}
@@ -619,6 +620,7 @@ label{font-size:10px;letter-spacing:.3px}
   <!-- Background: container ship silhouette -->
   <!-- Background: container ship -->
   <div class="landing-hero">
+  <div class="landing-hero-inner">
   <div class="landing-split">
     <div class="landing-left">
       <div class="landing-badge" data-i18n="hero_badge">EXPORT COMPLIANCE · FOOD &amp; AGRI</div>
@@ -656,7 +658,8 @@ label{font-size:10px;letter-spacing:.3px}
       </div>
     </div>
   </div>
-  <div class="ticker-wrap" style="margin-top:auto">
+  </div><!-- /landing-hero-inner -->
+  <div class="ticker-wrap">
     <div class="ticker-track">
       <div class="ticker-item">Cocoa Powder</div>
       <div class="ticker-item">Cocoa Butter</div>
