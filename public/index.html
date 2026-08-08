@@ -47,7 +47,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 
 /* LANDING PAGE */
 .landing{background:#172B36;min-height:calc(100dvh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 32px;position:relative}
-.landing-hero{min-height:calc(100dvh - 52px);display:flex;align-items:center;justify-content:center;width:100%}
+.landing-hero{min-height:auto;padding-top:56px;padding-bottom:24px;display:flex;align-items:center;justify-content:center;width:100%}
 .landing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(220,180,80,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
 .landing::after{content:'';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(17,76,90,.5) 0%,transparent 70%);pointer-events:none}
 .landing-split{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;text-align:left;width:100%;position:relative;z-index:1}
@@ -568,9 +568,23 @@ label{font-size:10px;letter-spacing:.3px}
 .hd-nav-link:hover{color:#fff}
 .hd-nav-n{color:rgba(220,180,80,.6);margin-right:4px;font-weight:600}
 @media(max-width:640px){.hd-nav{display:none!important}}
+.ticker-wrap{width:100%;overflow:hidden;padding:16px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);position:relative;z-index:1}
+.ticker-track{display:flex;gap:0;width:max-content;animation:tickerScroll 32s linear infinite}
+.ticker-wrap:hover .ticker-track{animation-play-state:paused}
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{display:flex;align-items:center;gap:8px;padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(241,246,244,.4);letter-spacing:.5px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.06)}
+.section-light{background:#F4F1EA;color:#1A1916;padding:64px 20px}
+.section-light .eyebrow{color:#B07040!important}
+.section-light h2,.section-light .sec-h{color:#1A1916!important}
+.section-light p,.section-light .sec-sub{color:rgba(26,25,22,.55)!important}
 </style>
 </head>
 <body>
+
+<div id="scrollProgressWrap" style="position:fixed;top:0;left:0;right:0;z-index:9999;pointer-events:none">
+  <div id="scrollProgressGold" style="height:2px;background:#DCB450;width:0%;transition:width .1s linear"></div>
+  <div id="scrollProgressTeal" style="height:1px;background:#D9E8E2;width:0%;opacity:0.4;transition:width .1s linear"></div>
+</div>
 
 <header class="hd">
   <div class="hd-b" onclick="goLanding()" style="cursor:pointer">
@@ -667,6 +681,39 @@ label{font-size:10px;letter-spacing:.3px}
     </div>
   </div>
 
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="ticker-item">Cocoa Powder</div>
+      <div class="ticker-item">Cocoa Butter</div>
+      <div class="ticker-item">Coffee</div>
+      <div class="ticker-item">Cinnamon</div>
+      <div class="ticker-item">Cassava</div>
+      <div class="ticker-item">Coconut</div>
+      <div class="ticker-item">Pepper</div>
+      <div class="ticker-item">Cloves</div>
+      <div class="ticker-item">Nutmeg</div>
+      <div class="ticker-item">Vanilla</div>
+      <div class="ticker-item">Palm Oil</div>
+      <div class="ticker-item">Rubber</div>
+      <div class="ticker-item">Seafood</div>
+      <div class="ticker-item">Rice</div>
+      <div class="ticker-item">Cocoa Powder</div>
+      <div class="ticker-item">Cocoa Butter</div>
+      <div class="ticker-item">Coffee</div>
+      <div class="ticker-item">Cinnamon</div>
+      <div class="ticker-item">Cassava</div>
+      <div class="ticker-item">Coconut</div>
+      <div class="ticker-item">Pepper</div>
+      <div class="ticker-item">Cloves</div>
+      <div class="ticker-item">Nutmeg</div>
+      <div class="ticker-item">Vanilla</div>
+      <div class="ticker-item">Palm Oil</div>
+      <div class="ticker-item">Rubber</div>
+      <div class="ticker-item">Seafood</div>
+      <div class="ticker-item">Rice</div>
+    </div>
+  </div>
+
   <div class="landing-problem" style="max-width:800px;margin:80px auto 0;text-align:center;padding:0 20px 80px;position:relative;z-index:1">
     <div style="font-size:11px;font-weight:600;color:rgba(220,180,80,.6);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px" data-i18n="lp_label">The problem</div>
     <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:36px;font-weight:700;line-height:1.2;margin-bottom:20px" data-i18n="lp_h2">One wrong document. Your shipment held.</h2>
@@ -692,43 +739,45 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
 
   <!-- Section A: What ShipSafe checks -->
-  <div id="landing-what" style="max-width:1000px;margin:0 auto 100px;padding:0 20px;position:relative;z-index:1">
+  <div id="landing-what" class="section-light" style="max-width:100%;margin:0 auto;position:relative;z-index:1">
+    <div style="max-width:1000px;margin:0 auto">
     <div style="text-align:center;margin-bottom:48px">
-      <div style="font-size:11px;font-weight:600;color:rgba(220,180,80,.6);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lc_label">What you get</div>
-      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:16px" data-i18n="lc_h2">Precise. Sourced. <span style="color:#DCB450">Corridor-specific.</span></h2>
-      <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;max-width:540px;margin:0 auto" data-i18n="lc_body">Every output tied to your exact corridor. No generic lists. No guesswork.</p>
+      <div class="eyebrow" style="font-size:11px;font-weight:600;color:#B07040;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lc_label">What you get</div>
+      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#1A1916;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:16px" data-i18n="lc_h2">Precise. Sourced. <span style="color:#B07040">Corridor-specific.</span></h2>
+      <p style="color:rgba(26,25,22,.55);font-size:15px;line-height:1.7;max-width:540px;margin:0 auto" data-i18n="lc_body">Every output tied to your exact corridor. No generic lists. No guesswork.</p>
     </div>
     <div class="landing-cards-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
-        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c1_t">Compliance checklist</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c1_d">Regulation codes, agencies, and deadlines. Specific to your corridor.</div>
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:6px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+        <div style="margin-bottom:12px;color:#B07040"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:#1A1916;margin-bottom:8px" data-i18n="lc_c1_t">Compliance checklist</div>
+        <div style="font-size:13px;color:rgba(26,25,22,.55);line-height:1.6" data-i18n="lc_c1_d">Regulation codes, agencies, and deadlines. Specific to your corridor.</div>
       </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c2_t">Document cross-checker</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c2_d">Upload your trade documents. Flags every discrepancy before your bank does.</div>
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:6px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+        <div style="margin-bottom:12px;color:#B07040"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:#1A1916;margin-bottom:8px" data-i18n="lc_c2_t">Document cross-checker</div>
+        <div style="font-size:13px;color:rgba(26,25,22,.55);line-height:1.6" data-i18n="lc_c2_d">Upload your trade documents. Flags every discrepancy before your bank does.</div>
       </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
-        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c3_t">Cost calculator</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c3_d">Full landed cost by Incoterms. Freight, insurance, certificates, and bank charges.</div>
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:6px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+        <div style="margin-bottom:12px;color:#B07040"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:#1A1916;margin-bottom:8px" data-i18n="lc_c3_t">Cost calculator</div>
+        <div style="font-size:13px;color:rgba(26,25,22,.55);line-height:1.6" data-i18n="lc_c3_d">Full landed cost by Incoterms. Freight, insurance, certificates, and bank charges.</div>
       </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
-        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c4_t">Payment risk guidance</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c4_d">LC, TT, DP, DA — which is safe for your buyer's country and your margin.</div>
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:6px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+        <div style="margin-bottom:12px;color:#B07040"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:#1A1916;margin-bottom:8px" data-i18n="lc_c4_t">Payment risk guidance</div>
+        <div style="font-size:13px;color:rgba(26,25,22,.55);line-height:1.6" data-i18n="lc_c4_d">LC, TT, DP, DA — which is safe for your buyer's country and your margin.</div>
       </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c5_t">Blind spot alerts</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c5_d">Non-obvious risks that catch experienced exporters off guard. Aflatoxin in transit, VGM deadlines, forex controls.</div>
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:6px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+        <div style="margin-bottom:12px;color:#B07040"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:#1A1916;margin-bottom:8px" data-i18n="lc_c5_t">Blind spot alerts</div>
+        <div style="font-size:13px;color:rgba(26,25,22,.55);line-height:1.6" data-i18n="lc_c5_d">Non-obvious risks that catch experienced exporters off guard. Aflatoxin in transit, VGM deadlines, forex controls.</div>
       </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:22px">
-        <div style="margin-bottom:12px;color:rgba(241,246,244,.5)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-        <div style="font-size:14px;font-weight:600;color:#FFFFFF;margin-bottom:8px" data-i18n="lc_c6_t">Any corridor, any commodity</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.6" data-i18n="lc_c6_d">Cocoa, coffee, spices, and more — to US, EU, Japan, UAE, China, and beyond. Official sources only.</div>
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:6px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+        <div style="margin-bottom:12px;color:#B07040"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+        <div style="font-size:14px;font-weight:600;color:#1A1916;margin-bottom:8px" data-i18n="lc_c6_t">Any corridor, any commodity</div>
+        <div style="font-size:13px;color:rgba(26,25,22,.55);line-height:1.6" data-i18n="lc_c6_d">Cocoa, coffee, spices, and more — to US, EU, Japan, UAE, China, and beyond. Official sources only.</div>
       </div>
+    </div>
     </div>
   </div>
 
@@ -1513,6 +1562,7 @@ function enterApp(){
   document.querySelector('.tara-fab').style.display='';
   document.body.style.background='#114C5A';
   const ln=document.getElementById('landingNav');if(ln)ln.style.display='none';
+  const wrap=document.getElementById('scrollProgressWrap');if(wrap)wrap.style.opacity='0';
   try{localStorage.setItem('ss_entered','1')}catch(e){}
   window.scrollTo({top:0});
 }
@@ -1523,6 +1573,7 @@ function goLanding(){
   document.querySelector('.tara-fab').style.display='none';
   document.body.style.background='#172B36';
   const ln=document.getElementById('landingNav');if(ln)ln.style.display='flex';
+  const wrap=document.getElementById('scrollProgressWrap');if(wrap)wrap.style.opacity='1';
   try{localStorage.removeItem('ss_entered')}catch(e){}
   window.scrollTo({top:0});
 }
@@ -4017,6 +4068,23 @@ function updateTabProgress(){
     }
   });
 }
+
+window.addEventListener('scroll',function(){
+  const landingView=document.getElementById('landingView');
+  const wrap=document.getElementById('scrollProgressWrap');
+  if(!landingView||landingView.style.display==='none'){
+    if(wrap) wrap.style.opacity='0';
+    return;
+  }
+  if(wrap) wrap.style.opacity='1';
+  const scrollTop=window.scrollY||document.documentElement.scrollTop;
+  const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+  const pct=docHeight>0?Math.min(100,(scrollTop/docHeight)*100):0;
+  const gold=document.getElementById('scrollProgressGold');
+  const teal=document.getElementById('scrollProgressTeal');
+  if(gold) gold.style.width=pct+'%';
+  if(teal) teal.style.width=pct+'%';
+});
 </script>
 </body>
 </html>
