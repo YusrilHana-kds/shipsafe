@@ -49,7 +49,6 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 .landing{background:#172B36;min-height:calc(100dvh - 52px);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;position:relative;overflow-x:hidden}
 .landing-hero{min-height:auto;padding:72px 32px 48px;display:flex;align-items:center;justify-content:center;width:100%}
 .landing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(220,180,80,.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
-.landing::after{content:'';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(17,76,90,.5) 0%,transparent 70%);pointer-events:none}
 .landing-split{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;text-align:left;width:100%;position:relative;z-index:1}
 .landing-left{text-align:left}
 .landing-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(220,180,80,.07);border:1px solid rgba(220,180,80,.15);color:rgba(220,180,80,.55);font-family:'IBM Plex Mono',monospace;letter-spacing:1px;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;margin-bottom:20px}
@@ -100,7 +99,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#172B36;color:var(--t
 .how-n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.1);color:#FFFFFF;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
 .how-ar{color:rgba(255,255,255,.45);font-size:12px;font-weight:400}
 @media(max-width:960px){.main-card{max-width:100%;margin:0 16px;border-radius:0 0 8px 8px}.welcome-banner{max-width:100%;margin:12px 16px 0}.tabs-bar{max-width:100%;padding:0 16px}}
-@media(max-width:768px){.landing{padding:0}.landing-hero{min-height:calc(100dvh - 52px);padding:40px 20px 32px}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-split{grid-template-columns:1fr!important;text-align:center!important;gap:32px}.landing-left{text-align:center!important}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-right{display:none!important}.landing-badge{font-size:8px;padding:4px 8px}.section-light{padding:60px 20px}.section-light::before,.section-light::after{height:24px}.section-light::before{top:-24px}.section-light::after{bottom:-24px}.landing-stats-grid{grid-template-columns:1fr!important}.landing-cards-grid{grid-template-columns:1fr!important}.landing-compare-card{grid-template-columns:1fr!important}.landing-steps-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}.entry-card{padding:20px!important}}
+@media(max-width:768px){.landing{padding:0}.landing-hero{min-height:calc(100dvh - 52px);padding:40px 20px 32px}.landing-h1{font-size:36px}.landing-sub{font-size:15px;margin:0 auto 32px}.landing-split{grid-template-columns:1fr!important;text-align:center!important;gap:32px}.landing-left{text-align:center!important}.landing-btns{flex-wrap:wrap;margin-bottom:28px;justify-content:center!important}.landing-trust{gap:16px;justify-content:center!important}.landing-trust-n{font-size:18px}.landing-trust-l{font-size:10px}.landing-right{display:none!important}.landing-badge{font-size:8px;padding:4px 8px}.section-light{padding:60px 20px}.landing-stats-grid{grid-template-columns:1fr!important}.landing-cards-grid{grid-template-columns:1fr!important}.landing-compare-card{grid-template-columns:1fr!important}.landing-steps-grid{grid-template-columns:1fr!important}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.main-card{border-radius:0;box-shadow:none;margin:0}.tab-panel{padding:20px 16px 28px}.welcome-banner{margin:12px 10px 0;border-radius:6px}.hd-tg{display:none}.entry-card{padding:20px!important}}
 @media(max-width:640px){.how{display:none}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 8px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;flex-shrink:0;padding:10px 12px;font-size:11px}.hero-stats{flex-direction:column;gap:8px}.hero-stat{max-width:100%}.route-pill{font-size:11px;padding:5px 12px}.tara-panel.open{width:100vw!important;height:100vh!important;border-radius:0!important;bottom:0!important;right:0!important;left:0!important;top:0!important}.gauge-wrap{flex-direction:column;align-items:center;text-align:center}.ov-summary{flex-wrap:wrap;gap:10px}.ov-summary-stat{min-width:80px}.fg{grid-template-columns:1fr}}
 /* WELCOME BANNER */
 .welcome-banner{max-width:900px;margin:16px auto 0;background:rgba(220,180,80,.05);border:1px solid rgba(220,180,80,.15);border-radius:5px;padding:14px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s}
@@ -573,14 +572,10 @@ label{font-size:10px;letter-spacing:.3px}
 .ticker-wrap:hover .ticker-track{animation-play-state:paused}
 @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-item{display:flex;align-items:center;gap:8px;padding:0 24px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(241,246,244,.4);letter-spacing:.5px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.06)}
-.section-light{background:#F4F1EA;color:#1A1916;padding:80px 32px;width:100%;position:relative}
+.section-light{background:#F4F1EA;color:#1A1916;padding:80px 32px;width:100%;position:relative;border-top:1px solid rgba(220,180,80,.14);border-bottom:1px solid rgba(220,180,80,.14)}
 .section-light .eyebrow{color:#B07040!important}
 .section-light h2,.section-light .sec-h{color:#1A1916!important}
 .section-light p,.section-light .sec-sub{color:rgba(26,25,22,.55)!important}
-/* dark→light transition: soft gradient fade at top */
-.section-light::before{content:'';position:absolute;top:-40px;left:0;right:0;height:40px;background:linear-gradient(to bottom,transparent 0%,#F4F1EA 100%);pointer-events:none;z-index:2}
-/* light→dark transition: soft gradient fade at bottom */
-.section-light::after{content:'';position:absolute;bottom:-40px;left:0;right:0;height:40px;background:linear-gradient(to bottom,#F4F1EA 0%,transparent 100%);pointer-events:none;z-index:2}
 .step-icon-wrap{width:52px;height:52px;border-radius:50%;background:rgba(220,180,80,.06);border:1px solid rgba(220,180,80,.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative}
 .step-icon-wrap svg{color:#DCB450}
 .step-icon-dot{position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:#D9E8E2;border:2px solid #172B36}
@@ -750,7 +745,7 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
 
   <!-- Section A: What ShipSafe checks -->
-  <div id="landing-what" style="max-width:1000px;margin:0 auto 80px;padding:60px 20px 0;position:relative;z-index:1">
+  <div id="landing-what" style="max-width:1000px;margin:0 auto;padding:72px 20px 80px;position:relative;z-index:1">
     <div style="text-align:center;margin-bottom:48px">
       <div style="font-size:11px;font-weight:600;color:rgba(220,180,80,.6);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lc_label">What you get</div>
       <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:16px" data-i18n="lc_h2">Precise. Sourced. <span style="color:#DCB450">Corridor-specific.</span></h2>
@@ -830,7 +825,7 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
 
   <!-- Section C: How it works -->
-  <div id="landing-how" style="max-width:800px;margin:0 auto 100px;padding:60px 20px 0;position:relative;z-index:1;text-align:center">
+  <div id="landing-how" style="max-width:800px;margin:0 auto;padding:72px 20px 100px;position:relative;z-index:1;text-align:center">
     <div style="font-size:11px;font-weight:600;color:rgba(220,180,80,.6);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="ls_label">How it works</div>
     <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:12px" data-i18n="ls_h2">Three steps. One corridor checked.</h2>
     <p style="color:rgba(255,255,255,.45);font-size:15px;line-height:1.7;margin-bottom:48px" data-i18n="ls_body">No account. No forwarder. Results in under 30 seconds.</p>
