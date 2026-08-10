@@ -568,12 +568,12 @@ label{font-size:10px;letter-spacing:.3px}
 .hd-nav-link:hover{color:#FFFFFF;background:rgba(255,255,255,.06)}
 .hd-nav-sep{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0}
 @media(max-width:640px){.hd-nav{display:none!important}}
-.ticker-wrap{width:100%;overflow:hidden;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.15);position:relative;z-index:1}
-.ticker-track{display:flex;gap:8px;width:max-content;animation:tickerScroll 36s linear infinite;padding:0 8px}
+.ticker-wrap{width:100%;overflow:hidden;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.15);position:relative;z-index:1}
+.ticker-track{display:flex;gap:10px;width:max-content;animation:tickerScroll 36s linear infinite;padding:0 10px}
 .ticker-wrap:hover .ticker-track{animation-play-state:paused}
 @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.ticker-item{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(241,246,244,.55);letter-spacing:.5px;white-space:nowrap;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px}
-.ticker-icon{font-size:13px;line-height:1;flex-shrink:0;filter:saturate(0.7) brightness(0.9)}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#172B36;letter-spacing:0;white-space:nowrap;background:#FFFFFF;border:none;border-radius:100px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ticker-icon{font-size:16px;line-height:1;flex-shrink:0;filter:none}
 .step-icon-wrap{width:52px;height:52px;border-radius:50%;background:rgba(220,180,80,.06);border:1px solid rgba(220,180,80,.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative}
 .step-icon-wrap svg{color:#DCB450}
 .step-icon-dot{position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:#D9E8E2;border:2px solid #172B36}
