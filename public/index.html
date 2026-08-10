@@ -574,10 +574,6 @@ label{font-size:10px;letter-spacing:.3px}
 @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-item{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(241,246,244,.55);letter-spacing:.5px;white-space:nowrap;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px}
 .ticker-icon{font-size:13px;line-height:1;flex-shrink:0;filter:saturate(0.7) brightness(0.9)}
-.section-light{background:#F4F1EA;color:#1A1916;padding:80px 32px;width:100%;position:relative}
-.section-light .eyebrow{color:#B07040!important}
-.section-light h2,.section-light .sec-h{color:#1A1916!important}
-.section-light p,.section-light .sec-sub{color:rgba(26,25,22,.55)!important}
 .step-icon-wrap{width:52px;height:52px;border-radius:50%;background:rgba(220,180,80,.06);border:1px solid rgba(220,180,80,.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative}
 .step-icon-wrap svg{color:#DCB450}
 .step-icon-dot{position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:#D9E8E2;border:2px solid #172B36}
@@ -725,28 +721,28 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
   </div>
 
-  <div class="landing-problem section-light" style="text-align:center">
+  <div class="landing-problem" style="text-align:center;padding:80px 32px">
     <div style="max-width:800px;margin:0 auto;padding:0 20px">
-    <div class="eyebrow" style="font-size:11px;font-weight:600;color:#B07040;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px" data-i18n="lp_label">The problem</div>
-    <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#1A1916;font-size:36px;font-weight:700;line-height:1.2;margin-bottom:20px" data-i18n="lp_h2">One wrong document. Your shipment held.</h2>
-    <p style="color:rgba(26,25,22,.55);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px" data-i18n="lp_body">Most exporters don't fail on product quality. They fail on paperwork. One missing certificate, one mismatched weight figure, one outdated rule — and your container sits at port while your buyer waits and your LC expires.</p>
+    <div class="eyebrow" style="font-size:11px;font-weight:600;color:rgba(220,180,80,.6);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px" data-i18n="lp_label">The problem</div>
+    <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:36px;font-weight:700;line-height:1.2;margin-bottom:20px" data-i18n="lp_h2">One wrong document. Your shipment held.</h2>
+    <p style="color:rgba(241,246,244,.45);font-size:16px;line-height:1.8;max-width:600px;margin:0 auto 48px" data-i18n="lp_body">Most exporters don't fail on product quality. They fail on paperwork. One missing certificate, one mismatched weight figure, one outdated rule — and your container sits at port while your buyer waits and your LC expires.</p>
     <div class="landing-stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left">
-      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
-        <div style="font-size:28px;font-family:'Libre Baskerville',Georgia,serif;color:#1A1916;margin-bottom:6px">$8,500</div>
-        <div style="font-size:13px;color:rgba(26,25,22,.5);line-height:1.5" data-i18n="lp_stat1_d">Average FDA detention cost. Doesn't include the buyer you lost.</div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:20px">
+        <div style="font-size:28px;font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;margin-bottom:6px">$8,500</div>
+        <div style="font-size:13px;color:rgba(241,246,244,.45);line-height:1.5" data-i18n="lp_stat1_d">Average FDA detention cost. Doesn't include the buyer you lost.</div>
       </div>
-      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
-        <div style="font-size:28px;font-family:'Libre Baskerville',Georgia,serif;color:#1A1916;margin-bottom:6px">23 days</div>
-        <div style="font-size:13px;color:rgba(26,25,22,.5);line-height:1.5" data-i18n="lp_stat2_d">Average US port hold time. Your LC deadline is not waiting.</div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:20px">
+        <div style="font-size:28px;font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;margin-bottom:6px">23 days</div>
+        <div style="font-size:13px;color:rgba(241,246,244,.45);line-height:1.5" data-i18n="lp_stat2_d">Average US port hold time. Your LC deadline is not waiting.</div>
       </div>
-      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
-        <div style="font-size:28px;font-family:'Libre Baskerville',Georgia,serif;color:#1A1916;margin-bottom:6px">1 in 3</div>
-        <div style="font-size:13px;color:rgba(26,25,22,.5);line-height:1.5" data-i18n="lp_stat3_d">Food shipments from Southeast Asia fail customs on first attempt.</div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:20px">
+        <div style="font-size:28px;font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;margin-bottom:6px">1 in 3</div>
+        <div style="font-size:13px;color:rgba(241,246,244,.45);line-height:1.5" data-i18n="lp_stat3_d">Food shipments from Southeast Asia fail customs on first attempt.</div>
       </div>
     </div>
     <div style="margin-top:40px">
       <button class="landing-cta" onclick="enterApp()" style="font-size:15px;padding:14px 36px" data-i18n="lp_cta2">Check my corridor →</button>
-      <div style="margin-top:12px;font-size:12px;color:rgba(26,25,22,.4)" data-i18n="lp_cta2_sub">No signup required. Results in under 30 seconds.</div>
+      <div style="margin-top:12px;font-size:12px;color:rgba(241,246,244,.35)" data-i18n="lp_cta2_sub">No signup required. Results in under 30 seconds.</div>
     </div>
     </div>
   </div>
@@ -801,32 +797,32 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
 
   <!-- Section B: The honest part -->
-  <div id="landing-trust" class="section-light">
+  <div id="landing-trust" style="padding:80px 32px">
     <div style="max-width:800px;margin:0 auto;padding:0 20px">
     <div style="text-align:center;margin-bottom:48px">
-      <div class="eyebrow" style="font-size:11px;font-weight:600;color:#B07040;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lh_label">The difference</div>
-      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#1A1916;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:16px" data-i18n="lh_h2">Generic tools tell you what to get.<br><span style="color:#B07040">ShipSafe tells you what's wrong.</span></h2>
-      <p style="color:rgba(26,25,22,.55);font-size:15px;line-height:1.7;max-width:560px;margin:0 auto" data-i18n="lh_body">The difference between a compliant shipment and a held one is usually one line. We find that line before customs does.</p>
+      <div class="eyebrow" style="font-size:11px;font-weight:600;color:rgba(220,180,80,.6);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px" data-i18n="lh_label">The difference</div>
+      <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:16px" data-i18n="lh_h2">Generic tools tell you what to get.<br><span style="color:#DCB450">ShipSafe tells you what's wrong.</span></h2>
+      <p style="color:rgba(241,246,244,.45);font-size:15px;line-height:1.7;max-width:560px;margin:0 auto" data-i18n="lh_body">The difference between a compliant shipment and a held one is usually one line. We find that line before customs does.</p>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="landing-compare-card" style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+      <div class="landing-compare-card" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center">
         <div>
-          <div style="font-size:13px;font-weight:600;color:rgba(26,25,22,.4);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_other">Generic tool</div>
-          <div style="background:rgba(0,0,0,.03);border-radius:8px;padding:14px;font-size:13px;color:rgba(26,25,22,.4);line-height:1.6" data-i18n="lh_other1">"Get a Bill of Lading from your shipping line."</div>
+          <div style="font-size:13px;font-weight:600;color:rgba(241,246,244,.3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_other">Generic tool</div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;font-size:13px;color:rgba(241,246,244,.35);line-height:1.6" data-i18n="lh_other1">"Get a Bill of Lading from your shipping line."</div>
         </div>
         <div>
-          <div style="font-size:13px;font-weight:600;color:#B07040;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_ss">ShipSafe</div>
-          <div style="background:rgba(220,180,80,.08);border-left:2px solid #B07040;border-radius:8px;padding:14px;font-size:13px;color:#1A1916;line-height:1.6" data-i18n="lh_ss1">"Your BL shows consignee as 'Global Harvest Trading Co.' but your LC says 'Global Harvest Trading'. Under UCP 600 Art. 14(d), this is a discrepancy. Bank will reject. Fix before sailing."</div>
+          <div style="font-size:13px;font-weight:600;color:#DCB450;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_ss">ShipSafe</div>
+          <div style="background:rgba(220,180,80,.07);border-left:2px solid rgba(220,180,80,.5);border-radius:8px;padding:14px;font-size:13px;color:rgba(241,246,244,.8);line-height:1.6" data-i18n="lh_ss1">"Your BL shows consignee as 'Global Harvest Trading Co.' but your LC says 'Global Harvest Trading'. Under UCP 600 Art. 14(d), this is a discrepancy. Bank will reject. Fix before sailing."</div>
         </div>
       </div>
-      <div class="landing-compare-card" style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+      <div class="landing-compare-card" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center">
         <div>
-          <div style="font-size:13px;font-weight:600;color:rgba(26,25,22,.4);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_other">Generic tool</div>
-          <div style="background:rgba(0,0,0,.03);border-radius:8px;padding:14px;font-size:13px;color:rgba(26,25,22,.4);line-height:1.6" data-i18n="lh_other2">"Lab test your cocoa for aflatoxin."</div>
+          <div style="font-size:13px;font-weight:600;color:rgba(241,246,244,.3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_other">Generic tool</div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;font-size:13px;color:rgba(241,246,244,.35);line-height:1.6" data-i18n="lh_other2">"Lab test your cocoa for aflatoxin."</div>
         </div>
         <div>
-          <div style="font-size:13px;font-weight:600;color:#B07040;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_ss">ShipSafe</div>
-          <div style="background:rgba(220,180,80,.08);border-left:2px solid #B07040;border-radius:8px;padding:14px;font-size:13px;color:#1A1916;line-height:1.6" data-i18n="lh_ss2">"FDA limit is 20 ppb. Japan limit is 10 ppb. Test 3 weeks before sailing — SGS or Bureau Veritas. Aflatoxin rises during transit in humid containers. Add desiccants."</div>
+          <div style="font-size:13px;font-weight:600;color:#DCB450;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px" data-i18n="lh_ss">ShipSafe</div>
+          <div style="background:rgba(220,180,80,.07);border-left:2px solid rgba(220,180,80,.5);border-radius:8px;padding:14px;font-size:13px;color:rgba(241,246,244,.8);line-height:1.6" data-i18n="lh_ss2">"FDA limit is 20 ppb. Japan limit is 10 ppb. Test 3 weeks before sailing — SGS or Bureau Veritas. Aflatoxin rises during transit in humid containers. Add desiccants."</div>
         </div>
       </div>
     </div>
