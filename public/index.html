@@ -594,6 +594,41 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .tw-desc{font-size:14px!important;line-height:1.6!important}
 .tw-footer{margin-top:20px!important}
 }
+/* GATE MODAL */
+.gate-overlay{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:20px}
+.gate-overlay.open{display:flex}
+.gate-box{background:#1E3445;border:1px solid rgba(255,255,255,.1);border-radius:12px;width:100%;max-width:460px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.gate-header{padding:28px 28px 0}
+.gate-logo{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.gate-logo-ic{width:28px;height:28px;background:rgba(255,255,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.gate-logo-nm{font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:16px;font-weight:700}
+.gate-title{font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:22px;font-weight:700;line-height:1.2;margin-bottom:6px}
+.gate-sub{font-size:13px;color:rgba(241,246,244,.5);line-height:1.5;margin-bottom:24px}
+.gate-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.08)}
+.gate-tab{flex:1;padding:10px 0;font-size:13px;font-weight:600;font-family:inherit;color:rgba(241,246,244,.4);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-1px}
+.gate-tab.active{color:#DCB450;border-bottom-color:#DCB450}
+.gate-body{padding:24px 28px 28px}
+.gate-panel{display:none}.gate-panel.active{display:block}
+.gate-field{margin-bottom:14px}
+.gate-label{display:block;font-size:11px;font-weight:600;color:rgba(241,246,244,.5);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;font-family:'IBM Plex Mono',monospace}
+.gate-input{width:100%;height:40px;padding:0 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:5px;color:#F1F6F4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s}
+.gate-input:focus{border-color:rgba(220,180,80,.5);background:rgba(255,255,255,.08)}
+.gate-input::placeholder{color:rgba(241,246,244,.25)}
+.gate-select{width:100%;height:40px;padding:0 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:5px;color:#F1F6F4;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;appearance:none;cursor:pointer}
+.gate-select option{background:#1E3445;color:#F1F6F4}
+.gate-code-wrap{display:flex;gap:8px}
+.gate-code-wrap .gate-input{font-family:'IBM Plex Mono',monospace;font-size:16px;letter-spacing:3px;text-transform:uppercase;text-align:center}
+.gate-btn{width:100%;height:42px;background:#DCB450;color:#172B36;border:none;border-radius:5px;font-size:13px;font-weight:700;font-family:'IBM Plex Mono',monospace;letter-spacing:.8px;cursor:pointer;transition:background .15s;margin-top:6px}
+.gate-btn:hover{background:#E8C96A}
+.gate-btn:disabled{opacity:.5;cursor:not-allowed}
+.gate-err{font-size:12px;color:#E05C52;margin-top:8px;min-height:18px;font-family:'DM Sans',sans-serif}
+.gate-success{text-align:center;padding:12px 0 4px}
+.gate-success-ic{font-size:36px;margin-bottom:12px}
+.gate-success-t{font-size:16px;font-weight:700;color:#F1F6F4;margin-bottom:6px}
+.gate-success-s{font-size:13px;color:rgba(241,246,244,.55);line-height:1.6}
+.gate-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.4);font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.gate-close:hover{color:#F1F6F4}
+.gate-box{position:relative}
 h2,h3{font-family:'DM Sans',system-ui,sans-serif;font-weight:600}
 .landing-h1{letter-spacing:-.3px}
 .tab-btn{letter-spacing:.3px;font-size:10px;text-transform:uppercase}
@@ -1645,19 +1680,11 @@ function dismissWelcome(){
 // Hide banner if already dismissed this session
 (function(){try{if(sessionStorage.getItem('ss_welcome')) document.getElementById('welcomeBanner')?.classList.add('hidden')}catch(e){}})();
 
-// Landing → App transition
+// Landing → App transition (gated)
 function enterApp(){
-  document.getElementById('landingView').style.display='none';
-  document.getElementById('appView').style.display='';
-  document.getElementById('disclaimerBar').style.display='';
-  document.querySelector('.tara-fab').style.display='';
-  document.body.style.background='#114C5A';
-  const ln=document.getElementById('landingNav');if(ln)ln.style.display='none';
-  const gb=document.getElementById('glossaryBtn');if(gb)gb.style.display='flex';
-  const wrap=document.getElementById('scrollProgressWrap');if(wrap)wrap.style.opacity='0';
-  try{localStorage.setItem('ss_entered','1')}catch(e){}
-  window.scrollTo({top:0});
-  updateTabProgress();
+  let granted=false;
+  try{granted=sessionStorage.getItem('ss_access')==='granted';}catch(e){}
+  if(granted){_openApp();}else{openGate();}
 }
 function goLanding(){
   document.getElementById('landingView').style.display='';
@@ -4289,6 +4316,156 @@ window.addEventListener('scroll',function(){
   if(gold) gold.style.width=pct+'%';
   if(teal) teal.style.width=pct+'%';
 });
+</script>
+
+<!-- GATE MODAL -->
+<div class="gate-overlay" id="gateOverlay">
+  <div class="gate-box">
+    <button class="gate-close" onclick="closeGate()" title="Close">✕</button>
+    <div class="gate-header">
+      <div class="gate-logo">
+        <div class="gate-logo-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l2-2h14l2 2"/><path d="M5 16V8h14v8"/><rect x="7" y="10" width="4" height="4" rx="0.5"/><rect x="13" y="10" width="4" height="4" rx="0.5"/><path d="M12 4v4"/><path d="M8 4h8"/></svg></div>
+        <span class="gate-logo-nm">ShipSafe</span>
+      </div>
+      <div class="gate-title">Early access only.</div>
+      <div class="gate-sub">ShipSafe is currently invite-only. Enter your access code or join the waitlist to get notified when we open up.</div>
+      <div class="gate-tabs">
+        <button class="gate-tab active" id="gateTabCode" onclick="switchGateTab('code')">Have a code</button>
+        <button class="gate-tab" id="gateTabWaitlist" onclick="switchGateTab('waitlist')">Join waitlist</button>
+      </div>
+    </div>
+    <div class="gate-body">
+
+      <!-- Code tab -->
+      <div class="gate-panel active" id="gatePanelCode">
+        <div class="gate-field">
+          <label class="gate-label">Access code</label>
+          <div class="gate-code-wrap">
+            <input class="gate-input" id="gateCodeInput" type="text" placeholder="XXXX-XXXX" maxlength="20" autocomplete="off" onkeydown="if(event.key==='Enter')submitGateCode()">
+          </div>
+        </div>
+        <div class="gate-err" id="gateCodeErr"></div>
+        <button class="gate-btn" id="gateCodeBtn" onclick="submitGateCode()">VERIFY CODE →</button>
+      </div>
+
+      <!-- Waitlist tab -->
+      <div class="gate-panel" id="gatePanelWaitlist">
+        <div id="gateWaitlistForm">
+          <div class="gate-field">
+            <label class="gate-label">Full name</label>
+            <input class="gate-input" id="wlName" type="text" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="gate-field">
+            <label class="gate-label">Work email</label>
+            <input class="gate-input" id="wlEmail" type="email" placeholder="you@company.com" autocomplete="email">
+          </div>
+          <div class="gate-field">
+            <label class="gate-label">What do you export / import?</label>
+            <input class="gate-input" id="wlExport" type="text" placeholder="e.g. Robusta coffee, Indonesia → EU">
+          </div>
+          <div class="gate-field">
+            <label class="gate-label">How often do you ship?</label>
+            <select class="gate-select" id="wlFrequency">
+              <option value="" disabled selected>Select frequency</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Quarterly">Quarterly</option>
+              <option value="Occasionally">Occasionally</option>
+              <option value="Planning first shipment">Planning first shipment</option>
+            </select>
+          </div>
+          <div class="gate-err" id="gateWlErr"></div>
+          <button class="gate-btn" id="gateWlBtn" onclick="submitWaitlist()">JOIN WAITLIST →</button>
+        </div>
+        <div class="gate-success" id="gateWaitlistSuccess" style="display:none">
+          <div class="gate-success-ic">✅</div>
+          <div class="gate-success-t">You're on the list!</div>
+          <div class="gate-success-s">We'll reach out as soon as your access is ready.<br>Keep an eye on your inbox.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function openGate(){document.getElementById('gateOverlay').classList.add('open');}
+function closeGate(){document.getElementById('gateOverlay').classList.remove('open');}
+document.getElementById('gateOverlay').addEventListener('click',function(e){if(e.target===this)closeGate();});
+
+function switchGateTab(tab){
+  document.getElementById('gatePanelCode').classList.toggle('active',tab==='code');
+  document.getElementById('gatePanelWaitlist').classList.toggle('active',tab==='waitlist');
+  document.getElementById('gateTabCode').classList.toggle('active',tab==='code');
+  document.getElementById('gateTabWaitlist').classList.toggle('active',tab==='waitlist');
+}
+
+async function submitGateCode(){
+  const input=document.getElementById('gateCodeInput');
+  const err=document.getElementById('gateCodeErr');
+  const btn=document.getElementById('gateCodeBtn');
+  const code=input.value.trim();
+  if(!code){err.textContent='Please enter your access code.';return;}
+  err.textContent='';
+  btn.disabled=true;btn.textContent='Verifying...';
+  try{
+    const res=await fetch('/api/verify-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});
+    const data=await res.json();
+    if(data.valid){
+      try{sessionStorage.setItem('ss_access','granted');}catch(e){}
+      closeGate();
+      _openApp();
+    } else {
+      err.textContent='Invalid or unrecognised code. Try again or join the waitlist.';
+      input.select();
+    }
+  }catch(e){
+    err.textContent='Something went wrong. Please try again.';
+  }finally{
+    btn.disabled=false;btn.textContent='VERIFY CODE →';
+  }
+}
+
+async function submitWaitlist(){
+  const name=document.getElementById('wlName').value.trim();
+  const email=document.getElementById('wlEmail').value.trim();
+  const exportInfo=document.getElementById('wlExport').value.trim();
+  const frequency=document.getElementById('wlFrequency').value;
+  const err=document.getElementById('gateWlErr');
+  const btn=document.getElementById('gateWlBtn');
+  if(!name){err.textContent='Please enter your name.';return;}
+  if(!email||!email.includes('@')){err.textContent='Please enter a valid email.';return;}
+  err.textContent='';
+  btn.disabled=true;btn.textContent='Submitting...';
+  try{
+    const res=await fetch('/api/join-waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,exportInfo,frequency})});
+    const data=await res.json();
+    if(data.success){
+      document.getElementById('gateWaitlistForm').style.display='none';
+      document.getElementById('gateWaitlistSuccess').style.display='block';
+    } else {
+      err.textContent=data.error||'Something went wrong. Please try again.';
+    }
+  }catch(e){
+    err.textContent='Something went wrong. Please try again.';
+  }finally{
+    btn.disabled=false;btn.textContent='JOIN WAITLIST →';
+  }
+}
+
+// Internal function that actually opens the app (used after gate passes)
+function _openApp(){
+  document.getElementById('landingView').style.display='none';
+  document.getElementById('appView').style.display='';
+  document.getElementById('disclaimerBar').style.display='';
+  document.querySelector('.tara-fab').style.display='';
+  document.body.style.background='#114C5A';
+  const ln=document.getElementById('landingNav');if(ln)ln.style.display='none';
+  const gb=document.getElementById('glossaryBtn');if(gb)gb.style.display='flex';
+  const wrap=document.getElementById('scrollProgressWrap');if(wrap)wrap.style.opacity='0';
+  try{localStorage.setItem('ss_entered','1');}catch(e){}
+  window.scrollTo({top:0});
+  updateTabProgress();
+}
 </script>
 </body>
 </html>
