@@ -1869,25 +1869,68 @@ function switchTab(id){
 let ckHistory=[]; // saved past compliance checks
 
 function printCheckerResult(){
-  const content=document.getElementById('ck-results');
-  if(!content)return;
+  // Build clean structured content from DOM
+  const route=document.getElementById('routeBar')?.innerText||'';
+  const phases=document.querySelectorAll('#phBox .ph');
+  let phasesHtml='';
+  phases.forEach(ph=>{
+    const title=ph.querySelector('.ph-t')?.innerText||'';
+    const items=ph.querySelectorAll('.ci');
+    let itemsHtml='';
+    items.forEach(ci=>{
+      const done=ci.classList.contains('done');
+      const task=ci.querySelector('.ci-t')?.innerText||'';
+      const detail=ci.querySelector('.ci-d')?.innerText||'';
+      itemsHtml+=`<div class="item${done?' done':''}">
+        <div class="cb">${done?'✓':''}</div>
+        <div class="item-body"><div class="item-t">${task}</div>${detail?`<div class="item-d">${detail}</div>`:''}</div>
+      </div>`;
+    });
+    phasesHtml+=`<div class="phase"><div class="phase-title">${title}</div>${itemsHtml}</div>`;
+  });
+
+  // Blind spots
+  const alerts=document.querySelectorAll('#alBox .al');
+  let alertsHtml='';
+  if(alerts.length){
+    alertsHtml='<div class="section-title">⚠ Blind Spot Alerts</div>';
+    alerts.forEach(a=>{
+      const t=a.querySelector('.al-t')?.innerText||'';
+      const tx=a.querySelector('.al-tx')?.innerText||'';
+      alertsHtml+=`<div class="alert-item"><b>${t}</b>${tx?`<div class="item-d">${tx}</div>`:''}</div>`;
+    });
+  }
+
+  const date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   const w=window.open('','_blank','width=900,height=700');
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ShipSafe — Compliance Check</title>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ShipSafe — Compliance Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'DM Sans',sans-serif;background:#fff;color:#1A1916;padding:32px;font-size:14px;line-height:1.6}
-    h1{font-family:'Libre Baskerville',serif;font-size:24px;margin-bottom:4px}
-    h2,h3{font-family:'Libre Baskerville',serif}
-    .print-header{margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #172B36}
-    .print-logo{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:700;color:#172B36;margin-bottom:4px}
-    svg{display:none}
-    button{display:none}
-    @media print{body{padding:16px}}
+    body{font-family:'DM Sans',sans-serif;background:#fff;color:#1A1916;padding:40px;font-size:13px;line-height:1.6;max-width:800px;margin:0 auto}
+    .header{border-bottom:2px solid #172B36;padding-bottom:16px;margin-bottom:24px}
+    .logo{font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;color:#172B36}
+    .date{font-size:11px;color:#888;margin-top:4px}
+    .route{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#172B36;background:#f5f3ee;border:1px solid #ddd;padding:8px 14px;border-radius:6px;margin-bottom:24px;letter-spacing:.3px}
+    .phase{margin-bottom:24px;page-break-inside:avoid}
+    .phase-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#888;border-bottom:1px solid #eee;padding-bottom:6px;margin-bottom:10px}
+    .item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;align-items:flex-start}
+    .item.done .item-t{text-decoration:line-through;color:#aaa}
+    .cb{width:16px;height:16px;border:1.5px solid #ccc;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;background:#fff;margin-top:2px}
+    .item.done .cb{background:#172B36;border-color:#172B36;color:#fff}
+    .item-t{font-size:13px;font-weight:600;color:#1A1916}
+    .item-d{font-size:12px;color:#666;margin-top:3px;line-height:1.5}
+    .section-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#888;border-bottom:1px solid #eee;padding-bottom:6px;margin:24px 0 10px}
+    .alert-item{padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+    .disclaimer{margin-top:32px;padding:12px;background:#fafafa;border:1px solid #eee;border-radius:6px;font-size:11px;color:#888;line-height:1.6}
+    @media print{body{padding:20px}@page{margin:16mm}}
   </style>
   </head><body>
-  <div class="print-header"><div class="print-logo">ShipSafe — Compliance Check Report</div><div style="font-size:12px;color:#666;margin-top:4px">${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div></div>
-  ${content.innerHTML}
+  <div class="header"><div class="logo">ShipSafe</div><div class="date">Compliance Check Report · ${date}</div></div>
+  <div class="route">🗺 ${route}</div>
+  ${phasesHtml}
+  ${alertsHtml}
+  <div class="disclaimer">⚠ This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div>
   <script>window.onload=()=>{window.print();window.onafterprint=()=>window.close()}<\/script>
   </body></html>`);
   w.document.close();
