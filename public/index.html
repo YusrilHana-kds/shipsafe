@@ -1902,38 +1902,41 @@ function printCheckerResult(){
   }
 
   const date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
-  const w=window.open('','_blank','width=900,height=700');
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ShipSafe — Compliance Report</title>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>ShipSafe — Compliance Report</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'DM Sans',sans-serif;background:#fff;color:#1A1916;padding:40px;font-size:13px;line-height:1.6;max-width:800px;margin:0 auto}
+    body{font-family:Arial,sans-serif;background:#fff;color:#1A1916;padding:40px;font-size:13px;line-height:1.6;max-width:800px;margin:0 auto}
     .header{border-bottom:2px solid #172B36;padding-bottom:16px;margin-bottom:24px}
-    .logo{font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;color:#172B36}
+    .logo{font-size:20px;font-weight:700;color:#172B36}
     .date{font-size:11px;color:#888;margin-top:4px}
-    .route{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#172B36;background:#f5f3ee;border:1px solid #ddd;padding:8px 14px;border-radius:6px;margin-bottom:24px;letter-spacing:.3px}
+    .route{font-size:12px;font-weight:600;color:#172B36;background:#f5f3ee;border:1px solid #ddd;padding:8px 14px;border-radius:6px;margin-bottom:24px}
     .phase{margin-bottom:24px;page-break-inside:avoid}
-    .phase-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#888;border-bottom:1px solid #eee;padding-bottom:6px;margin-bottom:10px}
+    .phase-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#888;border-bottom:1px solid #eee;padding-bottom:6px;margin-bottom:10px}
     .item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;align-items:flex-start}
     .item.done .item-t{text-decoration:line-through;color:#aaa}
-    .cb{width:16px;height:16px;border:1.5px solid #ccc;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;background:#fff;margin-top:2px}
+    .cb{width:16px;height:16px;border:1.5px solid #ccc;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;margin-top:2px}
     .item.done .cb{background:#172B36;border-color:#172B36;color:#fff}
     .item-t{font-size:13px;font-weight:600;color:#1A1916}
     .item-d{font-size:12px;color:#666;margin-top:3px;line-height:1.5}
-    .section-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#888;border-bottom:1px solid #eee;padding-bottom:6px;margin:24px 0 10px}
+    .section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#888;border-bottom:1px solid #eee;padding-bottom:6px;margin:24px 0 10px}
     .alert-item{padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
     .disclaimer{margin-top:32px;padding:12px;background:#fafafa;border:1px solid #eee;border-radius:6px;font-size:11px;color:#888;line-height:1.6}
-    @media print{body{padding:20px}@page{margin:16mm}}
+    @page{margin:16mm}
   </style>
   </head><body>
   <div class="header"><div class="logo">ShipSafe</div><div class="date">Compliance Check Report · ${date}</div></div>
-  <div class="route">🗺 ${route}</div>
+  <div class="route">${route}</div>
   ${phasesHtml}
   ${alertsHtml}
-  <div class="disclaimer">⚠ This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div>
-  <script>window.onload=()=>{window.print();window.onafterprint=()=>window.close()}<\/script>
-  </body></html>`);
-  w.document.close();
+  <div class="disclaimer">This checklist is AI-generated and may contain errors. Confirm all requirements with your freight forwarder or customs broker before shipping.</div>
+  </body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='shipsafe-compliance-report.html';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 function ckConfirmReset(){
