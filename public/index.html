@@ -1651,6 +1651,7 @@ function enterApp(){
   const wrap=document.getElementById('scrollProgressWrap');if(wrap)wrap.style.opacity='0';
   try{localStorage.setItem('ss_entered','1')}catch(e){}
   window.scrollTo({top:0});
+  updateTabProgress();
 }
 function goLanding(){
   document.getElementById('landingView').style.display='';
