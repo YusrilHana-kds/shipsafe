@@ -805,7 +805,8 @@ label{font-size:10px;letter-spacing:.3px}
       </div>
 
       <!-- Manage a Shipment — cream card -->
-      <div onclick="enterApp()" class="two-ways-card" style="cursor:pointer;background:#F4F1EA;transition:background .2s" onmouseover="this.style.background='#EDE9E0'" onmouseout="this.style.background='#F4F1EA'">
+      <div onclick="enterApp()" class="two-ways-card" style="cursor:pointer;background:#F4F1EA;transition:background .2s;position:relative;overflow:hidden" onmouseover="this.style.background='#EDE9E0'" onmouseout="this.style.background='#F4F1EA'">
+        <div style="position:absolute;top:16px;right:16px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:#114C5A;border-radius:100px;padding:4px 10px">On Trial</div>
         <div>
           <div class="tw-icon" style="width:52px;height:52px;border-radius:10px;background:rgba(17,76,90,.08);border:1px solid rgba(17,76,90,.15);display:flex;align-items:center;justify-content:center;margin-bottom:36px">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#114C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 012-2h4l2 3h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/></svg>
@@ -4335,6 +4336,11 @@ window.addEventListener('scroll',function(){
       <div class="gate-logo">
         <div class="gate-logo-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l2-2h14l2 2"/><path d="M5 16V8h14v8"/><rect x="7" y="10" width="4" height="4" rx="0.5"/><rect x="13" y="10" width="4" height="4" rx="0.5"/><path d="M12 4v4"/><path d="M8 4h8"/></svg></div>
         <span class="gate-logo-nm">ShipSafe</span>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.08);border-radius:6px;padding:3px">
+          <button class="lang-btn" onclick="setLang('en')" style="font-size:11px;padding:4px 8px">EN</button>
+          <button class="lang-btn" onclick="setLang('id')" style="font-size:11px;padding:4px 8px">ID</button>
+          <button class="lang-btn" onclick="setLang('es')" style="font-size:11px;padding:4px 8px">ES</button>
+        </div>
       </div>
       <div class="gate-title">Early access only.</div>
       <div class="gate-sub">ShipSafe is currently invite-only. Enter your access code or join the waitlist to get notified when we open up.</div>
