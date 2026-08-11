@@ -23,8 +23,6 @@ export async function POST(request) {
       fields: {
         Name: name,
         Email: email,
-        'Export Info': exportInfo || '',
-        Frequency: frequency || '',
         Status: 'Pending',
       },
     }),
