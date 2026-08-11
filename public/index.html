@@ -583,10 +583,16 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .lp-section-c p[style*="margin-bottom:48px"]{margin-bottom:28px!important}
 .lp-section-c .landing-steps-grid{margin-bottom:28px!important}
 /* Two ways */
-.two-ways-wrap{padding:28px 16px!important}
-.two-ways-h2{font-size:28px!important;margin-bottom:0!important}
+.two-ways-wrap{padding:20px 12px!important}
+.two-ways-h2{font-size:24px!important;margin-bottom:0!important}
 .two-ways-grid{grid-template-columns:1fr!important;gap:8px!important}
-.two-ways-card{padding:28px 24px!important;min-height:0!important}
+.two-ways-card{padding:22px 20px!important;min-height:0!important}
+.tw-icon{width:36px!important;height:36px!important;margin-bottom:14px!important;border-radius:8px!important}
+.tw-icon svg{width:18px!important;height:18px!important}
+.tw-tag{font-size:10px!important;margin-bottom:10px!important}
+.tw-title{font-size:26px!important;margin-bottom:10px!important}
+.tw-desc{font-size:14px!important;line-height:1.6!important}
+.tw-footer{margin-top:20px!important}
 }
 h2,h3{font-family:'DM Sans',system-ui,sans-serif;font-weight:600}
 .landing-h1{letter-spacing:-.3px}
@@ -748,14 +754,14 @@ label{font-size:10px;letter-spacing:.3px}
       <!-- Quick Check — teal card -->
       <div onclick="enterApp()" class="two-ways-card" style="cursor:pointer;background:#114C5A;transition:background .2s" onmouseover="this.style.background='#0E3F4C'" onmouseout="this.style.background='#114C5A'">
         <div>
-          <div style="width:52px;height:52px;border-radius:10px;background:rgba(220,180,80,.12);border:1px solid rgba(220,180,80,.2);display:flex;align-items:center;justify-content:center;margin-bottom:36px">
+          <div class="tw-icon" style="width:52px;height:52px;border-radius:10px;background:rgba(220,180,80,.12);border:1px solid rgba(220,180,80,.2);display:flex;align-items:center;justify-content:center;margin-bottom:36px">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DCB450" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
           </div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px;color:#DCB450;text-transform:uppercase;margin-bottom:20px;font-weight:600">Free · No signup</div>
-          <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:44px;font-weight:700;color:#F1F6F4;line-height:1.1;margin-bottom:20px">Quick check</div>
-          <div style="font-size:17px;color:rgba(241,246,244,.65);line-height:1.7;max-width:380px">Select commodity and destination. Get a corridor-specific checklist in 30 seconds. No account. No fluff.</div>
+          <div class="tw-tag" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px;color:#DCB450;text-transform:uppercase;margin-bottom:20px;font-weight:600">Free · No signup</div>
+          <div class="tw-title" style="font-family:'Libre Baskerville',Georgia,serif;font-size:44px;font-weight:700;color:#F1F6F4;line-height:1.1;margin-bottom:20px">Quick check</div>
+          <div class="tw-desc" style="font-size:17px;color:rgba(241,246,244,.65);line-height:1.7;max-width:380px">Select commodity and destination. Get a corridor-specific checklist in 30 seconds. No account. No fluff.</div>
         </div>
-        <div style="margin-top:48px;display:flex;align-items:center;justify-content:space-between">
+        <div class="tw-footer" style="margin-top:48px;display:flex;align-items:center;justify-content:space-between">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.8px;color:#DCB450;text-transform:uppercase">Check corridor</span>
           <div style="width:40px;height:40px;border-radius:50%;background:rgba(220,180,80,.1);border:1px solid rgba(220,180,80,.2);display:flex;align-items:center;justify-content:center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DCB450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -766,14 +772,14 @@ label{font-size:10px;letter-spacing:.3px}
       <!-- Manage a Shipment — cream card -->
       <div onclick="enterApp()" class="two-ways-card" style="cursor:pointer;background:#F4F1EA;transition:background .2s" onmouseover="this.style.background='#EDE9E0'" onmouseout="this.style.background='#F4F1EA'">
         <div>
-          <div style="width:52px;height:52px;border-radius:10px;background:rgba(17,76,90,.08);border:1px solid rgba(17,76,90,.15);display:flex;align-items:center;justify-content:center;margin-bottom:36px">
+          <div class="tw-icon" style="width:52px;height:52px;border-radius:10px;background:rgba(17,76,90,.08);border:1px solid rgba(17,76,90,.15);display:flex;align-items:center;justify-content:center;margin-bottom:36px">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#114C5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 012-2h4l2 3h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/></svg>
           </div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px;color:#114C5A;text-transform:uppercase;margin-bottom:20px;font-weight:600">Guided · Save progress</div>
-          <div style="font-family:'Libre Baskerville',Georgia,serif;font-size:44px;font-weight:700;color:#1A2E35;line-height:1.1;margin-bottom:20px">Manage a shipment</div>
-          <div style="font-size:17px;color:rgba(26,46,53,.65);line-height:1.7;max-width:380px">Have a real shipment? We guide you from compliance checklist to document verification, cost breakdown, and deadline tracking.</div>
+          <div class="tw-tag" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px;color:#114C5A;text-transform:uppercase;margin-bottom:20px;font-weight:600">Guided · Save progress</div>
+          <div class="tw-title" style="font-family:'Libre Baskerville',Georgia,serif;font-size:44px;font-weight:700;color:#1A2E35;line-height:1.1;margin-bottom:20px">Manage a shipment</div>
+          <div class="tw-desc" style="font-size:17px;color:rgba(26,46,53,.65);line-height:1.7;max-width:380px">Have a real shipment? We guide you from compliance checklist to document verification, cost breakdown, and deadline tracking.</div>
         </div>
-        <div style="margin-top:48px;display:flex;align-items:center;justify-content:space-between">
+        <div class="tw-footer" style="margin-top:48px;display:flex;align-items:center;justify-content:space-between">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.8px;color:#114C5A;text-transform:uppercase">Start shipment</span>
           <div style="width:40px;height:40px;border-radius:50%;background:rgba(17,76,90,.08);border:1px solid rgba(17,76,90,.2);display:flex;align-items:center;justify-content:center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#114C5A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
