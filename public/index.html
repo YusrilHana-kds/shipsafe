@@ -542,18 +542,51 @@ body.tara-dragging{user-select:none;-webkit-user-select:none}
 .corridor-banner.show{display:flex}
 
 @media(max-width:900px){#appView.gl-open{margin-right:0}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr 1fr 1fr;gap:8px}}
-@media(max-width:800px){.landing-h1{font-size:42px!important;letter-spacing:-.5px}.landing-sub{font-size:15px}.landing-btns{flex-wrap:wrap}.landing-split{grid-template-columns:1fr!important;gap:32px}.landing-right{display:none}.landing-split{max-width:100%}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}}
+@media(max-width:800px){.landing-h1{font-size:42px!important;letter-spacing:-.5px}.landing-sub{font-size:15px}.landing-btns{flex-wrap:wrap}.landing-split{grid-template-columns:1fr!important;gap:32px}.landing-right{display:none}.landing-split{max-width:100%}#tp-crosscheck>div:first-of-type{grid-template-columns:1fr!important}.landing-hero{height:auto!important;min-height:0!important}.landing-hero-inner{padding:56px 0 40px!important}.landing-trust-sep{display:none}}
 @media(max-width:640px){.hero h1{font-size:26px}.fg,.pg{grid-template-columns:1fr}.tabs-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start;padding:0 4px;scrollbar-width:none;-ms-overflow-style:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{padding:9px 10px;font-size:11px;white-space:nowrap;flex-shrink:0}.tab-panel{padding:16px 14px 24px}.route{flex-direction:column;align-items:flex-start;gap:6px}.ra{display:none}.tara-panel:not(.dragged){width:calc(100vw - 32px);right:16px;bottom:82px}.tara-cta{display:none}.lang-sw{display:none}.landing{padding:0}.landing-problem h2{font-size:26px!important}.gl-hd-btn span{display:none}.gl-hd-btn{padding:5px 7px}.gl-drawer{width:100vw;max-width:100vw}.fd{gap:12px}.fd select,.fd input{height:44px;font-size:16px}.btn-cta{height:48px;font-size:15px}.btn{height:40px;font-size:13px}.tab-btn{padding:10px 10px;font-size:10px;gap:4px}.tab-step{width:18px;height:18px;font-size:9px}.main-card{padding:0;border-radius:0}.tab-panel{padding:16px 14px 80px}.hd{padding:0 16px;height:56px}.hd-nm{font-size:16px}.landing-h1{font-size:36px!important;letter-spacing:-.3px}.landing-sub{font-size:14px!important}.landing-cta{font-size:12px!important;padding:12px 24px!important}.landing-trust{gap:12px}.landing-trust-sep{display:none}.ci{padding:10px 12px}.ci-tx{font-size:13px}.ph-hd{padding:12px 14px}.ov-summary{padding:12px 14px;gap:10px;flex-wrap:wrap}.ov-summary-num{font-size:18px}.ov-summary-label{font-size:10px}.ov-card{border-radius:4px}.tara-panel{width:100vw!important;height:100dvh!important;border-radius:0!important;bottom:0!important;right:0!important;left:0!important;top:0!important;max-height:100dvh!important}.tara-fab{bottom:16px;right:16px}.cost-mode-btn{font-size:11px;padding:6px 10px}.tara-chip{font-size:12px;padding:8px 12px}
-.landing-hero{padding:0 20px}.landing-split{grid-template-columns:1fr!important}.landing-right{display:none}
+/* Landing mobile layout */
+.landing-hero{height:auto!important;min-height:0!important;padding:0 20px}
+.landing-hero-inner{padding:48px 0 32px!important;align-items:flex-start!important}
+.landing-split{grid-template-columns:1fr!important;gap:0!important}
+.landing-right{display:none!important}
+.landing-h1{font-size:34px!important;line-height:1.15!important;margin-bottom:16px!important}
+.landing-sub{font-size:14px!important;margin-bottom:24px!important;max-width:100%!important}
+.landing-btns{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:0}
+.landing-cta{font-size:13px!important;padding:13px 24px!important;width:auto}
+.landing-trust{margin-top:24px;padding-top:20px;gap:16px;flex-wrap:wrap}
+.landing-trust-n{font-size:20px}
+.ticker-wrap{padding:12px 0}
+.ticker-item{font-size:12px;padding:6px 14px}
+/* Sections */
 .landing-cards-grid{grid-template-columns:1fr!important}
-.landing-stats-grid{grid-template-columns:1fr!important}
+.landing-stats-grid{grid-template-columns:1fr!important;gap:12px!important}
 .landing-steps-grid{grid-template-columns:1fr!important}
 .landing-compare-card{grid-template-columns:1fr!important;gap:16px!important}
-.landing-problem{padding:48px 20px!important}
-.two-ways-wrap{padding:40px 16px}
-.two-ways-h2{font-size:36px!important}
-.two-ways-grid{grid-template-columns:1fr!important;gap:3px}
-.two-ways-card{padding:36px 28px!important;min-height:320px!important}
+.landing-problem{padding:40px 20px!important}
+.landing-problem h2{font-size:28px!important;letter-spacing:-.3px!important;margin-bottom:14px!important}
+.landing-problem p{font-size:14px!important;margin-bottom:32px!important}
+.landing-problem .landing-stats-grid{gap:10px!important}
+#landing-what{padding:0 16px!important}
+#landing-what h2{font-size:24px!important}
+#landing-what>div:first-child{margin-bottom:24px!important}
+#landing-how{padding:0 16px!important}
+#landing-how h2{font-size:24px!important}
+#landing-how p{margin-bottom:20px!important}
+/* Section wrappers */
+.lp-section-a{padding:36px 0!important}
+.lp-section-b{padding:40px 20px!important}
+.lp-section-b>div{padding:0!important}
+.lp-section-b h2{font-size:26px!important;line-height:1.3!important}
+.lp-section-b>div>div:first-child{margin-bottom:28px!important}
+.lp-section-c{padding:40px 0 56px!important}
+.lp-section-c h2{font-size:26px!important}
+.lp-section-c p[style*="margin-bottom:48px"]{margin-bottom:28px!important}
+.lp-section-c .landing-steps-grid{margin-bottom:28px!important}
+/* Two ways */
+.two-ways-wrap{padding:28px 16px!important}
+.two-ways-h2{font-size:28px!important;margin-bottom:0!important}
+.two-ways-grid{grid-template-columns:1fr!important;gap:8px!important}
+.two-ways-card{padding:28px 24px!important;min-height:0!important}
 }
 h2,h3{font-family:'DM Sans',system-ui,sans-serif;font-weight:600}
 .landing-h1{letter-spacing:-.3px}
@@ -778,7 +811,7 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
 
   <!-- Section A: What ShipSafe checks -->
-  <div style="padding:60px 0">
+  <div class="lp-section-a" style="padding:60px 0">
   <div id="landing-what" style="max-width:1000px;margin:0 auto;padding:0 20px;position:relative;z-index:1">
     <div style="text-align:center;margin-bottom:36px">
       <div style="display:inline-block;font-size:12px;font-weight:700;color:#172B36;background:#DCB450;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;border-radius:100px;margin-bottom:20px" data-i18n="lc_label">What you get</div>
@@ -827,7 +860,7 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
 
   <!-- Section B: The honest part -->
-  <div id="landing-trust" style="padding:80px 32px;background:#172B36;color:#F1F6F4">
+  <div id="landing-trust" class="lp-section-b" style="padding:80px 32px;background:#172B36;color:#F1F6F4">
     <div style="max-width:800px;margin:0 auto;padding:0 20px">
     <div style="text-align:center;margin-bottom:48px">
       <div style="display:inline-block;font-size:12px;font-weight:700;color:#172B36;background:#DCB450;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;border-radius:100px;margin-bottom:20px" data-i18n="lh_label">The difference</div>
@@ -860,7 +893,7 @@ label{font-size:10px;letter-spacing:.3px}
   </div>
 
   <!-- Section C: How it works -->
-  <div style="padding:80px 0 100px;background:#172B36">
+  <div class="lp-section-c" style="padding:80px 0 100px;background:#172B36">
   <div id="landing-how" style="max-width:800px;margin:0 auto;padding:0 20px;position:relative;z-index:1;text-align:center">
     <div style="display:inline-block;font-size:12px;font-weight:700;color:#172B36;background:#DCB450;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;border-radius:100px;margin-bottom:20px" data-i18n="ls_label">How it works</div>
     <h2 style="font-family:'Libre Baskerville',Georgia,serif;color:#F1F6F4;font-size:34px;font-weight:700;line-height:1.25;margin-bottom:12px" data-i18n="ls_h2">Three steps. One corridor checked.</h2>
