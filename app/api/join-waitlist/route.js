@@ -23,7 +23,6 @@ export async function POST(request) {
       fields: {
         Name: name,
         Email: email,
-        Status: 'Pending',
       },
     }),
   });
