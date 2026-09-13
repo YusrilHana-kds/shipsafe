@@ -6,6 +6,8 @@ export const dynamic = 'force-dynamic';
 // ─── 1. ALLOWED ORIGINS ─────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
   'https://shipsafe-sage.vercel.app',
+  'https://getshipsafe.trade',
+  'https://www.getshipsafe.trade',
   'http://localhost:3000',
   'http://localhost:3001',
 ];
