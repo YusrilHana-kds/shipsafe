@@ -153,9 +153,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#0E2350;color:var(--t
 @media(max-width:400px){.tm-body{grid-template-columns:1fr}.tm-ph{width:100%;height:180px}}
 
 /* TARA + GLOSSARY */
-.as-lead{color:rgba(243,246,251,.75);font-size:17px;max-width:640px;margin:-24px 0 32px}
+.as-lead{color:rgba(243,246,251,.75);font-size:17px;max-width:640px;margin:-24px 0 clamp(16px,3vh,32px)}
 .as-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
-.as-card{display:flex;flex-direction:column;background:#15387A;border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;min-height:520px}
+.as-card{display:flex;flex-direction:column;background:#15387A;border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;height:clamp(440px,calc(100vh - 300px),560px)}
 .as-hd{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#0B1D44;border-bottom:1px solid rgba(255,255,255,.1)}
 .as-hd b{display:block;font-size:16px;color:#F3F6FB}
 .as-hd span{display:block;font-size:13px;color:rgba(243,246,251,.6)}
@@ -163,7 +163,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#0E2350;color:var(--t
 .as-av-gl{border-radius:10px;font-size:15px}
 .as-on{margin-left:auto;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7CC463;display:flex;gap:4px}
 .as-on span{display:inline !important;color:inherit !important;font-size:inherit !important}
-.as-chat{flex:1;padding:16px 18px;display:flex;flex-direction:column;gap:10px;overflow:auto;max-height:300px}
+.as-chat{flex:1;min-height:0;padding:16px 18px;display:flex;flex-direction:column;gap:10px;overflow:auto}
 .as-msg{max-width:88%;padding:11px 14px;border-radius:14px;font-size:14px;line-height:1.55;animation:asIn .25s ease}
 .as-msg.u{align-self:flex-end;background:#66B44C;color:#0E2350;font-weight:500;border-bottom-right-radius:4px}
 .as-msg.a{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#F3F6FB;border-bottom-left-radius:4px}
@@ -189,7 +189,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#0E2350;color:var(--t
 .as-cats{display:flex;flex-wrap:wrap;gap:6px}
 .as-cat{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:5px 10px;border-radius:100px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(243,246,251,.8);cursor:pointer}
 .as-cat.on{background:rgba(102,180,76,.18);border-color:#66B44C;color:#7CC463}
-.as-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:300px;padding-right:2px}
+.as-list{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px;overflow:auto;padding-right:2px}
 .as-gi{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px}
 .as-gi-hd{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;background:none;border:none;color:#F3F6FB;font:inherit;font-size:14px;font-weight:600;text-align:left;cursor:pointer}
 .as-gi-hd em{font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;padding:2px 7px;border-radius:5px;background:rgba(102,180,76,.14);color:#7CC463;flex-shrink:0}
@@ -201,7 +201,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#0E2350;color:var(--t
 .as-gi.open .as-gi-bd{display:block}
 .as-gi-bd .gl-key{display:block;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7CC463}
 .as-empty{font-size:14px;color:rgba(243,246,251,.6);padding:12px 2px}
-@media(max-width:900px){.as-grid{grid-template-columns:1fr}.as-card{min-height:0}}
+@media(max-width:900px){.as-grid{grid-template-columns:1fr}.as-card{height:auto;max-height:none}.as-chat{max-height:340px}.as-list{max-height:320px}}
+@media(min-width:901px) and (max-height:780px){.as-lead{display:none}#assist .ls-h2{margin-bottom:16px}.as-card{height:max(380px,calc(100vh - 190px))}.as-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}.as-chip{white-space:nowrap}.as-hd{padding:10px 18px}}
 /* LANDING PAGE */
 .landing{background:#0E2350;min-height:calc(100dvh - 64px);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;position:relative;overflow-x:clip}
 .landing-hero{min-height:calc(100dvh - 64px);padding:0 32px;display:flex;flex-direction:column;align-items:stretch;width:100%}
