@@ -1,8 +1,9 @@
 """Adds background music + UI sound effects to the silent render.
 
 Run after `node video/render.mjs`:  python3 video/sound.py  ->  public/video/how-it-works.mp4
+For a cut (`node video/render.mjs --cut short`):  python3 video/sound.py --cut short  ->  video/out/how-it-works-short.mp4
 """
-import os, subprocess, tempfile, wave
+import json, os, subprocess, sys, tempfile, wave
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -59,7 +60,7 @@ def hat():
     n = rng.standard_normal(int(0.04 * SR))
     return np.diff(n, prepend=0) * np.exp(-np.arange(len(n)) / SR * 90)
 
-def music():
+def music(arp=(6.2, 70), drums=(14, 67)):
     m = np.zeros(N)
     bars = int(np.ceil(DUR / BAR))
     for b in range(bars):
@@ -70,13 +71,13 @@ def music():
                 place(m, pad_note(midi(note), BAR * 2 + 1.2), t0, 0.10)
         for beat in range(4):
             tb = t0 + beat * BEAT
-            if 6.2 < tb < 70:
+            if arp[0] < tb < arp[1]:
                 if beat in (0, 2):
                     place(m, pluck(midi(chord[0] - 12), 0.9), tb, 0.22)
                 for half in (0, 1):
                     note = chord[(beat * 2 + half) % 4] + 12
                     place(m, pluck(midi(note)), tb + half * BEAT / 2, 0.06)
-            if 14 < tb < 67:
+            if drums[0] < tb < drums[1]:
                 if beat in (0, 2):
                     place(m, kick(), tb, 0.30)
                 place(m, hat(), tb + BEAT / 2, 0.035)
@@ -130,31 +131,36 @@ def scan(sec=2.0):
     f = 300 + 500 * tt / sec
     return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * tt / sec) ** 2
 
-def sfx():
+def sfx(at=lambda t: t, joins=(6.4, 14.0, 25.2, 36.6, 45.0, 53.2, 59.2, 67.2)):
+    """`at` maps a source time to output time (None = cut out); `joins` are output times for transitions."""
     s = np.zeros(N)
-    for t in (6.4, 14.0, 25.2, 36.6, 45.0, 53.2, 59.2, 67.2):
+    def put(sig, t, gain):
+        o = at(t)
+        if o is not None:
+            place(s, sig, o, gain)
+    for t in joins:
         place(s, whoosh(), t - .25, .18)
-    place(s, alert(low=True), 3.9, .25)
+    put(alert(low=True), 3.9, .25)
     for t in (7.6, 8.3, 8.9, 9.4, 10.0, 10.5, 11.0, 11.4, 12.2):
-        place(s, click(), t, .22)
+        put(click(), t, .22)
     for i in range(5):
-        place(s, pop(), 12.7 + i * .2, .06)
-        place(s, tick(), 17.2 + i * .75, .2)
-    place(s, scan(), 26.6, .07)
-    place(s, alert(low=True), 29.2, .25)
-    place(s, alert(), 30.6, .18)
-    place(s, tick(), 31.9, .2)
+        put(pop(), 12.7 + i * .2, .06)
+        put(tick(), 17.2 + i * .75, .2)
+    put(scan(), 26.6, .07)
+    put(alert(low=True), 29.2, .25)
+    put(alert(), 30.6, .18)
+    put(tick(), 31.9, .2)
     for i in range(6):
-        place(s, pop(), 37.4 + i * .3, .05)
-    place(s, pop(True), 46.0, .2)
-    place(s, pop(False), 48.2, .2)
+        put(pop(), 37.4 + i * .3, .05)
+    put(pop(True), 46.0, .2)
+    put(pop(False), 48.2, .2)
     for t in (54.1, 54.3, 54.5):
-        place(s, click(), t, .12)
+        put(click(), t, .12)
     for i in range(3):
-        place(s, pop(), 60.8 + i * .35, .08)
-    place(s, alert(), 62.9, .1)
-    place(s, alert(), 63.2, .1)
-    place(s, chime(), 67.5, .22)
+        put(pop(), 60.8 + i * .35, .08)
+    put(alert(), 62.9, .1)
+    put(alert(), 63.2, .1)
+    put(chime(), 67.5, .22)
     return s
 
 def write_wav(path, mono):
@@ -170,12 +176,31 @@ def mux(video, audio, out):
     subprocess.run([FFMPEG, '-y', '-loglevel', 'error', '-i', video, '-i', audio, '-map', '0:v', '-map', '1:a',
                     '-c:v', 'copy', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', out], check=True)
 
+def time_map(segments):
+    def at(t):
+        for g in segments:
+            if g['a'] <= t < g['b']:
+                return g['o'] + (t - g['a']) / g['sp']
+        return None
+    return at
+
 if __name__ == '__main__':
-    silent = os.path.join(HERE, 'out', 'how-it-works-silent.mp4')
+    cut = sys.argv[sys.argv.index('--cut') + 1] if '--cut' in sys.argv else None
+    out_dir = os.path.join(HERE, 'out')
+    if cut:
+        segs = json.load(open(os.path.join(out_dir, f'cut-{cut}.json')))
+        DUR = segs[-1]['o'] + segs[-1]['d']
+        N = int(SR * DUR)
+        at = time_map(segs)
+        mus = music(arp=(segs[0]['d'] - .2, DUR - 3.5), drums=(segs[2]['o'] - .2, DUR - 4.5))
+        fx = sfx(at, joins=[g['o'] for g in segs[1:]])
+        silent, target = os.path.join(out_dir, f'how-it-works-{cut}-silent.mp4'), os.path.join(out_dir, f'how-it-works-{cut}.mp4')
+    else:
+        mus, fx = music(), sfx()
+        silent, target = os.path.join(out_dir, 'how-it-works-silent.mp4'), os.path.join(ROOT, 'public', 'video', 'how-it-works.mp4')
     with tempfile.TemporaryDirectory() as tmp:
-        mus = music()
-        mix = normalize(0.75 * mus / (np.abs(mus).max() + 1e-9) + 0.9 * sfx())
+        mix = normalize(0.75 * mus / (np.abs(mus).max() + 1e-9) + 0.9 * fx)
         audio = os.path.join(tmp, 'mix.wav')
         write_wav(audio, mix)
-        mux(silent, audio, os.path.join(ROOT, 'public', 'video', 'how-it-works.mp4'))
-    print('wrote public/video/how-it-works.mp4')
+        mux(silent, audio, target)
+    print('wrote', os.path.relpath(target, ROOT))

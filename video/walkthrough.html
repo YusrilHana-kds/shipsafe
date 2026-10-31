@@ -181,6 +181,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#0E2350}
 .gauge{width:92px;height:92px;flex-shrink:0}
 .gauge circle{fill:none;stroke-width:8}
 .gauge text{font-family:'IBM Plex Mono',monospace;font-size:20px;fill:#F3F6FB;text-anchor:middle;dominant-baseline:central}
+#dip{inset:0;background:#0E2350;opacity:0;pointer-events:none;z-index:20}
 #illus{right:72px;top:88px;font-family:'IBM Plex Mono',monospace;font-size:16px;color:rgba(243,246,251,.45)}
 /* scene 9: outro */
 #bigLogo{left:50%;top:300px;height:180px;transform:translateX(-50%)}
@@ -239,7 +240,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#0E2350}
         <div class="it"><div class="ck">✓</div><div><b>SVLK / FLEGT legality licence</b><span>Timber legality · issued in Indonesia</span></div><div class="tag">Required</div></div>
         <div class="it"><div class="ck">✓</div><div><b>ISPM 15 heat-treated pallets</b><span>Wooden packaging · stamped</span></div><div class="tag">Required</div></div>
         <div class="it"><div class="ck">✓</div><div><b>Formaldehyde emission limit</b><span>REACH Annex XVII · test report</span></div><div class="tag">Required</div></div>
-        <div class="it"><div class="ck">✓</div><div><b>REX statement on origin</b><span>EU GSP · lower duty for your buyer</span></div><div class="tag">Duty saver</div></div>
+        <div class="it"><div class="ck">✓</div><div><b>Product traceability label</b><span>GPSR (EU) 2023/988 · name, address, batch no.</span></div><div class="tag">Required</div></div>
       </div>
     </div>
     <div class="abs side" id="blind"><div class="lbl">⚠ Blind spot</div><p>Your buyer can't place EUDR-covered wood on the EU market without plot-level geolocation. Ask your sawmill for it <b>now</b>.</p></div>
@@ -340,6 +341,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#0E2350}
   <img class="abs" id="logo" src="../public/logo-dark.png" alt="">
   <div class="abs" id="steps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="abs" id="illus">Illustrative example</div>
+  <div class="abs" id="dip"></div>
   <div class="abs" id="sub"></div>
   <div class="abs" id="caption"><span class="n" id="capN">01</span><span class="t" id="capT"></span><span class="s" id="capS"></span></div>
 </div>
@@ -532,12 +534,32 @@ function renderAt(t) {
 window.renderAt = renderAt;
 window.DURATION = DURATION;
 
+// Cuts (?cut=short): play selected source ranges [from, to, speed] back to back, dipping to navy at each join
+const CUTS = {
+  short: [[0.2, 5.4, 1], [6.9, 13.2, 1.6], [14.1, 22.6, 1.6], [25.3, 34.3, 1.5], [36.8, 42.4, 1.6], [59.3, 64.4, 1.4], [67.4, 71.8, 1]],
+};
+const cut = CUTS[new URLSearchParams(location.search).get('cut')];
+if (cut) {
+  let o = 0;
+  const segs = cut.map(([a, b, sp]) => { const d = (b - a) / sp, s = { a, b, sp, o, d }; o += d; return s; });
+  window.SEGMENTS = segs;
+  window.DURATION = o;
+  const base = renderAt;
+  window.renderAt = t => {
+    const s = segs.find(x => t < x.o + x.d) || segs[segs.length - 1];
+    base(s.a + (t - s.o) * s.sp);
+    $('#dip').style.opacity = Math.max(0, ...segs.slice(1).map(x => 1 - Math.abs(t - x.o) / .25));
+    $('#steps').style.display = 'none';
+    if ($('#capN').textContent === '07') $('#capN').textContent = '05';
+  };
+}
+
 // Preview mode: play in real time unless the renderer drives it (?render)
 if (!location.search.includes('render')) {
   const t0 = performance.now();
-  const loop = () => { renderAt(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); };
+  const loop = () => { window.renderAt(((performance.now() - t0) / 1000) % window.DURATION); requestAnimationFrame(loop); };
   document.fonts.ready.then(loop);
-} else renderAt(0);
+} else window.renderAt(0);
 </script>
 </body>
 </html>

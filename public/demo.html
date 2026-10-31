@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShipSafe — Interactive Demo</title>
+<meta name="description" content="Be Rina for two minutes: check a real export corridor, catch document errors before the bank, and see your landed cost — in your browser.">
+<link rel="icon" type="image/png" href="/logo-mark.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0E2350;--bg2:#0B1D44;--card:#15387A;--line:rgba(255,255,255,.12);--tx:#F3F6FB;--tx2:rgba(243,246,251,.78);--tx3:rgba(243,246,251,.58);--gn:#66B44C;--gnl:#7CC463;--sky:#408CC8;--am:#E8B44A;--rd:#E05C52}
+html,body{height:100%}
+body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
+.h{font-family:'Plus Jakarta Sans','DM Sans',sans-serif;font-weight:800;letter-spacing:-.5px}
+.mono{font-family:'IBM Plex Mono',monospace}
+.g{color:var(--gn)}
+
+.shell{display:flex;flex-direction:column;height:100%;min-height:100vh}
+.bar{display:flex;align-items:center;gap:16px;padding:10px 18px;background:var(--card);border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0}
+.home[hidden]{display:none}
+.home{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--tx);padding:4px 12px 4px 8px;border:1px solid rgba(255,255,255,.25);border-radius:100px;flex-shrink:0;transition:border-color .15s}
+.home:hover{border-color:var(--gn)}
+.home .arr{font-size:14px}
+.home img{height:20px;width:auto;display:block}
+.bar .dot{width:8px;height:8px;border-radius:50%;background:var(--gn);box-shadow:0 0 8px var(--gn);flex-shrink:0}
+.bar .ttl{white-space:nowrap}
+.bar .ttl em{font-style:normal;color:var(--tx3)}
+.steps{display:flex;gap:6px;margin-left:auto}
+.steps span{padding:4px 10px;border-radius:100px;border:1px solid var(--line);color:var(--tx3);white-space:nowrap}
+.steps span.on{background:var(--gn);border-color:var(--gn);color:var(--bg);font-weight:600}
+.steps span.done{color:var(--gnl);border-color:rgba(102,180,76,.5)}
+.runs{border:1px solid rgba(255,255,255,.3);padding:3px 8px;color:var(--tx2);white-space:nowrap}
+.full{color:var(--tx);text-decoration:none}.full:hover{border-color:var(--gn);color:var(--gnl)}
+
+main{flex:1;overflow:auto;padding:26px 28px 30px}
+.wrap{max-width:1040px;margin:0 auto}
+.screen{animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sky);font-weight:600;margin-bottom:8px}
+h1.h{font-size:clamp(26px,3.4vw,38px);line-height:1.12;margin-bottom:8px}
+h2.h{font-size:clamp(22px,2.6vw,28px);line-height:1.15;margin-bottom:6px}
+.lead{color:var(--tx2);font-size:16px;max-width:640px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px}
+.btn{text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:var(--gn);color:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:15px;padding:12px 22px;border-radius:100px;transition:transform .15s,background .15s}
+.btn:hover{background:var(--gnl);transform:translateY(-1px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.ghost{background:transparent;color:var(--tx);border:1px solid rgba(255,255,255,.3)}
+.btn.ghost:hover{border-color:var(--gn);color:var(--gnl)}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--tx3);font-family:'IBM Plex Mono',monospace}
+
+/* intro */
+.intro{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center}
+.avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--gn));display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:32px;color:var(--bg);margin-bottom:16px}
+.order{padding:20px}
+.order .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gnl);margin-bottom:12px}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;font-size:14px}
+.kv dt{color:var(--tx3)}
+.kv dd{font-weight:500}
+.q{margin:22px 0 4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px}
+
+/* corridor */
+.form{padding:22px;margin-top:18px}
+.hint{display:inline-flex;gap:8px;align-items:center;background:rgba(102,180,76,.12);border:1px solid rgba(102,180,76,.4);border-radius:100px;padding:6px 14px;font-size:13px;margin-top:14px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+.fl{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--tx2)}
+select{width:100%;height:48px;border-radius:10px;background:var(--bg);border:2px solid rgba(255,255,255,.16);color:var(--tx);font:inherit;font-size:15px;padding:0 14px;outline:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--tx3) 50%),linear-gradient(135deg,var(--tx3) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 14px) 21px;background-size:6px 6px;background-repeat:no-repeat}
+select:focus{border-color:var(--gn)}
+select.ok{border-color:rgba(102,180,76,.6)}
+.inco-help{font-size:12px;color:var(--tx3);margin-top:6px}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 0;text-align:center}
+.spinner{width:44px;height:44px;border-radius:50%;border:4px solid rgba(255,255,255,.15);border-top-color:var(--gn);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.srcs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.srcs span{padding:6px 12px;border-radius:100px;border:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:12px;opacity:0;animation:fadeIn .3s ease forwards}
+
+/* checklist */
+.route{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--tx2);margin-bottom:12px}
+.route i{font-style:normal;color:var(--tx3);margin:0 6px}
+.prog{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.pbar{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}
+.pbar div{height:100%;background:var(--gn);transition:width .3s}
+.pct{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gnl);min-width:96px;text-align:right}
+.cl{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:16px;align-items:start}
+.items{display:flex;flex-direction:column;gap:8px}
+.it{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.it-hd{display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%;text-align:left}
+.ck{flex-shrink:0;width:22px;height:22px;border-radius:6px;border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;color:transparent;font-size:14px;font-weight:800}
+.it.on .ck{background:var(--gn);border-color:var(--gn);color:var(--bg)}
+.it-t{flex:1;min-width:0}
+.it-t b{display:block;font-size:15px;font-weight:600}
+.it-t span{display:block;font-size:12.5px;color:var(--tx3)}
+.it.on .it-t b{color:var(--tx3);text-decoration:line-through}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:6px;white-space:nowrap;background:rgba(102,180,76,.14);color:var(--gnl)}
+.tag.cond{background:rgba(64,140,200,.18);color:#9CC7EA}
+.chev{color:var(--tx3);transition:transform .2s;font-size:12px}
+.it.open .chev{transform:rotate(180deg)}
+.it-bd{display:none;padding:0 14px 14px 48px;font-size:13.5px;color:var(--tx2)}
+.it.open .it-bd{display:block}
+.it-bd .src{display:block;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sky)}
+.side{display:flex;flex-direction:column;gap:12px}
+.box{border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--tx2)}
+.box em{display:block;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.box b{color:var(--tx)}
+.warn{background:rgba(224,92,82,.12);border:1px solid rgba(224,92,82,.45)}.warn em{color:#F49A92}
+.pay{background:rgba(102,180,76,.1);border:1px solid rgba(102,180,76,.4)}.pay em{color:var(--gnl)}
+.tip{background:rgba(232,180,74,.1);border:1px solid rgba(232,180,74,.45)}.tip em{color:#F2C46B}
+
+/* documents */
+.docs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:16px;align-items:start}
+.dlist{display:flex;flex-direction:column;gap:8px}
+.doc{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.2);text-align:left;width:100%}
+.doc.up{border-style:solid;background:var(--card)}
+.doc .ic{width:30px;height:38px;border-radius:4px;background:#F3F6FB;flex-shrink:0;position:relative;opacity:.35}
+.doc.up .ic{opacity:1}
+.doc .ic::before{content:'';position:absolute;left:6px;right:6px;top:8px;height:3px;background:#9CC7EA;box-shadow:0 7px 0 #9CC7EA,0 14px 0 #C9D6E6}
+.doc b{display:block;font-size:14px}
+.doc span span{display:block;font-size:12px;color:var(--tx3);font-family:'IBM Plex Mono',monospace}
+.doc .up-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.12);margin-top:6px;overflow:hidden;width:140px}
+.doc .up-bar div{height:100%;background:var(--gn);width:0;transition:width .35s linear}
+.doc .view{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sky)}
+.res{padding:18px}
+.res-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 10px;border-radius:100px}
+.badge.bad{background:rgba(224,92,82,.18);color:#F49A92;border:1px solid rgba(224,92,82,.5)}
+.badge.good{background:rgba(102,180,76,.16);color:var(--gnl);border:1px solid rgba(102,180,76,.5)}
+.iss{border-radius:10px;padding:13px 15px;margin-bottom:10px;border:1px solid;font-size:13.5px;color:var(--tx2)}
+.iss .ti{font-weight:700;font-size:15px;margin-bottom:4px}
+.iss .ref{font-family:'IBM Plex Mono',monospace;font-size:11.5px;margin-top:6px}
+.iss .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.iss .acts button{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.3)}
+.iss .acts .fix{background:var(--gn);color:var(--bg);border-color:var(--gn);font-weight:600}
+.hl{background:rgba(224,92,82,.35);color:#fff;border-radius:4px;padding:0 4px}
+.crit{background:rgba(224,92,82,.12);border-color:rgba(224,92,82,.55)}.crit .ti,.crit .ref{color:#F49A92}
+.wrn{background:rgba(232,180,74,.1);border-color:rgba(232,180,74,.5)}.wrn .ti,.wrn .ref{color:#F2C46B}
+.okk{background:rgba(102,180,76,.1);border-color:rgba(102,180,76,.45)}.okk .ti{color:var(--gnl)}
+.scan{position:relative;height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden;margin:16px 0}
+.scan div{position:absolute;inset:0;width:30%;background:var(--gn);animation:sweep 1s ease-in-out infinite}
+@keyframes sweep{from{left:-30%}to{left:100%}}
+.empty{padding:28px 18px;text-align:center;color:var(--tx3);font-size:14px}
+
+/* doc preview modal */
+.modal{position:fixed;inset:0;background:rgba(5,12,30,.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;animation:fadeIn .2s}
+.paper{background:#FBFCFE;color:#101F38;border-radius:8px;width:100%;max-width:560px;max-height:90%;overflow:auto;padding:26px 28px;box-shadow:0 30px 80px rgba(0,0,0,.5);font-size:13px}
+.paper h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid #101F38;padding-bottom:8px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline}
+.paper h3 small{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0;text-transform:none;color:#56607A}
+.paper table{width:100%;border-collapse:collapse}
+.paper td{padding:7px 4px;border-bottom:1px solid #E1E6EF;vertical-align:top}
+.paper td:first-child{color:#56607A;width:38%;font-size:12px}
+.paper .flag{background:#FDE2DF;outline:2px solid #E05C52;border-radius:3px;padding:1px 4px}
+.paper .fixed{background:#E3F4DC;outline:2px solid #66B44C;border-radius:3px;padding:1px 4px}
+.paper .close{margin-top:16px;width:100%;padding:10px;border-radius:8px;background:#101F38;color:#fff;font-weight:600}
+
+/* costs */
+.costs{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.ctrl{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:100px;padding:3px}
+.seg button{padding:7px 18px;border-radius:100px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--tx2)}
+.seg button.on{background:var(--gn);color:var(--bg);font-weight:600}
+.num{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--tx3)}
+.num input{width:140px;height:38px;border-radius:8px;background:var(--bg);border:2px solid rgba(255,255,255,.16);color:var(--tx);font:inherit;font-family:'IBM Plex Mono',monospace;font-size:14px;padding:0 10px;outline:none}
+.num input:focus{border-color:var(--gn)}
+.ctab{width:100%;border-collapse:collapse;font-size:14px}
+.ctab td{padding:9px 6px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ctab td:last-child{text-align:right;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+.ctab .cat{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:2px 8px;border-radius:5px;background:rgba(255,255,255,.08);color:var(--tx2);margin-right:8px;display:inline-block;min-width:66px;text-align:center}
+.ctab tr.buyer{opacity:.45}
+.ctab tr.new td{animation:flash 1.2s ease}
+@keyframes flash{from{background:rgba(102,180,76,.25)}to{background:transparent}}
+.tot{display:flex;justify-content:space-between;align-items:baseline;padding:12px 6px 0;font-weight:600}
+.tot b{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px 18px}
+.kpis span{display:block;font-size:12px;color:var(--tx3)}
+.kpis b{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800}
+.delta{font-size:12px;font-family:'IBM Plex Mono',monospace}
+
+/* done */
+.done{text-align:center;max-width:680px;margin:0 auto;padding-top:10px}
+.done .seal{width:84px;height:84px;margin:0 auto 16px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0;text-align:left}
+.sum div{padding:16px}
+.sum b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--gnl)}
+.sum span{font-size:13px;color:var(--tx2)}
+.slogan{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:24px;margin:6px 0 20px}
+.slogan .b{color:var(--sky)}
+
+@media(max-width:1180px){.runs:not(.full){display:none}}
+@media(max-width:1020px){.bar .ttl em{display:none}}
+@media(max-width:820px){
+  .bar .ttl em,.runs{display:none}
+  .steps span:not(.on){display:none}
+  main{padding:18px 16px 24px}
+  .intro,.cl,.docs,.costs,.fields,.sum{grid-template-columns:1fr}
+  .it-bd{padding-left:14px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="bar">
+    <a class="home" id="homeLink" href="/" target="_top" aria-label="Back to ShipSafe website" title="Back to ShipSafe website"><span class="arr" aria-hidden="true">←</span><img src="/logo-dark.png" alt=""></a>
+    <span class="dot"></span>
+    <span class="ttl">Booth demo <em>· Be Rina for two minutes</em></span>
+    <div class="steps" id="steps"></div>
+    <span class="runs">Runs in your browser</span>
+    <a class="runs full" id="fullLink" href="/demo" target="_blank" rel="noopener" hidden>Full screen ↗</a>
+  </div>
+  <main><div class="wrap" id="app"></div></main>
+</div>
+<div id="modal"></div>
+
+<script>
+// ───────────── Scenario data (illustrative, curated) ─────────────
+const ORDER = { product: 'Teak dining sets', hs: '9403.60', value: 48000, cogs: 36500, buyer: 'Hanse Wohnen GmbH', city: 'Hamburg', seller: 'PT Jati Rina Furniture', port: 'Tanjung Emas, Semarang' };
+
+const CHECKLIST = [
+  { id: 'eudr', t: 'EUDR due diligence statement', s: 'Reg. (EU) 2023/1115 · deforestation-free timber', tag: 'Required',
+    d: 'Wooden furniture (HS 9403.60) is in scope of the EU Deforestation Regulation. Your German importer files the due diligence statement — and needs the geolocation of the plots where the teak was harvested. Ask your timber supplier for plot coordinates and legality papers now.', src: 'EUR-Lex · Regulation (EU) 2023/1115, Annex I' },
+  { id: 'flegt', t: 'SVLK V-Legal document (FLEGT licence)', s: 'Timber legality · one licence per shipment', tag: 'Required',
+    d: "Indonesia's SVLK V-Legal document is accepted by the EU as a FLEGT licence. It is issued per shipment through the SILK system, so apply before the container is stuffed.", src: 'EU–Indonesia FLEGT VPA' },
+  { id: 'ispm', t: 'ISPM 15 heat-treated pallets & crates', s: 'Wooden packaging · IPPC stamp', tag: 'Required',
+    d: 'Every wooden pallet and crate must be heat-treated (HT) and carry the IPPC mark. Unmarked packaging can be refused or destroyed at the EU border — at your cost.', src: 'IPPC · ISPM 15' },
+  { id: 'form', t: 'Formaldehyde emission test', s: 'REACH Annex XVII, entry 77', tag: 'Required',
+    d: 'Furniture placed on the EU market must not release more than 0.062 mg/m³ of formaldehyde. Get a test report from an accredited lab for any MDF or plywood parts used in the sets.', src: 'EUR-Lex · Regulation (EU) 2023/1464' },
+  { id: 'gpsr', t: 'Product traceability label', s: 'General Product Safety Regulation (EU) 2023/988', tag: 'Required',
+    d: 'Each item (or its packaging) needs your company name, postal and email address, and a type or batch number. Your buyer must also be named as the responsible economic operator in the EU.', src: 'EUR-Lex · Regulation (EU) 2023/988, Art. 9' },
+  { id: 'coo', t: 'Certificate of Origin (e-SKA)', s: 'Only if the LC asks for it', tag: 'Conditional', cond: true,
+    d: "EU import duty on wooden furniture is already 0%, so you don't need a preferential origin proof. But if the Letter of Credit lists a Certificate of Origin, request it through Kemendag's e-SKA system before you present documents.", src: 'Kemendag · e-SKA' },
+];
+const CIF_ITEM = { id: 'ins', t: 'Marine insurance certificate', s: 'CIF · minimum ICC (C), 110% of value', tag: 'Required for CIF',
+  d: 'Under CIF you must insure the cargo to Hamburg — at least Institute Cargo Clauses (C), covering 110% of the contract value, in the LC currency. The certificate is part of the bank presentation.', src: 'ICC · Incoterms® 2020 (CIF), UCP 600 Art. 28' };
+
+const DOCS = [
+  { id: 'inv', name: 'Commercial Invoice', file: 'INV-2026-041.pdf' },
+  { id: 'pl', name: 'Packing List', file: 'PL-2026-041.pdf' },
+  { id: 'bl', name: 'Bill of Lading (draft)', file: 'BL-SRG-77310.pdf' },
+  { id: 'lc', name: 'Letter of Credit', file: 'LC-DE-88421.pdf' },
+];
+
+const COSTS = [
+  { cat: 'Inland', item: 'Truck Jepara → Tanjung Emas port', v: () => 380 },
+  { cat: 'Port', item: 'Terminal handling + export customs', v: () => 310 },
+  { cat: 'Packing', item: 'ISPM 15 heat-treated pallets', v: () => 180 },
+  { cat: 'Testing', item: 'Formaldehyde emission test', v: () => 350 },
+  { cat: 'Licence', item: 'SVLK V-Legal document', v: () => 40 },
+  { cat: 'Bank', item: 'LC negotiation (0.3%)', v: s => Math.round(s.value * .003) },
+  { cat: 'Freight', item: 'Ocean freight Semarang → Hamburg (40ft HC)', v: () => 2600, cif: true },
+  { cat: 'Insurance', item: 'Marine insurance, ICC (C) on 110%', v: s => Math.round(s.value * 1.1 * .003), cif: true },
+];
+
+// ───────────── State ─────────────
+const S = { step: 0, corridor: { product: '', origin: '', dest: '', inco: '' }, checked: new Set(), open: null,
+  uploaded: 0, checking: false, checked2: false, fixed: new Set(), value: ORDER.value, cogs: ORDER.cogs };
+const STEPS = ['Start', 'Corridor', 'Checklist', 'Documents', 'Costs', 'Done'];
+const $ = s => document.querySelector(s);
+const money = n => '$' + Math.round(n).toLocaleString('en-US');
+const flag = { Indonesia: '🇮🇩', Germany: '🇩🇪' };
+const items = () => S.corridor.inco === 'CIF' ? [...CHECKLIST, CIF_ITEM] : CHECKLIST;
+
+function go(step) { S.step = step; render(); document.querySelector('main').scrollTop = 0; }
+
+function renderSteps() {
+  $('#steps').innerHTML = STEPS.slice(1, 5).map((n, i) => {
+    const k = i + 1;
+    return `<span class="${S.step === k ? 'on' : S.step > k ? 'done' : ''}">${S.step > k ? '✓' : k} ${n}</span>`;
+  }).join('');
+}
+
+function render() {
+  renderSteps();
+  const views = [intro, corridor, checklist, documents, costs, done];
+  const enter = S.shown !== S.step; S.shown = S.step;
+  $('#app').innerHTML = `<div class="${enter ? 'screen' : ''}">${views[S.step]()}</div>`;
+  (afterRender[S.step] || (() => {}))();
+}
+const afterRender = {};
+
+// ───────────── 0. Intro ─────────────
+function intro() {
+  return `<div class="intro">
+    <div>
+      <div class="avatar">R</div>
+      <div class="eyebrow">Meet Rina</div>
+      <h1 class="h">Her first big order. <span class="g">One shot to get it right.</span></h1>
+      <p class="lead">Rina runs a teak furniture workshop in Jepara, Indonesia. A buyer in Hamburg just ordered a full container — paid by Letter of Credit. One wrong document and the bank refuses to pay.</p>
+      <div class="q">Can she ship it clean? Help her in four steps.</div>
+      <div class="actions" style="justify-content:flex-start"><button class="btn" onclick="go(1)">Start as Rina →</button><span class="note">Sample scenario · ~2 minutes</span></div>
+    </div>
+    <div class="card order">
+      <div class="lbl">Purchase order · #HW-2026-118</div>
+      <dl class="kv">
+        <dt>Product</dt><dd>${ORDER.product} · HS ${ORDER.hs}</dd>
+        <dt>Quantity</dt><dd>48 sets · 1 × 40ft high cube</dd>
+        <dt>Order value</dt><dd>${money(ORDER.value)}</dd>
+        <dt>Buyer</dt><dd>${ORDER.buyer}, ${ORDER.city}</dd>
+        <dt>Payment</dt><dd>Letter of Credit, at sight</dd>
+        <dt>Ship by</dt><dd>30 Nov 2026</dd>
+      </dl>
+    </div>
+  </div>`;
+}
+
+// ───────────── 1. Corridor ─────────────
+function corridor() {
+  const c = S.corridor;
+  const opt = (val, list) => list.map(([v, label, off]) => `<option value="${v}" ${off ? 'disabled' : ''} ${val === v ? 'selected' : ''}>${label}</option>`).join('');
+  const ready = c.product && c.origin && c.dest && c.inco;
+  return `<div class="eyebrow">Step 1 · Pick the corridor</div>
+    <h2 class="h">What is Rina shipping, and where?</h2>
+    <p class="lead">Choose from the dropdowns — the same way it works in ShipSafe.</p>
+    <div class="hint">📦 Rina's order: teak dining sets · Indonesia → Germany</div>
+    <div class="card form">
+      <div class="fields">
+        <div><div class="fl">Product / HS code</div><select id="fProduct" class="${c.product ? 'ok' : ''}">${opt(c.product, [['', 'Search product or HS code'], ['furn', 'Wooden dining furniture · 9403.60'], ['x1', 'Rattan chairs · 9401.52 (not in this demo)', 1], ['x2', 'Cotton T-shirts · 6109.10 (not in this demo)', 1]])}</select></div>
+        <div><div class="fl">Origin</div><select id="fOrigin" class="${c.origin ? 'ok' : ''}">${opt(c.origin, [['', 'Select origin'], ['Indonesia', '🇮🇩 Indonesia'], ['x', '🇻🇳 Vietnam (not in this demo)', 1]])}</select></div>
+        <div><div class="fl">Destination</div><select id="fDest" class="${c.dest ? 'ok' : ''}">${opt(c.dest, [['', 'Select destination'], ['Germany', '🇩🇪 Germany'], ['x', '🇺🇸 United States (not in this demo)', 1]])}</select></div>
+        <div><div class="fl">Incoterm</div><select id="fInco" class="${c.inco ? 'ok' : ''}">${opt(c.inco, [['', 'Select terms'], ['FOB', 'FOB — buyer books the ship'], ['CIF', 'CIF — Rina pays freight + insurance'], ['x', 'EXW (not in this demo)', 1]])}</select>
+          <div class="inco-help">Tip: try FOB first, then switch to CIF later and watch the checklist and costs change.</div></div>
+      </div>
+      <div class="actions"><button class="btn ghost" onclick="go(0)">← Back</button><button class="btn" id="goBtn" ${ready ? '' : 'disabled'} onclick="runCheck()">Check my route →</button></div>
+    </div>`;
+}
+afterRender[1] = () => {
+  const map = { fProduct: 'product', fOrigin: 'origin', fDest: 'dest', fInco: 'inco' };
+  Object.entries(map).forEach(([id, k]) => document.getElementById(id).onchange = e => { S.corridor[k] = e.target.value; render(); });
+};
+function runCheck() {
+  $('#app').innerHTML = `<div class="screen loading"><div class="spinner"></div><h2 class="h">Searching official sources…</h2>
+    <div class="srcs">${['EUR-Lex', 'EU Access2Markets', 'TARIC', 'ECHA', 'IPPC', 'Kemendag'].map((s, i) => `<span style="animation-delay:${i * .25}s">${s}</span>`).join('')}</div></div>`;
+  setTimeout(() => go(2), 2200);
+}
+
+// ───────────── 2. Checklist ─────────────
+function checklist() {
+  const list = items();
+  const n = list.filter(i => S.checked.has(i.id)).length, pct = Math.round(n / list.length * 100);
+  return `<div class="eyebrow">Step 2 · Your compliance checklist</div>
+    <h2 class="h">Every rule that applies — <span class="g">nothing generic.</span></h2>
+    <p class="lead" style="margin-bottom:14px">Tap a row to see why it matters. Tick it once Rina has it covered.</p>
+    <div class="cl">
+      <div>
+        <div class="route">${flag.Indonesia} Indonesia<i>→</i>${flag.Germany} Germany<i>·</i>Wooden dining furniture<i>·</i>${S.corridor.inco}</div>
+        <div class="prog"><div class="pbar"><div style="width:${pct}%"></div></div><div class="pct">${pct}% ready</div></div>
+        <div class="items">${list.map(i => `
+          <div class="it ${S.checked.has(i.id) ? 'on' : ''} ${S.open === i.id ? 'open' : ''}">
+            <div class="it-hd" data-open="${i.id}" role="button" tabindex="0">
+              <span class="ck" data-check="${i.id}" role="checkbox" aria-checked="${S.checked.has(i.id)}">✓</span>
+              <span class="it-t"><b>${i.t}</b><span>${i.s}</span></span>
+              <span class="tag ${i.cond ? 'cond' : ''}">${i.tag}</span><span class="chev">▼</span>
+            </div>
+            <div class="it-bd">${i.d}<span class="src">Source: ${i.src}</span></div>
+          </div>`).join('')}</div>
+      </div>
+      <div class="side">
+        <div class="box warn"><em>⚠ Blind spot</em><b>EUDR geolocation.</b> Your buyer can't sell EUDR-covered wood in the EU without plot-level coordinates for the timber. Most small exporters find out after the container has sailed.</div>
+        <div class="box pay"><em>Best payment term</em><b>Letter of Credit</b> — right for a first order with a new buyer. Consider TT after 2–3 clean shipments.</div>
+        ${S.corridor.inco === 'CIF' ? `<div class="box tip"><em>Because you chose CIF</em>Rina now books the ship and insures the cargo — one extra document (insurance certificate) goes to the bank.</div>` : ''}
+      </div>
+    </div>
+    <div class="actions"><button class="btn ghost" onclick="go(1)">← Change corridor</button>
+      <div class="row"><span class="note">${n}/${list.length} covered</span><button class="btn" onclick="go(3)">Next: check documents →</button></div></div>`;
+}
+afterRender[2] = () => {
+  document.querySelectorAll('[data-open]').forEach(el => el.onclick = e => {
+    const chk = e.target.closest('[data-check]');
+    if (chk) { const id = chk.dataset.check; S.checked.has(id) ? S.checked.delete(id) : S.checked.add(id); }
+    else S.open = S.open === el.dataset.open ? null : el.dataset.open;
+    render();
+  });
+};
+
+// ───────────── 3. Documents ─────────────
+const ISSUES = [
+  { id: 'consignee', sev: 'crit', title: '✕ Consignee name differs from the LC', doc: 'bl',
+    body: `Bill of Lading: <span class="hl">Hanse Wohnen GmbH &amp; Co.</span> · Letter of Credit applicant: <span class="hl">Hanse Wohnen GmbH</span>`,
+    ref: 'UCP 600 Art. 14(d) — data must not conflict · likely refusal', fix: 'Fix BL draft', fixed: 'Carrier amended the BL draft to "Hanse Wohnen GmbH".' },
+  { id: 'weight', sev: 'wrn', title: '! Gross weight doesn\'t match', doc: 'pl',
+    body: `Packing List <span class="hl">12,480 kg</span> · Bill of Lading <span class="hl">12,840 kg</span> — digits look swapped.`,
+    ref: 'Weights must be consistent across documents', fix: 'Correct BL to 12,480 kg', fixed: 'BL draft corrected to 12,480 kg — matches the packing list.' },
+];
+function docValues() {
+  const f = S.fixed;
+  return {
+    inv: [['Seller', ORDER.seller + ', Jepara, Indonesia'], ['Buyer', ORDER.buyer + ', Hamburg'], ['Description', 'Teak wood dining sets, 48 sets'], ['Terms', S.corridor.inco === 'CIF' ? 'CIF Hamburg, Incoterms® 2020' : 'FOB Semarang, Incoterms® 2020'], ['Amount', 'USD 48,000.00'], ['LC reference', 'LC-DE-88421']],
+    pl: [['Packages', '48 crates on ISPM 15 pallets'], ['Net weight', '11,620 kg'], ['Gross weight', { v: '12,480 kg', k: 'weight-src' }], ['Measurement', '66 CBM · 1 × 40ft HC']],
+    bl: [['Shipper', ORDER.seller], ['Consignee', { v: f.has('consignee') ? 'Hanse Wohnen GmbH' : 'Hanse Wohnen GmbH & Co.', k: 'consignee' }], ['Port of loading', 'Tanjung Emas, Semarang'], ['Port of discharge', 'Hamburg, Germany'], ['Vessel', 'MSC Aurora · voy. 446W'], ['Gross weight', { v: f.has('weight') ? '12,480 kg' : '12,840 kg', k: 'weight' }], ['Notation', 'Shipped on board · clean']],
+    lc: [['Applicant', { v: 'Hanse Wohnen GmbH', k: 'consignee-src' }], ['Beneficiary', ORDER.seller], ['Amount', 'USD 48,000.00'], ['Latest shipment', '30 Nov 2026'], ['Documents required', 'Invoice, Packing List, full set clean on-board BL' + (S.corridor.inco === 'CIF' ? ', insurance certificate' : '')]],
+  };
+}
+function preview(id) {
+  const d = DOCS.find(x => x.id === id), rows = docValues()[id];
+  const cell = v => {
+    if (typeof v === 'string') return v;
+    const isIssue = ISSUES.some(i => i.id === v.k);
+    if (!S.checked2 || !isIssue) return v.v;
+    return `<span class="${S.fixed.has(v.k) ? 'fixed' : 'flag'}">${v.v}</span>`;
+  };
+  $('#modal').innerHTML = `<div class="modal" onclick="if(event.target===this)closeModal()"><div class="paper">
+    <h3>${d.name}<small>${d.file}</small></h3>
+    <table>${rows.map(([k, v]) => `<tr><td>${k}</td><td>${cell(v)}</td></tr>`).join('')}</table>
+    <p style="margin-top:12px;font-size:11px;color:#56607A">Sample document for demo purposes.</p>
+    <button class="close" onclick="closeModal()">Close</button></div></div>`;
+}
+function closeModal() { $('#modal').innerHTML = ''; }
+
+function documents() {
+  const allUp = S.uploaded >= DOCS.length;
+  const open = ISSUES.filter(i => !S.fixed.has(i.id)).length;
+  let right;
+  if (!allUp) right = `<div class="empty">Upload Rina's documents to cross-check them against the Letter of Credit.</div>`;
+  else if (S.checking) right = `<div style="padding:22px"><b>Cross-checking 4 documents…</b><div class="scan"><div></div></div><div class="note">Comparing names, amounts, weights, ports and dates against the LC</div></div>`;
+  else if (!S.checked2) right = `<div class="empty">All four documents uploaded.<br><br><button class="btn" onclick="crossCheck()">Run cross-check →</button></div>`;
+  else right = `<div class="res">
+      <div class="res-hd"><b class="h" style="font-size:20px">Cross-check results</b>
+        <span class="badge ${open ? 'bad' : 'good'}">${open ? open + ' issue' + (open > 1 ? 's' : '') + ' found' : 'All clear'}</span></div>
+      ${ISSUES.map(i => S.fixed.has(i.id)
+        ? `<div class="iss okk"><div class="ti">✓ Fixed — ${i.title.replace(/^[✕!] /, '')}</div>${i.fixed}</div>`
+        : `<div class="iss ${i.sev}"><div class="ti">${i.title}</div>${i.body}<div class="ref">${i.ref}</div>
+            <div class="acts"><button onclick="preview('${i.doc === 'pl' ? 'bl' : i.doc}')">View in document</button><button class="fix" onclick="fixIssue('${i.id}')">${i.fix}</button></div></div>`).join('')}
+      <div class="iss okk"><div class="ti">✓ 14 other checks passed</div>Amounts, currency, ports, dates and goods description match the LC.</div>
+      ${open ? '' : `<div class="box pay" style="margin-top:4px"><em>Ready for the bank</em>Documents are consistent with the LC. Rina avoids a discrepancy fee ($150–500) and days of delay waiting for amendments.</div>`}
+    </div>`;
+  return `<div class="eyebrow">Step 3 · Document cross-check</div>
+    <h2 class="h">Catch it <span class="g">before the bank does.</span></h2>
+    <p class="lead" style="margin-bottom:16px">Banks check every document against the Letter of Credit, line by line. So does ShipSafe — first.</p>
+    <div class="docs">
+      <div>
+        <div class="dlist">${DOCS.map((d, i) => `<button class="doc ${i < S.uploaded ? 'up' : ''}" ${i < S.uploaded ? `onclick="preview('${d.id}')"` : 'disabled'}>
+          <span class="ic"></span><span><b>${d.name}</b><span>${i < S.uploaded ? d.file : 'Not uploaded'}</span>
+          ${i === S.uploaded && S.uploading ? '<span class="up-bar"><div id="upBar"></div></span>' : ''}</span>
+          ${i < S.uploaded ? '<span class="view">View</span>' : ''}</button>`).join('')}</div>
+        ${allUp ? '' : `<div class="actions" style="justify-content:flex-start"><button class="btn" onclick="upload()" ${S.uploading ? 'disabled' : ''}>⇪ Upload sample documents</button></div>`}
+        <p class="note" style="margin-top:10px">Demo uses sample files — nothing leaves your browser.</p>
+      </div>
+      <div class="card">${right}</div>
+    </div>
+    <div class="actions"><button class="btn ghost" onclick="go(2)">← Checklist</button><button class="btn" onclick="go(4)">Next: see the costs →</button></div>`;
+}
+function upload() {
+  S.uploading = true;
+  const next = () => {
+    render();
+    requestAnimationFrame(() => { const b = document.getElementById('upBar'); if (b) b.style.width = '100%'; });
+    setTimeout(() => {
+      S.uploaded++;
+      if (S.uploaded < DOCS.length) next(); else { S.uploading = false; render(); }
+    }, 420);
+  };
+  next();
+}
+function crossCheck() { S.checking = true; render(); setTimeout(() => { S.checking = false; S.checked2 = true; render(); }, 1900); }
+function fixIssue(id) { S.fixed.add(id); render(); }
+
+// ───────────── 4. Costs ─────────────
+function costs() {
+  const cif = S.corridor.inco === 'CIF';
+  const rows = COSTS.map(c => ({ ...c, val: c.v(S), mine: !c.cif || cif }));
+  const mine = rows.filter(r => r.mine).reduce((a, r) => a + r.val, 0);
+  const profit = S.value - S.cogs - mine, margin = S.value ? profit / S.value * 100 : 0;
+  const fobCost = rows.filter(r => !r.cif).reduce((a, r) => a + r.val, 0);
+  const fobMargin = S.value ? (S.value - S.cogs - fobCost) / S.value * 100 : 0;
+  const mColor = margin >= 20 ? 'var(--gnl)' : margin >= 10 ? '#F2C46B' : '#F49A92';
+  return `<div class="eyebrow">Step 4 · Landed cost & margin</div>
+    <h2 class="h">Know your real margin <span class="g">before you quote.</span></h2>
+    <p class="lead" style="margin-bottom:16px">Switch the Incoterm or change the numbers — every cost follows the rules of that term.</p>
+    <div class="ctrl">
+      <div class="num">Incoterm<div class="seg">${['FOB', 'CIF'].map(t => `<button class="${S.corridor.inco === t ? 'on' : ''}" onclick="setInco('${t}')">${t}</button>`).join('')}</div></div>
+      <label class="num">Order value (USD)<input id="iValue" type="number" min="0" step="500" value="${S.value}"></label>
+      <label class="num">Production cost (USD)<input id="iCogs" type="number" min="0" step="500" value="${S.cogs}"></label>
+    </div>
+    <div class="costs">
+      <div class="card" style="padding:14px 16px">
+        <table class="ctab">${rows.map(r => `<tr class="${r.mine ? '' : 'buyer'} ${r.cif && cif ? 'new' : ''}"><td><span class="cat">${r.cat}</span>${r.item}${r.mine ? '' : ' <span class="note">— buyer pays under FOB</span>'}</td><td>${r.mine ? money(r.val) : '—'}</td></tr>`).join('')}</table>
+        <div class="tot"><span>Rina's shipping & compliance cost</span><b>${money(mine)}</b></div>
+      </div>
+      <div class="side">
+        <div class="card kpis">
+          <div><span>Order value</span><b>${money(S.value)}</b></div>
+          <div><span>Gross profit</span><b>${money(profit)}</b></div>
+          <div><span>Gross margin</span><b style="color:${mColor}">${margin.toFixed(1)}%</b>${cif ? `<div class="delta" style="color:#F49A92">${(margin - fobMargin).toFixed(1)} pts vs FOB</div>` : ''}</div>
+          <div><span>Shipping / value</span><b>${S.value ? (mine / S.value * 100).toFixed(1) : '0'}%</b></div>
+        </div>
+        <div class="box tip"><em>💡 ${cif ? 'Quoting CIF?' : 'Under FOB'}</em>${cif
+          ? `Price it as FOB + freight + insurance (about <b>${money(S.value + 2600 + Math.round(S.value * 1.1 * .003))}</b>). Quote CIF at the FOB price and the freight comes straight out of Rina's margin.`
+          : `The buyer books the ship. Confirm their forwarder's cut-off at Semarang so Rina doesn't pay port storage while waiting.`}</div>
+        <p class="note">Illustrative rates for a 40ft HC, Semarang → Hamburg.</p>
+      </div>
+    </div>
+    <div class="actions"><button class="btn ghost" onclick="go(3)">← Documents</button><button class="btn" onclick="go(5)">Finish →</button></div>`;
+}
+afterRender[4] = () => {
+  const bind = (id, k) => { const el = document.getElementById(id); el.onchange = () => { S[k] = Math.max(0, +el.value || 0); render(); }; };
+  bind('iValue', 'value'); bind('iCogs', 'cogs');
+};
+function setInco(t) { S.corridor.inco = t; render(); }
+
+// ───────────── 5. Done ─────────────
+function done() {
+  const list = items(), n = list.filter(i => S.checked.has(i.id)).length;
+  const cif = S.corridor.inco === 'CIF';
+  const mine = COSTS.filter(c => !c.cif || cif).reduce((a, c) => a + c.v(S), 0);
+  const margin = S.value ? (S.value - S.cogs - mine) / S.value * 100 : 0;
+  const fixed = S.fixed.size;
+  const todo = [];
+  if (n < list.length) todo.push(`${list.length - n} compliance item${list.length - n > 1 ? 's' : ''}`);
+  if (fixed < ISSUES.length) todo.push(`${ISSUES.length - fixed} document issue${ISSUES.length - fixed > 1 ? 's' : ''} the bank would flag`);
+  const allClear = !todo.length;
+  return `<div class="done">
+    <svg class="seal" viewBox="0 0 84 84"><circle cx="42" cy="42" r="40" fill="rgba(102,180,76,.15)" stroke="#66B44C" stroke-width="3"/><path d="M26 43l11 11 21-23" fill="none" stroke="#7CC463" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="eyebrow">Demo complete</div>
+    <h1 class="h">${allClear ? 'Rina ships clean.' : 'Almost there, Rina.'}</h1>
+    <p class="lead" style="margin:0 auto">${allClear ? 'Rules covered, documents consistent with the LC, and a margin she understands — before the container leaves Semarang.' : 'Still open: ' + todo.join(' and ') + '. In real life, these are what hold a container at port.'}</p>
+    <div class="sum">
+      <div class="card"><b>${n}/${list.length}</b><span>compliance items covered</span></div>
+      <div class="card"><b>${fixed}/${ISSUES.length}</b><span>document issues fixed before the bank</span></div>
+      <div class="card"><b>${margin.toFixed(1)}%</b><span>gross margin on ${S.corridor.inco}</span></div>
+    </div>
+    <div class="slogan"><span class="b">Know it.</span> Check it. <span class="g">Ship it.</span></div>
+    <div class="row" style="justify-content:center">
+      <a class="btn" href="/#start" target="_top">Check your own corridor →</a>
+      <button class="btn ghost" onclick="restart()">↺ Replay demo</button>
+      ${n < list.length ? '<button class="btn ghost" onclick="go(2)">Finish checklist</button>' : ''}
+      ${fixed < ISSUES.length ? '<button class="btn ghost" onclick="go(3)">Fix documents</button>' : ''}
+    </div>
+    <p class="note" style="margin-top:18px">Sample scenario with illustrative data. Always verify with official sources before shipping.</p>
+  </div>`;
+}
+function restart() {
+  Object.assign(S, { corridor: { product: '', origin: '', dest: '', inco: '' }, checked: new Set(), open: null, uploaded: 0, uploading: false, checking: false, checked2: false, fixed: new Set(), value: ORDER.value, cogs: ORDER.cogs });
+  go(0);
+}
+if (window.self !== window.top) { document.getElementById('homeLink').hidden = true; document.getElementById('fullLink').hidden = false; document.querySelector('.runs:not(.full)').hidden = true; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+render();
+</script>
+</body>
+</html>

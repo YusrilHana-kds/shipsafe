@@ -1,6 +1,7 @@
 // Renders video/walkthrough.html to MP4 by driving headless Chrome frame-by-frame.
 // Usage: node video/render.mjs                      -> video/out/how-it-works-silent.mp4 (+ poster in public/video);
 //        then `python3 video/sound.py` adds the soundtrack
+//        node video/render.mjs --cut short            -> 30-second edit (see CUTS in walkthrough.html)
 //        node video/render.mjs --stills 2,9,20,30   -> PNG stills into --out dir for review
 import { spawn, execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, rmSync, mkdtempSync } from 'node:fs';
@@ -16,6 +17,7 @@ const FPS = 30;
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const FFMPEG = '/opt/homebrew/bin/ffmpeg';
 const stills = arg('--stills');
+const cutName = arg('--cut');
 const outDir = resolve(arg('--out', join(root, 'public', 'video')));
 
 const profile = mkdtempSync(join(tmpdir(), 'ss-chrome-'));
@@ -45,13 +47,13 @@ const evaluate = async expr => (await send('Runtime.evaluate', { expression: exp
 await send('Page.enable');
 await send('Emulation.setDeviceMetricsOverride', { width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false });
 const loaded = new Promise(r => listeners.push(m => m.method === 'Page.loadEventFired' && r()));
-await send('Page.navigate', { url: pathToFileURL(join(here, 'walkthrough.html')).href + '?render' });
+await send('Page.navigate', { url: pathToFileURL(join(here, 'walkthrough.html')).href + '?render' + (cutName ? `&cut=${cutName}` : '') });
 await loaded;
 await evaluate('document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.decode())))');
-const duration = await evaluate('DURATION');
+const duration = await evaluate('window.DURATION');
 
 async function shot(t, file, format = 'png') {
-  await evaluate(`renderAt(${t})`);
+  await evaluate(`window.renderAt(${t})`);
   const { data } = await send('Page.captureScreenshot', format === 'png' ? { format } : { format, quality: 92 });
   writeFileSync(file, Buffer.from(data, 'base64'));
 }
@@ -67,11 +69,12 @@ if (stills) {
     await shot(f / FPS, join(frames, `${String(f).padStart(5, '0')}.jpg`), 'jpeg');
     if (f % 150 === 0) console.log(`frame ${f}/${total}`);
   }
-  const mp4 = join(here, 'out', 'how-it-works-silent.mp4');
   mkdirSync(join(here, 'out'), { recursive: true });
+  const mp4 = join(here, 'out', cutName ? `how-it-works-${cutName}-silent.mp4` : 'how-it-works-silent.mp4');
+  if (cutName) writeFileSync(join(here, 'out', `cut-${cutName}.json`), await evaluate('JSON.stringify(window.SEGMENTS)'));
   execFileSync(FFMPEG, ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(frames, '%05d.jpg'),
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4]);
-  await shot(16.2, join(outDir, 'how-it-works-poster.jpg'), 'jpeg');
+  if (!cutName) await shot(16.2, join(outDir, 'how-it-works-poster.jpg'), 'jpeg');
   rmSync(frames, { recursive: true, force: true });
   console.log('wrote', mp4);
 }
