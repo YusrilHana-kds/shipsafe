@@ -537,6 +537,22 @@ body.lp .ls-src,body.lp .ls-step-n{font-family:'Inter',sans-serif}
   body.lp .swipe-hint{display:block}
 }
 .swipe-hint{display:none;font:500 12px 'Inter',sans-serif;color:var(--c-muted);margin-top:-4px}
+
+/* phone hero: one full, self-contained first screen (product card lives in video/demo) */
+.hx-stats{display:none}
+@media(max-width:640px){
+  .hx{min-height:calc(100svh - 60px - 62px);display:flex;flex-direction:column;justify-content:center;padding:28px 20px 32px}
+  .hx-in{gap:0}
+  .hx-vis,.hx-src{display:none}
+  .hx-ctas{gap:4px;margin-bottom:28px}
+  .hx-btn.s{background:none;border:none;color:var(--c-acc);padding:12px 0;font-size:15px}
+  .hx-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--c-line);padding-top:18px}
+  .hx-stats div{padding:0 10px;border-left:1px solid var(--c-line)}
+  .hx-stats div:first-child{padding-left:0;border-left:none}
+  .hx-stats b{display:block;font:800 clamp(18px,5.4vw,22px)/1.1 'Plus Jakarta Sans',sans-serif;color:var(--c-ink);letter-spacing:-.02em;white-space:nowrap}
+  .hx-stats span{display:block;margin-top:5px;font:600 10.5px/1.35 'Inter',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:var(--c-acc)}
+  body.lp .ticker-wrap{padding:12px 0}
+}
 /* LANDING PAGE */
 .landing{background:#0E2350;min-height:calc(100dvh - 64px);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;position:relative;overflow-x:clip}
 .landing-hero{min-height:calc(100dvh - 64px);padding:0 32px;display:flex;flex-direction:column;align-items:stretch;width:100%}
@@ -1244,6 +1260,11 @@ label{font-size:10px;letter-spacing:.3px}
         <div class="hx-ctas">
           <button class="hx-btn p" onclick="enterApp()" data-i18n="landing_cta">Check my corridor →</button>
           <a class="hx-btn s" href="#how" onclick="smoothScroll(event,'how')" data-i18n="hx_watch">▶ See how it works</a>
+        </div>
+        <div class="hx-stats">
+          <div><b>$150–500</b><span data-i18n="stat1">Bank fee per rejection</span></div>
+          <div><b>5–7 days</b><span data-i18n="stat2">Stuck at port to fix docs</span></div>
+          <div><b>10–20 hrs</b><span data-i18n="stat3">Paperwork per shipment</span></div>
         </div>
         <div class="hx-src"><span data-i18n="hx_src">Sources we check:</span><i>EUR-Lex</i><i>CBP</i><i>FDA</i><i>TARIC</i></div>
       </div>
