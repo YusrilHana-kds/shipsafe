@@ -410,6 +410,42 @@ body.lp .as-empty{color:var(--c-muted)}
   body.lp .tm-nm{font-size:21px}
   body.lp .tm-links{grid-column:1/-1}
 }
+
+/* light ticker */
+body.lp .ticker-wrap{background:#fff;border-top:1px solid var(--c-line);border-bottom:1px solid var(--c-line);padding:16px 0;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+body.lp .ticker-item{background:var(--c-chip);border:1px solid var(--c-line);color:var(--c-ink);font-family:'Inter',sans-serif;font-weight:500}
+body.lp .ticker-wrap+.ls{border-top:none}
+/* hero: keep Tara bubble clear of the alert */
+.hx-card{margin-bottom:34px}
+.hx-float{bottom:-16px;right:-20px}
+/* stronger colour in features + team */
+body.lp{--c-bg2:#E1EDFA}
+body.lp .ls-feat{box-shadow:0 1px 2px rgba(11,31,68,.05);transition:border-color .15s,transform .15s}
+body.lp .ls-feat:hover{border-color:var(--c-acc);transform:translateY(-2px)}
+body.lp .ls-feat-ic{background:var(--c-acc);color:#fff}
+body.lp .ls-feat b{font-weight:700}
+body.lp .ls-feat span{color:var(--c-ink2)}
+body.lp .ls-cmp-l{background:#fff}
+body.lp .ls-cmp-l em{color:var(--c-muted)}
+body.lp .ls-cmp-l p{color:var(--c-ink2)}
+body.lp .ls-cmp-r{background:var(--c-acc);border-left:none}
+body.lp .ls-cmp-r em{color:#CFE3F6}
+body.lp .ls-cmp-r p{color:#fff}
+body.lp .tm-card{box-shadow:0 1px 2px rgba(11,31,68,.05)}
+body.lp .tm-hd{background:var(--c-acc);color:#fff}
+body.lp .tm-role{color:var(--c-acc);font-weight:600}
+body.lp .tm-bio{color:var(--c-ink2)}
+body.lp .tm-links a{background:var(--c-chip);color:var(--c-ink);font-weight:500}
+body.lp .tm-copy{background:var(--c-chip)}
+@media(max-width:640px){.hx-card{margin-bottom:0}.hx-float{bottom:auto;right:auto}}
+
+/* shipping photo in problem section */
+.ls-pgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;margin-bottom:clamp(36px,6vh,56px)}
+.ls-pgrid .ls-src{margin-bottom:0}
+.ls-photo{position:relative;margin:0;border-radius:18px;overflow:hidden;aspect-ratio:16/10;box-shadow:0 24px 60px -24px rgba(21,56,122,.35)}
+.ls-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ls-photo figcaption{position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,.92);color:#0B1F44;font:600 13px 'Inter',sans-serif;border-radius:100px;padding:7px 14px}
+@media(max-width:900px){.ls-pgrid{grid-template-columns:1fr;gap:24px}.ls-photo{order:-1;aspect-ratio:16/9}}
 /* LANDING PAGE */
 .landing{background:#0E2350;min-height:calc(100dvh - 64px);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;position:relative;overflow-x:clip}
 .landing-hero{min-height:calc(100dvh - 64px);padding:0 32px;display:flex;flex-direction:column;align-items:stretch;width:100%}
@@ -1126,16 +1162,58 @@ label{font-size:10px;letter-spacing:.3px}
     </div>
   </div>
 
+  <div class="ticker-wrap" aria-label="Products we cover">
+    <div class="ticker-track">
+      <div class="ticker-item"><span class="ticker-icon">☕</span>Coffee</div>
+      <div class="ticker-item"><span class="ticker-icon">👕</span>Apparel</div>
+      <div class="ticker-item"><span class="ticker-icon">🪑</span>Furniture</div>
+      <div class="ticker-item"><span class="ticker-icon">🍫</span>Cocoa</div>
+      <div class="ticker-item"><span class="ticker-icon">👟</span>Footwear</div>
+      <div class="ticker-item"><span class="ticker-icon">🔌</span>Electronics</div>
+      <div class="ticker-item"><span class="ticker-icon">🛞</span>Rubber &amp; Tires</div>
+      <div class="ticker-item"><span class="ticker-icon">🦐</span>Seafood</div>
+      <div class="ticker-item"><span class="ticker-icon">🧴</span>Cosmetics</div>
+      <div class="ticker-item"><span class="ticker-icon">⚙️</span>Auto Parts</div>
+      <div class="ticker-item"><span class="ticker-icon">🧵</span>Textiles</div>
+      <div class="ticker-item"><span class="ticker-icon">🫙</span>Palm Oil</div>
+      <div class="ticker-item"><span class="ticker-icon">🧪</span>Chemicals</div>
+      <div class="ticker-item"><span class="ticker-icon">🧺</span>Handicrafts</div>
+      <div class="ticker-item"><span class="ticker-icon">🔩</span>Steel &amp; Metals</div>
+      <div class="ticker-item"><span class="ticker-icon">📦</span>Paper &amp; Packaging</div>
+      <div class="ticker-item"><span class="ticker-icon">☕</span>Coffee</div>
+      <div class="ticker-item"><span class="ticker-icon">👕</span>Apparel</div>
+      <div class="ticker-item"><span class="ticker-icon">🪑</span>Furniture</div>
+      <div class="ticker-item"><span class="ticker-icon">🍫</span>Cocoa</div>
+      <div class="ticker-item"><span class="ticker-icon">👟</span>Footwear</div>
+      <div class="ticker-item"><span class="ticker-icon">🔌</span>Electronics</div>
+      <div class="ticker-item"><span class="ticker-icon">🛞</span>Rubber &amp; Tires</div>
+      <div class="ticker-item"><span class="ticker-icon">🦐</span>Seafood</div>
+      <div class="ticker-item"><span class="ticker-icon">🧴</span>Cosmetics</div>
+      <div class="ticker-item"><span class="ticker-icon">⚙️</span>Auto Parts</div>
+      <div class="ticker-item"><span class="ticker-icon">🧵</span>Textiles</div>
+      <div class="ticker-item"><span class="ticker-icon">🫙</span>Palm Oil</div>
+      <div class="ticker-item"><span class="ticker-icon">🧪</span>Chemicals</div>
+      <div class="ticker-item"><span class="ticker-icon">🧺</span>Handicrafts</div>
+      <div class="ticker-item"><span class="ticker-icon">🔩</span>Steel &amp; Metals</div>
+      <div class="ticker-item"><span class="ticker-icon">📦</span>Paper &amp; Packaging</div>
+    </div>
+  </div>
+
   <!-- THE PROBLEM -->
   <section class="ls" id="problem">
     <div class="ls-in">
       <div class="ls-eyebrow"><span data-i18n="p_tag">The problem</span><em data-i18n="p_cap">Paperwork, not product</em></div>
       <h2 class="ls-h2" data-i18n="p_h2">Global trade moves the world.<br><span>Paperwork holds it back.</span></h2>
-      <div class="ls-bigstat">
-        <div class="ls-big">$1T</div>
-        <p data-i18n="p_stat">Up to $1 trillion a year in potential trade gains — locked behind border red tape.</p>
+      <div class="ls-pgrid">
+        <div>
+          <div class="ls-bigstat">
+            <div class="ls-big">$1T</div>
+            <p data-i18n="p_stat">Up to $1 trillion a year in potential trade gains — locked behind border red tape.</p>
+          </div>
+          <div class="ls-src" data-i18n="p_src">Source: WTO, 2022.</div>
+        </div>
+        <figure class="ls-photo"><img src="/ship-bg.jpg" alt="Aerial view of a container ship being loaded at a port terminal" loading="lazy"><figcaption data-i18n="p_photo">Every container waits on its paperwork.</figcaption></figure>
       </div>
-      <div class="ls-src" data-i18n="p_src">Source: WTO, 2022.</div>
       <div class="ls-journey-hd" data-i18n="p_jhd">A typical export journey</div>
       <div class="ls-journey">
         <div class="ls-step"><span class="ls-step-n">01</span><b data-i18n="p_j1t">Find requirements</b><span data-i18n="p_j1d">Scattered everywhere</span></div>
@@ -2003,9 +2081,9 @@ REGLAS DE IDIOMA:
 };
 
 // Landing section copy (overrides older keys of the same name)
-Object.assign(T.en,{hx_new:'New',hero_badge:'AI export compliance · any product, any corridor',hx_h1a:'Compliant.',hx_h1b:'Every shipment.',landing_sub:'Know exactly what customs requires — certificates, tests, deadlines — and catch document errors before your bank does.',landing_cta:'Check my corridor →',hx_watch:'▶ See how it works',hx_src:'Sources we check:',hx_tara:'Ask Tara',hx_tara_q:'“FOB or CIF for this buyer?”'});
-Object.assign(T.id,{hx_new:'Baru',hero_badge:'Kepatuhan ekspor berbasis AI · produk apa pun, rute mana pun',hx_h1a:'Patuh aturan.',hx_h1b:'Setiap pengiriman.',landing_sub:'Tahu persis syarat bea cukai — sertifikat, tes, tenggat — dan temukan kesalahan dokumen sebelum bank menemukannya.',landing_cta:'Cek rute saya →',hx_watch:'▶ Lihat cara kerjanya',hx_src:'Sumber yang kami cek:',hx_tara:'Tanya Tara',hx_tara_q:'“FOB atau CIF untuk buyer ini?”'});
-Object.assign(T.es,{hx_new:'Nuevo',hero_badge:'Cumplimiento de exportación con IA · cualquier producto, cualquier corredor',hx_h1a:'Conforme.',hx_h1b:'Cada envío.',landing_sub:'Sabe exactamente qué exige la aduana — certificados, pruebas, plazos — y detecta errores en documentos antes que tu banco.',landing_cta:'Verificar mi corredor →',hx_watch:'▶ Ver cómo funciona',hx_src:'Fuentes que revisamos:',hx_tara:'Pregúntale a Tara',hx_tara_q:'“¿FOB o CIF para este comprador?”'});
+Object.assign(T.en,{p_photo:'Every container waits on its paperwork.',hx_new:'New',hero_badge:'AI export compliance · any product, any corridor',hx_h1a:'Compliant.',hx_h1b:'Every shipment.',landing_sub:'Know exactly what customs requires — certificates, tests, deadlines — and catch document errors before your bank does.',landing_cta:'Check my corridor →',hx_watch:'▶ See how it works',hx_src:'Sources we check:',hx_tara:'Ask Tara',hx_tara_q:'“FOB or CIF for this buyer?”'});
+Object.assign(T.id,{p_photo:'Setiap kontainer menunggu dokumennya.',hx_new:'Baru',hero_badge:'Kepatuhan ekspor berbasis AI · produk apa pun, rute mana pun',hx_h1a:'Patuh aturan.',hx_h1b:'Setiap pengiriman.',landing_sub:'Tahu persis syarat bea cukai — sertifikat, tes, tenggat — dan temukan kesalahan dokumen sebelum bank menemukannya.',landing_cta:'Cek rute saya →',hx_watch:'▶ Lihat cara kerjanya',hx_src:'Sumber yang kami cek:',hx_tara:'Tanya Tara',hx_tara_q:'“FOB atau CIF untuk buyer ini?”'});
+Object.assign(T.es,{p_photo:'Cada contenedor espera su papeleo.',hx_new:'Nuevo',hero_badge:'Cumplimiento de exportación con IA · cualquier producto, cualquier corredor',hx_h1a:'Conforme.',hx_h1b:'Cada envío.',landing_sub:'Sabe exactamente qué exige la aduana — certificados, pruebas, plazos — y detecta errores en documentos antes que tu banco.',landing_cta:'Verificar mi corredor →',hx_watch:'▶ Ver cómo funciona',hx_src:'Fuentes que revisamos:',hx_tara:'Pregúntale a Tara',hx_tara_q:'“¿FOB o CIF para este comprador?”'});
 Object.assign(T.en,{as_tag:'Built in',as_cap:'Help the moment you\'re stuck',as_h2:'Your compliance expert, <span>on call.</span>',as_lead:'Ask Tara anything in plain language, or look up any rule in the trade glossary — right inside ShipSafe.',as_try:'Try a question',as_note:'Sample answers. In the app, Tara answers your exact case.',as_tara_cta:'Ask Tara your own question →',as_gl_title:'Trade Glossary',as_gl_terms:'terms, explained',as_gl_ph:'Search a term — e.g. FOB, Art. 14, D/P',as_gl_all:'All',as_gl_none:'No matching term — try FOB, CIF or "Art. 14".',as_gl_note:'Incoterms® 2020 · UCP 600 · ISBP 745 · URC 522 · URDG 758',as_gl_cta:'Open the full glossary →',as_ft_tara:'Tara — AI assistant'});
 Object.assign(T.id,{as_tag:'Sudah termasuk',as_cap:'Bantuan saat kamu bingung',as_h2:'Ahli kepatuhanmu, <span>siap kapan saja.</span>',as_lead:'Tanya Tara apa saja dengan bahasa sehari-hari, atau cari aturan apa pun di glosarium perdagangan — langsung di ShipSafe.',as_try:'Coba tanya',as_note:'Contoh jawaban. Di app, Tara menjawab kasusmu secara spesifik.',as_tara_cta:'Tanya Tara pertanyaanmu →',as_gl_title:'Glosarium Perdagangan',as_gl_terms:'istilah dijelaskan',as_gl_ph:'Cari istilah — mis. FOB, Art. 14, D/P',as_gl_all:'Semua',as_gl_none:'Istilah tidak ditemukan — coba FOB, CIF atau "Art. 14".',as_gl_note:'Incoterms® 2020 · UCP 600 · ISBP 745 · URC 522 · URDG 758',as_gl_cta:'Buka glosarium lengkap →',as_ft_tara:'Tara — asisten AI'});
 Object.assign(T.es,{as_tag:'Incluido',as_cap:'Ayuda justo cuando la necesitas',as_h2:'Tu experto en cumplimiento, <span>siempre disponible.</span>',as_lead:'Pregúntale a Tara lo que sea en lenguaje sencillo, o busca cualquier regla en el glosario comercial — dentro de ShipSafe.',as_try:'Prueba una pregunta',as_note:'Respuestas de ejemplo. En la app, Tara responde tu caso exacto.',as_tara_cta:'Pregúntale a Tara →',as_gl_title:'Glosario Comercial',as_gl_terms:'términos explicados',as_gl_ph:'Busca un término — ej. FOB, Art. 14, D/P',as_gl_all:'Todos',as_gl_none:'Sin resultados — prueba FOB, CIF o "Art. 14".',as_gl_note:'Incoterms® 2020 · UCP 600 · ISBP 745 · URC 522 · URDG 758',as_gl_cta:'Abrir el glosario completo →',as_ft_tara:'Tara — asistente IA'});
