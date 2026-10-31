@@ -151,6 +151,57 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#0E2350;color:var(--t
 .tm-copy.ok{border-color:#66B44C;color:#7CC463}
 @media(max-width:760px){.dm{box-shadow:6px 6px 0 rgba(102,180,76,.35)}}
 @media(max-width:400px){.tm-body{grid-template-columns:1fr}.tm-ph{width:100%;height:180px}}
+
+/* TARA + GLOSSARY */
+.as-lead{color:rgba(243,246,251,.75);font-size:17px;max-width:640px;margin:-24px 0 32px}
+.as-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
+.as-card{display:flex;flex-direction:column;background:#15387A;border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;min-height:520px}
+.as-hd{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#0B1D44;border-bottom:1px solid rgba(255,255,255,.1)}
+.as-hd b{display:block;font-size:16px;color:#F3F6FB}
+.as-hd span{display:block;font-size:13px;color:rgba(243,246,251,.6)}
+.as-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#408CC8,#66B44C);color:#0E2350;font-family:'Plus Jakarta Sans','DM Sans',sans-serif;font-weight:800;font-size:18px;display:flex !important;align-items:center;justify-content:center;flex-shrink:0}
+.as-av-gl{border-radius:10px;font-size:15px}
+.as-on{margin-left:auto;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7CC463;display:flex;gap:4px}
+.as-on span{display:inline !important;color:inherit !important;font-size:inherit !important}
+.as-chat{flex:1;padding:16px 18px;display:flex;flex-direction:column;gap:10px;overflow:auto;max-height:300px}
+.as-msg{max-width:88%;padding:11px 14px;border-radius:14px;font-size:14px;line-height:1.55;animation:asIn .25s ease}
+.as-msg.u{align-self:flex-end;background:#66B44C;color:#0E2350;font-weight:500;border-bottom-right-radius:4px}
+.as-msg.a{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#F3F6FB;border-bottom-left-radius:4px}
+.as-msg.a b{color:#7CC463}
+.as-dots{display:flex;gap:5px;padding:14px 16px}
+.as-dots i{width:7px;height:7px;border-radius:50%;background:rgba(243,246,251,.6);animation:asDot 1s infinite}
+.as-dots i:nth-child(2){animation-delay:.15s}.as-dots i:nth-child(3){animation-delay:.3s}
+@keyframes asDot{0%,60%,100%{opacity:.3}30%{opacity:1}}
+@keyframes asIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.as-try{padding:0 18px 12px}
+.as-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#408CC8;margin-bottom:8px;font-weight:600}
+.as-chips{display:flex;flex-wrap:wrap;gap:8px}
+.as-chip{font:inherit;font-size:13px;color:#F3F6FB;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:7px 12px;cursor:pointer;text-align:left}
+.as-chip:hover{border-color:#66B44C;color:#7CC463}
+.as-chip:disabled{opacity:.45;cursor:default}
+.as-ft{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-top:1px solid rgba(255,255,255,.1);margin-top:auto;flex-wrap:wrap}
+.as-note{font-size:12px;color:rgba(243,246,251,.55)}
+.as-btn{font:inherit;font-family:'Plus Jakarta Sans','DM Sans',sans-serif;font-weight:700;font-size:14px;color:#0E2350;background:#66B44C;border:none;border-radius:100px;padding:9px 16px;cursor:pointer;white-space:nowrap}
+.as-btn:hover{background:#7CC463}
+.as-gl{padding:16px 18px 10px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
+.as-search{width:100%;height:44px;border-radius:10px;background:#0E2350;border:2px solid rgba(255,255,255,.16);color:#F3F6FB;font:inherit;font-size:15px;padding:0 14px;outline:none}
+.as-search:focus{border-color:#66B44C}
+.as-cats{display:flex;flex-wrap:wrap;gap:6px}
+.as-cat{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:5px 10px;border-radius:100px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(243,246,251,.8);cursor:pointer}
+.as-cat.on{background:rgba(102,180,76,.18);border-color:#66B44C;color:#7CC463}
+.as-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:300px;padding-right:2px}
+.as-gi{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px}
+.as-gi-hd{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;background:none;border:none;color:#F3F6FB;font:inherit;font-size:14px;font-weight:600;text-align:left;cursor:pointer}
+.as-gi-hd em{font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;padding:2px 7px;border-radius:5px;background:rgba(102,180,76,.14);color:#7CC463;flex-shrink:0}
+.as-gi-hd i{margin-left:auto;font-style:normal;color:rgba(243,246,251,.5);font-size:11px;transition:transform .2s}
+.as-gi.open .as-gi-hd i{transform:rotate(180deg)}
+.as-gi-bd{display:none;padding:0 12px 12px;font-size:13.5px;line-height:1.6;color:rgba(243,246,251,.8)}
+.as-gi-bd strong{color:#F3F6FB}
+.as-gi-bd ul{padding-left:18px;margin:4px 0}
+.as-gi.open .as-gi-bd{display:block}
+.as-gi-bd .gl-key{display:block;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7CC463}
+.as-empty{font-size:14px;color:rgba(243,246,251,.6);padding:12px 2px}
+@media(max-width:900px){.as-grid{grid-template-columns:1fr}.as-card{min-height:0}}
 /* LANDING PAGE */
 .landing{background:#0E2350;min-height:calc(100dvh - 64px);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;position:relative;overflow-x:clip}
 .landing-hero{min-height:calc(100dvh - 64px);padding:0 32px;display:flex;flex-direction:column;align-items:stretch;width:100%}
@@ -982,8 +1033,34 @@ label{font-size:10px;letter-spacing:.3px}
     </div>
   </section>
 
+  <!-- TARA + GLOSSARY -->
+  <section class="ls" id="assist">
+    <div class="ls-in">
+      <div class="ls-eyebrow"><span data-i18n="as_tag">Built in</span><em data-i18n="as_cap">Help the moment you're stuck</em></div>
+      <h2 class="ls-h2" data-i18n="as_h2">Your compliance expert, <span>on call.</span></h2>
+      <p class="as-lead" data-i18n="as_lead">Ask Tara anything in plain language, or look up any rule in the trade glossary — right inside ShipSafe.</p>
+      <div class="as-grid">
+        <div class="as-card">
+          <div class="as-hd"><span class="as-av">T</span><div><b>Tara</b><span data-i18n="tara_role">Trade Compliance Assistant</span></div><em class="as-on">● <span data-i18n="tara_online">Online</span></em></div>
+          <div class="as-chat" id="asChat"></div>
+          <div class="as-try"><div class="as-lbl" data-i18n="as_try">Try a question</div><div class="as-chips" id="asChips"></div></div>
+          <div class="as-ft"><span class="as-note" data-i18n="as_note">Sample answers. In the app, Tara answers your exact case.</span><button class="as-btn" onclick="enterApp()" data-i18n="as_tara_cta">Ask Tara your own question →</button></div>
+        </div>
+        <div class="as-card">
+          <div class="as-hd"><span class="as-av as-av-gl">Aa</span><div><b data-i18n="as_gl_title">Trade Glossary</b><span id="asGlCount"></span></div></div>
+          <div class="as-gl">
+            <input id="asGlQ" class="as-search" type="search" autocomplete="off" data-i18n-ph="as_gl_ph" placeholder="Search a term — e.g. FOB, Art. 14, D/P">
+            <div class="as-cats" id="asGlCats"></div>
+            <div class="as-list" id="asGlList"></div>
+          </div>
+          <div class="as-ft"><span class="as-note" data-i18n="as_gl_note">Incoterms® 2020 · UCP 600 · ISBP 745 · URC 522 · URDG 758</span><button class="as-btn" onclick="toggleGlossary()" data-i18n="as_gl_cta">Open the full glossary →</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- TEAM -->
-  <section class="ls" id="team">
+  <section class="ls ls-alt" id="team">
     <div class="ls-in">
       <div class="ls-eyebrow"><span data-i18n="t_tag">Team</span><em data-i18n="t_cap">Built by people who ship</em></div>
       <h2 class="ls-h2" data-i18n="t_h2">Exporters building <span>for exporters.</span></h2>
@@ -992,7 +1069,7 @@ label{font-size:10px;letter-spacing:.3px}
   </section>
 
   <!-- GET STARTED -->
-  <section class="ls ls-alt" id="start">
+  <section class="ls" id="start">
     <div class="ls-in">
       <h2 class="ls-h2 ls-center" data-i18n="c_h2">Two ways to start.</h2>
       <div class="ls-ctas">
@@ -1033,6 +1110,8 @@ label{font-size:10px;letter-spacing:.3px}
         <a href="#" onclick="event.preventDefault();enterApp()" data-i18n="tab_checker">Compliance Checker</a>
         <a href="#" onclick="event.preventDefault();enterApp()" data-i18n="tab_crosscheck">Doc Cross-Checker</a>
         <a href="#" onclick="event.preventDefault();enterApp()" data-i18n="tab_cost">Cost Calculator</a>
+        <a href="#assist" onclick="smoothScroll(event,'assist')" data-i18n="as_ft_tara">Tara — AI assistant</a>
+        <a href="#" onclick="event.preventDefault();toggleGlossary()" data-i18n="tab_glossary">Trade Glossary</a>
       </div>
     </div>
     <div class="ls-in ls-foot-bot">
@@ -1758,6 +1837,9 @@ REGLAS DE IDIOMA:
 };
 
 // Landing section copy (overrides older keys of the same name)
+Object.assign(T.en,{as_tag:'Built in',as_cap:'Help the moment you\'re stuck',as_h2:'Your compliance expert, <span>on call.</span>',as_lead:'Ask Tara anything in plain language, or look up any rule in the trade glossary — right inside ShipSafe.',as_try:'Try a question',as_note:'Sample answers. In the app, Tara answers your exact case.',as_tara_cta:'Ask Tara your own question →',as_gl_title:'Trade Glossary',as_gl_terms:'terms, explained',as_gl_ph:'Search a term — e.g. FOB, Art. 14, D/P',as_gl_all:'All',as_gl_none:'No matching term — try FOB, CIF or "Art. 14".',as_gl_note:'Incoterms® 2020 · UCP 600 · ISBP 745 · URC 522 · URDG 758',as_gl_cta:'Open the full glossary →',as_ft_tara:'Tara — AI assistant'});
+Object.assign(T.id,{as_tag:'Sudah termasuk',as_cap:'Bantuan saat kamu bingung',as_h2:'Ahli kepatuhanmu, <span>siap kapan saja.</span>',as_lead:'Tanya Tara apa saja dengan bahasa sehari-hari, atau cari aturan apa pun di glosarium perdagangan — langsung di ShipSafe.',as_try:'Coba tanya',as_note:'Contoh jawaban. Di app, Tara menjawab kasusmu secara spesifik.',as_tara_cta:'Tanya Tara pertanyaanmu →',as_gl_title:'Glosarium Perdagangan',as_gl_terms:'istilah dijelaskan',as_gl_ph:'Cari istilah — mis. FOB, Art. 14, D/P',as_gl_all:'Semua',as_gl_none:'Istilah tidak ditemukan — coba FOB, CIF atau "Art. 14".',as_gl_note:'Incoterms® 2020 · UCP 600 · ISBP 745 · URC 522 · URDG 758',as_gl_cta:'Buka glosarium lengkap →',as_ft_tara:'Tara — asisten AI'});
+Object.assign(T.es,{as_tag:'Incluido',as_cap:'Ayuda justo cuando la necesitas',as_h2:'Tu experto en cumplimiento, <span>siempre disponible.</span>',as_lead:'Pregúntale a Tara lo que sea en lenguaje sencillo, o busca cualquier regla en el glosario comercial — dentro de ShipSafe.',as_try:'Prueba una pregunta',as_note:'Respuestas de ejemplo. En la app, Tara responde tu caso exacto.',as_tara_cta:'Pregúntale a Tara →',as_gl_title:'Glosario Comercial',as_gl_terms:'términos explicados',as_gl_ph:'Busca un término — ej. FOB, Art. 14, D/P',as_gl_all:'Todos',as_gl_none:'Sin resultados — prueba FOB, CIF o "Art. 14".',as_gl_note:'Incoterms® 2020 · UCP 600 · ISBP 745 · URC 522 · URDG 758',as_gl_cta:'Abrir el glosario completo →',as_ft_tara:'Tara — asistente IA'});
 Object.assign(T.en,{nav_demo:'Demo',nav_team:'Team',d_tag:'Demo',d_cap:'Try it yourself',d_h2:'See ShipSafe at work. <span>Hands-on.</span>',d_open:'Open the interactive demo',d_open_sub:'Be Rina, a furniture exporter, for two minutes.',t_tag:'Team',t_cap:'Built by people who ship',t_h2:'Exporters building <span>for exporters.</span>'});
 Object.assign(T.id,{nav_demo:'Demo',nav_team:'Tim',d_tag:'Demo',d_cap:'Coba sendiri',d_h2:'Lihat ShipSafe bekerja. <span>Langsung.</span>',d_open:'Buka demo interaktif',d_open_sub:'Jadi Rina, eksportir furnitur, selama dua menit.',t_tag:'Tim',t_cap:'Dibangun oleh pelaku ekspor',t_h2:'Eksportir membangun <span>untuk eksportir.</span>'});
 Object.assign(T.es,{nav_demo:'Demo',nav_team:'Equipo',d_tag:'Demo',d_cap:'Pruébalo tú mismo',d_h2:'Mira ShipSafe en acción. <span>En vivo.</span>',d_open:'Abrir la demo interactiva',d_open_sub:'Sé Rina, exportadora de muebles, por dos minutos.',t_tag:'Equipo',t_cap:'Hecho por quienes exportan',t_h2:'Exportadores construyendo <span>para exportadores.</span>'});
@@ -1766,6 +1848,7 @@ Object.assign(T.id,{nav_problem:'Masalahnya',nav_how:'Cara kerja',nav_features:'
 Object.assign(T.es,{nav_problem:'El problema',nav_how:'Cómo funciona',nav_features:'Funciones',landing_sub:'Certificados, pruebas, trámites, plazos — sabe qué exige la aduana antes de que tu contenedor salga del puerto. Cualquier producto, cualquier corredor.',stat1:'Cargo bancario por rechazo',stat2:'Retenido en puerto',stat3:'Papeleo por envío',p_tag:'El problema',p_cap:'Papeleo, no producto',p_h2:'El comercio global mueve el mundo.<br><span>El papeleo lo frena.</span>',p_stat:'Hasta $1 billón al año en ganancias comerciales potenciales — atrapadas en la burocracia fronteriza.',p_src:'Fuente: OMC, 2022.',p_jhd:'Un recorrido de exportación típico',p_j1t:'Buscar requisitos',p_j1d:'Dispersos por todas partes',p_j2t:'Preparar documentos',p_j2d:'10–20 h de trabajo',p_j3t:'Presentar al banco',p_j3d:'Esperar revisión',p_j4t:'Rechazado',p_j4d:'$150–500 en cargos',p_j5t:'Corregir y reenviar',p_j5d:'5–7 días en puerto',p_j6t:'Esperar el pago',p_j6d:'$20K+ de capital inmovilizado',p_punch:'Un pequeño error puede retrasar <span>todo el envío.</span>',h_tag:'Cómo funciona',h_h2:'Elige un corredor. Obtén el checklist. <span>Envía sin problemas.</span>',h_video:'Video explicativo — muy pronto',h1t:'Elige tu corredor',h1d:'Producto, origen, destino, Incoterm.',h2t:'Obtén tu checklist',h2d:'Reglas, agencias y plazos exactos de fuentes oficiales.',h3t:'Coteja tus documentos',h3d:'Detecta discrepancias antes que tu banco.',f_tag:'Qué obtienes',f_cap:'Solo fuentes oficiales',f_h2:'Preciso. Con fuentes. <span>Por corredor.</span>',f1t:'Checklist de cumplimiento',f1d:'Regulaciones, agencias, plazos — por corredor.',f2t:'Verificador de documentos',f2d:'Auditoría UCP 600 antes de que la vea el banco.',f3t:'Calculadora de costos',f3d:'Costo total puesto en destino por Incoterm.',f4t:'Riesgo de pago',f4d:'LC, TT, DP o DA — ¿seguro para este comprador?',f5t:'Alertas de puntos ciegos',f5d:'EUDR, pruebas de producto, VGM, control de divisas.',f6t:'Cualquier producto',f6d:'De alimentos a muebles y electrónica. 20+ países.',f_gen:'Herramienta genérica',f_gen_q:'“Obtén un Bill of Lading de tu naviera.”',f_ss_q:'“Tu BL dice ‘Global Harvest Trading Co.’ — tu LC no. Discrepancia UCP 600 Art. 14(d). El banco rechazará. Corrige antes de zarpar.”',c_h2:'Dos formas de empezar.',c1_tag:'Gratis · Sin registro',c1_t:'Verificación rápida',c1_d:'Un checklist del corredor en 30 segundos.',c2_tag:'Guiado · En prueba',c2_t:'Gestionar un envío',c2_d:'Checklist, documentos, costos y plazos en un solo lugar.',ft_d:'Cumplimiento comercial con IA para exportadores e importadores que llevan productos de mercados emergentes al mundo.',ft_explore:'Explorar',ft_start:'Empezar',ft_tools:'Herramientas',ft_legal:'Orientación con IA, no asesoría legal. Verifica siempre con un agente aduanal autorizado antes de enviar.'});
 function setLang(lang){
   currentLang=lang;
+  if(window.redrawAssist) window.redrawAssist();
   // Update toggle buttons
   document.querySelectorAll('.lang-btn').forEach(b=>{
     b.classList.toggle('active',b.textContent.trim().toLowerCase()===lang);
@@ -2493,7 +2576,7 @@ CRITICAL REQUIREMENTS — every "detail" field must be specific to this corridor
 - Use specific numbers: contaminant/substance limits in ppb/ppm, duty and anti-dumping rates in %, font sizes in pt, weight tolerances in %, timelines in days
 
 INCOTERMS CONTEXT for ${incoterms}:
-${incoterms === 'FOB' ? '- Exporter pays all costs until goods cross ship\'s rail at origin port. Buyer arranges and pays ocean freight + insurance.' :
+${incoterms === 'FOB' ? '- Exporter pays all costs until goods are on board the vessel at the origin port. Buyer arranges and pays ocean freight + insurance.' :
   incoterms === 'CIF' ? '- Exporter pays inland transport + export clearance + ocean freight + marine insurance to destination port. Include these in cost estimation.' :
   incoterms === 'CFR' ? '- Exporter pays inland transport + export clearance + ocean freight (NOT insurance). Buyer arranges insurance. Reflect this in costs.' :
   incoterms === 'EXW' ? '- Buyer handles everything from factory gate. Exporter has minimal obligations but must still prepare export documents.' :
@@ -4239,9 +4322,9 @@ const GLOSSARY=[
 {cat:'inco',title:'EXW — Ex Works',body:'<strong>Risk transfers:</strong> At seller\'s premises<br><strong>Seller pays:</strong> Nothing beyond making goods available at their premises<br><strong>Buyer pays:</strong> Everything — loading, export clearance, transport, insurance, import clearance, duties<span class="gl-key">Caution</span>Seller may not be able to clear goods for export (buyer\'s responsibility). Rarely practical for international trade — use FCA instead.'},
 {cat:'inco',title:'FCA — Free Carrier',body:'<strong>Risk transfers:</strong> When goods are handed to the carrier at the named place<br><strong>Seller pays:</strong> Delivery to carrier, export clearance, loading (if at seller\'s premises)<br><strong>Buyer pays:</strong> Main carriage, insurance (optional), import clearance, duties<span class="gl-key">New in 2020</span>FCA now allows the buyer to instruct their carrier to issue an on-board B/L to the seller — solving the old problem of getting a shipped-on-board B/L under FCA.'},
 {cat:'inco',title:'FAS — Free Alongside Ship',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods are placed alongside the vessel at the port of shipment<br><strong>Seller pays:</strong> Delivery alongside ship, export clearance<br><strong>Buyer pays:</strong> Loading onto vessel, ocean freight, insurance, import clearance<span class="gl-key">Use case</span>Bulk cargoes (grain, minerals) where the buyer charters the vessel.'},
-{cat:'inco',title:'FOB — Free On Board',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods cross the ship\'s rail at the port of shipment<br><strong>Seller pays:</strong> Delivery to port, loading onto vessel, export clearance<br><strong>Buyer pays:</strong> Ocean freight, insurance, import clearance, duties<span class="gl-key">Most popular for exports</span>FOB is the most common Incoterm for agricultural commodity exports. Seller\'s obligation ends once goods are on the ship.'},
-{cat:'inco',title:'CFR — Cost and Freight',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods cross the ship\'s rail at origin port (same as FOB)<br><strong>Seller pays:</strong> Export clearance, loading, ocean freight to destination port<br><strong>Buyer pays:</strong> Insurance, import clearance, duties, unloading<span class="gl-key">Key nuance</span>Risk transfers at ORIGIN even though seller pays freight to DESTINATION. If goods are damaged during voyage, it\'s the buyer\'s loss — so buyer must arrange insurance.'},
-{cat:'inco',title:'CIF — Cost, Insurance & Freight',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods cross the ship\'s rail at origin (same as FOB/CFR)<br><strong>Seller pays:</strong> Export clearance, loading, ocean freight, marine insurance (min. 110% invoice value per ICC Clause C)<br><strong>Buyer pays:</strong> Import clearance, duties, unloading<span class="gl-key">Insurance requirement</span>Seller only needs to provide MINIMUM coverage (ICC Clause C). Buyer should arrange additional insurance if needed. Under UCP 600 Art. 28, insurance must cover ≥110% CIF value.'},
+{cat:'inco',title:'FOB — Free On Board',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods are placed on board the vessel at the port of shipment<br><strong>Seller pays:</strong> Delivery to port, loading onto vessel, export clearance<br><strong>Buyer pays:</strong> Ocean freight, insurance, import clearance, duties<span class="gl-key">Most popular for exports</span>FOB is one of the most common Incoterms for sea exports. The seller\'s obligation ends once the goods are on board.'},
+{cat:'inco',title:'CFR — Cost and Freight',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods are on board the vessel at the origin port (same as FOB)<br><strong>Seller pays:</strong> Export clearance, loading, ocean freight to destination port<br><strong>Buyer pays:</strong> Insurance, import clearance, duties, unloading<span class="gl-key">Key nuance</span>Risk transfers at ORIGIN even though seller pays freight to DESTINATION. If goods are damaged during voyage, it\'s the buyer\'s loss — so buyer must arrange insurance.'},
+{cat:'inco',title:'CIF — Cost, Insurance & Freight',body:'<strong>Sea only.</strong><br><strong>Risk transfers:</strong> When goods are on board the vessel at origin (same as FOB/CFR)<br><strong>Seller pays:</strong> Export clearance, loading, ocean freight, marine insurance (min. 110% invoice value per ICC Clause C)<br><strong>Buyer pays:</strong> Import clearance, duties, unloading<span class="gl-key">Insurance requirement</span>Seller only needs to provide MINIMUM coverage (ICC Clause C). Buyer should arrange additional insurance if needed. Under UCP 600 Art. 28, insurance must cover ≥110% CIF value.'},
 {cat:'inco',title:'CPT — Carriage Paid To',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> When goods are handed to the first carrier<br><strong>Seller pays:</strong> Export clearance, carriage to named destination<br><strong>Buyer pays:</strong> Insurance (optional), import clearance, duties<span class="gl-key">CPT vs CFR</span>CPT works for any transport mode (truck, rail, air, multimodal). CFR is sea-only. Otherwise similar concept.'},
 {cat:'inco',title:'CIP — Carriage & Insurance Paid To',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> When goods are handed to the first carrier<br><strong>Seller pays:</strong> Export clearance, carriage to destination, insurance<br><strong>Buyer pays:</strong> Import clearance, duties<span class="gl-key">New in 2020</span>CIP now requires ALL RISKS insurance (ICC Clause A) — higher coverage than CIF which only requires Clause C. This is a major change from Incoterms 2010.'},
 {cat:'inco',title:'DAP — Delivered At Place',body:'<strong>Any mode.</strong><br><strong>Risk transfers:</strong> At the named place of destination, ready for unloading<br><strong>Seller pays:</strong> Everything to destination (export, transport, but NOT import clearance)<br><strong>Buyer pays:</strong> Import clearance, duties, unloading<span class="gl-key">Use case</span>When seller wants to deliver to buyer\'s warehouse or inland point but buyer handles customs.'},
@@ -4308,6 +4391,53 @@ function filterGlCat(cat){
   else if(anyVisible&&empty){empty.remove()}
 }
 initGlossary();
+
+// ═══════════ LANDING: TARA + GLOSSARY PREVIEW ═══════════
+const AS_QA = {"en": [["Do I need CE marking for wooden chairs to Germany?", "<b>No CE mark</b> — plain wooden chairs aren't covered by CE directives. They still have to meet the <b>EU General Product Safety Regulation (EU) 2023/988</b>, and the timber falls under <b>EUDR</b>."], ["FOB or CIF — which should I quote?", "Under <b>FOB</b> the buyer books freight and insurance. Under <b>CIF</b> you pay freight plus minimum insurance (ICC (C), 110% of value) to the destination port — but in both, risk passes to the buyer once goods are on board. Quote CIF only if you can price the freight."], ["How do I find my HS code?", "The first <b>6 digits</b> are the same worldwide (WCO Harmonized System). Then check the destination's tariff for the full code — <b>TARIC</b> for the EU, <b>HTSUS</b> for the US. Unsure? Ask customs for a binding ruling."], ["What if my documents don't match the LC?", "The bank can refuse the presentation as discrepant (<b>UCP 600 Art. 16</b>). You'll pay discrepancy fees and wait while the buyer decides whether to accept — that's why ShipSafe cross-checks every field first."]], "id": [["Perlu tanda CE untuk kursi kayu ke Jerman?", "<b>Tidak perlu tanda CE</b> — kursi kayu biasa tidak termasuk direktif CE. Tapi tetap wajib memenuhi <b>EU General Product Safety Regulation (EU) 2023/988</b>, dan kayunya masuk cakupan <b>EUDR</b>."], ["Lebih baik quote FOB atau CIF?", "Dengan <b>FOB</b>, buyer yang pesan kapal dan asuransi. Dengan <b>CIF</b>, kamu bayar ongkos kirim plus asuransi minimum (ICC (C), 110% nilai) sampai pelabuhan tujuan — tapi di keduanya risiko pindah ke buyer begitu barang di atas kapal. Pilih CIF hanya kalau kamu bisa menghitung ongkos kirimnya."], ["Gimana cara cari kode HS?", "<b>6 digit pertama</b> sama di seluruh dunia (WCO Harmonized System). Lalu cek tarif negara tujuan untuk kode lengkapnya — <b>TARIC</b> untuk EU, <b>HTSUS</b> untuk AS. Ragu? Minta binding ruling ke bea cukai."], ["Kalau dokumen tidak cocok dengan LC?", "Bank bisa menolak karena ada diskrepansi (<b>UCP 600 Art. 16</b>). Kamu kena biaya diskrepansi dan harus menunggu buyer memutuskan mau menerima atau tidak — makanya ShipSafe mengecek setiap field lebih dulu."]], "es": [["¿Necesito marcado CE para sillas de madera a Alemania?", "<b>No necesitan marcado CE</b> — las sillas de madera simples no están cubiertas por directivas CE. Pero deben cumplir el <b>Reglamento General de Seguridad de los Productos (UE) 2023/988</b>, y la madera entra en el <b>EUDR</b>."], ["¿Cotizo FOB o CIF?", "Con <b>FOB</b> el comprador contrata flete y seguro. Con <b>CIF</b> pagas el flete y un seguro mínimo (ICC (C), 110% del valor) hasta el puerto de destino — pero en ambos el riesgo pasa al comprador al cargar la mercancía. Cotiza CIF solo si sabes calcular el flete."], ["¿Cómo encuentro mi código HS?", "Los primeros <b>6 dígitos</b> son iguales en todo el mundo (Sistema Armonizado de la OMA). Luego revisa el arancel del destino para el código completo — <b>TARIC</b> en la UE, <b>HTSUS</b> en EE.UU. ¿Dudas? Pide una resolución vinculante a la aduana."], ["¿Y si mis documentos no coinciden con la carta de crédito?", "El banco puede rechazar la presentación por discrepancias (<b>UCP 600 Art. 16</b>). Pagarás comisiones y esperarás a que el comprador decida si acepta — por eso ShipSafe revisa cada campo antes."]]};
+const AS_CATS = [['all', null], ['inco', 'Incoterms'], ['ucp', 'UCP 600'], ['isbp', 'ISBP 745'], ['urc', 'URC 522'], ['urdg', 'URDG 758']];
+(function initAssist() {
+  const chat = document.getElementById('asChat'), chips = document.getElementById('asChips');
+  const list = document.getElementById('asGlList'), cats = document.getElementById('asGlCats'), q = document.getElementById('asGlQ');
+  if (!chat || !list) return;
+  const t = k => (T[currentLang] && T[currentLang][k]) || T.en[k];
+  const qa = () => AS_QA[currentLang] || AS_QA.en;
+  const esc = v => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let asked = [0], busy = false;
+  function drawTara() {
+    const items = qa();
+    chat.innerHTML = asked.map(i => `<div class="as-msg u">${esc(items[i][0])}</div><div class="as-msg a">${items[i][1]}</div>`).join('');
+    chips.innerHTML = items.map((x, i) => asked.includes(i) ? '' : `<button class="as-chip" data-i="${i}" ${busy ? 'disabled' : ''}>${esc(x[0])}</button>`).join('');
+    chat.scrollTop = chat.scrollHeight;
+  }
+  chips.addEventListener('click', e => {
+    const b = e.target.closest('.as-chip'); if (!b || busy) return;
+    const i = +b.dataset.i, items = qa();
+    busy = true;
+    chat.insertAdjacentHTML('beforeend', `<div class="as-msg u">${esc(items[i][0])}</div><div class="as-msg a as-dots"><i></i><i></i><i></i></div>`);
+    chips.querySelectorAll('.as-chip').forEach(c => c.disabled = true);
+    chat.scrollTop = chat.scrollHeight;
+    setTimeout(() => { asked.push(i); busy = false; drawTara(); }, 900);
+  });
+  let cat = 'all';
+  const plain = h => h.replace(/<[^>]+>/g, ' ');
+  function drawGlossary() {
+    document.getElementById('asGlCount').textContent = GLOSSARY.length + ' ' + t('as_gl_terms');
+    cats.innerHTML = AS_CATS.map(([k, label]) => `<button class="as-cat ${cat === k ? 'on' : ''}" data-c="${k}">${label || t('as_gl_all')}</button>`).join('');
+    const s = q.value.trim().toLowerCase();
+    const hits = GLOSSARY.filter(g => (cat === 'all' || g.cat === cat) && (!s || g.title.toLowerCase().includes(s) || plain(g.body).toLowerCase().includes(s)));
+    const order = AS_CATS.map(c => c[0]);
+    const rank = g => !s ? 0 : g.title.toLowerCase().startsWith(s) ? 0 : g.title.toLowerCase().includes(s) ? 1 : 2;
+    hits.sort((x, y) => rank(x) - rank(y) || order.indexOf(x.cat) - order.indexOf(y.cat));
+    const label = c => (AS_CATS.find(x => x[0] === c) || [, c])[1];
+    list.innerHTML = hits.length ? hits.map((g, i) => `<div class="as-gi ${i === 0 && s ? 'open' : ''}"><button class="as-gi-hd"><em>${label(g.cat)}</em>${esc(g.title)}<i>▼</i></button><div class="as-gi-bd">${g.body}</div></div>`).join('')
+      : `<div class="as-empty">${t('as_gl_none')}</div>`;
+  }
+  cats.addEventListener('click', e => { const b = e.target.closest('.as-cat'); if (b) { cat = b.dataset.c; drawGlossary(); } });
+  list.addEventListener('click', e => { const b = e.target.closest('.as-gi-hd'); if (b) b.parentElement.classList.toggle('open'); });
+  q.addEventListener('input', drawGlossary);
+  drawTara(); drawGlossary();
+  window.redrawAssist = () => { drawTara(); drawGlossary(); };
+})();
 
 // ═══════════ HERO DEMO ANIMATION ═══════════
 (function runHeroDemo(){
