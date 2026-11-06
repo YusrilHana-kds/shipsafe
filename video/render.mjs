@@ -18,6 +18,7 @@ const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const FFMPEG = '/opt/homebrew/bin/ffmpeg';
 const stills = arg('--stills');
 const cutName = arg('--cut');
+const langName = arg('--lang');
 const outDir = resolve(arg('--out', join(root, 'public', 'video')));
 
 const profile = mkdtempSync(join(tmpdir(), 'ss-chrome-'));
@@ -47,7 +48,7 @@ const evaluate = async expr => (await send('Runtime.evaluate', { expression: exp
 await send('Page.enable');
 await send('Emulation.setDeviceMetricsOverride', { width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false });
 const loaded = new Promise(r => listeners.push(m => m.method === 'Page.loadEventFired' && r()));
-await send('Page.navigate', { url: pathToFileURL(join(here, 'walkthrough.html')).href + '?render' + (cutName ? `&cut=${cutName}` : '') });
+await send('Page.navigate', { url: pathToFileURL(join(here, 'walkthrough.html')).href + '?render' + (cutName ? `&cut=${cutName}` : '') + (langName ? `&lang=${langName}` : '') });
 await loaded;
 await evaluate('document.fonts.ready.then(() => Promise.all([...document.images].map(i => i.decode())))');
 const duration = await evaluate('window.DURATION');
@@ -70,11 +71,11 @@ if (stills) {
     if (f % 150 === 0) console.log(`frame ${f}/${total}`);
   }
   mkdirSync(join(here, 'out'), { recursive: true });
-  const mp4 = join(here, 'out', cutName ? `how-it-works-${cutName}-silent.mp4` : 'how-it-works-silent.mp4');
+  const mp4 = join(here, 'out', `how-it-works${cutName ? '-' + cutName : ''}${langName ? '-' + langName : ''}-silent.mp4`);
   if (cutName) writeFileSync(join(here, 'out', `cut-${cutName}.json`), await evaluate('JSON.stringify(window.SEGMENTS)'));
   execFileSync(FFMPEG, ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(frames, '%05d.jpg'),
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4]);
-  if (!cutName) await shot(16.2, join(outDir, 'how-it-works-poster.jpg'), 'jpeg');
+  if (!cutName && !langName) await shot(16.2, join(outDir, 'how-it-works-poster.jpg'), 'jpeg');
   rmSync(frames, { recursive: true, force: true });
   console.log('wrote', mp4);
 }

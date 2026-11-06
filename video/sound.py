@@ -197,7 +197,9 @@ if __name__ == '__main__':
         silent, target = os.path.join(out_dir, f'how-it-works-{cut}-silent.mp4'), os.path.join(out_dir, f'how-it-works-{cut}.mp4')
     else:
         mus, fx = music(), sfx()
-        silent, target = os.path.join(out_dir, 'how-it-works-silent.mp4'), os.path.join(ROOT, 'public', 'video', 'how-it-works.mp4')
+        lang = sys.argv[sys.argv.index('--lang') + 1] if '--lang' in sys.argv else None
+        suf = f'-{lang}' if lang else ''
+        silent, target = os.path.join(out_dir, f'how-it-works{suf}-silent.mp4'), os.path.join(ROOT, 'public', 'video', f'how-it-works{suf}.mp4')
     with tempfile.TemporaryDirectory() as tmp:
         mix = normalize(0.75 * mus / (np.abs(mus).max() + 1e-9) + 0.9 * fx)
         audio = os.path.join(tmp, 'mix.wav')

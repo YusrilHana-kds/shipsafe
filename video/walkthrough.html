@@ -21,6 +21,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#F2F8FE}
 #caption .n{background:#1F6FB8;color:#FFFFFF;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:20px;border-radius:100px;padding:5px 14px}
 #caption .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:26px}
 #caption .s{font-size:21px;color:rgba(11,31,68,0.80)}
+html:lang(zh-CN) #sub,html:lang(zh-CN) #caption .t,html:lang(zh-CN) #caption .s{font-family:'PingFang SC','Hiragino Sans GB','Noto Sans SC',sans-serif;letter-spacing:0}
 #sub{left:0;right:0;margin:0 auto;width:fit-content;bottom:40px;max-width:1640px;text-align:center;font-size:31px;line-height:1.4;font-weight:500;color:#0B1F44;background:#D6E4F3;box-shadow:0 8px 24px -12px rgba(21,56,122,.25);border-radius:14px;padding:12px 28px;text-wrap:balance}
 #steps{right:72px;top:64px;display:flex;gap:10px}
 #steps i{display:block;width:56px;height:8px;border-radius:4px;background:#D6E4F3}
@@ -385,6 +386,49 @@ const CAPTIONS = [
   [53.5, 59.2, '06', 'Trade glossary', 'Incoterms · UCP 600 · ISBP 745'],
   [59.5, 67.1, '07', 'Track every shipment', 'Readiness and deadlines in one view'],
 ];
+
+// Caption languages (?lang=id|zh|es); on-screen product UI stays in English
+const L10N = {
+  id: { subs: [
+    'Satu dokumen salah bisa menahan kontainermu di pelabuhan — dan memakan ratusan dolar biaya bank.',
+    'Dengan ShipSafe, cukup pilih produk, negara asal, tujuan, dan Incoterm. Tanpa menebak-nebak.',
+    'Dalam hitungan detik, kamu dapat semua aturan yang berlaku — langsung dari sumber resmi. Plus blind spot yang sering terlewat.',
+    'Upload dokumen dagangmu. ShipSafe mengecek setiap field terhadap LC dan menandai yang akan ditolak bank — sebelum kapal berangkat.',
+    'Lihat total biaya per Incoterm — dan margin sebenarnya — sebelum kamu kasih harga.',
+    'Bingung? Tanya Tara, asisten AI kepatuhan dagang, untuk jawaban yang jelas dan bersumber.',
+    'Cari Incoterm atau aturan perbankan apa pun di glosarium bawaan.',
+    'Pantau semua pengiriman di satu tempat — kesiapan, dokumen, dan tenggat sekaligus.'],
+    caps: [['Pilih rute', 'Produk · asal · tujuan · Incoterm'], ['Dapatkan checklist', 'Aturan persis dari sumber resmi'], ['Cek silang dokumen', 'Sebelum bank menemukannya'],
+      ['Ketahui total biaya', 'Setiap biaya, per Incoterm'], ['Tanya Tara apa saja', 'Asisten AI kepatuhan dagang'], ['Glosarium dagang', 'Incoterms · UCP 600 · ISBP 745'], ['Pantau setiap pengiriman', 'Kesiapan dan tenggat dalam satu tampilan']] },
+  zh: { subs: [
+    '一份单据出错，集装箱就可能滞留港口——还要多付数百美元银行费用。',
+    '使用 ShipSafe，只需选择产品、原产国、目的国和贸易术语。无需猜测。',
+    '几秒钟内，您就能获得所有适用规则——直接来自官方来源。还有大多数出口商忽略的盲点。',
+    '上传贸易单据。ShipSafe 会对照信用证逐项核对，并在开船前标出银行会拒付的问题。',
+    '按贸易术语查看完整到岸成本和真实利润——在报价之前。',
+    '遇到问题？问 AI 贸易合规助手 Tara，获得清晰、有依据的答案。',
+    '在内置术语表中查找任何贸易术语或银行规则。',
+    '在一个地方跟踪每票货物——准备度、单据和截止日期一目了然。'],
+    caps: [['选择贸易路线', '产品 · 原产国 · 目的国 · 贸易术语'], ['获取合规清单', '来自官方来源的准确规则'], ['交叉核对单据', '赶在银行之前'],
+      ['了解到岸成本', '按贸易术语列出每项费用'], ['随时问 Tara', '您的 AI 贸易合规助手'], ['贸易术语表', 'Incoterms · UCP 600 · ISBP 745'], ['跟踪每票货物', '准备度和截止日期一览无余']] },
+  es: { subs: [
+    'Un documento erróneo puede retener tu contenedor en el puerto — y costarte cientos en comisiones bancarias.',
+    'Con ShipSafe, solo elige tu producto, origen, destino e Incoterm. Sin adivinar.',
+    'En segundos obtienes cada norma aplicable — directo de fuentes oficiales. Más los puntos ciegos que casi todos pasan por alto.',
+    'Sube tus documentos comerciales. ShipSafe revisa cada campo contra tu carta de crédito y marca lo que el banco rechazaría — antes de zarpar.',
+    'Ve tu costo total puesto en destino por Incoterm — y tu margen real — antes de cotizar.',
+    '¿Una duda? Pregúntale a Tara, tu asistente de cumplimiento con IA, y recibe una respuesta clara y con fuentes.',
+    'Consulta cualquier Incoterm o regla bancaria en el glosario integrado.',
+    'Sigue cada envío en un solo lugar — preparación, documentos y plazos de un vistazo.'],
+    caps: [['Elige tu corredor', 'Producto · origen · destino · Incoterm'], ['Obtén tu checklist', 'Reglas exactas de fuentes oficiales'], ['Coteja tus documentos', 'Antes que tu banco'],
+      ['Conoce tu costo total', 'Cada cargo, por Incoterm'], ['Pregúntale a Tara', 'Tu asistente de cumplimiento con IA'], ['Glosario comercial', 'Incoterms · UCP 600 · ISBP 745'], ['Sigue cada envío', 'Preparación y plazos en una vista']] },
+};
+const LANG = new URLSearchParams(location.search).get('lang');
+if (L10N[LANG]) {
+  SUBS.forEach((x, i) => { x[2] = L10N[LANG].subs[i]; });
+  CAPTIONS.forEach((c, i) => { c[3] = L10N[LANG].caps[i][0]; c[4] = L10N[LANG].caps[i][1]; });
+  if (LANG === 'zh') document.documentElement.lang = 'zh-CN';
+}
 
 function renderAt(t) {
   for (const [sel, a, b] of SCENES) $(sel).style.opacity = win(t, a, b, .5);
