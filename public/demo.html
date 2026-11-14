@@ -67,6 +67,16 @@ h1 em{font-style:normal;color:var(--acc)}
 .sw button{padding:5px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--muted)}
 .sw button.on{background:var(--acc);color:#fff}
 .foot{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:10px;flex-wrap:wrap}
+.persona{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(135deg,#F6FAFF,#EAF2FC);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-bottom:26px}
+.persona .av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#408CC8,#1F6FB8);color:#fff;font:800 26px 'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 0 4px #fff}
+.persona .pn{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em}
+.persona .pr{font-size:13.5px;color:var(--muted)}
+.persona p{margin:8px 0 12px;color:var(--ink2);max-width:660px}
+.facts{display:flex;flex-wrap:wrap;gap:8px}.facts span{background:#fff;border:1px solid var(--line);border-radius:100px;padding:5px 12px;font-size:13px;font-weight:600}
+.door .when{display:block;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin-top:12px}
+.door .when+b{margin-top:4px}
+.rina{font-size:12.5px;font-weight:600;color:var(--acc);background:#fff;border:1px solid var(--line);border-radius:100px;padding:3px 10px;white-space:nowrap}
+@media(max-width:560px){.persona{padding:16px}.persona .av{width:48px;height:48px;font-size:20px}.rina{display:none}}
 .prefill{background:var(--okbg);color:#1E6B2F;border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:22px}
 
 /* explore result */
@@ -283,8 +293,12 @@ const S={screen:'start', a:{prod:'',origin:'Indonesia',dest:'',inco:'',done:fals
   ans:{pay:'L/C',inco:'FOB',cargo:'',wood:true,dg:false,cold:false,fcl:'Full container',clear:'My forwarder'},
   qi:0, buyer:false, up:{}, open:{}, showOthers:false, showMaybe:false, added:{}};
 
-function go(s){S.screen=s; if(s==='b1'){S.qi=0} render(); }
-function bar(t,back){ $('#bar').innerHTML=`<b>${t}</b>${back?`<button class="link back" onclick="go('${back}')">← Back</button>`:''}`; }
+// Rina's case: teak dining sets from Jepara to a buyer in Hamburg (user can change anything)
+function go(s){S.screen=s;
+  if(s==='a'&&!S.a.prod){S.a.prod='Teak furniture'}
+  if(s==='b1'){S.qi=0; if(!S.ans.cargo){S.ans.cargo='Teak furniture';S.ans.wood=true} if(!S.a.dest) S.a.dest='Germany'}
+  render(); }
+function bar(t,back){ $('#bar').innerHTML=`<b>${t}</b>${S.screen!=='start'?'<span class="rina">Playing as Rina · Jepara → Hamburg</span>':''}${back?`<button class="link back" onclick="go('${back}')">← Back</button>`:''}`; }
 
 let lastView='';
 function render(){
@@ -295,12 +309,16 @@ function render(){
 // ── start: which door ──
 function start(){
   bar('Welcome to ShipSafe');
-  return `<div class="q">Where are you right now?</div><div class="qsub">Pick one. You can switch anytime.</div>
+  return `<div class="persona"><div class="av">R</div><div>
+      <div class="pn">Meet Rina</div><div class="pr">Owner, Rina Jati Furniture · Jepara, Indonesia</div>
+      <p>Rina runs a teak furniture workshop with 14 craftsmen. A buyer in Hamburg wants a full container of dining sets. It's her first order to Europe, and she can't afford a held container or a rejected payment.</p>
+      <div class="facts"><span>🪑 Teak dining sets</span><span>🇩🇪 Buyer in Hamburg</span><span>📦 1 × 40ft container</span><span>💰 $48,000 order</span></div></div></div>
+  <div class="q">Where is Rina right now?</div><div class="qsub">Walk through it as Rina. Pick the moment she's in, and switch anytime.</div>
   <div class="doors">
-    <button class="door" data-go="a"><div class="em">🧭</div><b>I'm exploring a market</b><span>No order yet. I want to know what a country needs before I quote.</span>
-      <ul><li>Documents usually needed</li><li>Things to watch out for</li><li>Cost estimator</li></ul><span class="go">Explore a market →</span></button>
-    <button class="door main" data-go="b1"><div class="em">📦</div><b>I have an order to ship <span class="tag">MOST USED</span></b><span>Contract signed. I need to get every document ready on time.</span>
-      <ul><li>Your checklist on one page</li><li>Each document checked on upload</li><li>Reminders before every cut-off</li></ul><span class="go">Start my shipment →</span></button>
+    <button class="door" data-go="a"><div class="em">🧭</div><span class="when">Before the deal</span><b>She's exploring the market</b><span>The buyer asked for a quote. Rina wants to know what Germany needs, and what it will cost her, before she names a price.</span>
+      <ul><li>Documents usually needed</li><li>Things to watch out for</li><li>Cost estimator</li></ul><span class="go">Explore as Rina →</span></button>
+    <button class="door main" data-go="b1"><div class="em">📦</div><span class="when">After the deal</span><b>She has an order to ship <span class="tag">MOST USED</span></b><span>Contract signed, letter of credit on the way. Rina needs every document right before the ship sails.</span>
+      <ul><li>Her checklist on one page</li><li>Each document checked on upload</li><li>Reminders before every cut-off</li></ul><span class="go">Ship Rina's order →</span></button>
   </div>`;
 }
 
@@ -382,7 +400,7 @@ function exploreForm(){
     ${tile(4,'Who pays for what? (Incoterm)',S.a.inco,`<div class="incos">${Object.keys(INCO).map(k=>`<button class="inco ${S.a.inco===k?'on':''}" data-inco="${k}"><b>${k}</b><span>${INCO[k].t}</span><div class="mb">${INCO[k].legs.map(x=>`<i class="${x?'me':''}"></i>`).join('')}</div></button>`).join('')}</div>
       <div class="hint">Green = the part of the trip you pay for. Not sure? Most first-time exporters start with <b>FOB</b>.</div>`,'full')}
   </div>
-  <div class="checkbar"><span class="ex">Just looking? <button data-aex>Try an example: teak dining sets → Germany, FOB</button></span>
+  <div class="checkbar"><span class="ex">Rina's buyer is in Germany. <button data-aex>Fill in Rina's deal: Germany, FOB</button></span>
     <button class="btn p lg" data-acheck ${aReady()?'':'disabled'}>${aReady()?'Check my route →':`Fill ${4-filled()} more to check`}</button></div>`;
 }
 function exploreResult(){
