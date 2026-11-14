@@ -3,546 +3,570 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ShipSafe — Interactive Demo</title>
-<meta name="description" content="Be Rina for two minutes: check a real export corridor, catch document errors before the bank, and see your landed cost — in your browser.">
-<link rel="icon" type="image/png" href="/logo-mark.png">
-<meta property="og:title" content="ShipSafe — Interactive demo: be Rina for two minutes">
-<meta property="og:description" content="Check a real export corridor, catch document errors before the bank, and see your landed cost — in your browser.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://shipsafe-trade.vercel.app/demo">
-<meta property="og:image" content="https://shipsafe-trade.vercel.app/og-global.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<title>ShipSafe Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#F2F8FE;--bg2:#E8F2FC;--card:#FFFFFF;--chip:#EDF4FB;--line:#D6E4F3;--tx:#0B1F44;--tx2:#2A3A57;--tx3:#55657F;--gn:#2F9E44;--gnl:#2F9E44;--acc:#1F6FB8;--acc2:#185C99;--sky:#1F6FB8;--am:#E8B44A;--rd:#E05C52}
-html,body{height:100%}
-body{background:var(--bg);color:var(--tx);font-family:'Inter','DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
-.h{font-family:'Plus Jakarta Sans','DM Sans',sans-serif;font-weight:800;letter-spacing:-.5px}
-.mono{font-family:'IBM Plex Mono',monospace}
-.g{color:var(--gn)}
-.h .g{color:var(--acc)}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F2F8FE;--bg2:#E6F0FB;--ink:#0B1F44;--ink2:#2A3A57;--muted:#5B6B85;--line:#D6E4F3;--chip:#EDF4FB;--acc:#1F6FB8;--acc2:#185C99;--soft:rgba(31,111,184,.09);--ok:#2F9E44;--okbg:#E8F5EA;--warn:#A86E00;--warnbg:#FFF4DC;--err:#C93C32;--errbg:#FDEDEB;--shadow:0 20px 50px -24px rgba(21,56,122,.3)}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.h{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;letter-spacing:-.035em}
+.proto{background:#0B1F44;color:#fff;text-align:center;font-size:12.5px;padding:7px 12px}.proto b{color:#9CC7EA}
+nav.top{height:66px;border-bottom:1px solid var(--line);background:rgba(242,248,254,.92);position:sticky;top:0;z-index:20;backdrop-filter:blur(10px)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:100%}
+nav.top img{height:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;font-weight:600;font-size:15px;padding:13px 20px;text-decoration:none;transition:background .15s,border-color .15s}
+.btn.p{background:var(--acc);color:#fff}.btn.p:hover{background:var(--acc2)}
+.btn.s{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn.s:hover{border-color:var(--acc);color:var(--acc)}
+.btn.sm{padding:8px 13px;font-size:13.5px;border-radius:9px}
+.link{color:var(--acc);font-weight:600;font-size:13.5px}
 
-.shell{display:flex;flex-direction:column;height:100%;min-height:100vh}
-.bar{background:#fff !important;display:flex;align-items:center;gap:16px;padding:10px 18px;background:var(--card);border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0}
-.home[hidden]{display:none}
-.home{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--tx);padding:4px 12px 4px 8px;border:1px solid var(--line);border-radius:100px;flex-shrink:0;transition:border-color .15s}
-.home:hover{border-color:var(--gn)}
-.home .arr{font-size:14px}
-.home img{height:20px;width:auto;display:block}
-.bar .dot{width:8px;height:8px;border-radius:50%;background:var(--gn);box-shadow:0 0 8px var(--gn);flex-shrink:0}
-.bar .ttl{white-space:nowrap}
-.bar .ttl em{font-style:normal;color:var(--tx3)}
-.steps{display:flex;gap:6px;margin-left:auto}
-.steps span{padding:4px 10px;border-radius:100px;border:1px solid var(--line);color:var(--tx3);white-space:nowrap}
-.steps span.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
-.steps span.done{color:var(--gnl);border-color:rgba(102,180,76,.5)}
-.runs{border:1px solid var(--line);padding:3px 8px;color:var(--tx2);white-space:nowrap}
-.full{color:var(--tx);text-decoration:none}.full:hover{border-color:var(--gn);color:var(--gnl)}
+.hero{padding:64px 0 48px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;color:var(--acc);background:#fff;border:1px solid var(--line);border-radius:100px;padding:7px 15px;margin-bottom:20px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+h1.h{font-size:clamp(38px,5.6vw,64px);line-height:1.04;margin-bottom:16px}
+h1 em{font-style:normal;color:var(--acc)}
+.lead{font-size:18px;color:var(--muted);max-width:620px;margin:0 auto 28px}
 
-main{flex:1;overflow:auto;padding:26px 28px 30px}
-.wrap{max-width:1040px;margin:0 auto}
-.screen{animation:fadeIn .35s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sky);font-weight:600;margin-bottom:8px}
-h1.h{font-size:clamp(26px,3.4vw,38px);line-height:1.12;margin-bottom:8px}
-h2.h{font-size:clamp(22px,2.6vw,28px);line-height:1.15;margin-bottom:6px}
-.lead{color:var(--tx2);font-size:16px;max-width:640px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px -18px rgba(21,56,122,.25)}
-.btn{text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:var(--acc);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:15px;padding:12px 22px;border-radius:100px;transition:transform .15s,background .15s}
-.btn:hover{background:var(--acc2);transform:translateY(-1px)}
-.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--line)}
-.btn.ghost:hover{border-color:var(--gn);color:var(--gnl)}
-.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
-.note{font-size:12px;color:var(--tx3);font-family:'IBM Plex Mono',monospace}
+/* app */
+.app{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:64px;min-height:520px}
+.appbar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--chip);font-size:13.5px;color:var(--muted)}
+.appbar b{color:var(--ink)}
+.appbar .back{margin-left:auto}
+.screen{padding:36px 32px;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.q{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(24px,3vw,32px);letter-spacing:-.03em;margin-bottom:6px}
+.qsub{color:var(--muted);margin-bottom:26px}
+.doors{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.door{text-align:left;border:2px solid var(--line);border-radius:18px;padding:26px;background:#fff;transition:border-color .15s,transform .15s}
+.door:hover{border-color:var(--acc);transform:translateY(-2px)}
+.door .em{font-size:34px}
+.door b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;margin:10px 0 6px}
+.door span{color:var(--muted)}
+.door ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink2)}
+.door li::before{content:'✓ ';color:var(--ok);font-weight:700}
+.door .go{display:inline-block;margin-top:18px;color:var(--acc);font-weight:700}
+.door.main{border-color:var(--acc);background:linear-gradient(180deg,#fff,#F6FAFF)}
+.door .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;color:#fff;background:var(--acc);border-radius:100px;padding:3px 9px;margin-left:8px;vertical-align:middle}
 
-/* intro */
-.intro{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center}
-.avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--gn));display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:32px;color:#fff;margin-bottom:16px}
-.order{padding:20px}
-.order .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gnl);margin-bottom:12px}
-.kv{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;font-size:14px}
-.kv dt{color:var(--tx3)}
-.kv dd{font-weight:500}
-.q{margin:22px 0 4px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:2px solid var(--line);border-radius:14px;padding:14px 18px;background:#fff;font-weight:600;font-size:15px;text-align:left;transition:border-color .15s,background .15s}
+.chip small{display:block;font-weight:500;font-size:12.5px;color:var(--muted);margin-top:2px}
+.chip:hover{border-color:var(--acc)}
+.chip.on{border-color:var(--acc);background:var(--soft);color:var(--acc)}
+.chip.big{min-width:230px}
+.field{margin-bottom:22px}
+.field label{display:block;font-weight:700;margin-bottom:10px}
+.dots{display:flex;gap:6px;margin-bottom:22px}
+.dots i{width:28px;height:5px;border-radius:3px;background:var(--line)}.dots i.on{background:var(--acc)}
+.toggles{display:flex;flex-direction:column;gap:10px;margin-top:18px;max-width:520px}
+.tg{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:500}
+.sw{display:inline-flex;background:var(--chip);border-radius:100px;padding:3px}
+.sw button{padding:5px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--muted)}
+.sw button.on{background:var(--acc);color:#fff}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:10px;flex-wrap:wrap}
+.prefill{background:var(--okbg);color:#1E6B2F;border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:22px}
 
-/* corridor */
-.form{padding:22px;margin-top:18px}
-.hint{display:inline-flex;gap:8px;align-items:center;background:rgba(102,180,76,.12);border:1px solid rgba(102,180,76,.4);border-radius:100px;padding:6px 14px;font-size:13px;margin-top:14px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
-.fl{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--tx2)}
-select{width:100%;height:48px;border-radius:10px;background:var(--bg);border:2px solid var(--line);color:var(--tx);font:inherit;font-size:15px;padding:0 14px;outline:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--tx3) 50%),linear-gradient(135deg,var(--tx3) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 14px) 21px;background-size:6px 6px;background-repeat:no-repeat}
-select:focus{border-color:var(--gn)}
-select.ok{border-color:rgba(102,180,76,.6)}
-.inco-help{font-size:12px;color:var(--tx3);margin-top:6px}
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 0;text-align:center}
-.spinner{width:44px;height:44px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--gn);animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.srcs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.srcs span{padding:6px 12px;border-radius:100px;border:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:12px;opacity:0;animation:fadeIn .3s ease forwards}
+/* explore result */
+.res{border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:6px;background:#FBFDFF}
+.res h4{font-size:17px;margin-bottom:12px}
+.doc{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.doc:first-of-type{border-top:none}
+.doc .ic{width:30px;height:30px;border-radius:9px;background:var(--soft);color:var(--acc);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.doc b{display:block;font-size:14.5px}.doc span{font-size:13px;color:var(--muted)}
+.watch{background:var(--warnbg);border-radius:12px;padding:12px 14px;font-size:13.5px;color:#6B4A00;margin-top:12px}
+.cost{display:flex;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:14px}
+.cost b{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;display:block}
+.cta-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--acc);color:#fff;border-radius:14px;padding:16px 18px;margin-top:18px}
+.cta-row .btn{background:#fff;color:var(--acc)}
 
-/* checklist */
-.route{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--tx2);margin-bottom:12px}
-.route i{font-style:normal;color:var(--tx3);margin:0 6px}
-.prog{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.pbar{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
-.pbar div{height:100%;background:var(--gn);transition:width .3s}
-.pct{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gnl);min-width:96px;text-align:right}
-.cl{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:16px;align-items:start}
-.items{display:flex;flex-direction:column;gap:8px}
-.it{background:var(--chip);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.it-hd{display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%;text-align:left}
-.ck{flex-shrink:0;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;color:transparent;font-size:14px;font-weight:800}
-.it.on .ck{background:var(--gn);border-color:var(--gn);color:#fff}
-.it-t{flex:1;min-width:0}
-.it-t b{display:block;font-size:15px;font-weight:600}
-.it-t span{display:block;font-size:12.5px;color:var(--tx3)}
-.it.on .it-t b{color:var(--tx3);text-decoration:line-through}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;border-radius:6px;white-space:nowrap;background:rgba(102,180,76,.14);color:var(--gnl)}
-.tag.cond{background:rgba(64,140,200,.18);color:var(--acc)}
-.chev{color:var(--tx3);transition:transform .2s;font-size:12px}
-.it.open .chev{transform:rotate(180deg)}
-.it-bd{display:none;padding:0 14px 14px 48px;font-size:13.5px;color:var(--tx2)}
-.it.open .it-bd{display:block}
-.it-bd .src{display:block;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sky)}
-.side{display:flex;flex-direction:column;gap:12px}
-.box{border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--tx2)}
-.box em{display:block;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600;margin-bottom:6px}
-.box b{color:var(--tx)}
-.warn{background:rgba(224,92,82,.12);border:1px solid rgba(224,92,82,.45)}.warn em{color:#C93C32}
-.pay{background:rgba(102,180,76,.1);border:1px solid rgba(102,180,76,.4)}.pay em{color:var(--gnl)}
-.tip{background:rgba(232,180,74,.1);border:1px solid rgba(232,180,74,.45)}.tip em{color:#A86E00}
+/* door A: route builder */
+.route{background:radial-gradient(120% 140% at 0% 0%,#2A6BB0 0%,#123A72 45%,#0B1F44 100%);color:#fff;border-radius:20px;padding:22px 26px 18px;margin-bottom:22px;position:relative;overflow:hidden}
+.route::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:18px 18px;pointer-events:none}
+.route .rt{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9CC7EA;font-weight:700;margin-bottom:14px;position:relative;z-index:1}
+.route .rt button{color:#fff;font-size:12.5px;text-transform:none;letter-spacing:0;font-weight:600;background:rgba(255,255,255,.12);border-radius:100px;padding:5px 12px}
+.rrow{display:grid;grid-template-columns:150px 1fr 150px;align-items:center;gap:14px;position:relative;z-index:1}
+.end{text-align:center}
+.end .fl{width:58px;height:58px;margin:0 auto 6px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:30px}
+.end .fl.q{border-style:dashed;color:rgba(255,255,255,.5);font-size:22px;font-weight:700}
+.end b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px}
+.end span{font-size:12px;color:#9CC7EA}
+.mid{position:relative;padding:34px 0 0}
+.mid .prod{position:absolute;top:0;left:50%;transform:translateX(-50%);white-space:nowrap;background:#fff;color:var(--ink);border-radius:100px;padding:5px 13px;font-size:13px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.mid .prod.q{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);box-shadow:none;border:1px dashed rgba(255,255,255,.4)}
+.mid .prod small{font-weight:500;color:var(--muted);margin-left:4px}
+.legs{display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:4px;margin-top:14px}
+.leg{height:8px;border-radius:4px;background:rgba(255,255,255,.18);transition:background .35s}
+.leg.me{background:#6FD08C}
+.leglbl{display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:4px;font-size:11px;color:#9CC7EA;margin-top:6px;text-align:center}
+.ship{position:absolute;top:30px;font-size:22px;transition:left .6s cubic-bezier(.5,0,.2,1);transform:translateX(-50%)}
+.ship.go{animation:sail 3.2s ease-in-out infinite alternate}
+@keyframes sail{from{left:8%}to{left:92%}}
+.hand{position:absolute;top:52px;transform:translateX(-50%);transition:left .45s cubic-bezier(.5,0,.2,1);font-size:11px;font-weight:700;color:#fff;white-space:nowrap;text-align:center}
+.hand::before{content:'';display:block;width:2px;height:22px;background:#FFD166;margin:0 auto 3px}
+.hand span{background:#FFD166;color:#3A2A00;border-radius:6px;padding:2px 7px}
+.rlegend{display:flex;gap:16px;justify-content:center;font-size:12px;color:#CFE3F7;margin-top:30px;position:relative;z-index:1}
+.rlegend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 
-/* documents */
-.docs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:16px;align-items:start}
-.dlist{display:flex;flex-direction:column;gap:8px}
-.doc{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--chip);border:1px dashed var(--line);text-align:left;width:100%}
-.doc.up{border-style:solid;background:var(--card)}
-.doc .ic{width:30px;height:38px;border-radius:4px;background:#E8F2FC;flex-shrink:0;position:relative;opacity:.35}
-.doc.up .ic{opacity:1}
-.doc .ic::before{content:'';position:absolute;left:6px;right:6px;top:8px;height:3px;background:var(--acc);box-shadow:0 7px 0 var(--acc),0 14px 0 #C9D6E6}
-.doc b{display:block;font-size:14px}
-.doc span span{display:block;font-size:12px;color:var(--tx3);font-family:'IBM Plex Mono',monospace}
-.doc .up-bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden;width:140px}
-.doc .up-bar div{height:100%;background:var(--gn);width:0;transition:width .35s linear}
-.doc .view{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sky)}
-.res{padding:18px}
-.res-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
-.badge{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 10px;border-radius:100px}
-.badge.bad{background:rgba(224,92,82,.18);color:#C93C32;border:1px solid rgba(224,92,82,.5)}
-.badge.good{background:rgba(102,180,76,.16);color:var(--gnl);border:1px solid rgba(102,180,76,.5)}
-.iss{border-radius:10px;padding:13px 15px;margin-bottom:10px;border:1px solid;font-size:13.5px;color:var(--tx2)}
-.iss .ti{font-weight:700;font-size:15px;margin-bottom:4px}
-.iss .ref{font-family:'IBM Plex Mono',monospace;font-size:11.5px;margin-top:6px}
-.iss .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.iss .acts button{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid var(--line)}
-.iss .acts .fix{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:600}
-.hl{background:#FDE2DF;color:#C93C32;border-radius:4px;padding:0 4px}
-.crit{background:rgba(224,92,82,.12);border-color:rgba(224,92,82,.55)}.crit .ti,.crit .ref{color:#C93C32}
-.wrn{background:rgba(232,180,74,.1);border-color:rgba(232,180,74,.5)}.wrn .ti,.wrn .ref{color:#A86E00}
-.okk{background:rgba(102,180,76,.1);border-color:rgba(102,180,76,.45)}.okk .ti{color:var(--gnl)}
-.scan{position:relative;height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:16px 0}
-.scan div{position:absolute;inset:0;width:30%;background:var(--gn);animation:sweep 1s ease-in-out infinite}
-@keyframes sweep{from{left:-30%}to{left:100%}}
-.empty{padding:28px 18px;text-align:center;color:var(--tx3);font-size:14px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff;position:relative;transition:border-color .2s,box-shadow .2s}
+.tile.done{border-color:#BFD9F2;box-shadow:0 0 0 3px var(--soft)}
+.tile .tl{display:flex;align-items:center;gap:9px;font-weight:700;margin-bottom:12px}
+.tile .n{width:24px;height:24px;border-radius:50%;background:var(--chip);color:var(--acc);font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.tile.done .n{background:var(--ok);color:#fff}
+.tile.full{grid-column:1/-1}
+.srch{position:relative}
+.srch input{width:100%;font:inherit;font-size:15px;border:2px solid var(--line);border-radius:12px;padding:12px 14px 12px 40px;background:#fff;color:var(--ink);outline:none}
+.srch input:focus{border-color:var(--acc)}
+.srch::before{content:'🔎';position:absolute;left:13px;top:12px;font-size:15px;opacity:.6}
+.dd{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);z-index:5;overflow:hidden}
+.dd button{display:flex;width:100%;justify-content:space-between;padding:11px 14px;text-align:left;font-size:14.5px;border-top:1px solid var(--chip)}
+.dd button:hover{background:var(--chip)}
+.dd small{color:var(--muted);font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.mini{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.mini button{font-size:13px;border:1px solid var(--line);border-radius:100px;padding:5px 11px;background:var(--bg);font-weight:500}
+.mini button:hover,.mini button.on{border-color:var(--acc);color:var(--acc);background:var(--soft)}
+.flags{display:flex;flex-wrap:wrap;gap:8px}
+.flag{display:flex;align-items:center;gap:7px;border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-weight:600;font-size:14px;background:#fff}
+.flag em{font-style:normal;font-size:20px}
+.flag:hover{border-color:var(--acc)}.flag.on{border-color:var(--acc);background:var(--soft);color:var(--acc)}
+.incos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.inco{border:2px solid var(--line);border-radius:14px;padding:12px;text-align:left;background:#fff}
+.inco:hover{border-color:var(--acc)}.inco.on{border-color:var(--acc);background:var(--soft)}
+.inco b{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;display:block}
+.inco span{font-size:12.5px;color:var(--muted);display:block;min-height:34px;line-height:1.35}
+.inco .mb{display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:2px;margin-top:8px}
+.inco .mb i{height:5px;border-radius:2px;background:var(--line)}.inco .mb i.me{background:var(--ok)}
+.hint{font-size:13px;color:var(--muted);margin-top:10px}
+.checkbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px}
+.ex{font-size:13.5px;color:var(--muted)}.ex button{color:var(--acc);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.btn.p:disabled{background:#A9C8E6;cursor:not-allowed}
+.btn.lg{padding:15px 26px;font-size:16px;border-radius:14px}
 
-/* doc preview modal */
-.modal{position:fixed;inset:0;background:rgba(5,12,30,.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;animation:fadeIn .2s}
-.paper{background:#FBFCFE;color:#101F38;border-radius:8px;width:100%;max-width:560px;max-height:90%;overflow:auto;padding:26px 28px;box-shadow:0 30px 80px rgba(0,0,0,.5);font-size:13px}
-.paper h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid #101F38;padding-bottom:8px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline}
-.paper h3 small{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0;text-transform:none;color:#56607A}
-.paper table{width:100%;border-collapse:collapse}
-.paper td{padding:7px 4px;border-bottom:1px solid #E1E6EF;vertical-align:top}
-.paper td:first-child{color:#56607A;width:38%;font-size:12px}
-.paper .flag{background:#FDE2DF;outline:2px solid #E05C52;border-radius:3px;padding:1px 4px}
-.paper .fixed{background:#E3F4DC;outline:2px solid #66B44C;border-radius:3px;padding:1px 4px}
-.paper .close{margin-top:16px;width:100%;padding:10px;border-radius:8px;background:#101F38;color:#fff;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat{border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:#fff;text-align:left}
+.stat b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.stat span{font-size:13px;color:var(--muted)}
+.stat.w b{color:var(--warn)}
+.tabs{display:flex;gap:6px;background:var(--chip);border-radius:14px;padding:5px;margin-bottom:16px;width:max-content;max-width:100%}
+.tabs button{padding:9px 16px;border-radius:10px;font-weight:600;font-size:14px;color:var(--muted)}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(21,56,122,.12)}
+.swt{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:16px}
+.swt button{border:1px solid var(--line);border-radius:100px;padding:5px 12px;font-weight:700;font-size:13px;background:#fff;color:var(--ink2)}
+.swt button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.phase{margin-bottom:16px}
+.phase h5{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.ck{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:6px;width:100%;text-align:left;background:#fff;font-size:14.5px}
+.ck .bx{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800}
+.ck.on{background:#F6FBF7}.ck.on .bx{background:var(--ok);border-color:var(--ok)}.ck.on .t{text-decoration:line-through;color:var(--muted)}
+.ck .who{margin-left:auto;font-size:11.5px;font-weight:700;border-radius:100px;padding:2px 8px;background:var(--chip);color:var(--muted);white-space:nowrap}
+.prog{height:8px;border-radius:4px;background:var(--chip);overflow:hidden;margin:4px 0 16px}.prog i{display:block;height:100%;background:var(--ok);transition:width .3s}
+.costbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:6px 0 14px}
+.costbar i{display:block;height:100%}
+.crow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-top:1px solid var(--line);font-size:14.5px}
+.crow .who{font-size:11.5px;font-weight:700;border-radius:100px;padding:2px 8px;margin-left:8px}
+.who.me{background:var(--okbg);color:#1E6B2F}.who.by{background:var(--chip);color:var(--muted)}
+.crow.me b{color:var(--ink)}.crow.by{color:var(--muted)}
+.pop{animation:pop .4s ease}@keyframes pop{0%{transform:scale(.96);opacity:.4}100%{transform:none;opacity:1}}
+@media(max-width:760px){.rrow{grid-template-columns:76px 1fr 76px;gap:8px}.end .fl{width:46px;height:46px;font-size:24px}.end b{font-size:13px}.end span{display:none}.tiles{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:10px}.stat b{font-size:20px}.stat span{font-size:11.5px;line-height:1.3;display:block}.incos{grid-template-columns:1fr 1fr}.route{padding:18px 14px 14px}.mid{padding-top:38px}.mid .prod{font-size:11.5px;max-width:100%;overflow:hidden;text-overflow:ellipsis}.mid .prod small{display:none}.leglbl{display:none}.hand{top:50px;font-size:10px}.ship{top:28px;font-size:18px}.rlegend{margin-top:26px}.tabs button{padding:8px 10px;font-size:13px}.swt{gap:6px}}
 
-/* costs */
-.costs{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
-.ctrl{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end}
-.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:100px;padding:3px}
-.seg button{padding:7px 18px;border-radius:100px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--tx2)}
-.seg button.on{background:var(--acc);color:#fff;font-weight:600}
-.num{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--tx3)}
-.num input{width:140px;height:38px;border-radius:8px;background:var(--bg);border:2px solid var(--line);color:var(--tx);font:inherit;font-family:'IBM Plex Mono',monospace;font-size:14px;padding:0 10px;outline:none}
-.num input:focus{border-color:var(--gn)}
-.ctab{width:100%;border-collapse:collapse;font-size:14px}
-.ctab td{padding:9px 6px;border-bottom:1px solid var(--chip)}
-.ctab td:last-child{text-align:right;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
-.ctab .cat{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:2px 8px;border-radius:5px;background:var(--chip);color:var(--tx2);margin-right:8px;display:inline-block;min-width:66px;text-align:center}
-.ctab tr.buyer{opacity:.45}
-.ctab tr.new td{animation:flash 1.2s ease}
-@keyframes flash{from{background:rgba(102,180,76,.25)}to{background:transparent}}
-.tot{display:flex;justify-content:space-between;align-items:baseline;padding:12px 6px 0;font-weight:600}
-.tot b{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px}
-.kpis{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px 18px}
-.kpis span{display:block;font-size:12px;color:var(--tx3)}
-.kpis b{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800}
-.delta{font-size:12px;font-family:'IBM Plex Mono',monospace}
+/* dropdowns, one-page order form, estimator */
+.sel{position:relative}
+.sel select{appearance:none;-webkit-appearance:none;width:100%;font:inherit;font-size:15px;font-weight:600;border:2px solid var(--line);border-radius:12px;padding:12px 40px 12px 14px;background:#fff;color:var(--ink);cursor:pointer}
+.sel select:focus{border-color:var(--acc);outline:none}
+.sel::after{content:'';position:absolute;right:16px;top:50%;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.sel.empty select{color:var(--muted);font-weight:500}
+.ofs{display:grid;gap:14px}
+.osec{border:1px solid var(--line);border-radius:16px;padding:18px;background:#fff}
+.osec h4{font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.g3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.fl2 label,.g3 label,.g2 > div > label{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:2px solid var(--line);border-radius:12px;padding:9px 13px;font-weight:600;font-size:14px;background:#fff;text-align:left}
+.seg button small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.seg button:hover{border-color:var(--acc)}.seg button.on{border-color:var(--acc);background:var(--soft);color:var(--acc)}
+.incos.sm .inco{padding:10px}.incos.sm .inco b{font-size:16px}.incos.sm .inco span{min-height:0;font-size:12px}
+.est{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.est label{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+.est .money{position:relative}.est .money input{width:100%;font:inherit;font-size:16px;font-weight:700;border:2px solid var(--line);border-radius:12px;padding:11px 14px 11px 30px;color:var(--ink);outline:none}
+.est .money input:focus{border-color:var(--acc)}.est .money::before{content:'$';position:absolute;left:14px;top:12px;font-weight:700;color:var(--muted)}
+.estout{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 16px}
+.estout div{background:var(--chip);border-radius:14px;padding:12px 14px}
+.estout b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.02em}
+.estout span{font-size:12.5px;color:var(--muted)}
+.estout .hi{background:var(--okbg)}.estout .hi b{color:#1E6B2F}
+@media(max-width:760px){.g3,.g2,.est{grid-template-columns:1fr}.estout{grid-template-columns:1fr}}
 
-/* done */
-.done{text-align:center;max-width:680px;margin:0 auto;padding-top:10px}
-.done .seal{width:84px;height:84px;margin:0 auto 16px}
-.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0;text-align:left}
-.sum div{padding:16px}
-.sum b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--gnl)}
-.sum span{font-size:13px;color:var(--tx2)}
-.slogan{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:24px;margin:6px 0 20px}
-.slogan .b{color:var(--sky)}
-
-@media(max-width:1180px){.runs:not(.full){display:none}}
-@media(max-width:1020px){.bar .ttl em{display:none}}
-@media(max-width:820px){
-  .bar .ttl em,.runs{display:none}
-  .steps span:not(.on){display:none}
-  main{padding:18px 16px 24px}
-  .intro,.cl,.docs,.costs,.fields,.sum{grid-template-columns:1fr}
-  .it-bd{padding-left:14px}
-}
+/* shipment */
+.top3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px;margin-bottom:16px}
+.card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff}
+.card small{color:var(--muted);font-size:12.5px;font-weight:600}
+.card b.big{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.ring{display:flex;align-items:center;gap:14px}
+.ring svg{width:64px;height:64px;flex-shrink:0}
+.banner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14.5px}
+.banner.w{background:var(--warnbg);color:#5B3F00}.banner.ok{background:var(--okbg);color:#1E6B2F}
+.sec-t{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;margin:8px 0 10px}
+.sec-t span{font-size:13px;color:var(--muted);font-weight:500}
+.sec-t button{margin-left:auto}
+.todo{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:8px;background:#fff;flex-wrap:wrap}
+.todo.new{box-shadow:0 0 0 2px rgba(31,111,184,.35)}
+.todo.fix{border-color:#F2B8B2;background:var(--errbg)}
+.todo .st{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;border:2px solid var(--line);color:transparent}
+.todo .st.ok{background:var(--ok);border-color:var(--ok);color:#fff}.todo .st.w{background:var(--warn);border-color:var(--warn);color:#fff}.todo .st.e{background:var(--err);border-color:var(--err);color:#fff}
+.todo .nm{flex:1;min-width:200px}
+.todo .nm b{display:block;font-size:15px}
+.todo .nm span{font-size:13px;color:var(--muted)}
+.todo .due{font-size:13px;color:var(--muted);white-space:nowrap}
+.pill{font-size:11px;font-weight:700;border-radius:100px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+.todo .nm .pill{display:inline-block}.todo .nm .pill.by{background:var(--soft);color:var(--acc)}.todo .nm .pill.sg{background:#F3EEFF;color:#6B3FC2}.todo .nm .pill.new{background:var(--acc);color:#fff}
+.msg{flex-basis:100%;font-size:13.5px;border-radius:10px;padding:10px 12px}
+.msg.ok{background:var(--okbg);color:#1E6B2F}.msg.w{background:var(--warnbg);color:#6B4A00}.msg.e{background:var(--errbg);color:#8F2A22}
+.why{font-size:12.5px;opacity:.85;margin-top:4px}
+.others{border:1px dashed var(--line);border-radius:14px;padding:12px 16px;color:var(--muted);font-size:14px}
+.others .r{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line);color:var(--ink2)}
+.others .r:first-of-type{border-top:none}
+.maybe{border:1px dashed #C9B6F2;background:#FBF9FF;border-radius:14px;padding:14px 16px;margin-top:18px}
+.maybe .r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #ECE4FB;font-size:14px}
+.modal{position:fixed;inset:0;background:rgba(11,31,68,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal .box{background:#fff;border-radius:18px;max-width:560px;width:100%;padding:24px;box-shadow:var(--shadow)}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.way{border:2px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;font-weight:600;font-size:14px}
+.way span{display:block;font-size:26px;margin-bottom:6px}.way:hover{border-color:var(--acc)}
+pre{white-space:pre-wrap;font:inherit;font-size:13.5px;background:var(--chip);border-radius:10px;padding:12px;margin:12px 0}
+.solo{border-bottom:1px solid var(--line);background:#fff}.solo .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}.solo img{height:28px;display:block}
+.demo{padding-top:24px}.demo .app{margin-bottom:12px}
+.note{color:var(--muted);font-size:12.5px;padding:0 0 24px}.note .wrap{display:block}
+html.embed .solo{display:none}html.embed body{background:#fff}html.embed .demo{max-width:none;padding:0}
+html.embed .app{border:none;border-radius:0;box-shadow:none;margin:0;min-height:100vh}html.embed .note{padding:10px 18px 14px}
+@media(max-width:760px){.doors,.top3,.ways{grid-template-columns:1fr}.screen{padding:26px 18px}.chip.big{min-width:0;width:100%}}
 </style>
 </head>
 <body>
-<div class="shell">
-  <div class="bar">
-    <a class="home" id="homeLink" href="/" target="_top" aria-label="Back to ShipSafe website" title="Back to ShipSafe website"><span class="arr" aria-hidden="true">←</span><img src="/logo-light.png" alt=""></a>
-    <span class="dot"></span>
-    <span class="ttl">Booth demo <em>· Be Rina for two minutes</em></span>
-    <div class="steps" id="steps"></div>
-    <span class="runs">Runs in your browser</span>
-    <a class="runs full" id="fullLink" href="/demo" target="_blank" rel="noopener" hidden>Full screen ↗</a>
-  </div>
-  <main><div class="wrap" id="app"></div></main>
+<header class="solo"><div class="wrap"><a href="/"><img src="/logo-light.png" alt="ShipSafe"></a><a class="link" href="/">← Back to ShipSafe</a></div></header>
+<div class="wrap demo">
+  <div class="app" id="app"><div class="appbar" id="bar"></div><div id="scr"></div></div>
 </div>
-<div id="modal"></div>
+<p class="note"><span class="wrap">Demo with sample data. ShipSafe · AI-Powered Export Readiness Platform · Not legal advice.</span></p>
 
 <script>
-// ───────────── Scenario data (illustrative, curated) ─────────────
-const ORDER = { product: 'Teak dining sets', hs: '9403.60', value: 48000, cogs: 36500, buyer: 'Hanse Wohnen GmbH', city: 'Hamburg', seller: 'PT Jati Rina Furniture', port: 'Tanjung Emas, Semarang' };
+if(window.self!==window.top) document.documentElement.classList.add('embed');
+const $=s=>document.querySelector(s);
+const esc=v=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const LSD=new Date(); LSD.setDate(LSD.getDate()+21);
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const fmt=d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+const dd=d=>Math.ceil((d-new Date())/864e5);
 
-const CHECKLIST = [
-  { id: 'eudr', t: 'EUDR due diligence statement', s: 'Reg. (EU) 2023/1115 · deforestation-free timber', tag: 'Required',
-    d: 'Wooden furniture (HS 9403.60) is in scope of the EU Deforestation Regulation. Your German importer files the due diligence statement — and needs the geolocation of the plots where the teak was harvested. Ask your timber supplier for plot coordinates and legality papers now.', src: 'EUR-Lex · Regulation (EU) 2023/1115, Annex I' },
-  { id: 'flegt', t: 'SVLK V-Legal document (FLEGT licence)', s: 'Timber legality · one licence per shipment', tag: 'Required',
-    d: "Indonesia's SVLK V-Legal document is accepted by the EU as a FLEGT licence. It is issued per shipment through the SILK system, so apply before the container is stuffed.", src: 'EU–Indonesia FLEGT VPA' },
-  { id: 'ispm', t: 'ISPM 15 heat-treated pallets & crates', s: 'Wooden packaging · IPPC stamp', tag: 'Required',
-    d: 'Every wooden pallet and crate must be heat-treated (HT) and carry the IPPC mark. Unmarked packaging can be refused or destroyed at the EU border — at your cost.', src: 'IPPC · ISPM 15' },
-  { id: 'form', t: 'Formaldehyde emission test', s: 'REACH Annex XVII, entry 77', tag: 'Required',
-    d: 'Furniture placed on the EU market must not release more than 0.062 mg/m³ of formaldehyde. Get a test report from an accredited lab for any MDF or plywood parts used in the sets.', src: 'EUR-Lex · Regulation (EU) 2023/1464' },
-  { id: 'gpsr', t: 'Product traceability label', s: 'General Product Safety Regulation (EU) 2023/988', tag: 'Required',
-    d: 'Each item (or its packaging) needs your company name, postal and email address, and a type or batch number. Your buyer must also be named as the responsible economic operator in the EU.', src: 'EUR-Lex · Regulation (EU) 2023/988, Art. 9' },
-  { id: 'coo', t: 'Certificate of Origin (e-SKA)', s: 'Only if the LC asks for it', tag: 'Conditional', cond: true,
-    d: "EU import duty on wooden furniture is already 0%, so you don't need a preferential origin proof. But if the Letter of Credit lists a Certificate of Origin, request it through Kemendag's e-SKA system before you present documents.", src: 'Kemendag · e-SKA' },
-];
-const CIF_ITEM = { id: 'ins', t: 'Marine insurance certificate', s: 'CIF · minimum ICC (C), 110% of value', tag: 'Required for CIF',
-  d: 'Under CIF you must insure the cargo to Hamburg — at least Institute Cargo Clauses (C), covering 110% of the contract value, in the LC currency. The certificate is part of the bank presentation.', src: 'ICC · Incoterms® 2020 (CIF), UCP 600 Art. 28' };
+const PRODUCTS={
+  'Teak furniture':{cat:'wood',em:'🪑',hs:'9403.60'},'Coffee beans':{cat:'agri',em:'☕',hs:'0901.11'},'Cocoa beans':{cat:'agri',em:'🍫',hs:'1801.00'},'Cotton T-shirts':{cat:'textile',em:'👕',hs:'6109.10'},'Frozen shrimp':{cat:'sea',em:'🦐',hs:'0306.17'}};
+const ORIGIN={Indonesia:['🇮🇩','Tanjung Priok'],Vietnam:['🇻🇳','Cat Lai'],Thailand:['🇹🇭','Laem Chabang'],Malaysia:['🇲🇾','Port Klang'],Philippines:['🇵🇭','Manila'],India:['🇮🇳','Nhava Sheva'],Brazil:['🇧🇷','Santos'],Ghana:['🇬🇭','Tema'],Kenya:['🇰🇪','Mombasa']};
+const PORT={Germany:'Hamburg',Netherlands:'Rotterdam',France:'Le Havre',Italy:'Genoa','United Kingdom':'Felixstowe','United States':'Los Angeles',Canada:'Vancouver',Japan:'Tokyo','South Korea':'Busan',China:'Shanghai',Singapore:'Singapore',Australia:'Sydney',UAE:'Jebel Ali','Saudi Arabia':'Jeddah'};
+const EU=['Germany','Netherlands','France','Italy'];
+// Incoterm → which of the 4 legs the seller pays: [to port, origin port, ocean, destination port]
+const INCO={EXW:{t:'Buyer picks up at your door',legs:[0,0,0,0],at:3},FOB:{t:'You deliver onto the ship',legs:[1,1,0,0],at:40},CFR:{t:'You also pay the sea freight',legs:[1,1,1,0],at:84},CIF:{t:'Freight + insurance on you',legs:[1,1,1,0],at:84}};
+const FREIGHT={Germany:1900,Netherlands:1850,France:1950,Italy:1800,'United Kingdom':2000,'United States':3200,Canada:2900,Japan:1100,'South Korea':1000,China:800,Singapore:500,Australia:1500,UAE:900,'Saudi Arabia':1000};
+const DEST={Germany:'🇩🇪',Netherlands:'🇳🇱',France:'🇫🇷',Italy:'🇮🇹','United Kingdom':'🇬🇧','United States':'🇺🇸',Canada:'🇨🇦',Japan:'🇯🇵','South Korea':'🇰🇷',China:'🇨🇳',Singapore:'🇸🇬',Australia:'🇦🇺',UAE:'🇦🇪','Saudi Arabia':'🇸🇦'};
+const NEEDS={
+  wood:{docs:[['📄','Commercial invoice & packing list','Every shipment'],['🌳','Proof of legal timber (SVLK / V-Legal)','Issued in Indonesia, one per shipment'],['🪵','Heat-treated pallets (ISPM 15)','Wooden packaging must be stamped'],['🧪','Formaldehyde test report','EU limit 0.062 mg/m³ for furniture'],['🏷️','Product traceability label','Your name, address and batch no.'],['📍','EUDR data (where the wood came from)','Your buyer needs plot coordinates']],
+        watch:'Many first shipments to the EU get stuck on EUDR data. Ask your sawmill for plot coordinates early.', cost:[['$1,400','your shipping & compliance cost (FOB, 40ft)'],['≈ 21%','typical gross margin at $48k']]},
+  agri:{docs:[['📄','Commercial invoice & packing list','Every shipment'],['🌱','Phytosanitary certificate','From the plant quarantine office'],['🧪','Lab test (mycotoxins, pesticides)','Destination limits apply'],['💨','Fumigation certificate','If required by buyer or destination'],['📍','EUDR data (coffee/cocoa to EU)','Plot coordinates of the farms']],
+        watch:'Moisture and mould in transit cause most claims. Use liners and desiccants.', cost:[['$1,100','your shipping & compliance cost (FOB, 20ft)'],['≈ 15%','typical gross margin']]},
+  textile:{docs:[['📄','Commercial invoice & packing list','Every shipment'],['🏷️','Fibre content & care labels','Required on every garment'],['🧾','Certificate of origin','Can lower your buyer\'s duty'],['🧪','Test report (chemicals / children\'s wear)','Depends on destination']],
+        watch:'Labels in the destination language are often missed and cause holds at customs.', cost:[['$900','your shipping & compliance cost (FOB, 20ft)'],['≈ 18%','typical gross margin']]},
+  sea:{docs:[['📄','Commercial invoice & packing list','Every shipment'],['🐟','Health certificate','From the fish quarantine authority'],['🧪','Lab test (antibiotic residues)','Zero tolerance in many markets'],['❄️','Cold-chain temperature records','Keep −18 °C end to end']],
+        watch:'A reefer power cut at transshipment can ruin the whole container. Book direct where possible.', cost:[['$4,200','your shipping & compliance cost (CFR, 40ft reefer)'],['≈ 12%','typical gross margin']]},
+};
+const S={screen:'start', a:{prod:'',origin:'Indonesia',dest:'',inco:'',done:false,tab:'check',chk:{},val:48000,box:'40ft'}, fromA:false,
+  ans:{pay:'L/C',inco:'FOB',cargo:'',wood:true,dg:false,cold:false,fcl:'Full container',clear:'My forwarder'},
+  qi:0, buyer:false, up:{}, open:{}, showOthers:false, showMaybe:false, added:{}};
 
-const DOCS = [
-  { id: 'inv', name: 'Commercial Invoice', file: 'INV-2026-041.pdf' },
-  { id: 'pl', name: 'Packing List', file: 'PL-2026-041.pdf' },
-  { id: 'bl', name: 'Bill of Lading (draft)', file: 'BL-SRG-77310.pdf' },
-  { id: 'lc', name: 'Letter of Credit', file: 'LC-DE-88421.pdf' },
-];
+function go(s){S.screen=s; if(s==='b1'){S.qi=0} render(); }
+function bar(t,back){ $('#bar').innerHTML=`<b>${t}</b>${back?`<button class="link back" onclick="go('${back}')">← Back</button>`:''}`; }
 
-const COSTS = [
-  { cat: 'Inland', item: 'Truck Jepara → Tanjung Emas port', v: () => 380 },
-  { cat: 'Port', item: 'Terminal handling + export customs', v: () => 310 },
-  { cat: 'Packing', item: 'ISPM 15 heat-treated pallets', v: () => 180 },
-  { cat: 'Testing', item: 'Formaldehyde emission test', v: () => 350 },
-  { cat: 'Licence', item: 'SVLK V-Legal document', v: () => 40 },
-  { cat: 'Bank', item: 'LC negotiation (0.3%)', v: s => Math.round(s.value * .003) },
-  { cat: 'Freight', item: 'Ocean freight Semarang → Hamburg (40ft HC)', v: () => 2600, cif: true },
-  { cat: 'Insurance', item: 'Marine insurance, ICC (C) on 110%', v: s => Math.round(s.value * 1.1 * .003), cif: true },
-];
-
-// ───────────── State ─────────────
-const S = { step: 0, corridor: { product: '', origin: '', dest: '', inco: '' }, checked: new Set(), open: null,
-  uploaded: 0, checking: false, checked2: false, fixed: new Set(), value: ORDER.value, cogs: ORDER.cogs };
-const STEPS = ['Start', 'Corridor', 'Checklist', 'Documents', 'Costs', 'Done'];
-const $ = s => document.querySelector(s);
-const money = n => '$' + Math.round(n).toLocaleString('en-US');
-const flag = { Indonesia: '🇮🇩', Germany: '🇩🇪' };
-const items = () => S.corridor.inco === 'CIF' ? [...CHECKLIST, CIF_ITEM] : CHECKLIST;
-
-function go(step) { S.step = step; render(); document.querySelector('main').scrollTop = 0; }
-
-function renderSteps() {
-  $('#steps').innerHTML = STEPS.slice(1, 5).map((n, i) => {
-    const k = i + 1;
-    return `<span class="${S.step === k ? 'on' : S.step > k ? 'done' : ''}">${S.step > k ? '✓' : k} ${n}</span>`;
-  }).join('');
+let lastView='';
+function render(){
+  const view=S.screen+(S.a.done?'+':''); if(view!==lastView){ if(lastView) window.scrollTo(0,0); lastView=view; }
+  const f={start,a:explore,b1:wizard,ship:shipment}[S.screen]; $('#scr').innerHTML=`<div class="screen">${f()}</div>`; bind();
 }
 
-function render() {
-  renderSteps();
-  const views = [intro, corridor, checklist, documents, costs, done];
-  const enter = S.shown !== S.step; S.shown = S.step;
-  $('#app').innerHTML = `<div class="${enter ? 'screen' : ''}">${views[S.step]()}</div>`;
-  (afterRender[S.step] || (() => {}))();
-}
-const afterRender = {};
-
-// ───────────── 0. Intro ─────────────
-function intro() {
-  return `<div class="intro">
-    <div>
-      <div class="avatar">R</div>
-      <div class="eyebrow">Meet Rina</div>
-      <h1 class="h">Her first big order. <span class="g">One shot to get it right.</span></h1>
-      <p class="lead">Rina runs a teak furniture workshop in Jepara, Indonesia. A buyer in Hamburg just ordered a full container — paid by Letter of Credit. One wrong document and the bank refuses to pay.</p>
-      <div class="q">Can she ship it clean? Help her in four steps.</div>
-      <div class="actions" style="justify-content:flex-start"><button class="btn" onclick="go(1)">Start as Rina →</button><span class="note">Sample scenario · ~2 minutes</span></div>
-    </div>
-    <div class="card order">
-      <div class="lbl">Purchase order · #HW-2026-118</div>
-      <dl class="kv">
-        <dt>Product</dt><dd>${ORDER.product} · HS ${ORDER.hs}</dd>
-        <dt>Quantity</dt><dd>48 sets · 1 × 40ft high cube</dd>
-        <dt>Order value</dt><dd>${money(ORDER.value)}</dd>
-        <dt>Buyer</dt><dd>${ORDER.buyer}, ${ORDER.city}</dd>
-        <dt>Payment</dt><dd>Letter of Credit, at sight</dd>
-        <dt>Ship by</dt><dd>30 Nov 2026</dd>
-      </dl>
-    </div>
+// ── start: which door ──
+function start(){
+  bar('Welcome to ShipSafe');
+  return `<div class="q">Where are you right now?</div><div class="qsub">Pick one. You can switch anytime.</div>
+  <div class="doors">
+    <button class="door" data-go="a"><div class="em">🧭</div><b>I'm exploring a market</b><span>No order yet. I want to know what a country needs before I quote.</span>
+      <ul><li>Documents usually needed</li><li>Things to watch out for</li><li>Cost estimator</li></ul><span class="go">Explore a market →</span></button>
+    <button class="door main" data-go="b1"><div class="em">📦</div><b>I have an order to ship <span class="tag">MOST USED</span></b><span>Contract signed. I need to get every document ready on time.</span>
+      <ul><li>Your checklist on one page</li><li>Each document checked on upload</li><li>Reminders before every cut-off</li></ul><span class="go">Start my shipment →</span></button>
   </div>`;
 }
 
-// ───────────── 1. Corridor ─────────────
-function corridor() {
-  const c = S.corridor;
-  const opt = (val, list) => list.map(([v, label, off]) => `<option value="${v}" ${off ? 'disabled' : ''} ${val === v ? 'selected' : ''}>${label}</option>`).join('');
-  const ready = c.product && c.origin && c.dest && c.inco;
-  return `<div class="eyebrow">Step 1 · Pick the corridor</div>
-    <h2 class="h">What is Rina shipping, and where?</h2>
-    <p class="lead">Choose from the dropdowns — the same way it works in ShipSafe.</p>
-    <div class="hint">📦 Rina's order: teak dining sets · Indonesia → Germany</div>
-    <div class="card form">
-      <div class="fields">
-        <div><div class="fl">Product / HS code</div><select id="fProduct" class="${c.product ? 'ok' : ''}">${opt(c.product, [['', 'Search product or HS code'], ['furn', 'Wooden dining furniture · 9403.60'], ['x1', 'Rattan chairs · 9401.52 (not in this demo)', 1], ['x2', 'Cotton T-shirts · 6109.10 (not in this demo)', 1]])}</select></div>
-        <div><div class="fl">Origin</div><select id="fOrigin" class="${c.origin ? 'ok' : ''}">${opt(c.origin, [['', 'Select origin'], ['Indonesia', '🇮🇩 Indonesia'], ['x', '🇻🇳 Vietnam (not in this demo)', 1]])}</select></div>
-        <div><div class="fl">Destination</div><select id="fDest" class="${c.dest ? 'ok' : ''}">${opt(c.dest, [['', 'Select destination'], ['Germany', '🇩🇪 Germany'], ['x', '🇺🇸 United States (not in this demo)', 1]])}</select></div>
-        <div><div class="fl">Incoterm</div><select id="fInco" class="${c.inco ? 'ok' : ''}">${opt(c.inco, [['', 'Select terms'], ['FOB', 'FOB — buyer books the ship'], ['CIF', 'CIF — Rina pays freight + insurance'], ['x', 'EXW (not in this demo)', 1]])}</select>
-          <div class="inco-help">Tip: try FOB first, then switch to CIF later and watch the checklist and costs change.</div></div>
-      </div>
-      <div class="actions"><button class="btn ghost" onclick="go(0)">← Back</button><button class="btn" id="goBtn" ${ready ? '' : 'disabled'} onclick="runCheck()">Check my route →</button></div>
-    </div>`;
+// ── door A: explore a market (route builder → results) ──
+const DST=()=>S.a.dest||'Germany';
+const aReady=()=>S.a.prod&&S.a.origin&&S.a.dest&&S.a.inco;
+const filled=()=>[S.a.prod,S.a.origin,S.a.dest,S.a.inco].filter(Boolean).length;
+
+// Documents for this corridor (category base + origin/destination tweaks)
+function corridorDocs(){
+  const cat=PRODUCTS[S.a.prod].cat, o=S.a.origin, d=S.a.dest, eu=EU.includes(d);
+  let docs=NEEDS[cat].docs.filter(x=>eu||!x[1].startsWith('EUDR')).map(x=>[...x]);
+  docs.forEach(x=>{ if(x[1].startsWith('Proof of legal timber')&&o!=='Indonesia'){x[1]='Proof of legal timber harvest';x[2]='Issued in '+o+', one per shipment'} });
+  if(d==='United States'&&cat==='wood') docs.push(['🇺🇸','Lacey Act declaration','Species and country of harvest']);
+  if(d==='United States'&&(cat==='agri'||cat==='sea')) docs.push(['🇺🇸','FDA prior notice & facility registration','Filed before the ship arrives']);
+  if(d==='UAE') docs.push(['🏛️','Certificate of origin, chamber-legalised','Needed for UAE customs']);
+  if(S.a.inco==='CIF') docs.push(['🛡️','Insurance certificate','At least 110% of invoice value']);
+  return docs;
 }
-afterRender[1] = () => {
-  const map = { fProduct: 'product', fOrigin: 'origin', fDest: 'dest', fInco: 'inco' };
-  Object.entries(map).forEach(([id, k]) => document.getElementById(id).onchange = e => { S.corridor[k] = e.target.value; render(); });
-};
-function runCheck() {
-  $('#app').innerHTML = `<div class="screen loading"><div class="spinner"></div><h2 class="h">Searching official sources…</h2>
-    <div class="srcs">${['EUR-Lex', 'EU Access2Markets', 'TARIC', 'ECHA', 'IPPC', 'Kemendag'].map((s, i) => `<span style="animation-delay:${i * .25}s">${s}</span>`).join('')}</div></div>`;
-  setTimeout(() => go(2), 2200);
+function watchOuts(){
+  const w=[NEEDS[PRODUCTS[S.a.prod].cat].watch];
+  w.push({EXW:'Under EXW your buyer\'s agent files export customs in your name, and mistakes still come back to you.',
+          FOB:'Under FOB the risk is yours until the goods are on board. Damage at the port is still your problem.',
+          CFR:'You pay freight but the risk moves to your buyer at loading — remind them to insure.',
+          CIF:'CIF insurance is minimum cover (ICC C). Ask if your buyer wants all-risks.'}[S.a.inco]);
+  return w;
+}
+function costs(){
+  const small=S.a.box==='20ft', k=small?.6:1, reefer=PRODUCTS[S.a.prod].cat==='sea'?2:1, l=INCO[S.a.inco].legs;
+  const ins=Math.round(S.a.val*1.1*.003/10)*10;   // ~0.3% of 110% invoice value
+  return [['Packing & export documents',250,1],['Trucking to port',small?280:350,l[0]],['Origin port & export customs',small?220:300,l[1]],
+    [`Sea freight (${S.a.box}${reefer>1?' reefer':''})`,Math.round(FREIGHT[S.a.dest]*k*reefer/10)*10,l[2]],['Cargo insurance',ins,S.a.inco==='CIF'?1:0],['Destination port charges',small?300:400,0],['Import duty & taxes','n/a',0]];
+}
+function checklist(){
+  const o=S.a.origin, i=S.a.inco, before=corridorDocs().filter(d=>!d[1].startsWith('Commercial')).map(d=>['Get: '+d[1],'You']);
+  const port=[];
+  if(i==='EXW') port.push(['Have goods packed and ready for your buyer\'s pickup','You'],['Give your buyer\'s agent the export paperwork','You']);
+  else { if(i==='FOB') port.push(['Get the booking from your buyer\'s forwarder','Buyer']); else port.push(['Book the vessel yourself','You']);
+    if(i==='CIF') port.push(['Buy cargo insurance (110% of value)','You']);
+    port.push(['Truck the container to '+ORIGIN[o][1],'You'],['File the export declaration'+(o==='Indonesia'?' (PEB)':''),'You']); }
+  const pay=[['Send invoice, packing list & B/L to your buyer or bank','You'],['Get paid','You']];
+  return [['Before shipping',before],['Booking & at the port',port],['After loading',pay]];
 }
 
-// ───────────── 2. Checklist ─────────────
-function checklist() {
-  const list = items();
-  const n = list.filter(i => S.checked.has(i.id)).length, pct = Math.round(n / list.length * 100);
-  return `<div class="eyebrow">Step 2 · Your compliance checklist</div>
-    <h2 class="h">Every rule that applies — <span class="g">nothing generic.</span></h2>
-    <p class="lead" style="margin-bottom:14px">Tap a row to see why it matters. Tick it once Rina has it covered.</p>
-    <div class="cl">
-      <div>
-        <div class="route">${flag.Indonesia} Indonesia<i>→</i>${flag.Germany} Germany<i>·</i>Wooden dining furniture<i>·</i>${S.corridor.inco}</div>
-        <div class="prog"><div class="pbar"><div style="width:${pct}%"></div></div><div class="pct">${pct}% ready</div></div>
-        <div class="items">${list.map(i => `
-          <div class="it ${S.checked.has(i.id) ? 'on' : ''} ${S.open === i.id ? 'open' : ''}">
-            <div class="it-hd" data-open="${i.id}" role="button" tabindex="0">
-              <span class="ck" data-check="${i.id}" role="checkbox" aria-checked="${S.checked.has(i.id)}">✓</span>
-              <span class="it-t"><b>${i.t}</b><span>${i.s}</span></span>
-              <span class="tag ${i.cond ? 'cond' : ''}">${i.tag}</span><span class="chev">▼</span>
-            </div>
-            <div class="it-bd">${i.d}<span class="src">Source: ${i.src}</span></div>
-          </div>`).join('')}</div>
-      </div>
-      <div class="side">
-        <div class="box warn"><em>⚠ Blind spot</em><b>EUDR geolocation.</b> Your buyer can't sell EUDR-covered wood in the EU without plot-level coordinates for the timber. Most small exporters find out after the container has sailed.</div>
-        <div class="box pay"><em>Best payment term</em><b>Letter of Credit</b> — right for a first order with a new buyer. Consider TT after 2–3 clean shipments.</div>
-        ${S.corridor.inco === 'CIF' ? `<div class="box tip"><em>Because you chose CIF</em>Rina now books the ship and insures the cargo — one extra document (insurance certificate) goes to the bank.</div>` : ''}
-      </div>
+function routeStrip(compact){
+  const p=PRODUCTS[S.a.prod], o=ORIGIN[S.a.origin], d=S.a.dest, ic=INCO[S.a.inco], legs=ic?ic.legs:[0,0,0,0];
+  return `<div class="route"><div class="rt"><span>${compact?'Your route':'Your route · '+filled()+' of 4 set'}</span>${compact?'<button data-aedit>✎ Edit</button>':''}</div>
+  <div class="rrow">
+    <div class="end">${S.a.origin?`<div class="fl">${o[0]}</div><b>${S.a.origin}</b><span>${o[1]}</span>`:'<div class="fl q">?</div><b>From</b>'}</div>
+    <div class="mid">
+      <div class="prod ${p?'':'q'}">${p?`${p.em} ${S.a.prod}<small>HS ${p.hs}</small>`:'What are you selling?'}</div>
+      <div class="ship ${aReady()?'go':''}" style="left:${aReady()?50:8}%">🚢</div>
+      <div class="legs">${legs.map(x=>`<i class="leg ${x?'me':''}"></i>`).join('')}</div>
+      <div class="leglbl"><span>Truck</span><span>Port</span><span>Ocean</span><span>Port</span></div>
+      ${ic?`<div class="hand" style="left:${ic.at}%"><span>Buyer takes over</span></div>`:''}
     </div>
-    <div class="actions"><button class="btn ghost" onclick="go(1)">← Change corridor</button>
-      <div class="row"><span class="note">${n}/${list.length} covered</span><button class="btn" onclick="go(3)">Next: check documents →</button></div></div>`;
+    <div class="end">${d?`<div class="fl">${DEST[d]}</div><b>${d}</b><span>${PORT[d]}</span>`:'<div class="fl q">?</div><b>To</b>'}</div>
+  </div>
+  <div class="rlegend"><span><i style="background:#6FD08C"></i>You pay</span><span><i style="background:rgba(255,255,255,.25)"></i>Buyer pays</span></div></div>`;
 }
-afterRender[2] = () => {
-  document.querySelectorAll('[data-open]').forEach(el => el.onclick = e => {
-    const chk = e.target.closest('[data-check]');
-    if (chk) { const id = chk.dataset.check; S.checked.has(id) ? S.checked.delete(id) : S.checked.add(id); }
-    else S.open = S.open === el.dataset.open ? null : el.dataset.open;
-    render();
+
+// Styled native dropdown; data-sel writes to S.a (explore) or data-bsel to the order form
+function selBox(key,val,map,flag,ph,attr='data-sel'){
+  return `<div class="sel ${val?'':'empty'}"><select ${attr}="${key}">${val?'':`<option value="" selected disabled>${ph}</option>`}${Object.keys(map).map(k=>`<option value="${esc(k)}" ${val===k?'selected':''}>${flag(k)}  ${k}</option>`).join('')}</select></div>`;
+}
+function explore(){
+  bar('Explore a market','start');
+  return S.a.done?exploreResult():exploreForm();
+}
+function exploreForm(){
+  const tile=(n,t,on,body,cls='')=>`<div class="tile ${on?'done':''} ${cls}"><div class="tl"><span class="n">${on?'✓':n}</span>${t}</div>${body}</div>`;
+  return `<div class="q">What are you shipping, and where?</div><div class="qsub">No order needed. See the documents, risks and costs for any route.</div>
+  ${routeStrip(false)}
+  <div class="tiles">
+    ${tile(1,'Product or HS code',S.a.prod,`<div class="srch"><input id="pq" autocomplete="off" placeholder="Search product or HS code" value="${S.a.prod?esc(S.a.prod+' · '+PRODUCTS[S.a.prod].hs):''}"><div class="dd" id="pdd" hidden></div></div>
+      <div class="mini">${Object.keys(PRODUCTS).map(k=>`<button class="${S.a.prod===k?'on':''}" data-prod="${k}">${PRODUCTS[k].em} ${k}</button>`).join('')}</div>`,'full')}
+    ${tile(2,'Shipping from',S.a.origin,selBox('origin',S.a.origin,ORIGIN,k=>ORIGIN[k][0],'Select origin'))}
+    ${tile(3,'Selling to',S.a.dest,selBox('dest',S.a.dest,DEST,k=>DEST[k],'Select destination'))}
+    ${tile(4,'Who pays for what? (Incoterm)',S.a.inco,`<div class="incos">${Object.keys(INCO).map(k=>`<button class="inco ${S.a.inco===k?'on':''}" data-inco="${k}"><b>${k}</b><span>${INCO[k].t}</span><div class="mb">${INCO[k].legs.map(x=>`<i class="${x?'me':''}"></i>`).join('')}</div></button>`).join('')}</div>
+      <div class="hint">Green = the part of the trip you pay for. Not sure? Most first-time exporters start with <b>FOB</b>.</div>`,'full')}
+  </div>
+  <div class="checkbar"><span class="ex">Just looking? <button data-aex>Try an example: teak dining sets → Germany, FOB</button></span>
+    <button class="btn p lg" data-acheck ${aReady()?'':'disabled'}>${aReady()?'Check my route →':`Fill ${4-filled()} more to check`}</button></div>`;
+}
+function exploreResult(){
+  const docs=corridorDocs(), w=watchOuts(), c=costs(), mine=c.filter(x=>x[2]&&typeof x[1]==='number').reduce((a,x)=>a+x[1],0);
+  const ph=checklist(), all=ph.flatMap(x=>x[1]), done=all.filter(x=>S.a.chk[x[0]]).length, t=S.a.tab;
+  let body='';
+  if(t==='check') body=`<div style="display:flex;justify-content:space-between;font-size:13.5px;color:var(--muted)"><span>${done} of ${all.length} done</span><span>Tap to tick off</span></div><div class="prog"><i style="width:${all.length?done/all.length*100:0}%"></i></div>
+    ${ph.map(([h,items])=>`<div class="phase"><h5>${h}</h5>${items.map(x=>`<button class="ck ${S.a.chk[x[0]]?'on':''}" data-ck="${esc(x[0])}"><span class="bx">${S.a.chk[x[0]]?'✓':''}</span><span class="t">${x[0]}</span><span class="who">${x[1]}</span></button>`).join('')}</div>`).join('')}`;
+  if(t==='docs') body=docs.map(d=>`<div class="doc"><span class="ic">${d[0]}</span><div><b>${d[1]}</b><span>${d[2]}</span></div></div>`).join('')+
+    w.map(x=>`<div class="watch">⚠️ <b>Watch out:</b> ${x}</div>`).join('');
+  if(t==='cost'){ const tot=c.filter(x=>typeof x[1]==='number').reduce((a,x)=>a+x[1],0), pct=S.a.val?mine/S.a.val*100:0;
+    body=`<div class="est"><div><label>Order value</label><div class="money"><input id="aval" type="text" inputmode="numeric" value="${S.a.val.toLocaleString()}"></div></div>
+      <div><label>Container</label><div class="seg">${['20ft','40ft'].map(b=>`<button class="${S.a.box===b?'on':''}" data-box="${b}">${b}</button>`).join('')}</div></div></div>
+    <div class="estout"><div><b>$${mine.toLocaleString()}</b><span>you pay under ${S.a.inco}</span></div><div><b>${pct.toFixed(1)}%</b><span>of your order value</span></div>
+      <div class="hi"><b>$${Math.max(0,S.a.val-mine).toLocaleString()}</b><span>left from the sale after these costs</span></div></div>
+    <div style="font-size:14px;color:var(--muted)">Door-to-door cost for one ${S.a.box} container</div>
+    <div class="costbar">${c.filter(x=>typeof x[1]==='number').map(x=>`<i style="width:${x[1]/tot*100}%;background:${x[2]?'var(--ok)':'#C9D9EA'};border-right:2px solid #fff"></i>`).join('')}</div>
+    ${c.map(x=>`<div class="crow ${x[2]?'me':'by'}"><span>${x[0]}<span class="who ${x[2]?'me':'by'}">${x[2]?'You':'Buyer'}</span></span><b>${typeof x[1]==='number'?'$'+x[1].toLocaleString():x[1]}</b></div>`).join('')}
+    <p style="font-size:12.5px;color:var(--muted);margin-top:8px">Rough market averages. Your forwarder's quote will differ. Switch the terms above to compare.</p>`;}
+  return `<div class="q">${PRODUCTS[S.a.prod].em} ${S.a.prod} → ${DEST[S.a.dest]} ${S.a.dest}</div><div class="qsub">Here's what this route takes. Switch the terms to see what changes.</div>
+  ${routeStrip(true)}
+  <div class="swt">Try other terms: ${Object.keys(INCO).map(k=>`<button class="${S.a.inco===k?'on':''}" data-inco="${k}">${k}</button>`).join('')}</div>
+  <div class="stats pop" id="stats"><button class="stat" data-tab="docs"><b>${docs.length}</b><span>documents usually needed</span></button>
+    <button class="stat w" data-tab="docs"><b>${w.length}</b><span>things to watch out for</span></button>
+    <button class="stat" data-tab="cost"><b>$${mine.toLocaleString()}</b><span>your share of costs (${S.a.inco})</span></button></div>
+  <div class="tabs">${[['check','✅ Checklist'],['docs','📄 Documents'],['cost','💲 Cost estimator']].map(([k,l])=>`<button class="${t===k?'on':''}" data-tab="${k}">${l}</button>`).join('')}</div>
+  <div class="res">${body}</div>
+  <p style="font-size:12px;color:var(--muted);margin-top:10px">A guide from official sources. Your buyer's requirements always come first.</p>
+  <div class="cta-row"><span><b>Got an order?</b> We'll carry these answers over, no retyping.</span><button class="btn" data-go="fromA">Turn this into a shipment →</button></div>`;
+}
+function bindExplore(sc){
+  const set=(k,v)=>{S.a[k]=v;render()};
+  sc.querySelectorAll('[data-prod]').forEach(b=>b.onclick=()=>set('prod',b.dataset.prod));
+  sc.querySelectorAll('[data-origin]').forEach(b=>b.onclick=()=>set('origin',b.dataset.origin));
+  sc.querySelectorAll('[data-dest]').forEach(b=>b.onclick=()=>set('dest',b.dataset.dest));
+  sc.querySelectorAll('[data-inco]').forEach(b=>b.onclick=()=>set('inco',b.dataset.inco));
+  sc.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>set('tab',b.dataset.tab));
+  sc.querySelectorAll('[data-ck]').forEach(b=>b.onclick=()=>{S.a.chk[b.dataset.ck]=!S.a.chk[b.dataset.ck];render()});
+  const q=(s,f)=>{const e=sc.querySelector(s); if(e) e.onclick=f};
+  sc.querySelectorAll('select[data-sel]').forEach(e=>e.onchange=()=>set(e.dataset.sel,e.value));
+  sc.querySelectorAll('[data-box]').forEach(b=>b.onclick=()=>set('box',b.dataset.box));
+  const av=sc.querySelector('#aval');
+  if(av){ av.oninput=()=>{ clearTimeout(av._t); av._t=setTimeout(()=>{ S.a.val=+av.value.replace(/\D/g,'')||0; render();
+      const n=$('#aval'); if(n){n.focus(); n.setSelectionRange(n.value.length,n.value.length)} },350) } }
+  q('[data-acheck]',()=>{S.a.done=true;S.a.tab='check';render()});
+  q('[data-aedit]',()=>{S.a.done=false;render()});
+  q('[data-aex]',()=>{Object.assign(S.a,{prod:'Teak furniture',origin:'Indonesia',dest:'Germany',inco:'FOB'});render()});
+  // product search: filters by name or HS code without re-rendering (keeps focus)
+  const inp=sc.querySelector('#pq'), dd=sc.querySelector('#pdd');
+  if(inp){
+    const show=()=>{const v=inp.value.toLowerCase().replace(/[·.]/g,'').trim();
+      const hits=Object.keys(PRODUCTS).filter(k=>!v||k.toLowerCase().includes(v)||PRODUCTS[k].hs.replace('.','').startsWith(v.replace(/\s/g,'')));
+      dd.innerHTML=hits.length?hits.map(k=>`<button data-pick="${k}"><span>${PRODUCTS[k].em} ${k}</span><small>HS ${PRODUCTS[k].hs}</small></button>`).join(''):'<div style="padding:12px 14px;color:var(--muted);font-size:14px">No match in the demo list.</div>';
+      dd.hidden=false; dd.querySelectorAll('[data-pick]').forEach(b=>b.onmousedown=e=>{e.preventDefault();set('prod',b.dataset.pick)});};
+    inp.onfocus=()=>{inp.select();show()}; inp.oninput=show; inp.onblur=()=>setTimeout(()=>dd.hidden=true,100);
+  }
+}
+
+// ── door B: one-page order form (usual choices pre-selected) ──
+const PAY=[['L/C','Letter of credit','Bank guarantees payment'],['T/T','Bank transfer (T/T)','Buyer sends money directly'],['D/P','Documents against payment','Bank releases docs on payment']];
+function wizard(){
+  bar('New shipment','start');
+  if(!S.a.dest) S.a.dest='Germany';
+  const A=S.ans, seg=(k,opts)=>`<div class="seg">${opts.map(o=>`<button class="${A[k]===o[0]?'on':''}" data-b="${k}" data-v="${o[0]}">${o[1]}${o[2]?`<small>${o[2]}</small>`:''}</button>`).join('')}</div>`;
+  const ready=!!A.cargo;
+  return `<div class="q">Tell us about your order</div><div class="qsub">Everything on one page. We pre-selected the usual choices, so change only what's different.</div>
+  ${S.fromA?`<div class="prefill">✓ Product, route and terms carried over from your exploration.</div>`:''}
+  <div class="ofs">
+    <div class="osec"><h4>What and where</h4><div class="g3">
+      <div><label>Product</label>${selBox('cargo',A.cargo,PRODUCTS,k=>PRODUCTS[k].em,'Select product','data-bsel')}</div>
+      <div><label>From</label>${selBox('origin',S.a.origin,ORIGIN,k=>ORIGIN[k][0],'Select origin','data-bsel')}</div>
+      <div><label>To</label>${selBox('dest',S.a.dest,DEST,k=>DEST[k],'Select destination','data-bsel')}</div></div></div>
+    <div class="osec"><h4>Deal terms</h4><div class="g2">
+      <div><label>How will your buyer pay you?</label>${seg('pay',PAY)}</div>
+      <div><label>Who pays for what? (Incoterm)</label><div class="incos sm">${Object.keys(INCO).map(k=>`<button class="inco ${A.inco===k?'on':''}" data-b="inco" data-v="${k}"><b>${k}</b><span>${INCO[k].t}</span><div class="mb">${INCO[k].legs.map(x=>`<i class="${x?'me':''}"></i>`).join('')}</div></button>`).join('')}</div></div></div></div>
+    <div class="osec"><h4>Cargo and customs</h4><div class="g2">
+      <div><label>Container</label>${seg('fcl',[['Full container','Full container','Just your goods (FCL)'],['Shared container','Shared container','Forwarder consolidates (LCL)']])}
+        <label style="margin-top:16px">Who handles export customs?</label>${seg('clear',[['My forwarder','My forwarder','Most common'],['Myself','Myself',''],['Customs broker','Customs broker','']])}</div>
+      <div><label>Anything special?</label><div class="toggles" style="margin-top:0">${[['wood','Wooden crates or pallets'],['dg','Dangerous goods (batteries, chemicals)'],['cold','Needs refrigeration']].map(([k,t])=>`<div class="tg">${t}<span class="sw"><button data-tg="${k}" data-v="0" class="${!A[k]?'on':''}">No</button><button data-tg="${k}" data-v="1" class="${A[k]?'on':''}">Yes</button></span></div>`).join('')}</div></div></div></div>
+  </div>
+  <div class="checkbar"><span class="ex">You can add your buyer's L/C or email on the next page.</span>
+    <button class="btn p lg" data-create ${ready?'':'disabled'}>${ready?'Create my checklist →':'Pick a product to continue'}</button></div>`;
+}
+
+function items(){
+  const a=S.ans, F=a.inco==='FOB'||a.inco==='EXW', si=addD(LSD,-5);
+  const cat=PRODUCTS[a.cargo].cat;
+  const L=[
+    {id:'inv',n:'Commercial invoice',d:'The bill to your buyer',due:addD(si,-3),mine:1},
+    {id:'pl',n:'Packing list',d:'What\'s in each box, with weights',due:addD(si,-3),mine:1},
+    {id:'org',n:cat==='wood'?'Proof of legal timber (SVLK / V-Legal)':cat==='agri'?'Phytosanitary certificate':cat==='sea'?'Health certificate':'Fibre content labels',d:'Needed for this kind of product',due:addD(si,-5),mine:1},
+  ];
+  if(a.wood) L.push({id:'ispm',n:'Heat-treated pallets (ISPM 15)',d:'Because you use wooden packaging',due:addD(si,-5),mine:1});
+  if(a.dg) L.push({id:'dg',n:'Dangerous goods declaration + MSDS',d:'Because you ship dangerous goods',due:addD(si,-5),mine:1});
+  if(a.cold) L.push({id:'cold',n:'Temperature records',d:'Because it needs refrigeration',due:addD(si,0),mine:1});
+  L.push({id:'si',n:'Shipping instruction info',d:F?'You give the details; buyer\'s forwarder books':'Your forwarder prepares it',due:si,mine:F});
+  L.push({id:'vgm',n:'Container weight (VGM)',d:'Must match your packing list',due:addD(LSD,-3),mine:1});
+  L.push({id:'bl',n:'Check the draft bill of lading',d:'Last chance to fix for free',due:addD(LSD,-1),mine:1});
+  if(a.inco==='CIF') L.push({id:'ins',n:'Insurance certificate',d:'At least 110% of the value',due:addD(LSD,-1),mine:1});
+  if(S.buyer){
+    L.find(x=>x.id==='inv').by=1; L.find(x=>x.id==='inv').fix='Your buyer\'s L/C asks for 3 signed originals (their email said 2). Follow the L/C.';
+    L.push({id:'co',n:'Certificate of origin',d:'Your buyer asked for it',due:addD(si,-4),mine:1,by:1,isNew:1});
+    L.push({id:'sgs',n:'Inspection certificate (SGS)',d:'Your buyer asked for it',due:addD(si,-6),mine:1,by:1,isNew:1});
+  }
+  Object.keys(S.added).forEach(k=>L.push({id:k,n:k,d:'Suggested for '+DST()+', confirm with buyer',due:addD(si,-4),mine:1,sg:1}));
+  const others=[['Booking the ship',F?'Buyer':'Your forwarder'],['Export customs declaration',a.clear==='Myself'?'You':a.clear==='Customs broker'?'Customs broker':'Your forwarder']];
+  if(!F) others.push(['Shipping instruction','Your forwarder']);
+  return {mine:L.filter(x=>x.mine),others};
+}
+const RES={inv:()=>S.buyer?['ok','Looks good, matches your buyer\'s L/C.','L/C 45A · UCP 600 Art. 18']:['ok','Looks good. We\'ll re-check when your buyer\'s requirements arrive.','Internal consistency'],
+  pl:()=>['w','Weight is 12,480 kg but your container weight says 12,840 kg. One is a typo.','Packing list vs VGM'],
+  bl:()=>S.buyer?['e','Consignee must be "To order of Commerzbank AG" per your buyer\'s L/C.','L/C 46A · UCP 600 Art. 14(d)']:['ok','Matches your invoice and shipping instruction.','Internal consistency']};
+function shipment(){
+  const a=S.ans, {mine,others}=items(), done=mine.filter(x=>S.up[x.id]&&S.up[x.id][0]==='ok').length;
+  bar(`${PRODUCTS[a.cargo].em} ${a.cargo} → ${DEST[DST()]} ${DST()} · ${a.inco} · ${a.pay}`,'b1');
+  const pct=done/mine.length, C=2*Math.PI*26;
+  const next=[['SI cut-off',addD(LSD,-5)],['Port cut-off',addD(LSD,-3)],['Latest shipment',LSD]].find(x=>dd(x[1])>=0);
+  let h=`<div class="top3">
+    <div class="card ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#E6EEF7" stroke-width="7"/><circle cx="32" cy="32" r="26" fill="none" stroke="#2F9E44" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 32 32)"/></svg><div><small>Ready</small><b class="big">${done} of ${mine.length}</b></div></div>
+    <div class="card"><small>Next deadline</small><b class="big">${dd(next[1])} days</b><span style="font-size:13px;color:var(--muted)">${next[0]} · ${fmt(next[1])} (estimate)</span></div>
+    <div class="card"><small>Buyer's requirements</small><b class="big" style="font-size:20px;margin-top:6px">${S.buyer?'✓ Added':'Not yet'}</b>${S.buyer?'':'<button class="link" data-addreq>Add when you get them</button>'}</div></div>`;
+  h+= S.buyer
+    ? `<div class="banner ok"><span>✓ <b>Updated from your buyer's L/C:</b> 2 new documents and 1 thing to fix.</span></div>`
+    : `<div class="banner w"><span>📬 <b>Your buyer hasn't sent their requirements yet. That's fine.</b> Start with these; we'll update the list when they arrive.</span><button class="btn p sm" data-addreq>Add buyer requirements</button></div>`;
+  h+=`<div class="sec-t">Your to-do <span>${mine.length-done} left</span></div>`;
+  h+=mine.map(x=>{const r=S.up[x.id]; const st=r?r[0]:''; return `<div class="todo ${x.isNew?'new':''} ${x.fix?'fix':''}">
+      <span class="st ${st}">${st==='ok'?'✓':st==='w'?'!':st==='e'?'✕':''}</span>
+      <div class="nm"><b>${esc(x.n)}${x.isNew?'<span class="pill new">NEW</span>':''}${x.by?'<span class="pill by">Buyer asked</span>':''}${x.sg?'<span class="pill sg">Suggested</span>':''}</b><span>${esc(x.d)}</span></div>
+      <span class="due">Due ${fmt(x.due)}</span>
+      <button class="btn ${r?'s':'p'} sm" data-up="${esc(x.id)}">${r?'Replace':'Upload'}</button>
+      ${x.sg?`<button class="link" data-rm="${esc(x.id)}">Remove</button>`:''}
+      ${x.fix&&!(r&&S.buyer&&x.id!=='inv')?`<div class="msg e">⚠️ ${esc(x.fix)}</div>`:''}
+      ${r?`<div class="msg ${r[0]}">${esc(r[1])} <button class="link" data-why="${x.id}" style="font-size:12.5px">Why?</button>${S.open[x.id]?`<div class="why">Based on: ${esc(r[2])}</div>`:''}${r[0]==='e'?'<div style="margin-top:8px"><button class="btn p sm" data-mail>Write the fix email to my forwarder</button></div>':''}</div>`:''}
+    </div>`}).join('');
+  h+=`<div class="sec-t" style="margin-top:18px">Handled by others <span>${others.length}</span><button class="link" data-others>${S.showOthers?'Hide':'Show'}</button></div>`;
+  if(S.showOthers) h+=`<div class="others">${others.map(o=>`<div class="r"><span>${o[0]}</span><b>${o[1]}</b></div>`).join('')}</div>`;
+  const n=NEEDS[PRODUCTS[a.cargo].cat];
+  h+=`<div class="maybe"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span><b>Not sure if ${DST()} needs anything else?</b> <span style="color:var(--muted);font-size:13.5px">Optional suggestions. Nothing is added unless you tap +.</span></span><button class="link" data-maybe>${S.showMaybe?'Hide':'Show suggestions'}</button></div>
+    ${S.showMaybe?n.docs.slice(1).filter(d=>!mine.some(m=>m.n===d[1])).map(d=>`<div class="r"><span>${d[0]} <b>${d[1]}</b> <span style="color:var(--muted)">· ${d[2]}</span></span>${S.added[d[1]]?'<span style="color:var(--ok);font-weight:600">Added</span>':`<button class="btn s sm" data-add="${esc(d[1])}">+ Add</button>`}</div>`).join(''):''}</div>`;
+  return h;
+}
+
+function modal(html){const m=document.createElement('div');m.className='modal';m.innerHTML=`<div class="box">${html}</div>`;document.body.appendChild(m);m.onclick=e=>{if(e.target===m||e.target.dataset.close!==undefined)m.remove()};return m}
+
+function bind(){
+  const sc=$('#scr');
+  sc.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='fromA'){S.fromA=true;S.ans.cargo=S.a.prod;S.ans.inco=S.a.inco;S.ans.wood=PRODUCTS[S.a.prod].cat==='wood';S.ans.cold=PRODUCTS[S.a.prod].cat==='sea';S.qi=0;S.screen='b1';render();return} go(g)});
+  bindExplore(sc);
+  sc.querySelectorAll('[data-ans]').forEach(b=>b.onclick=()=>{const q=QS[S.qi]; S.ans[q.k]=b.dataset.ans; if(q.k==='cargo'){S.ans.wood=PRODUCTS[b.dataset.ans].cat==='wood';render();return}
+    if(S.qi<QS.length-1){ setTimeout(()=>{S.qi++;render()},180); render(); } else render(); });
+  sc.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{S.ans[b.dataset.b]=b.dataset.v;render()});
+  sc.querySelectorAll('select[data-bsel]').forEach(e=>e.onchange=()=>{const k=e.dataset.bsel;
+    if(k==='cargo'){S.ans.cargo=e.value;S.ans.wood=PRODUCTS[e.value].cat==='wood';S.ans.cold=PRODUCTS[e.value].cat==='sea'} else S.a[k]=e.value; render()});
+  if(sc.querySelector('[data-create]')) sc.querySelector('[data-create]').onclick=()=>{S.screen='ship';render()};
+  sc.querySelectorAll('[data-tg]').forEach(b=>b.onclick=()=>{S.ans[b.dataset.tg]=b.dataset.v==='1';render()});
+  if(sc.querySelector('[data-prev]')) sc.querySelector('[data-prev]').onclick=()=>{S.qi--;render()};
+  if(sc.querySelector('[data-next]')) sc.querySelector('[data-next]').onclick=()=>{ if(S.qi<QS.length-1){S.qi++;render()} else {S.screen='ship';render()} };
+  sc.querySelectorAll('[data-addreq]').forEach(b=>b.onclick=()=>{
+    const m=modal(`<b style="font-size:18px">Add your buyer's requirements</b><p style="color:var(--muted);font-size:14px;margin-top:4px">Any format works — we'll read it for you.</p>
+      <div class="ways"><button class="way" data-l><span>💬</span>Paste a message</button><button class="way" data-l><span>📸</span>Upload a screenshot</button><button class="way" data-l><span>🏦</span>Upload the L/C</button></div>
+      <p style="font-size:12.5px;color:var(--muted)">Demo: any option loads a sample L/C.</p><div style="text-align:right;margin-top:8px"><button class="btn s sm" data-close>Not now</button></div>`);
+    m.querySelectorAll('[data-l]').forEach(w=>w.onclick=()=>{ m.querySelector('.box').innerHTML=`<b style="font-size:18px">We found 7 documents in your buyer's L/C</b>
+      <pre>✓ Commercial invoice — 3 signed originals  ← differs from email (2)
+✓ Packing list — 3 copies
+✓ Bill of lading — to order of Commerzbank AG
+✓ Fumigation certificate
+＋ Certificate of origin (new)
+＋ Inspection certificate by SGS (new)</pre>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn s sm" data-close>Cancel</button><button class="btn p sm" id="ok">Looks right, update my list</button></div>`;
+      m.querySelector('#ok').onclick=()=>{S.buyer=true; if(S.up.inv) S.up.inv=['w','Your buyer\'s L/C changed what\'s needed (3 signed originals). Please check and re-upload.','L/C 46A-1 · L/C takes precedence over the email']; m.remove();render()}; });
   });
-};
+  sc.querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{const id=b.dataset.up; b.textContent='Checking…'; b.disabled=true;
+    setTimeout(()=>{S.up[id]=(RES[id]||(()=>['ok','Looks good, consistent with your other documents.',S.buyer?'Buyer requirements + earlier documents':'Earlier documents']))();render()},650)});
+  sc.querySelectorAll('[data-why]').forEach(b=>b.onclick=()=>{S.open[b.dataset.why]=!S.open[b.dataset.why];render()});
+  sc.querySelectorAll('[data-others]').forEach(b=>b.onclick=()=>{S.showOthers=!S.showOthers;render()});
+  sc.querySelectorAll('[data-maybe]').forEach(b=>b.onclick=()=>{S.showMaybe=!S.showMaybe;render()});
+  sc.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{S.added[b.dataset.add]=1;render()});
+  sc.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{delete S.added[b.dataset.rm];delete S.up[b.dataset.rm];render()});
+  sc.querySelectorAll('[data-mail]').forEach(b=>b.onclick=()=>modal(`<b style="font-size:18px">Fix email to your forwarder</b><pre>Hi Samudra team,
 
-// ───────────── 3. Documents ─────────────
-const ISSUES = [
-  { id: 'consignee', sev: 'crit', title: '✕ Consignee name differs from the LC', doc: 'bl',
-    body: `Bill of Lading: <span class="hl">Hanse Wohnen GmbH &amp; Co.</span> · Letter of Credit applicant: <span class="hl">Hanse Wohnen GmbH</span>`,
-    ref: 'UCP 600 Art. 14(d) — data must not conflict · likely refusal', fix: 'Fix BL draft', fixed: 'Carrier amended the BL draft to "Hanse Wohnen GmbH".' },
-  { id: 'weight', sev: 'wrn', title: '! Gross weight doesn\'t match', doc: 'pl',
-    body: `Packing List <span class="hl">12,480 kg</span> · Bill of Lading <span class="hl">12,840 kg</span> — digits look swapped.`,
-    ref: 'Weights must be consistent across documents', fix: 'Correct BL to 12,480 kg', fixed: 'BL draft corrected to 12,480 kg — matches the packing list.' },
-];
-function docValues() {
-  const f = S.fixed;
-  return {
-    inv: [['Seller', ORDER.seller + ', Jepara, Indonesia'], ['Buyer', ORDER.buyer + ', Hamburg'], ['Description', 'Teak wood dining sets, 48 sets'], ['Terms', S.corridor.inco === 'CIF' ? 'CIF Hamburg, Incoterms® 2020' : 'FOB Semarang, Incoterms® 2020'], ['Amount', 'USD 48,000.00'], ['LC reference', 'LC-DE-88421']],
-    pl: [['Packages', '48 crates on ISPM 15 pallets'], ['Net weight', '11,620 kg'], ['Gross weight', { v: '12,480 kg', k: 'weight-src' }], ['Measurement', '66 CBM · 1 × 40ft HC']],
-    bl: [['Shipper', ORDER.seller], ['Consignee', { v: f.has('consignee') ? 'Hanse Wohnen GmbH' : 'Hanse Wohnen GmbH & Co.', k: 'consignee' }], ['Port of loading', 'Tanjung Emas, Semarang'], ['Port of discharge', 'Hamburg, Germany'], ['Vessel', 'MSC Aurora · voy. 446W'], ['Gross weight', { v: f.has('weight') ? '12,480 kg' : '12,840 kg', k: 'weight' }], ['Notation', 'Shipped on board · clean']],
-    lc: [['Applicant', { v: 'Hanse Wohnen GmbH', k: 'consignee-src' }], ['Beneficiary', ORDER.seller], ['Amount', 'USD 48,000.00'], ['Latest shipment', '30 Nov 2026'], ['Documents required', 'Invoice, Packing List, full set clean on-board BL' + (S.corridor.inco === 'CIF' ? ', insurance certificate' : '')]],
-  };
-}
-function preview(id) {
-  const d = DOCS.find(x => x.id === id), rows = docValues()[id];
-  const cell = v => {
-    if (typeof v === 'string') return v;
-    const isIssue = ISSUES.some(i => i.id === v.k);
-    if (!S.checked2 || !isIssue) return v.v;
-    return `<span class="${S.fixed.has(v.k) ? 'fixed' : 'flag'}">${v.v}</span>`;
-  };
-  $('#modal').innerHTML = `<div class="modal" onclick="if(event.target===this)closeModal()"><div class="paper">
-    <h3>${d.name}<small>${d.file}</small></h3>
-    <table>${rows.map(([k, v]) => `<tr><td>${k}</td><td>${cell(v)}</td></tr>`).join('')}</table>
-    <p style="margin-top:12px;font-size:11px;color:#56607A">Sample document for demo purposes.</p>
-    <button class="close" onclick="closeModal()">Close</button></div></div>`;
-}
-function closeModal() { $('#modal').innerHTML = ''; }
+Before you issue the bill of lading, please change the consignee to "TO ORDER OF COMMERZBANK AG". This is required by our buyer's L/C (field 46A).
 
-function documents() {
-  const allUp = S.uploaded >= DOCS.length;
-  const open = ISSUES.filter(i => !S.fixed.has(i.id)).length;
-  let right;
-  if (!allUp) right = `<div class="empty">Upload Rina's documents to cross-check them against the Letter of Credit.</div>`;
-  else if (S.checking) right = `<div style="padding:22px"><b>Cross-checking 4 documents…</b><div class="scan"><div></div></div><div class="note">Comparing names, amounts, weights, ports and dates against the LC</div></div>`;
-  else if (!S.checked2) right = `<div class="empty">All four documents uploaded.<br><br><button class="btn" onclick="crossCheck()">Run cross-check →</button></div>`;
-  else right = `<div class="res">
-      <div class="res-hd"><b class="h" style="font-size:20px">Cross-check results</b>
-        <span class="badge ${open ? 'bad' : 'good'}">${open ? open + ' issue' + (open > 1 ? 's' : '') + ' found' : 'All clear'}</span></div>
-      ${ISSUES.map(i => S.fixed.has(i.id)
-        ? `<div class="iss okk"><div class="ti">✓ Fixed — ${i.title.replace(/^[✕!] /, '')}</div>${i.fixed}</div>`
-        : `<div class="iss ${i.sev}"><div class="ti">${i.title}</div>${i.body}<div class="ref">${i.ref}</div>
-            <div class="acts"><button onclick="preview('${i.doc === 'pl' ? 'bl' : i.doc}')">View in document</button><button class="fix" onclick="fixIssue('${i.id}')">${i.fix}</button></div></div>`).join('')}
-      <div class="iss okk"><div class="ti">✓ 14 other checks passed</div>Amounts, currency, ports, dates and goods description match the LC.</div>
-      ${open ? '' : `<div class="box pay" style="margin-top:4px"><em>Ready for the bank</em>Documents are consistent with the LC. Rina avoids a discrepancy fee ($150–500) and days of delay waiting for amendments.</div>`}
-    </div>`;
-  return `<div class="eyebrow">Step 3 · Document cross-check</div>
-    <h2 class="h">Catch it <span class="g">before the bank does.</span></h2>
-    <p class="lead" style="margin-bottom:16px">Banks check every document against the Letter of Credit, line by line. So does ShipSafe — first.</p>
-    <div class="docs">
-      <div>
-        <div class="dlist">${DOCS.map((d, i) => `<button class="doc ${i < S.uploaded ? 'up' : ''}" ${i < S.uploaded ? `onclick="preview('${d.id}')"` : 'disabled'}>
-          <span class="ic"></span><span><b>${d.name}</b><span>${i < S.uploaded ? d.file : 'Not uploaded'}</span>
-          ${i === S.uploaded && S.uploading ? '<span class="up-bar"><div id="upBar"></div></span>' : ''}</span>
-          ${i < S.uploaded ? '<span class="view">View</span>' : ''}</button>`).join('')}</div>
-        ${allUp ? '' : `<div class="actions" style="justify-content:flex-start"><button class="btn" onclick="upload()" ${S.uploading ? 'disabled' : ''}>⇪ Upload sample documents</button></div>`}
-        <p class="note" style="margin-top:10px">Demo uses sample files — nothing leaves your browser.</p>
-      </div>
-      <div class="card">${right}</div>
-    </div>
-    <div class="actions"><button class="btn ghost" onclick="go(2)">← Checklist</button><button class="btn" onclick="go(4)">Next: see the costs →</button></div>`;
+Please send me the revised draft to confirm. Thank you!</pre><div style="text-align:right"><button class="btn p sm" data-close>Copy &amp; close</button></div>`));
 }
-function upload() {
-  S.uploading = true;
-  const next = () => {
-    render();
-    requestAnimationFrame(() => { const b = document.getElementById('upBar'); if (b) b.style.width = '100%'; });
-    setTimeout(() => {
-      S.uploaded++;
-      if (S.uploaded < DOCS.length) next(); else { S.uploading = false; render(); }
-    }, 420);
-  };
-  next();
-}
-function crossCheck() { S.checking = true; render(); setTimeout(() => { S.checking = false; S.checked2 = true; render(); }, 1900); }
-function fixIssue(id) { S.fixed.add(id); render(); }
-
-// ───────────── 4. Costs ─────────────
-function costs() {
-  const cif = S.corridor.inco === 'CIF';
-  const rows = COSTS.map(c => ({ ...c, val: c.v(S), mine: !c.cif || cif }));
-  const mine = rows.filter(r => r.mine).reduce((a, r) => a + r.val, 0);
-  const profit = S.value - S.cogs - mine, margin = S.value ? profit / S.value * 100 : 0;
-  const fobCost = rows.filter(r => !r.cif).reduce((a, r) => a + r.val, 0);
-  const fobMargin = S.value ? (S.value - S.cogs - fobCost) / S.value * 100 : 0;
-  const mColor = margin >= 20 ? 'var(--gnl)' : margin >= 10 ? '#A86E00' : '#C93C32';
-  return `<div class="eyebrow">Step 4 · Landed cost & margin</div>
-    <h2 class="h">Know your real margin <span class="g">before you quote.</span></h2>
-    <p class="lead" style="margin-bottom:16px">Switch the Incoterm or change the numbers — every cost follows the rules of that term.</p>
-    <div class="ctrl">
-      <div class="num">Incoterm<div class="seg">${['FOB', 'CIF'].map(t => `<button class="${S.corridor.inco === t ? 'on' : ''}" onclick="setInco('${t}')">${t}</button>`).join('')}</div></div>
-      <label class="num">Order value (USD)<input id="iValue" type="number" min="0" step="500" value="${S.value}"></label>
-      <label class="num">Production cost (USD)<input id="iCogs" type="number" min="0" step="500" value="${S.cogs}"></label>
-    </div>
-    <div class="costs">
-      <div class="card" style="padding:14px 16px">
-        <table class="ctab">${rows.map(r => `<tr class="${r.mine ? '' : 'buyer'} ${r.cif && cif ? 'new' : ''}"><td><span class="cat">${r.cat}</span>${r.item}${r.mine ? '' : ' <span class="note">— buyer pays under FOB</span>'}</td><td>${r.mine ? money(r.val) : '—'}</td></tr>`).join('')}</table>
-        <div class="tot"><span>Rina's shipping & compliance cost</span><b>${money(mine)}</b></div>
-      </div>
-      <div class="side">
-        <div class="card kpis">
-          <div><span>Order value</span><b>${money(S.value)}</b></div>
-          <div><span>Gross profit</span><b>${money(profit)}</b></div>
-          <div><span>Gross margin</span><b style="color:${mColor}">${margin.toFixed(1)}%</b>${cif ? `<div class="delta" style="color:#C93C32">${(margin - fobMargin).toFixed(1)} pts vs FOB</div>` : ''}</div>
-          <div><span>Shipping / value</span><b>${S.value ? (mine / S.value * 100).toFixed(1) : '0'}%</b></div>
-        </div>
-        <div class="box tip"><em>💡 ${cif ? 'Quoting CIF?' : 'Under FOB'}</em>${cif
-          ? `Price it as FOB + freight + insurance (about <b>${money(S.value + 2600 + Math.round(S.value * 1.1 * .003))}</b>). Quote CIF at the FOB price and the freight comes straight out of Rina's margin.`
-          : `The buyer books the ship. Confirm their forwarder's cut-off at Semarang so Rina doesn't pay port storage while waiting.`}</div>
-        <p class="note">Illustrative rates for a 40ft HC, Semarang → Hamburg.</p>
-      </div>
-    </div>
-    <div class="actions"><button class="btn ghost" onclick="go(3)">← Documents</button><button class="btn" onclick="go(5)">Finish →</button></div>`;
-}
-afterRender[4] = () => {
-  const bind = (id, k) => { const el = document.getElementById(id); el.onchange = () => { S[k] = Math.max(0, +el.value || 0); render(); }; };
-  bind('iValue', 'value'); bind('iCogs', 'cogs');
-};
-function setInco(t) { S.corridor.inco = t; render(); }
-
-// ───────────── 5. Done ─────────────
-function done() {
-  const list = items(), n = list.filter(i => S.checked.has(i.id)).length;
-  const cif = S.corridor.inco === 'CIF';
-  const mine = COSTS.filter(c => !c.cif || cif).reduce((a, c) => a + c.v(S), 0);
-  const margin = S.value ? (S.value - S.cogs - mine) / S.value * 100 : 0;
-  const fixed = S.fixed.size;
-  const todo = [];
-  if (n < list.length) todo.push(`${list.length - n} compliance item${list.length - n > 1 ? 's' : ''}`);
-  if (fixed < ISSUES.length) todo.push(`${ISSUES.length - fixed} document issue${ISSUES.length - fixed > 1 ? 's' : ''} the bank would flag`);
-  const allClear = !todo.length;
-  return `<div class="done">
-    <svg class="seal" viewBox="0 0 84 84"><circle cx="42" cy="42" r="40" fill="rgba(102,180,76,.15)" stroke="#66B44C" stroke-width="3"/><path d="M26 43l11 11 21-23" fill="none" stroke="#7CC463" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <div class="eyebrow">Demo complete</div>
-    <h1 class="h">${allClear ? 'Rina ships clean.' : 'Almost there, Rina.'}</h1>
-    <p class="lead" style="margin:0 auto">${allClear ? 'Rules covered, documents consistent with the LC, and a margin she understands — before the container leaves Semarang.' : 'Still open: ' + todo.join(' and ') + '. In real life, these are what hold a container at port.'}</p>
-    <div class="sum">
-      <div class="card"><b>${n}/${list.length}</b><span>compliance items covered</span></div>
-      <div class="card"><b>${fixed}/${ISSUES.length}</b><span>document issues fixed before the bank</span></div>
-      <div class="card"><b>${margin.toFixed(1)}%</b><span>gross margin on ${S.corridor.inco}</span></div>
-    </div>
-    <div class="slogan"><span class="b">Know it.</span> Check it. <span class="g">Ship it.</span></div>
-    <div class="row" style="justify-content:center">
-      <a class="btn" href="/#start" target="_top">Check your own corridor →</a>
-      <button class="btn ghost" onclick="restart()">↺ Replay demo</button>
-      ${n < list.length ? '<button class="btn ghost" onclick="go(2)">Finish checklist</button>' : ''}
-      ${fixed < ISSUES.length ? '<button class="btn ghost" onclick="go(3)">Fix documents</button>' : ''}
-    </div>
-    <p class="note" style="margin-top:18px">Sample scenario with illustrative data. Always verify with official sources before shipping.</p>
-  </div>`;
-}
-function restart() {
-  Object.assign(S, { corridor: { product: '', origin: '', dest: '', inco: '' }, checked: new Set(), open: null, uploaded: 0, uploading: false, checking: false, checked2: false, fixed: new Set(), value: ORDER.value, cogs: ORDER.cogs });
-  go(0);
-}
-if (window.self !== window.top) { document.getElementById('homeLink').hidden = true; document.getElementById('fullLink').hidden = false; document.querySelector('.runs:not(.full)').hidden = true; }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 render();
 </script>
 </body>
