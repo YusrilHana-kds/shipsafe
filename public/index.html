@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-<title>ShipSafe — Trade Compliance</title>
+<title>ShipSafe · AI-Powered Export Readiness Platform</title>
 <meta name="description" content="AI trade compliance for exporters and importers in any industry — food, textiles, furniture, electronics, and more. Know what customs requires and catch document errors before your bank does.">
-<meta property="og:title" content="ShipSafe — Compliant. Every shipment.">
+<meta property="og:title" content="ShipSafe · Export-ready. Every shipment.">
 <meta property="og:description" content="Know what customs requires for any product, any corridor — and catch document errors before your bank does. Know it. Check it. Ship it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shipsafe-trade.vercel.app/">
@@ -14,7 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="ShipSafe — Compliant. Every shipment. Global trade compliance for any product.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ShipSafe — Compliant. Every shipment.">
+<meta name="twitter:title" content="ShipSafe · Export-ready. Every shipment.">
 <meta name="twitter:description" content="Know what customs requires for any product, any corridor — and catch document errors before your bank does.">
 <meta name="twitter:image" content="https://shipsafe-trade.vercel.app/og-global.png">
 <link rel="icon" type="image/png" href="/logo-mark.png">
@@ -66,6 +66,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#0E2350;color:var(--t
 .ls-big{font-family:'Plus Jakarta Sans','DM Sans',sans-serif;font-weight:800;font-size:clamp(88px,14vw,180px);line-height:.9;letter-spacing:-6px;color:#F3F6FB}
 .ls-bigstat p{font-size:clamp(18px,1.8vw,24px);line-height:1.45;color:rgba(243,246,251,.9);max-width:460px;margin:0}
 .ls-src{font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(243,246,251,.6);margin:18px 0 clamp(36px,6vh,56px)}
+.ls-stats2{display:flex;flex-direction:column;gap:clamp(4px,1vh,12px)}
+body.lp .ls-stats2 .ls-big,.ls-stats2 .ls-big{font-size:clamp(52px,min(6.5vw,10vh),96px);letter-spacing:-.04em;min-width:3.4ch}
+.ls-stats2 .ls-src{margin:10px 0 clamp(16px,3vh,28px)}
 .ls-journey-hd{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#408CC8;margin-bottom:14px;font-weight:600}
 .ls-journey{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
 .ls-step,.ls-howstep{display:flex;flex-direction:column;gap:6px;background:#15387A;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:14px}
@@ -1267,16 +1270,16 @@ label{font-size:10px;letter-spacing:.3px}
   <div class="hx">
     <div class="hx-in">
       <div class="hx-copy">
-        <div class="hx-pill"><span data-i18n="hero_badge">AI-Powered · Your Copilot for Global Trade</span></div>
-        <h1 class="hx-h1"><span data-i18n="hx_h1a">Compliant.</span><br><em data-i18n="hx_h1b">Every shipment.</em></h1>
-        <p class="hx-lead" data-i18n="landing_sub">Know exactly what customs requires — certificates, tests, deadlines — and catch document errors before your bank does.</p>
+        <div class="hx-pill"><span data-i18n="hero_badge">AI-Powered Export Readiness Platform</span></div>
+        <h1 class="hx-h1"><span data-i18n="hx_h1a">Export-ready.</span><br><em data-i18n="hx_h1b">Every shipment.</em></h1>
+        <p class="hx-lead" data-i18n="landing_sub">From exploring a new market to the day your container sails, ShipSafe shows what every gate needs, checks each document as it arrives, and keeps you ahead of every cut-off.</p>
         <div class="hx-ctas">
           <button class="hx-btn p" onclick="enterApp()" data-i18n="landing_cta">Check my corridor →</button>
           <a class="hx-btn s" href="#how" onclick="smoothScroll(event,'how')" data-i18n="hx_watch">▶ See how it works</a>
         </div>
         <div class="hx-stats">
-          <div><b>$150–500</b><span data-i18n="stat1">Bank fee per rejection</span></div>
-          <div><b>5–7 days</b><span data-i18n="stat2">Stuck at port to fix docs</span></div>
+          <div><b>57%</b><span data-i18n="stat1">Face delays from doc errors</span></div>
+          <div><b>$300B</b><span data-i18n="stat2">Trade unlocked with less friction</span></div>
           <div><b>10–20 hrs</b><span data-i18n="stat3">Paperwork per shipment</span></div>
         </div>
         <div class="hx-src"><span data-i18n="hx_src">Sources we check:</span><i>EUR-Lex</i><i>CBP</i><i>FDA</i><i>TARIC</i></div>
@@ -1289,7 +1292,7 @@ label{font-size:10px;letter-spacing:.3px}
           <div class="hx-row"><span class="hx-ck">✓</span><div>SVLK / FLEGT licence<small>Timber legality</small></div><span class="hx-tag">Required</span></div>
           <div class="hx-row"><span class="hx-ck">✓</span><div>ISPM 15 pallets<small>Heat-treated, stamped</small></div><span class="hx-tag">Required</span></div>
           <div class="hx-row"><span class="hx-ck off"></span><div>Formaldehyde test<small>REACH Annex XVII</small></div><span class="hx-tag">Required</span></div>
-          <div class="hx-alert"><span>⚠</span><div><b>BL consignee doesn't match the LC.</b> UCP 600 Art. 14(d) — the bank will refuse. Fix before sailing.</div></div>
+          <div class="hx-alert"><span>⚠</span><div data-i18n="hx_alert"><b>Formaldehyde test missing.</b> German customs can hold the container. Book the lab before 25 Nov.</div></div>
         </div>
         <a class="hx-float" href="#assist" onclick="smoothScroll(event,'assist')"><span class="hx-av">T</span><div><b data-i18n="hx_tara">Ask Tara</b><span data-i18n="hx_tara_q">“FOB or CIF for this buyer?”</span></div></a>
       </div>
@@ -1336,25 +1339,34 @@ label{font-size:10px;letter-spacing:.3px}
   <!-- THE PROBLEM -->
   <section class="ls" id="problem">
     <div class="ls-in">
-      <div class="ls-eyebrow"><span data-i18n="p_tag">The problem</span><em data-i18n="p_cap">Paperwork, not product</em></div>
-      <h2 class="ls-h2" data-i18n="p_h2">Global trade moves the world.<br><span>Paperwork holds it back.</span></h2>
+      <div class="ls-eyebrow"><span data-i18n="p_tag">The problem</span><em data-i18n="p_cap">Complexity at every gate</em></div>
+      <h2 class="ls-h2" data-i18n="p_h2">Global trade moves the world.<br><span>But complexity holds it back.</span></h2>
       <div class="ls-pgrid">
-        <div>
-          <div class="ls-bigstat">
-            <div class="ls-big">$1T</div>
-            <p data-i18n="p_stat">Up to $1 trillion a year in potential trade gains — locked behind border red tape.</p>
+        <div class="ls-stats2">
+          <div>
+            <div class="ls-bigstat">
+              <div class="ls-big">57%</div>
+              <p data-i18n="p_stat">of logistics companies face shipment delays from documentation errors.</p>
+            </div>
+            <div class="ls-src" data-i18n="p_src">Source: Deep Current, 2025.</div>
           </div>
-          <div class="ls-src" data-i18n="p_src">Source: WTO, 2022.</div>
+          <div>
+            <div class="ls-bigstat">
+              <div class="ls-big">$300B</div>
+              <p data-i18n="p_stat2">in potential additional global trade from reducing border friction.</p>
+            </div>
+            <div class="ls-src" data-i18n="p_src2">Source: UNCTAD, 2025.</div>
+          </div>
         </div>
         <figure class="ls-photo"><img src="/ship-bg.jpg" alt="Aerial view of a container ship being loaded at a port terminal" loading="lazy"><figcaption data-i18n="p_photo">Every container waits on its paperwork.</figcaption></figure>
       </div>
       <div class="ls-journey-hd" data-i18n="p_jhd">A typical export journey</div>
       <div class="ls-journey">
-        <div class="ls-step"><span class="ls-step-n">01</span><b data-i18n="p_j1t">Find requirements</b><span data-i18n="p_j1d">Scattered everywhere</span></div>
-        <div class="ls-step"><span class="ls-step-n">02</span><b data-i18n="p_j2t">Prepare documents</b><span data-i18n="p_j2d">10–20 hrs staff time</span></div>
-        <div class="ls-step"><span class="ls-step-n">03</span><b data-i18n="p_j3t">Submit to bank</b><span data-i18n="p_j3d">Wait for review</span></div>
-        <div class="ls-step bad"><span class="ls-step-n">04</span><b data-i18n="p_j4t">Rejected</b><span data-i18n="p_j4d">$150–500 bank fees</span></div>
-        <div class="ls-step"><span class="ls-step-n">05</span><b data-i18n="p_j5t">Fix &amp; resubmit</b><span data-i18n="p_j5d">5–7 days at port</span></div>
+        <div class="ls-step"><span class="ls-step-n">01</span><b data-i18n="p_j1t">Research the market</b><span data-i18n="p_j1d">Rules spread across agencies</span></div>
+        <div class="ls-step"><span class="ls-step-n">02</span><b data-i18n="p_j2t">Prepare documents</b><span data-i18n="p_j2d">10–20 hrs per shipment</span></div>
+        <div class="ls-step"><span class="ls-step-n">03</span><b data-i18n="p_j3t">Pass every gate</b><span data-i18n="p_j3d">Customs, port, bank, buyer</span></div>
+        <div class="ls-step bad"><span class="ls-step-n">04</span><b data-i18n="p_j4t">One error</b><span data-i18n="p_j4d">Held at a gate</span></div>
+        <div class="ls-step"><span class="ls-step-n">05</span><b data-i18n="p_j5t">Fix &amp; resubmit</b><span data-i18n="p_j5d">5–7 days lost at port</span></div>
         <div class="ls-step"><span class="ls-step-n">06</span><b data-i18n="p_j6t">Wait for payment</b><span data-i18n="p_j6d">$20K+ capital stuck</span></div>
       </div>
       <div class="ls-punch" data-i18n="p_punch">One small error can delay an <span>entire shipment.</span></div>
@@ -2242,6 +2254,11 @@ T.zh=Object.assign({},T.en,{v_caps:`字幕`,tagline:`贸易合规`,hero_badge:`A
 - 常用的国际贸易缩写和专有名词可保留原文：FOB、CIF、HS Code、L/C、UCP 600、Incoterms、FDA、EUDR、REACH 等，但解释必须用中文
 - 法规名称首次出现时可附中文说明，例如 “EUDR（欧盟毁林法规）”
 - 金额和数量保持国际格式：$1,500、5,000 kg`});
+// Positioning: AI-Powered Export Readiness Platform (hero + problem section)
+Object.assign(T.en,{hero_badge:'AI-Powered Export Readiness Platform',hx_h1a:'Export-ready.',hx_h1b:'Every shipment.',landing_sub:'From exploring a new market to the day your container sails, ShipSafe shows what every gate needs, checks each document as it arrives, and keeps you ahead of every cut-off.',stat1:'Face delays from doc errors',stat2:'Trade unlocked with less friction',stat3:'Paperwork per shipment',hx_alert:'<b>Formaldehyde test missing.</b> German customs can hold the container. Book the lab before 25 Nov.',p_cap:'Complexity at every gate',p_h2:'Global trade moves the world.<br><span>But complexity holds it back.</span>',p_stat:'of logistics companies face shipment delays from documentation errors.',p_src:'Source: Deep Current, 2025.',p_stat2:'in potential additional global trade from reducing border friction.',p_src2:'Source: UNCTAD, 2025.',p_j1t:'Research the market',p_j1d:'Rules spread across agencies',p_j2d:'10–20 hrs per shipment',p_j3t:'Pass every gate',p_j3d:'Customs, port, bank, buyer',p_j4t:'One error',p_j4d:'Held at a gate',p_j5d:'5–7 days lost at port'});
+Object.assign(T.id,{hero_badge:'Platform Kesiapan Ekspor Berbasis AI',hx_h1a:'Siap ekspor.',hx_h1b:'Setiap pengiriman.',landing_sub:'Dari menjajaki pasar baru sampai kontainer berangkat, ShipSafe menunjukkan apa yang dibutuhkan di setiap tahap, mengecek setiap dokumen begitu datang, dan mengingatkanmu sebelum setiap tenggat.',stat1:'Telat karena salah dokumen',stat2:'Potensi dagang tanpa hambatan',stat3:'Urus dokumen per kiriman',hx_alert:'<b>Tes formaldehida belum ada.</b> Bea cukai Jerman bisa menahan kontainer. Pesan lab sebelum 25 Nov.',p_cap:'Rumit di setiap tahap',p_h2:'Perdagangan global menggerakkan dunia.<br><span>Tapi kerumitannya menahan.</span>',p_stat:'pelaku logistik mengalami keterlambatan pengiriman karena kesalahan dokumen.',p_src:'Sumber: Deep Current, 2025.',p_stat2:'potensi tambahan perdagangan global dengan mengurangi hambatan di perbatasan.',p_src2:'Sumber: UNCTAD, 2025.',p_j1t:'Riset pasar',p_j1d:'Aturan tersebar di banyak instansi',p_j2d:'10–20 jam per kiriman',p_j3t:'Lolos setiap tahap',p_j3d:'Bea cukai, pelabuhan, bank, buyer',p_j4t:'Satu kesalahan',p_j4d:'Tertahan di satu tahap',p_j5d:'5–7 hari hilang di pelabuhan'});
+Object.assign(T.es,{hero_badge:'Plataforma de preparación exportadora con IA',hx_h1a:'Listo para exportar.',hx_h1b:'Cada envío.',landing_sub:'Desde explorar un mercado nuevo hasta el día en que zarpa tu contenedor, ShipSafe te muestra lo que pide cada etapa, revisa cada documento al llegar y te avisa antes de cada fecha límite.',stat1:'Con retrasos por errores en documentos',stat2:'Comercio liberado con menos fricción',stat3:'Papeleo por envío',hx_alert:'<b>Falta la prueba de formaldehído.</b> La aduana alemana puede retener el contenedor. Reserva el laboratorio antes del 25 nov.',p_cap:'Complejidad en cada etapa',p_h2:'El comercio global mueve el mundo.<br><span>Pero la complejidad lo frena.</span>',p_stat:'del sector logístico sufre retrasos en envíos por errores en la documentación.',p_src:'Fuente: Deep Current, 2025.',p_stat2:'en comercio global adicional potencial al reducir la fricción fronteriza.',p_src2:'Fuente: UNCTAD, 2025.',p_j1t:'Investigar el mercado',p_j1d:'Reglas dispersas en muchas agencias',p_j2d:'10–20 h por envío',p_j3t:'Pasar cada etapa',p_j3d:'Aduana, puerto, banco, comprador',p_j4t:'Un error',p_j4d:'Retenido en una etapa',p_j5d:'5–7 días perdidos en puerto'});
+Object.assign(T.zh,{hero_badge:'AI 驱动的出口准备平台',hx_h1a:'出口就绪。',hx_h1b:'每一票货。',landing_sub:'从考察新市场到集装箱开船，ShipSafe 告诉您每个环节需要什么，单据一到就核查，并在每个截止日期前提醒您。',stat1:'因单据错误而延误',stat2:'减少摩擦可释放的贸易',stat3:'每票货物的文书工时',hx_alert:'<b>缺少甲醛检测报告。</b>德国海关可能扣留集装箱。请在 11 月 25 日前预约实验室。',p_cap:'每个环节都很复杂',p_h2:'全球贸易推动世界。<br><span>但复杂性拖累了它。</span>',p_stat:'的物流企业曾因单据错误导致货物延误。',p_src:'来源：Deep Current，2025 年。',p_stat2:'减少边境摩擦可带来的潜在全球贸易增量。',p_src2:'来源：联合国贸发会议（UNCTAD），2025 年。',p_j1t:'研究市场',p_j1d:'规则分散在多个机构',p_j2d:'每票 10–20 小时',p_j3t:'通过每个环节',p_j3d:'海关、港口、银行、买家',p_j4t:'一个错误',p_j4d:'卡在某个环节',p_j5d:'滞港 5–7 天'});
 function setLang(lang){
   currentLang=lang;
   document.documentElement.lang=lang==='zh'?'zh-CN':lang;
