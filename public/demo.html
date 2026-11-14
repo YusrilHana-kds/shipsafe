@@ -266,7 +266,8 @@ html.embed .intro{min-height:100vh}
 .in-sub{margin:16px auto 30px;max-width:620px;font-size:clamp(15px,1.7vw,18px);line-height:1.55;color:rgba(243,246,251,.72);text-wrap:balance}
 .in-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:620px}
 .in-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:20px 16px;border-radius:16px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.14);color:#F3F6FB;transition:border-color .15s,background .15s,transform .15s}
-.in-card:hover,.in-card:focus-visible{border-color:#7CC463;background:rgba(124,196,99,.1);transform:translateY(-2px);outline:none}
+@media(hover:hover){.in-card:hover{border-color:#7CC463;background:rgba(124,196,99,.1);transform:translateY(-2px)}}
+.in-card:focus-visible{border-color:#7CC463;background:rgba(124,196,99,.1);transform:translateY(-2px);outline:none}
 .in-card.hot{border-color:rgba(124,196,99,.7)}
 .in-card .ic{font-size:28px;margin-bottom:4px}
 .in-card small{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7CC463}
@@ -274,7 +275,17 @@ html.embed .intro{min-height:100vh}
 .in-card span:last-child{font-size:13.5px;color:rgba(243,246,251,.65)}
 .in-hint{margin-top:22px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7CC463}
 .in-fine{margin-top:14px;font-size:12.5px;color:rgba(243,246,251,.55)}
-@media(max-width:560px){.in-cards{grid-template-columns:1fr}.intro{padding:36px 16px 24px}}
+@media(max-width:560px){
+  .intro{padding:28px 16px 22px}.in-main{padding-top:28px}
+  .in-sub{margin:12px auto 20px}
+  .in-cards{grid-template-columns:1fr;gap:10px}
+  /* compact row cards on phones: icon left, text right */
+  .in-card{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto auto;column-gap:14px;row-gap:1px;align-items:center;text-align:left;padding:14px 16px}
+  .in-card .ic{grid-row:1/4;margin:0;font-size:26px}
+  .in-card::after{content:'→';grid-column:3;grid-row:1/4;color:#7CC463;font-weight:700;font-size:18px}
+  .in-card b{font-size:18px}
+  .in-hint{margin-top:16px;font-size:12px}
+}
 @media(max-width:760px){.doors,.top3,.ways{grid-template-columns:1fr}.screen{padding:26px 18px}.chip.big{min-width:0;width:100%}}
 </style>
 </head>
