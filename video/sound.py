@@ -10,7 +10,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 FFMPEG = '/opt/homebrew/bin/ffmpeg'
 SR = 44100
-DUR = 75.0
+DUR = 77.0
 N = int(SR * DUR)
 rng = np.random.default_rng(7)
 
@@ -60,7 +60,7 @@ def hat():
     n = rng.standard_normal(int(0.04 * SR))
     return np.diff(n, prepend=0) * np.exp(-np.arange(len(n)) / SR * 90)
 
-def music(arp=(6.2, 70), drums=(14, 67)):
+def music(arp=(6.2, 71), drums=(12.4, 70)):
     m = np.zeros(N)
     bars = int(np.ceil(DUR / BAR))
     for b in range(bars):
@@ -131,8 +131,9 @@ def scan(sec=2.0):
     f = 300 + 500 * tt / sec
     return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * tt / sec) ** 2
 
-def sfx(at=lambda t: t, joins=(6.4, 14.0, 25.2, 36.6, 45.0, 53.2, 59.2, 67.2)):
-    """`at` maps a source time to output time (None = cut out); `joins` are output times for transitions."""
+def sfx(at=lambda t: t, joins=(6.4, 12.4, 24.2, 34.2, 43.0, 51.4, 62.4, 70.4)):
+    """`at` maps a source time to output time (None = cut out); `joins` are output times for transitions.
+    Times follow walkthrough.html (CLICKS and scene timings)."""
     s = np.zeros(N)
     def put(sig, t, gain):
         o = at(t)
@@ -140,27 +141,21 @@ def sfx(at=lambda t: t, joins=(6.4, 14.0, 25.2, 36.6, 45.0, 53.2, 59.2, 67.2)):
             place(s, sig, o, gain)
     for t in joins:
         place(s, whoosh(), t - .25, .18)
-    put(alert(low=True), 3.9, .25)
-    for t in (7.6, 8.3, 8.9, 9.4, 10.0, 10.5, 11.0, 11.4, 12.2):
-        put(click(), t, .22)
     for i in range(5):
-        put(pop(), 12.7 + i * .2, .06)
-        put(tick(), 17.2 + i * .75, .2)
-    put(scan(), 26.6, .07)
-    put(alert(low=True), 29.2, .25)
-    put(alert(), 30.6, .18)
-    put(tick(), 31.9, .2)
+        put(tick(), 3.8 + i * .45, .14)                      # journey chips light up
+    for t in (10.05, 13.65, 14.9, 15.8, 16.6, 17.6, 18.8, 19.9, 21.55, 26.85, 27.45, 29.95, 35.4, 39.45, 49.45, 53.65, 56.45, 67.45):
+        put(click(), t, .22)
+    for i in range(4):
+        put(pop(), 13.75 + i * .14, .05)                     # typing "1801"
     for i in range(6):
-        put(pop(), 37.4 + i * .3, .05)
-    put(pop(True), 46.0, .2)
-    put(pop(False), 48.2, .2)
-    for t in (54.1, 54.3, 54.5):
-        put(click(), t, .12)
-    for i in range(3):
-        put(pop(), 60.8 + i * .35, .08)
-    put(alert(), 62.9, .1)
-    put(alert(), 63.2, .1)
-    put(chime(), 67.5, .22)
+        put(pop(), 35.5 + i * .17, .05)                      # typing "60,000"
+    put(tick(), 54.6, .2)                                    # invoice passes
+    put(alert(), 57.4, .18)                                  # packing list warning
+    put(scan(1.6), 63.2, .07)                                # L/C scan
+    for i in range(6):
+        put(pop(), 65.0 + i * .18, .06)                      # findings appear
+    put(tick(), 67.5, .2)
+    put(chime(), 71.4, .22)
     return s
 
 def write_wav(path, mono):

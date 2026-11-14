@@ -75,7 +75,7 @@ if (stills) {
   if (cutName) writeFileSync(join(here, 'out', `cut-${cutName}.json`), await evaluate('JSON.stringify(window.SEGMENTS)'));
   execFileSync(FFMPEG, ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(frames, '%05d.jpg'),
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4]);
-  if (!cutName && !langName) await shot(16.2, join(outDir, 'how-it-works-poster.jpg'), 'jpeg');
+  if (!cutName && !langName) await shot(20.5, join(outDir, 'how-it-works-poster.jpg'), 'jpeg');
   rmSync(frames, { recursive: true, force: true });
   console.log('wrote', mp4);
 }

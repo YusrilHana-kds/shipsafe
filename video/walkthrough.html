@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>ShipSafe walkthrough</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- "How it works" video. Render: node video/render.mjs [--lang id|zh|es], then python3 video/sound.py [--lang …] -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1920px;height:1080px;overflow:hidden;background:#F2F8FE}
@@ -13,415 +14,470 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#F2F8FE}
 .scene{position:absolute;inset:0;opacity:0}
 .h{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;letter-spacing:-2px;line-height:1.05}
 .mono{font-family:'IBM Plex Mono',monospace}
-.g{color:#1F6FB8}.b{color:#408CC8}
+.g{color:#1F6FB8}.ok{color:#2F9E44}
+.card{background:#FFFFFF;border:1px solid #D6E4F3;border-radius:22px;box-shadow:0 30px 80px rgba(21,56,122,.16)}
+.lbl{font-family:'IBM Plex Mono',monospace;font-size:17px;letter-spacing:2px;text-transform:uppercase;color:#408CC8;font-weight:600}
 
-/* chrome */
+/* chrome (same as site video) */
 #logo{left:72px;top:56px;height:52px}
-#caption{left:50%;top:46px;transform:translateX(-50%);display:flex;align-items:center;gap:18px;background:#D6E4F3;border:1px solid #D6E4F3;box-shadow:0 8px 24px -12px rgba(21,56,122,.25);border-radius:100px;padding:16px 30px 16px 16px;white-space:nowrap}
+#caption{left:50%;top:46px;transform:translateX(-50%);display:flex;align-items:center;gap:18px;background:#D6E4F3;box-shadow:0 8px 24px -12px rgba(21,56,122,.25);border-radius:100px;padding:16px 30px 16px 16px;white-space:nowrap}
 #caption .n{background:#1F6FB8;color:#FFFFFF;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:20px;border-radius:100px;padding:5px 14px}
 #caption .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:26px}
 #caption .s{font-size:21px;color:rgba(11,31,68,0.80)}
 html:lang(zh-CN) #sub,html:lang(zh-CN) #caption .t,html:lang(zh-CN) #caption .s{font-family:'PingFang SC','Hiragino Sans GB','Noto Sans SC',sans-serif;letter-spacing:0}
-#sub{left:0;right:0;margin:0 auto;width:fit-content;bottom:40px;max-width:1640px;text-align:center;font-size:31px;line-height:1.4;font-weight:500;color:#0B1F44;background:#D6E4F3;box-shadow:0 8px 24px -12px rgba(21,56,122,.25);border-radius:14px;padding:12px 28px;text-wrap:balance}
+#sub{left:0;right:0;margin:0 auto;width:fit-content;bottom:40px;max-width:1640px;text-align:center;font-size:31px;line-height:1.4;font-weight:500;background:#D6E4F3;box-shadow:0 8px 24px -12px rgba(21,56,122,.25);border-radius:14px;padding:12px 28px;text-wrap:balance}
 #steps{right:72px;top:64px;display:flex;gap:10px}
-#steps i{display:block;width:56px;height:8px;border-radius:4px;background:#D6E4F3}
+#steps i{display:block;width:48px;height:8px;border-radius:4px;background:#D6E4F3}
 #steps i.on{background:#1F6FB8}
-
-/* scene 1 */
-#s1 .l1{left:160px;top:250px;font-size:120px}
-#s1 .l2{left:160px;top:385px;font-size:120px}
-#journey{left:160px;top:620px;display:flex;gap:16px}
-.chip{width:250px;padding:22px;border-radius:14px;background:#FFFFFF;border:1px solid #D6E4F3}
-.chip .k{font-family:'IBM Plex Mono',monospace;font-size:18px;color:#2F9E44;margin-bottom:8px}
-.chip .v{font-size:24px;font-weight:600}
-.chip.bad{background:rgba(224,92,82,.2);border-color:rgba(224,92,82,.8)}
-.chip.bad .k,.chip.bad .v{color:#C93C32}
-#s1 .cost{left:160px;top:830px;font-size:30px;color:rgba(11,31,68,0.95)}
-
-/* cards */
-.card{background:#FFFFFF;border:1px solid #D6E4F3;border-radius:20px;box-shadow:0 30px 80px rgba(21,56,122,.18)}
-.lbl{font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:#408CC8;font-weight:600}
-
-/* scene 2 */
-#form{left:360px;top:190px;width:1200px;padding:48px 56px}
-#form h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:44px;font-weight:800;margin-bottom:8px}
-#form .sub{font-size:24px;color:rgba(11,31,68,0.80);margin-bottom:36px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:24px 28px}
-.fl{font-size:20px;font-weight:600;margin-bottom:10px;color:rgba(11,31,68,0.95)}
-.fi{height:72px;border-radius:12px;background:#F2F8FE;border:2px solid #D6E4F3;display:flex;align-items:center;padding:0 24px;font-size:26px;position:relative;white-space:nowrap}
-.fi::after{content:'';position:absolute;right:24px;top:28px;width:12px;height:12px;border-right:3px solid rgba(11,31,68,0.60);border-bottom:3px solid rgba(11,31,68,0.60);transform:rotate(45deg)}
-#dd{position:absolute;background:#FFFFFF;border:2px solid #1F6FB8;border-radius:12px;padding:8px;box-shadow:0 24px 60px -16px rgba(21,56,122,.35);z-index:5}
-#dd div{height:62px;display:flex;align-items:center;padding:0 18px;border-radius:8px;font-size:25px;color:rgba(11,31,68,0.95);white-space:nowrap}
-#dd div.hi{background:#E3EEFA;color:#1F6FB8;font-weight:600}
-#dd .grp{height:34px;font-family:'IBM Plex Mono',monospace;font-size:16px;letter-spacing:1.5px;text-transform:uppercase;color:#408CC8}
-#click{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid #1F6FB8;z-index:7;pointer-events:none}
-#cursor{z-index:8}
-#gcur{width:44px;height:44px;z-index:30;opacity:0;filter:drop-shadow(0 4px 8px rgba(11,31,68,.25))}
-#gclick{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid #1F6FB8;z-index:29;pointer-events:none;display:none}
-.fi.act{border-color:#1F6FB8;box-shadow:0 0 0 6px rgba(102,180,76,.18)}
-.fi .ph{color:rgba(11,31,68,0.45)}
-.caret{display:inline-block;width:3px;height:34px;background:#1F6FB8;margin-left:3px;vertical-align:middle}
-#go{margin-top:34px;height:80px;border-radius:14px;background:#1F6FB8;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px}
-#pill{left:50%;top:118px;transform:translateX(-50%);background:rgba(102,180,76,.15);border:1px solid rgba(102,180,76,.6);border-radius:100px;padding:12px 28px;font-family:'IBM Plex Mono',monospace;font-size:24px;white-space:nowrap}
-#cursor{width:44px;height:44px}
-#searching{left:50%;top:860px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;white-space:nowrap}
-#searching .src{padding:10px 20px;border-radius:100px;border:1px solid #D6E4F3;font-family:'IBM Plex Mono',monospace;font-size:20px;background:#FFFFFF}
-#searching .lead{font-family:'IBM Plex Mono',monospace;font-size:22px;color:#2F9E44;margin-right:6px}
-
-/* scene 3 */
-#check{left:120px;top:150px;width:1040px;padding:34px 44px}
-.route{font-family:'IBM Plex Mono',monospace;font-size:24px;margin-bottom:22px}
-.route i{font-style:normal;color:rgba(11,31,68,0.55);margin:0 8px}
-.prog{display:flex;align-items:center;gap:20px;margin-bottom:26px}
-.bar{flex:1;height:12px;border-radius:6px;background:#D6E4F3;overflow:hidden}
-.bar div{height:100%;background:linear-gradient(90deg,#408CC8,#2F9E44);width:0}
-.pct{font-family:'IBM Plex Mono',monospace;font-size:24px;color:#2F9E44;width:150px;text-align:right}
-.items{display:flex;flex-direction:column;gap:12px}
-.it{display:flex;align-items:center;gap:20px;padding:15px 22px;border-radius:14px;background:#EDF4FB;border:1px solid #D6E4F3}
-.ck{width:36px;height:36px;border-radius:9px;border:3px solid #D6E4F3;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:transparent;font-size:24px;font-weight:800}
-.it.on .ck{background:#2F9E44;border-color:#2F9E44;color:#FFFFFF}
-.it b{font-size:28px;font-weight:600;display:block}
-.it span{font-size:20px;color:rgba(11,31,68,0.75)}
-.tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:18px;color:#2F9E44;background:rgba(102,180,76,.12);padding:6px 12px;border-radius:8px;white-space:nowrap}
-.side{left:1200px;width:600px;padding:30px 32px;border-radius:18px}
-.side .lbl{margin-bottom:12px}
-.side p{font-size:26px;line-height:1.45}
-#blind{top:230px;background:rgba(224,92,82,.16);border:1px solid rgba(224,92,82,.6)}
-#blind .lbl{color:#C93C32}
-#pay{top:520px;background:rgba(102,180,76,.12);border:1px solid rgba(102,180,76,.5)}
-#pay .lbl{color:#2F9E44}
-#srcs{left:1200px;top:790px;font-family:'IBM Plex Mono',monospace;font-size:20px;color:rgba(11,31,68,0.80);width:600px;line-height:1.6}
-
-/* scene 4 */
-#docs{left:120px;top:190px;display:flex;flex-direction:column;gap:18px}
-.doc{width:440px;height:132px;padding:22px 26px;display:flex;align-items:center;gap:22px;position:relative;overflow:hidden}
-.doc .ic{width:62px;height:76px;border-radius:8px;background:#E8F2FC;position:relative;flex-shrink:0}
-.doc .ic::before{content:'';position:absolute;left:12px;right:12px;top:16px;height:5px;background:#1F6FB8;box-shadow:0 13px 0 #1F6FB8,0 26px 0 #1F6FB8,0 39px 0 #C9D6E6}
-.doc b{font-size:28px;display:block}
-.doc span{font-family:'IBM Plex Mono',monospace;font-size:18px;color:rgba(11,31,68,0.70)}
-.scan{position:absolute;left:0;right:0;height:5px;background:#1F6FB8;box-shadow:0 0 24px 6px rgba(102,180,76,.6)}
-#result{left:640px;top:190px;width:1160px;padding:36px 40px}
-#result .hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-#result .hd b{font-family:'Plus Jakarta Sans',sans-serif;font-size:40px;font-weight:800}
-.badge{font-family:'IBM Plex Mono',monospace;font-size:20px;padding:8px 16px;border-radius:100px;background:rgba(224,92,82,.2);color:#C93C32;border:1px solid rgba(224,92,82,.6)}
-.iss{border-radius:14px;padding:20px 24px;margin-bottom:14px;border:1px solid}
-.iss .ti{font-size:28px;font-weight:700;margin-bottom:6px;display:flex;gap:12px;align-items:center}
-.iss p{font-size:22px;line-height:1.5;color:rgba(11,31,68,0.95)}
-.iss .ref{font-family:'IBM Plex Mono',monospace;font-size:18px;margin-top:8px}
-.crit{background:rgba(224,92,82,.14);border-color:rgba(224,92,82,.65)}
-.crit .ti,.crit .ref{color:#C93C32}
-.warn{background:rgba(232,180,74,.12);border-color:rgba(232,180,74,.55)}
-.warn .ti,.warn .ref{color:#A86E00}
-.ok{background:rgba(102,180,76,.1);border-color:rgba(102,180,76,.5)}
-.ok .ti{color:#2F9E44}
-.hl{background:#FDE2DF;border-radius:6px;padding:0 6px;color:#C93C32}
-#saved{left:640px;top:818px;width:1160px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:34px}
-
-
-/* scene 5: cost */
-#cost{left:120px;top:150px;width:1100px;padding:34px 40px}
-.costhd{display:flex;justify-content:space-between;align-items:center;background:#F2F8FE;border-radius:14px;padding:20px 24px;margin-bottom:20px}
-.costhd .r{font-family:'IBM Plex Mono',monospace;font-size:20px;color:rgba(11,31,68,0.75)}
-.costhd .tot{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:40px;margin-top:4px}
-.costhd .ai{font-family:'IBM Plex Mono',monospace;font-size:16px;padding:6px 12px;border-radius:6px;background:#D6E4F3;color:rgba(11,31,68,0.80)}
-.ctit{font-size:22px;font-weight:600;margin:6px 0 10px}
-.crow{display:flex;align-items:center;gap:14px;padding:11px 4px;border-bottom:1px solid #EDF4FB;font-size:23px}
-.crow .cat{font-family:'IBM Plex Mono',monospace;font-size:15px;padding:4px 10px;border-radius:6px;background:#EDF4FB;color:rgba(11,31,68,0.85);width:118px;text-align:center}
-.crow .v{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:22px}
-.crow.buyer{opacity:.45}
-#profit{left:1260px;top:190px;width:540px;padding:30px 32px;border-radius:18px;background:rgba(102,180,76,.12);border:1px solid rgba(102,180,76,.55)}
-#profit .lbl{color:#2F9E44;margin-bottom:18px}
-.pg{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.pg div span{display:block;font-size:19px;color:rgba(11,31,68,0.75)}
-.pg div b{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:40px}
-#tip{left:1260px;top:560px;width:540px;padding:26px 30px;border-radius:18px;background:rgba(232,180,74,.12);border:1px solid rgba(232,180,74,.5)}
-#tip .lbl{color:#A86E00;margin-bottom:10px}
-#tip p{font-size:24px;line-height:1.45}
-
-/* scene 6: Tara */
-#tara{left:560px;top:150px;width:800px;height:740px;display:flex;flex-direction:column;overflow:hidden}
-.thd{display:flex;align-items:center;gap:16px;padding:22px 26px;background:#F2F8FE;border-bottom:1px solid #D6E4F3}
-.tav{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#408CC8,#1F6FB8);display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:26px;color:#FFFFFF}
-.thd b{font-size:26px;display:block}
-.thd span{font-size:18px;color:rgba(11,31,68,0.70)}
-.thd .on{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:16px;color:#2F9E44}
-.tbody{flex:1;padding:26px;display:flex;flex-direction:column;gap:16px}
-.msg{max-width:84%;padding:18px 22px;border-radius:18px;font-size:24px;line-height:1.5}
-.msg.u{align-self:flex-end;background:#1F6FB8;color:#FFFFFF;font-weight:500;border-bottom-right-radius:6px}
-.msg.a{align-self:flex-start;background:#EDF4FB;border:1px solid #D6E4F3;border-bottom-left-radius:6px}
-.msg.a b{color:#2F9E44}
-.dots{display:flex;gap:8px;padding:22px 24px}
-.dots i{width:12px;height:12px;border-radius:50%;background:rgba(11,31,68,0.70)}
-.tin{margin:0 26px 24px;height:68px;border-radius:14px;border:2px solid #D6E4F3;display:flex;align-items:center;padding:0 22px;font-size:22px;color:rgba(11,31,68,0.50)}
-
-/* scene 7: glossary */
-#glos{left:460px;top:150px;width:1000px;padding:34px 40px}
-.gsearch{height:72px;border-radius:14px;background:#F2F8FE;border:2px solid #1F6FB8;display:flex;align-items:center;padding:0 24px;font-size:28px;margin-bottom:18px}
-.gchips{display:flex;gap:10px;margin-bottom:20px}
-.gchips span{font-family:'IBM Plex Mono',monospace;font-size:17px;padding:6px 14px;border-radius:100px;border:1px solid #D6E4F3;color:rgba(11,31,68,0.90)}
-.gchips span.on{background:rgba(102,180,76,.18);border-color:#1F6FB8;color:#2F9E44}
-.gi{padding:20px 22px;border-radius:14px;background:#EDF4FB;border:1px solid #D6E4F3;margin-bottom:12px}
-.gi .gt{display:flex;align-items:center;gap:14px;font-size:27px;font-weight:700}
-.gi .gt em{font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;padding:4px 10px;border-radius:6px;background:rgba(102,180,76,.15);color:#2F9E44}
-.gi .gt em.b{background:rgba(64,140,200,.18);color:#1F6FB8}
-.gi p{font-size:22px;line-height:1.5;color:rgba(11,31,68,0.90);margin-top:8px}
-
-/* scene 8: dashboard */
-#dash{left:160px;top:140px;width:1600px}
-.dhd{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:44px;margin-bottom:18px}
-.dsum{display:flex;align-items:center;background:linear-gradient(135deg,#FFFFFF,#F2F8FE);border:1px solid #D6E4F3;border-radius:18px;padding:22px 10px;margin-bottom:18px}
-.dsum div{flex:1;text-align:center}
-.dsum b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:46px}
-.dsum span{font-size:19px;color:rgba(11,31,68,0.70)}
-.dsum i{width:1px;height:60px;background:#D6E4F3}
-.ship{display:flex;align-items:center;gap:24px;padding:20px 26px;margin-bottom:14px}
-.ship .tt{font-size:28px;font-weight:600}
-.ship .meta{font-family:'IBM Plex Mono',monospace;font-size:17px;color:rgba(11,31,68,0.65);margin-top:4px}
-.st{font-family:'IBM Plex Mono',monospace;font-size:16px;padding:4px 12px;border-radius:6px;margin-left:14px;vertical-align:middle;color:#fff}
-.dl{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:20px;padding:10px 16px;border-radius:10px;white-space:nowrap}
-.dl.w{background:rgba(232,180,74,.12);border:1px solid rgba(232,180,74,.5);color:#A86E00}
-.dl.ok{background:rgba(102,180,76,.1);border:1px solid rgba(102,180,76,.45);color:#2F9E44}
-.gauge{width:92px;height:92px;flex-shrink:0}
-.gauge circle{fill:none;stroke-width:8}
-.gauge text{font-family:'IBM Plex Mono',monospace;font-size:20px;fill:#0B1F44;text-anchor:middle;dominant-baseline:central}
-#dip{inset:0;background:#F2F8FE;opacity:0;pointer-events:none;z-index:20}
 #illus{right:72px;top:88px;font-family:'IBM Plex Mono',monospace;font-size:16px;color:rgba(11,31,68,0.55)}
-/* scene 9: outro */
-#bigLogo{left:50%;top:300px;height:180px;transform:translateX(-50%)}
-#slogan{left:0;right:0;top:540px;text-align:center;font-size:84px}
+#cur{width:44px;height:44px;z-index:30;opacity:0;filter:drop-shadow(0 4px 8px rgba(11,31,68,.25))}
+#ring{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid #1F6FB8;z-index:29;display:none}
+
+/* S1 hook */
+#eyebrow{left:160px;top:200px;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #D6E4F3;border-radius:100px;padding:10px 22px;font-weight:700;font-size:22px;color:#1F6FB8}
+#eyebrow i{width:10px;height:10px;border-radius:50%;background:#2F9E44}
+#s1 .l{left:160px;font-size:116px}
+#journey{left:160px;top:700px;display:flex;align-items:center;gap:14px}
+.jc{padding:18px 24px;border-radius:14px;background:#fff;border:2px solid #D6E4F3;font-size:24px;font-weight:600;white-space:nowrap;transition:none}
+.jc.on{border-color:#2F9E44;background:#E8F5EA;color:#1E6B2F}
+.ja{font-size:26px;color:rgba(11,31,68,.35)}
+
+/* S2 doors */
+#s2 .q{left:0;right:0;top:190px;text-align:center;font-size:72px}
+#s2 .qs{left:0;right:0;top:282px;text-align:center;font-size:28px;color:rgba(11,31,68,.7)}
+.door{top:370px;width:700px;height:470px;padding:44px 48px;border:3px solid #D6E4F3}
+#dA{left:220px}#dB{left:1000px;border-color:#1F6FB8;background:linear-gradient(180deg,#fff,#F6FAFF)}
+.door .em{font-size:64px}
+.door b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:44px;font-weight:800;letter-spacing:-1.2px;margin:16px 0 10px}
+.door p{font-size:25px;color:rgba(11,31,68,.7);line-height:1.4}
+.door ul{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:10px;font-size:24px}
+.door li::before{content:'✓  ';color:#2F9E44;font-weight:800}
+.door .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;color:#fff;background:#1F6FB8;border-radius:100px;padding:5px 12px;margin-left:12px;vertical-align:middle;letter-spacing:1px}
+.door.sel{border-color:#2F9E44;box-shadow:0 0 0 10px rgba(47,158,68,.15),0 30px 80px rgba(21,56,122,.16)}
+
+/* route strip (S3, S4) */
+.route{background:radial-gradient(120% 140% at 0% 0%,#2A6BB0 0%,#123A72 45%,#0B1F44 100%);color:#fff;border-radius:24px;overflow:hidden}
+.route::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1.5px,transparent 1.5px);background-size:24px 24px;pointer-events:none}
+.rlab{position:absolute;left:40px;top:28px;font-family:'IBM Plex Mono',monospace;font-size:17px;letter-spacing:2px;color:#9CC7EA;font-weight:600}
+.end{position:absolute;width:220px;text-align:center}
+.end .fl{width:96px;height:96px;margin:0 auto 10px;border-radius:50%;background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-size:52px}
+.end .fl.q{border-style:dashed;color:rgba(255,255,255,.5);font-size:38px;font-weight:700}
+.end b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:28px}
+.end span{font-size:19px;color:#9CC7EA}
+.mid{position:absolute}
+.legs{position:absolute;left:0;right:0;display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:8px}
+.leg{height:14px;border-radius:7px;background:rgba(255,255,255,.18)}
+.leg.me{background:#6FD08C}
+.leglbl{position:absolute;left:0;right:0;display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:8px;font-size:19px;color:#9CC7EA;text-align:center}
+.pbadge{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;background:#fff;color:#0B1F44;border-radius:100px;padding:10px 24px;font-size:24px;font-weight:700;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.pbadge.q{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);box-shadow:none;border:2px dashed rgba(255,255,255,.4);font-weight:500}
+.pbadge small{font-family:'IBM Plex Mono',monospace;font-weight:500;color:#5B6B85;margin-left:8px;font-size:18px}
+.shipi{position:absolute;font-size:40px;transform:translateX(-50%)}
+.hand{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.hand::before{content:'';display:block;width:3px;height:34px;background:#FFD166;margin:0 auto 5px}
+.hand span{background:#FFD166;color:#3A2A00;border-radius:8px;padding:4px 12px;font-size:18px;font-weight:700}
+.rleg{position:absolute;left:0;right:0;display:flex;gap:28px;justify-content:center;font-size:19px;color:#CFE3F7}
+.rleg i{display:inline-block;width:16px;height:16px;border-radius:4px;margin-right:8px;vertical-align:-2px}
+
+/* S3 explore form */
+#rt3{left:160px;top:150px;width:1600px;height:330px}
+#fields{left:160px;top:510px;width:1600px;display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:24px}
+.fl{font-size:21px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.fl .n{width:30px;height:30px;border-radius:50%;background:#E3EEFA;color:#1F6FB8;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.fl .n.done{background:#2F9E44;color:#fff}
+.fi{height:76px;border-radius:14px;background:#fff;border:2px solid #D6E4F3;display:flex;align-items:center;padding:0 24px;font-size:26px;font-weight:600;position:relative;white-space:nowrap}
+.fi.sel::after{content:'';position:absolute;right:26px;top:28px;width:12px;height:12px;border-right:3px solid rgba(11,31,68,.55);border-bottom:3px solid rgba(11,31,68,.55);transform:rotate(45deg)}
+.fi.act{border-color:#1F6FB8;box-shadow:0 0 0 6px rgba(31,111,184,.14)}
+.fi .ph{color:rgba(11,31,68,.42);font-weight:500}
+.fi .srch{margin-right:14px;font-size:22px;opacity:.6}
+.caret{display:inline-block;width:3px;height:32px;background:#1F6FB8;margin-left:3px;vertical-align:middle}
+#incos{left:160px;top:660px;width:1180px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.inco{border:3px solid #D6E4F3;border-radius:16px;padding:16px 20px;background:#fff}
+.inco b{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;display:block}
+.inco span{font-size:19px;color:rgba(11,31,68,.65)}
+.inco .mb{display:grid;grid-template-columns:1fr 1fr 2fr 1fr;gap:4px;margin-top:12px}
+.inco .mb i{height:8px;border-radius:4px;background:#D6E4F3}.inco .mb i.me{background:#2F9E44}
+.inco.on{border-color:#1F6FB8;background:#EEF5FD}
+#go3{left:1380px;top:690px;width:380px;height:96px;border-radius:18px;background:#1F6FB8;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:32px}
+#dd{position:absolute;background:#fff;border:2px solid #1F6FB8;border-radius:14px;padding:8px;box-shadow:0 24px 60px -16px rgba(21,56,122,.35);z-index:5;display:none}
+#dd div{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-radius:8px;font-size:25px;white-space:nowrap}
+#dd div small{font-family:'IBM Plex Mono',monospace;font-size:18px;color:#5B6B85}
+#dd div.hi{background:#E3EEFA;color:#1F6FB8;font-weight:600}
+
+/* S4 results */
+#hd4{left:160px;top:150px;width:1600px;display:flex;align-items:center;justify-content:space-between}
+#hd4 .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:50px;letter-spacing:-1.5px}
+.sw{display:flex;align-items:center;gap:10px;font-size:21px;color:rgba(11,31,68,.6)}
+.sw span{border:2px solid #D6E4F3;border-radius:100px;padding:6px 18px;font-weight:700;color:#2A3A57;background:#fff;font-size:20px}
+.sw span.on{background:#1F6FB8;border-color:#1F6FB8;color:#fff}
+#rt4{left:160px;top:240px;width:1600px;height:120px}
+#stats{left:160px;top:385px;width:1600px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.stat{padding:22px 28px}
+.stat b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:54px;letter-spacing:-1.5px}
+.stat span{font-size:21px;color:rgba(11,31,68,.65)}
+#chk{left:160px;top:545px;width:960px;padding:20px 28px}
+.ph5{font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:2px;color:#5B6B85;margin:4px 0 10px;text-transform:uppercase}
+.ck{display:flex;align-items:center;gap:16px;border:1px solid #D6E4F3;border-radius:12px;padding:8px 16px;margin-bottom:7px;font-size:21px}
+.ck .bx{width:30px;height:30px;border-radius:8px;border:3px solid #D6E4F3;display:flex;align-items:center;justify-content:center;color:transparent;font-weight:800;font-size:18px;flex-shrink:0}
+.ck.on{background:#F6FBF7}.ck.on .bx{background:#2F9E44;border-color:#2F9E44;color:#fff}.ck.on .tx{text-decoration:line-through;color:rgba(11,31,68,.5)}
+.ck .who{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:15px;background:#EDF4FB;color:#5B6B85;border-radius:100px;padding:3px 12px}
+#side4{left:1160px;top:545px;width:600px;display:flex;flex-direction:column;gap:18px}
+.watch{background:#FFF4DC;border:1px solid #F0D49A;border-radius:18px;padding:18px 24px;font-size:20px;line-height:1.45;color:#5B3F00}
+.watch .lbl{color:#A86E00;margin-bottom:8px}
+.dl{padding:14px 24px}
+.dl .r{display:flex;align-items:center;gap:12px;font-size:19px;padding:5px 0;border-top:1px solid #EDF4FB}
+.dl .r:first-of-type{border-top:none}
+.newp{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#fff;background:#1F6FB8;border-radius:100px;padding:2px 9px;margin-left:auto}
+
+/* S5 cost estimator */
+#est{left:160px;top:150px;width:1600px;padding:34px 44px}
+#est .top{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-bottom:26px}
+.money{height:80px;border:2px solid #D6E4F3;border-radius:14px;display:flex;align-items:center;padding:0 24px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:36px}
+.money.act{border-color:#1F6FB8;box-shadow:0 0 0 6px rgba(31,111,184,.14)}
+.money em{font-style:normal;color:#5B6B85;margin-right:10px}
+.seg{display:flex;gap:14px}
+.seg span{height:80px;min-width:150px;border:3px solid #D6E4F3;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px;background:#fff}
+.seg span.on{border-color:#1F6FB8;background:#EEF5FD;color:#1F6FB8}
+.outs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px}
+.outs div{background:#EDF4FB;border-radius:18px;padding:20px 26px}
+.outs b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:52px;letter-spacing:-1.5px}
+.outs span{font-size:20px;color:rgba(11,31,68,.65)}
+.outs .hi{background:#E8F5EA}.outs .hi b{color:#1E6B2F}
+.cbar{display:flex;height:22px;border-radius:11px;overflow:hidden;background:#E3EEFA;margin-bottom:14px}
+.cbar i{display:block;height:100%;border-right:3px solid #fff}
+.crow{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid #EDF4FB;font-size:22px}
+.crow .v{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.who2{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;border-radius:100px;padding:2px 10px}
+.who2.me{background:#E8F5EA;color:#1E6B2F}.who2.by{background:#EDF4FB;color:#5B6B85}
+.crow.by{color:rgba(11,31,68,.5)}
+
+/* S6 one-page order */
+#ord{left:160px;top:150px;width:1600px;padding:32px 40px}
+#ord .t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:46px;letter-spacing:-1.4px}
+#ord .st{font-size:22px;color:rgba(11,31,68,.65);margin:4px 0 16px}
+.pre{background:#E8F5EA;color:#1E6B2F;border-radius:14px;padding:12px 20px;font-size:21px;font-weight:600;margin-bottom:16px}
+.os{border:1px solid #D6E4F3;border-radius:16px;padding:14px 22px;margin-bottom:12px}
+.os .lbl{font-size:15px;margin-bottom:10px;color:#5B6B85}
+.g3{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.os .k{font-size:18px;font-weight:700;margin-bottom:8px}
+.box{height:60px;border:2px solid #D6E4F3;border-radius:12px;display:flex;align-items:center;padding:0 18px;font-size:23px;font-weight:600;position:relative}
+.box::after{content:'';position:absolute;right:20px;top:20px;width:10px;height:10px;border-right:3px solid rgba(11,31,68,.5);border-bottom:3px solid rgba(11,31,68,.5);transform:rotate(45deg)}
+.box.flash,.pill.flash{border-color:#2F9E44;box-shadow:0 0 0 6px rgba(47,158,68,.16)}
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{border:2px solid #D6E4F3;border-radius:12px;padding:9px 16px;font-size:20px;font-weight:600;background:#fff}
+.pill.on{border-color:#1F6FB8;background:#EEF5FD;color:#1F6FB8}
+#go6{margin:6px 0 0 auto;width:fit-content;height:72px;padding:0 40px;border-radius:16px;background:#1F6FB8;color:#fff;display:flex;align-items:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:28px}
+
+/* S7 checklist */
+#top7{left:160px;top:150px;width:1600px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:22px}
+#top7 .card{padding:22px 28px}
+#top7 small{font-size:19px;color:#5B6B85;font-weight:600}
+#top7 b.big{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:46px;letter-spacing:-1.4px}
+#top7 .sm{font-size:18px;color:#5B6B85}
+.rg{display:flex;align-items:center;gap:22px}
+.rg svg{width:96px;height:96px}
+.rg circle{fill:none;stroke-width:10}
+#list7{left:160px;top:345px;width:1600px}
+.todo{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:#fff;border:1px solid #D6E4F3;border-radius:16px;padding:12px 22px;margin-bottom:9px}
+.todo .sti{width:34px;height:34px;border-radius:50%;border:3px solid #D6E4F3;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:18px;flex-shrink:0}
+.todo .sti.ok{background:#2F9E44;border-color:#2F9E44}.todo .sti.w{background:#A86E00;border-color:#A86E00}
+.todo .nm{flex:1}.todo .nm b{display:block;font-size:24px}.todo .nm span{font-size:18px;color:#5B6B85}
+.todo .due{font-size:18px;color:#5B6B85}
+.ub{background:#1F6FB8;color:#fff;border-radius:10px;padding:10px 20px;font-weight:700;font-size:19px;min-width:118px;text-align:center}
+.ub.ghost{background:none;color:#1F6FB8}
+.tmsg{flex-basis:100%;border-radius:12px;padding:12px 16px;font-size:20px;overflow:hidden}
+.tmsg.ok{background:#E8F5EA;color:#1E6B2F}.tmsg.w{background:#FFF4DC;color:#6B4A00}
+.tmsg .why{font-family:'IBM Plex Mono',monospace;font-size:16px;opacity:.8;margin-top:4px}
+
+/* S8 buyer L/C */
+#lc{left:160px;top:200px;width:520px;height:600px;padding:36px 40px;overflow:hidden}
+#lc .ttl{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:30px;margin-bottom:6px}
+#lc .mono{font-size:17px;color:#5B6B85;line-height:1.75}
+#lc .ln{height:12px;border-radius:6px;background:#E3EEFA;margin:14px 0}
+#lc .scan{position:absolute;left:0;right:0;height:6px;background:#1F6FB8;box-shadow:0 0 26px 8px rgba(102,180,76,.55)}
+#found{left:740px;top:200px;width:1020px;padding:32px 40px}
+#found .hd{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:38px;letter-spacing:-1px;margin-bottom:18px}
+.fr{display:flex;align-items:center;gap:16px;padding:13px 0;border-top:1px solid #EDF4FB;font-size:24px}
+.fr .m{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;background:#2F9E44;flex-shrink:0}
+.fr .m.add{background:#1F6FB8}.fr .m.chg{background:#A86E00}
+.fr em{font-style:normal;font-size:18px;color:#A86E00;margin-left:auto;font-family:'IBM Plex Mono',monospace}
+.fr .newp{font-size:15px}
+#go8{margin-top:22px;height:74px;border-radius:16px;background:#1F6FB8;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:28px}
+#go8.done{background:#2F9E44}
+
+/* S9 outro */
+#bigLogo{left:50%;top:250px;height:170px;transform:translateX(-50%)}
+#slogan{left:0;right:0;top:480px;text-align:center;font-size:88px}
 #slogan span{display:inline-block;margin:0 14px}
-#tagline{left:0;right:0;top:680px;text-align:center;font-size:32px;color:rgba(11,31,68,0.90)}
-#cta{left:50%;top:780px;transform:translateX(-50%);display:flex;align-items:center;gap:22px;white-space:nowrap}
-#cta .btn{background:#1F6FB8;color:#FFFFFF;border-radius:100px;padding:22px 40px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:32px}
+#tagline{left:0;right:0;top:620px;text-align:center;font-size:34px;color:rgba(11,31,68,0.85)}
+#cta{left:50%;top:730px;transform:translateX(-50%);white-space:nowrap}
+#cta span{display:inline-block;background:#1F6FB8;color:#fff;border-radius:100px;padding:22px 44px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:32px}
+#dip{inset:0;background:#F2F8FE;opacity:0;pointer-events:none;z-index:20}
 </style>
 </head>
 <body>
 <div id="stage">
 
-  <!-- SCENE 1: hook -->
+  <!-- S1 hook -->
   <div class="scene" id="s1">
-    <div class="abs h l1">One wrong document.</div>
-    <div class="abs h l2 g">Your container waits.</div>
+    <div class="abs" id="eyebrow"><i></i>AI-Powered Export Readiness Platform</div>
+    <div class="abs h l" id="l1" style="top:280px">Every document.</div>
+    <div class="abs h l" id="l2" style="top:410px">Every gate.</div>
+    <div class="abs h l g" id="l3" style="top:540px">First time.</div>
     <div class="abs" id="journey">
-      <div class="chip"><div class="k">01</div><div class="v">Find rules</div></div>
-      <div class="chip"><div class="k">02</div><div class="v">Prepare docs</div></div>
-      <div class="chip"><div class="k">03</div><div class="v">Submit to bank</div></div>
-      <div class="chip" id="rej"><div class="k">04</div><div class="v">Rejected</div></div>
-      <div class="chip"><div class="k">05</div><div class="v">Fix &amp; resubmit</div></div>
-      <div class="chip"><div class="k">06</div><div class="v">Wait to get paid</div></div>
+      <span class="jc">Explore a market</span><span class="ja">→</span><span class="jc">Win the order</span><span class="ja">→</span>
+      <span class="jc">Prepare documents</span><span class="ja">→</span><span class="jc">Pass every check</span><span class="ja">→</span><span class="jc">Ship &amp; get paid</span>
     </div>
-    <div class="abs cost" id="cost">$150–500 in bank fees · 5–7 days stuck at port · for one typo.</div>
   </div>
 
-  <!-- SCENE 2: corridor -->
+  <!-- S2 two doors -->
   <div class="scene" id="s2">
-    <div class="abs" id="pill">🇮🇩 Indonesia → 🇩🇪 Germany · Wooden furniture · FOB</div>
-    <div class="abs card" id="form">
-      <h3>Compliance Checker</h3>
-      <div class="sub">Pick your corridor — we'll find every rule that applies.</div>
-      <div class="fields">
-        <div><div class="fl">Product / HS code</div><div class="fi" id="f1"></div></div>
-        <div><div class="fl">Origin</div><div class="fi" id="f2"></div></div>
-        <div><div class="fl">Destination</div><div class="fi" id="f3"></div></div>
-        <div><div class="fl">Incoterm</div><div class="fi" id="f4"></div></div>
-      </div>
-      <div id="go">Check My Route</div>
-    </div>
-    <div class="abs" id="searching"><span class="lead">Searching official sources</span>
-      <span class="src">EUR-Lex</span><span class="src">Access2Markets</span><span class="src">TARIC</span><span class="src">ECHA</span><span class="src">Kemendag</span></div>
-    <div id="dd"></div><div id="click"></div>
-    <svg class="abs" id="cursor" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#0B1F44" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    <div class="abs h q">Where are you right now?</div>
+    <div class="abs qs">Pick one. You can switch anytime.</div>
+    <div class="abs card door" id="dA"><div class="em">🧭</div><b>I'm exploring a market</b><p>No order yet. I want to know what a country needs before I quote.</p>
+      <ul><li>Documents usually needed</li><li>Things to watch out for</li><li>Cost estimator</li></ul></div>
+    <div class="abs card door" id="dB"><div class="em">📦</div><b>I have an order to ship<span class="tag">MOST USED</span></b><p>Contract signed. I need every document ready on time.</p>
+      <ul><li>Your checklist on one page</li><li>Each document checked on upload</li><li>Reminders before every cut-off</li></ul></div>
   </div>
 
-  <!-- SCENE 3: checklist -->
+  <!-- S3 explore -->
   <div class="scene" id="s3">
-    <div class="abs card" id="check">
-      <div class="route">🇮🇩 Indonesia<i>→</i>🇩🇪 Germany<i>·</i>Wooden furniture<i>·</i>FOB</div>
-      <div class="prog"><div class="bar"><div id="bar"></div></div><div class="pct" id="pct">0% ready</div></div>
-      <div class="items">
-        <div class="it"><div class="ck">✓</div><div><b>EUDR due diligence statement</b><span>Reg. (EU) 2023/1115 · timber plot geolocation</span></div><div class="tag">Required</div></div>
-        <div class="it"><div class="ck">✓</div><div><b>SVLK / FLEGT legality licence</b><span>Timber legality · issued in Indonesia</span></div><div class="tag">Required</div></div>
-        <div class="it"><div class="ck">✓</div><div><b>ISPM 15 heat-treated pallets</b><span>Wooden packaging · stamped</span></div><div class="tag">Required</div></div>
-        <div class="it"><div class="ck">✓</div><div><b>Formaldehyde emission limit</b><span>REACH Annex XVII · test report</span></div><div class="tag">Required</div></div>
-        <div class="it"><div class="ck">✓</div><div><b>Product traceability label</b><span>GPSR (EU) 2023/988 · name, address, batch no.</span></div><div class="tag">Required</div></div>
+    <div class="abs route" id="rt3">
+      <div class="rlab" id="rlab3">YOUR ROUTE</div>
+      <div class="end" style="left:60px;top:70px"><div class="fl">🇮🇩</div><b>Indonesia</b><span>Tanjung Priok</span></div>
+      <div class="end" id="dest3" style="right:60px;top:70px"><div class="fl q">?</div><b>To</b><span>&nbsp;</span></div>
+      <div class="mid" style="left:330px;right:330px;top:60px;height:240px">
+        <div class="pbadge q" id="pb3" style="top:12px">What are you selling?</div>
+        <div class="shipi" id="ship3" style="top:72px;left:6%">🚢</div>
+        <div class="legs" style="top:118px" id="legs3"><i class="leg"></i><i class="leg"></i><i class="leg"></i><i class="leg"></i></div>
+        <div class="leglbl" style="top:142px"><span>Truck</span><span>Port</span><span>Ocean</span><span>Port</span></div>
+        <div class="hand" id="hand3" style="top:126px;left:40%"><span>Buyer takes over</span></div>
+        <div class="rleg" style="top:212px"><span><i style="background:#6FD08C"></i>You pay</span><span><i style="background:rgba(255,255,255,.25)"></i>Buyer pays</span></div>
       </div>
     </div>
-    <div class="abs side" id="blind"><div class="lbl">⚠ Blind spot</div><p>Your buyer can't place EUDR-covered wood on the EU market without plot-level geolocation. Ask your sawmill for it <b>now</b>.</p></div>
-    <div class="abs side" id="pay"><div class="lbl">Best payment term</div><p><b>Letter of Credit</b> for a first order with a new German buyer. Switch to TT after 2–3 clean shipments.</p></div>
-    <div class="abs" id="srcs">Sources: EUR-Lex · EU Access2Markets · ECHA</div>
+    <div class="abs" id="fields">
+      <div><div class="fl"><span class="n" id="n1">1</span>Product or HS code</div><div class="fi" id="f1"></div></div>
+      <div><div class="fl"><span class="n done">✓</span>Shipping from</div><div class="fi sel">🇮🇩&nbsp; Indonesia</div></div>
+      <div><div class="fl"><span class="n" id="n3">3</span>Selling to</div><div class="fi sel" id="f3"></div></div>
+    </div>
+    <div class="abs" id="incos">
+      <div class="inco" data-k="EXW"><b>EXW</b><span>Buyer picks up at your door</span><div class="mb"><i></i><i></i><i></i><i></i></div></div>
+      <div class="inco" data-k="FOB"><b>FOB</b><span>You deliver onto the ship</span><div class="mb"><i class="me"></i><i class="me"></i><i></i><i></i></div></div>
+      <div class="inco" data-k="CFR"><b>CFR</b><span>You also pay sea freight</span><div class="mb"><i class="me"></i><i class="me"></i><i class="me"></i><i></i></div></div>
+      <div class="inco" data-k="CIF"><b>CIF</b><span>Freight + insurance on you</span><div class="mb"><i class="me"></i><i class="me"></i><i class="me"></i><i></i></div></div>
+    </div>
+    <div class="abs" id="go3">Check my route →</div>
+    <div id="dd"></div>
   </div>
 
-  <!-- SCENE 4: cross-check -->
+  <!-- S4 results -->
   <div class="scene" id="s4">
-    <div class="abs" id="docs">
-      <div class="card doc"><div class="ic"></div><div><b>Commercial Invoice</b><span>INV-2026-041.pdf</span></div></div>
-      <div class="card doc"><div class="ic"></div><div><b>Packing List</b><span>PL-2026-041.pdf</span></div></div>
-      <div class="card doc"><div class="ic"></div><div><b>Bill of Lading</b><span>BL-SUB-77310.pdf</span></div></div>
-      <div class="card doc"><div class="ic"></div><div><b>Letter of Credit</b><span>LC-DE-88421.pdf</span></div></div>
+    <div class="abs" id="hd4"><div class="t">🍫 Cocoa beans → 🇳🇱 Netherlands</div>
+      <div class="sw">Try other terms: <span>EXW</span><span id="sFOB" class="on">FOB</span><span>CFR</span><span id="sCIF">CIF</span></div></div>
+    <div class="abs route" id="rt4">
+      <div class="end" style="left:20px;top:22px;width:200px"><b style="font-size:24px">🇮🇩 Indonesia</b></div>
+      <div class="end" style="right:20px;top:22px;width:220px"><b style="font-size:24px">🇳🇱 Netherlands</b></div>
+      <div class="mid" style="left:260px;right:280px;top:0;height:120px">
+        <div class="legs" style="top:32px" id="legs4"><i class="leg me"></i><i class="leg me"></i><i class="leg"></i><i class="leg"></i></div>
+        <div class="leglbl" style="top:56px;font-size:16px"><span>Truck</span><span>Port</span><span>Ocean</span><span>Port</span></div>
+        <div class="hand" id="hand4" style="top:40px;left:40%"><span style="font-size:15px">Buyer takes over</span></div>
+      </div>
+    </div>
+    <div class="abs" id="stats">
+      <div class="card stat"><b id="nDocs">0</b><span>documents usually needed</span></div>
+      <div class="card stat"><b style="color:#A86E00">2</b><span>things to watch out for</span></div>
+      <div class="card stat"><b id="nCost">$0</b><span id="nCostL">your share of costs (FOB)</span></div>
+    </div>
+    <div class="abs card" id="chk">
+      <div class="ph5">Before shipping</div>
+      <div class="ck"><span class="bx">✓</span><span class="tx">Get: Phytosanitary certificate</span><span class="who">You</span></div>
+      <div class="ck"><span class="bx">✓</span><span class="tx">Get: Lab test (mycotoxins, pesticides)</span><span class="who">You</span></div>
+      <div class="ck"><span class="bx">✓</span><span class="tx">Get: EUDR data (cocoa to EU)</span><span class="who">You</span></div>
+      <div class="ph5" style="margin-top:14px">Booking &amp; at the port</div>
+      <div class="ck" id="ckBook"><span class="bx">✓</span><span class="tx" id="bookTx">Get the booking from your buyer's forwarder</span><span class="who" id="bookWho">Buyer</span></div>
+      <div class="ck"><span class="bx">✓</span><span class="tx">File the export declaration (PEB)</span><span class="who">You</span></div>
+    </div>
+    <div class="abs" id="side4">
+      <div class="watch"><div class="lbl">⚠ Watch out</div>Moisture and mould in transit cause most claims. Use liners and desiccants.</div>
+      <div class="card dl" id="dl4">
+        <div class="r">📄 Commercial invoice &amp; packing list</div>
+        <div class="r">🌱 Phytosanitary certificate</div>
+        <div class="r">🧪 Lab test (mycotoxins)</div>
+        <div class="r">📍 EUDR data (cocoa to EU)</div>
+        <div class="r" id="insDoc">🛡️ Insurance certificate <span class="newp">NEW</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 cost estimator -->
+  <div class="scene" id="s5">
+    <div class="abs card" id="est">
+      <div class="top">
+        <div><div class="fl">Order value</div><div class="money" id="money"><em>$</em><span id="valTx"></span></div></div>
+        <div><div class="fl">Container</div><div class="seg"><span id="b20">20ft</span><span id="b40" class="on">40ft</span></div></div>
+      </div>
+      <div class="outs">
+        <div><b id="oPay">$0</b><span>you pay under CIF</span></div>
+        <div><b id="oPct">0%</b><span>of your order value</span></div>
+        <div class="hi" id="oLeftBox"><b id="oLeft">$0</b><span>left from the sale after these costs</span></div>
+      </div>
+      <div class="cbar" id="cbar"></div>
+      <div id="crows"></div>
+    </div>
+  </div>
+
+  <!-- S6 one-page order -->
+  <div class="scene" id="s6">
+    <div class="abs card" id="ord">
+      <div class="t">Tell us about your order</div>
+      <div class="st">Everything on one page. The usual choices are already selected.</div>
+      <div class="pre" id="pre">✓ Product, route and terms carried over from your exploration.</div>
+      <div class="os" id="os1"><div class="lbl">What and where</div><div class="g3">
+        <div><div class="k">Product</div><div class="box" id="bx1">🍫&nbsp; Cocoa beans</div></div>
+        <div><div class="k">From</div><div class="box" id="bx2">🇮🇩&nbsp; Indonesia</div></div>
+        <div><div class="k">To</div><div class="box" id="bx3">🇳🇱&nbsp; Netherlands</div></div></div></div>
+      <div class="os" id="os2"><div class="lbl">Deal terms</div><div class="g2">
+        <div><div class="k">How will your buyer pay you?</div><div class="pills"><span class="pill on" id="pLC">Letter of credit</span><span class="pill">Bank transfer (T/T)</span><span class="pill">Docs against payment</span></div></div>
+        <div><div class="k">Incoterm</div><div class="pills"><span class="pill">EXW</span><span class="pill">FOB</span><span class="pill">CFR</span><span class="pill on" id="pCIF">CIF</span></div></div></div></div>
+      <div class="os" id="os3"><div class="lbl">Cargo and customs</div><div class="g2">
+        <div><div class="k">Container</div><div class="pills"><span class="pill on">Full container</span><span class="pill">Shared container</span></div></div>
+        <div><div class="k">Who handles export customs?</div><div class="pills"><span class="pill on">My forwarder</span><span class="pill">Myself</span><span class="pill">Customs broker</span></div></div></div></div>
+      <div id="go6">Create my checklist →</div>
+    </div>
+  </div>
+
+  <!-- S7 checklist + document checks -->
+  <div class="scene" id="s7">
+    <div class="abs" id="top7">
+      <div class="card"><div class="rg"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#E3EEFA"/><circle id="rgf" cx="50" cy="50" r="40" stroke="#2F9E44" stroke-dasharray="251" stroke-dashoffset="251" stroke-linecap="round" transform="rotate(-90 50 50)"/></svg>
+        <div><small>Ready</small><b class="big" id="rdy">0 of 7</b></div></div></div>
+      <div class="card"><small>Next deadline</small><b class="big">16 days</b><div class="sm">SI cut-off · 30 Nov (estimate)</div></div>
+      <div class="card"><small>Buyer's requirements</small><b class="big" id="byr" style="font-size:40px">Not yet</b><div class="sm" style="color:#1F6FB8;font-weight:700" id="byr2">Add when you get them</div></div>
+    </div>
+    <div class="abs" id="list7">
+      <div class="todo" id="t1"><span class="sti" id="st1"></span><div class="nm"><b>Commercial invoice</b><span>The bill to your buyer</span></div><span class="due">Due 27 Nov</span><span class="ub" id="u1">Upload</span>
+        <div class="tmsg ok" id="m1">✓ Looks good. Consistent with your other documents.<div class="why">Checked against: packing list · order details</div></div></div>
+      <div class="todo" id="t2"><span class="sti" id="st2"></span><div class="nm"><b>Packing list</b><span>What's in each box, with weights</span></div><span class="due">Due 27 Nov</span><span class="ub" id="u2">Upload</span>
+        <div class="tmsg w" id="m2">⚠ Weight is 12,480 kg but your container weight says 12,840 kg. One is a typo.<div class="why">Packing list vs VGM · banks reject conflicting data</div></div></div>
+      <div class="todo"><span class="sti"></span><div class="nm"><b>Phytosanitary certificate</b><span>From the plant quarantine office</span></div><span class="due">Due 25 Nov</span><span class="ub">Upload</span></div>
+      <div class="todo"><span class="sti"></span><div class="nm"><b>Insurance certificate</b><span>At least 110% of invoice value</span></div><span class="due">Due 28 Nov</span><span class="ub">Upload</span></div>
+    </div>
+  </div>
+
+  <!-- S8 buyer L/C -->
+  <div class="scene" id="s8">
+    <div class="abs card" id="lc">
+      <div class="lbl" style="margin-bottom:12px">Buyer's letter of credit</div>
+      <div class="ttl">LC-DE-88421.pdf</div>
+      <div class="mono">MT700 · Commerzbank AG<br>46A Documents required:<br>1. Commercial invoice, 3 signed originals<br>2. Packing list, 3 copies<br>3. Full set B/L to order of Commerzbank AG<br>4. Phytosanitary certificate<br>5. Certificate of origin<br>6. Inspection certificate by SGS<br>7. Insurance certificate, 110%</div>
+      <div class="ln" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="ln" style="width:72%"></div>
       <div class="scan" id="scan"></div>
     </div>
-    <div class="abs card" id="result">
-      <div class="hd"><b>Cross-check results</b><span class="badge" id="badge">2 issues found</span></div>
-      <div class="iss crit" id="i1"><div class="ti">✕ Consignee name mismatch</div>
-        <p>Bill of Lading: <span class="hl">Global Harvest Trading Co.</span> · Letter of Credit: <span class="hl">Global Harvest Trading</span></p>
-        <div class="ref">UCP 600 Art. 14(d) · Bank will reject → fix before sailing</div></div>
-      <div class="iss warn" id="i2"><div class="ti">! Gross weight differs</div>
-        <p>Packing List <span class="hl">12,480 kg</span> · Bill of Lading <span class="hl">12,840 kg</span></p>
-        <div class="ref">Data must not conflict across documents</div></div>
-      <div class="iss ok" id="i3"><div class="ti">✓ 14 other checks passed</div><p>Currency, amounts, ports, dates and descriptions match the LC.</p></div>
-    </div>
-    <div class="abs" id="saved">Caught before the bank. <span class="g">No fees. No port delay.</span></div>
-  </div>
-
-
-  <!-- SCENE 5: cost calculator -->
-  <div class="scene" id="s5c">
-    <div class="abs card" id="cost">
-      <div class="costhd"><div><div class="r">Indonesia → Germany · FOB · 40ft HC</div><div class="tot">Your cost: <span class="g" id="costTot">$0</span></div></div><span class="ai">AI estimate</span></div>
-      <div class="ctit">Your costs (shipper)</div>
-      <div class="crow"><span class="cat">Inland</span>Truck to Tanjung Perak<span class="v">$420</span></div>
-      <div class="crow"><span class="cat">Port</span>Terminal handling + export customs<span class="v">$310</span></div>
-      <div class="crow"><span class="cat">Packing</span>ISPM 15 heat-treated pallets<span class="v">$180</span></div>
-      <div class="crow"><span class="cat">Testing</span>Formaldehyde emission test<span class="v">$350</span></div>
-      <div class="crow"><span class="cat">Bank</span>LC negotiation (0.3%)<span class="v">$144</span></div>
-      <div class="crow buyer"><span class="cat">Freight</span>Ocean freight + insurance — buyer pays under FOB<span class="v">—</span></div>
-    </div>
-    <div class="abs" id="profit"><div class="lbl">Profitability</div>
-      <div class="pg"><div><span>Order value</span><b>$48,000</b></div><div><span>Gross margin</span><b class="g">21%</b></div>
-      <div><span>Shipping / value</span><b>2.9%</b></div><div><span>Gross profit</span><b>$10,080</b></div></div></div>
-    <div class="abs" id="tip"><div class="lbl">💡 Cost-saving tip</div><p>Book heat-treated pallets with your fumigator in one go — it's cheaper than certifying per shipment.</p></div>
-  </div>
-
-  <!-- SCENE 6: Tara -->
-  <div class="scene" id="s6">
-    <div class="abs card" id="tara">
-      <div class="thd"><div class="tav">T</div><div><b>Tara</b><span>Trade Compliance Assistant</span></div><span class="on">● Online</span></div>
-      <div class="tbody">
-        <div class="msg u" id="q1">Do I need CE marking for wooden chairs to Germany?</div>
-        <div class="msg a dots" id="typing"><i></i><i></i><i></i></div>
-        <div class="msg a" id="a1"></div>
-      </div>
-      <div class="tin">Ask about trade compliance…</div>
+    <div class="abs card" id="found">
+      <div class="hd">We found 7 documents in your buyer's L/C</div>
+      <div class="fr"><span class="m chg">!</span>Commercial invoice · 3 signed originals<em>email said 2</em></div>
+      <div class="fr"><span class="m">✓</span>Packing list · 3 copies</div>
+      <div class="fr"><span class="m">✓</span>Bill of lading · to order of Commerzbank AG</div>
+      <div class="fr"><span class="m">✓</span>Phytosanitary &amp; insurance certificates</div>
+      <div class="fr"><span class="m add">+</span>Certificate of origin <span class="newp">NEW</span></div>
+      <div class="fr"><span class="m add">+</span>Inspection certificate (SGS) <span class="newp">NEW</span></div>
+      <div id="go8">Looks right, update my list</div>
     </div>
   </div>
 
-  <!-- SCENE 7: glossary -->
-  <div class="scene" id="s7">
-    <div class="abs card" id="glos">
-      <div class="gsearch" id="gq"></div>
-      <div class="gchips"><span class="on">Incoterms 2020</span><span>UCP 600</span><span>ISBP 745</span><span>URC 522</span></div>
-      <div class="gi"><div class="gt">FOB — Free On Board <em>Incoterms</em></div><p>Sea only. Risk passes once goods are on board at the port of shipment. Seller clears export; buyer pays freight and insurance.</p></div>
-      <div class="gi"><div class="gt">CIF — Cost, Insurance &amp; Freight <em>Incoterms</em></div><p>Seller pays freight and minimum insurance (110% of value) to the destination port.</p></div>
-      <div class="gi"><div class="gt">UCP 600 Art. 14(d) <em class="b">UCP</em></div><p>Data in documents need not be identical, but must not conflict.</p></div>
-    </div>
-  </div>
-
-  <!-- SCENE 8: dashboard -->
-  <div class="scene" id="s8">
-    <div class="abs" id="dash">
-      <div class="dhd">Shipment Overview</div>
-      <div class="dsum"><div><b>3</b><span>Active</span></div><i></i><div><b>12</b><span>Completed</span></div><i></i><div><b>81%</b><span>Avg readiness</span></div><i></i><div><b style="color:#A86E00">2</b><span>Docs pending</span></div></div>
-      <div class="card ship"><svg class="gauge" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#D6E4F3"/><circle class="gf" data-v="100" cx="50" cy="50" r="40" stroke="#1F6FB8" stroke-dasharray="251" transform="rotate(-90 50 50)"/><text x="50" y="50">0%</text></svg>
-        <div><div class="tt">Teak dining sets → Hamburg<span class="st" style="background:#E8F2FC;color:#1F6FB8;border:1px solid #9CC2E6">In transit</span></div><div class="meta">SS-2026-041 · BL SUB-77310 · MSC Aurora</div></div>
-        <div class="dl ok">✓ All documents verified</div></div>
-      <div class="card ship"><svg class="gauge" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#D6E4F3"/><circle class="gf" data-v="64" cx="50" cy="50" r="40" stroke="#E8B44A" stroke-dasharray="251" transform="rotate(-90 50 50)"/><text x="50" y="50">0%</text></svg>
-        <div><div class="tt">Cocoa butter → Yokohama<span class="st" style="background:#FFF4DC;color:#A86E00;border:1px solid #F0D49A">Pre-shipment</span></div><div class="meta">SS-2026-044 · Booking ONE-55821</div></div>
-        <div class="dl w">⚠ Insurance certificate · 3 days left</div></div>
-      <div class="card ship"><svg class="gauge" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="#D6E4F3"/><circle class="gf" data-v="80" cx="50" cy="50" r="40" stroke="#1F6FB8" stroke-dasharray="251" transform="rotate(-90 50 50)"/><text x="50" y="50">0%</text></svg>
-        <div><div class="tt">Kids' cotton T-shirts → Los Angeles<span class="st" style="background:#1F6FB8;color:#FFFFFF">Docs check</span></div><div class="meta">SS-2026-046 · BL CGP-10294 · Maersk Elba</div></div>
-        <div class="dl w">⚠ Children's Product Certificate · 6 days left</div></div>
-    </div>
-  </div>
-
-  <!-- SCENE 9: outro -->
-  <div class="scene" id="s5">
+  <!-- S9 outro -->
+  <div class="scene" id="s9">
     <img class="abs" id="bigLogo" src="../public/logo-light.png" alt="">
-    <div class="abs h" id="slogan"><span class="b">Know it.</span><span>Check it.</span><span class="g">Ship it.</span></div>
-    <div class="abs" id="tagline">Trade compliance for any product, any corridor.</div>
-    <div class="abs" id="cta"><span class="btn">Check my corridor →</span></div>
+    <div class="abs h" id="slogan"><span>Every document.</span><span>Every gate.</span><span class="g">First time.</span></div>
+    <div class="abs" id="tagline">AI-Powered Export Readiness Platform</div>
+    <div class="abs" id="cta"><span>Get export-ready →</span></div>
   </div>
 
   <img class="abs" id="logo" src="../public/logo-light.png" alt="">
   <div class="abs" id="steps"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="abs" id="illus">Illustrative example</div>
   <div class="abs" id="dip"></div>
-  <div id="gclick"></div>
-  <svg class="abs" id="gcur" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#0B1F44" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  <div id="ring"></div>
+  <svg class="abs" id="cur" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#0B1F44" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/></svg>
   <div class="abs" id="sub"></div>
   <div class="abs" id="caption"><span class="n" id="capN">01</span><span class="t" id="capT"></span><span class="s" id="capS"></span></div>
 </div>
 
 <script>
-const DURATION = 75;
+const DURATION = 77;
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const seg = (t, a, b) => clamp((t - a) / (b - a));
 const ease = x => 1 - Math.pow(1 - x, 3);
 const inOut = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-// visible from a to b with fade f at both ends
 const win = (t, a, b, f = .45) => Math.min(seg(t, a, a + f), 1 - seg(t, b - f, b));
-// rise-in: opacity + translateY
 function rise(el, p, dy = 40) { el.style.opacity = p; el.style.transform = (el.dataset.base || '') + ` translateY(${(1 - ease(p)) * dy}px)`; }
-function typed(full, p) { const n = Math.round(full.length * clamp(p)); return [...full].slice(0, n).join(''); }
+const typed = (s, p) => s.slice(0, Math.round(s.length * clamp(p)));
+const money = v => '$' + Math.round(v).toLocaleString('en-US');
+const lerp = (a, b, p) => a + (b - a) * p;
 
-const SCENES = [['#s1', 0, 6.6], ['#s2', 6.4, 14.2], ['#s3', 14, 25.4], ['#s4', 25.2, 36.8], ['#s5c', 36.6, 45.2], ['#s6', 45, 53.4], ['#s7', 53.2, 59.4], ['#s8', 59.2, 67.4], ['#s5', 67.2, 75.5]];
-const O = 30.6; // outro offset from its original 36.6s start
+const SCENES = [['#s1', 0, 6.6], ['#s2', 6.4, 12.6], ['#s3', 12.4, 24.4], ['#s4', 24.2, 34.4], ['#s5', 34.2, 43.2], ['#s6', 43, 51.6], ['#s7', 51.4, 62.6], ['#s8', 62.4, 70.6], ['#s9', 70.4, 77.5]];
 const SUBS = [
-  [0.3, 6.3, 'One wrong document can hold your container at port — and cost you hundreds in bank fees.'],
-  [6.8, 13.8, 'With ShipSafe, just pick your product, origin, destination and Incoterm. No guesswork.'],
-  [14.3, 25.0, 'In seconds, you get every rule that applies — straight from official sources. Plus the blind spots most exporters miss.'],
-  [25.5, 36.4, 'Upload your trade documents. ShipSafe checks every field against your letter of credit and flags what your bank would reject — before you sail.'],
-  [36.9, 44.8, 'See your full landed cost by Incoterm — and your real margin — before you quote.'],
-  [45.3, 53.0, 'Stuck on a question? Ask Tara, your AI trade compliance assistant, for a clear, sourced answer.'],
-  [53.5, 59.0, 'Look up any Incoterm or banking rule in the built-in glossary.'],
-  [59.5, 67.0, 'Track every shipment in one place — readiness, documents and deadlines at a glance.'],
+  [0.4, 6.2, 'Exporting means getting every document right, for every gate, the first time.'],
+  [6.8, 12.2, 'ShipSafe starts with one question: are you exploring a market, or shipping an order?'],
+  [12.8, 18.4, 'Exploring? Pick your product, where you ship from and where you sell to.'],
+  [18.6, 24.0, 'The route shows exactly which part of the trip you pay for under each Incoterm.'],
+  [24.6, 34.0, 'Get the documents, the watch-outs and a checklist by stage. Switch the terms and everything updates.'],
+  [34.6, 42.8, 'The cost estimator shows what you pay, and what\'s left from the sale, before you quote.'],
+  [43.4, 51.2, 'Got the order? Everything carries over. Your whole order fits on one page.'],
+  [51.8, 62.2, 'Upload each document as it arrives. ShipSafe checks it against your other papers and flags problems before the bank does.'],
+  [62.8, 70.2, 'When your buyer sends their letter of credit, drop it in. ShipSafe reads it and updates your list.'],
 ];
 const CAPTIONS = [
-  [6.9, 13.9, '01', 'Pick your corridor', 'Product · origin · destination · Incoterm'],
-  [14.3, 25.1, '02', 'Get your checklist', 'Exact rules from official sources'],
-  [25.5, 36.5, '03', 'Cross-check your docs', 'Before your bank does'],
-  [36.9, 45, '04', 'Know your landed cost', 'Every fee, by Incoterm'],
-  [45.3, 53.2, '05', 'Ask Tara anything', 'Your AI trade compliance assistant'],
-  [53.5, 59.2, '06', 'Trade glossary', 'Incoterms · UCP 600 · ISBP 745'],
-  [59.5, 67.1, '07', 'Track every shipment', 'Readiness and deadlines in one view'],
+  [6.8, 12.4, '01', 'Choose your door', 'Exploring a market, or shipping an order'],
+  [12.8, 24.2, '02', 'Explore any market', 'Product · origin · destination · Incoterm'],
+  [24.6, 34.2, '03', 'See what the route takes', 'Documents · watch-outs · checklist'],
+  [34.6, 43.0, '04', 'Estimate your costs', 'Your share, by Incoterm and container'],
+  [43.4, 51.4, '05', 'Your order on one page', 'The usual choices pre-selected'],
+  [51.8, 62.4, '06', 'Every document checked', 'As soon as you upload it'],
+  [62.8, 70.4, '07', 'Buyer requirements, read for you', 'L/C, email or screenshot'],
 ];
 
 // Caption languages (?lang=id|zh|es); on-screen product UI stays in English
 const L10N = {
   id: { subs: [
-    'Satu dokumen salah bisa menahan kontainermu di pelabuhan — dan memakan ratusan dolar biaya bank.',
-    'Dengan ShipSafe, cukup pilih produk, negara asal, tujuan, dan Incoterm. Tanpa menebak-nebak.',
-    'Dalam hitungan detik, kamu dapat semua aturan yang berlaku — langsung dari sumber resmi. Plus blind spot yang sering terlewat.',
-    'Upload dokumen dagangmu. ShipSafe mengecek setiap field terhadap LC dan menandai yang akan ditolak bank — sebelum kapal berangkat.',
-    'Lihat total biaya per Incoterm — dan margin sebenarnya — sebelum kamu kasih harga.',
-    'Bingung? Tanya Tara, asisten AI kepatuhan dagang, untuk jawaban yang jelas dan bersumber.',
-    'Cari Incoterm atau aturan perbankan apa pun di glosarium bawaan.',
-    'Pantau semua pengiriman di satu tempat — kesiapan, dokumen, dan tenggat sekaligus.'],
-    caps: [['Pilih rute', 'Produk · asal · tujuan · Incoterm'], ['Dapatkan checklist', 'Aturan persis dari sumber resmi'], ['Cek silang dokumen', 'Sebelum bank menemukannya'],
-      ['Ketahui total biaya', 'Setiap biaya, per Incoterm'], ['Tanya Tara apa saja', 'Asisten AI kepatuhan dagang'], ['Glosarium dagang', 'Incoterms · UCP 600 · ISBP 745'], ['Pantau setiap pengiriman', 'Kesiapan dan tenggat dalam satu tampilan']] },
+    'Ekspor berarti setiap dokumen harus benar, di setiap tahap, sejak pertama kali.',
+    'ShipSafe dimulai dengan satu pertanyaan: kamu sedang menjajaki pasar, atau mengirim order?',
+    'Sedang menjajaki? Pilih produk, negara asal, dan negara tujuan.',
+    'Rute menunjukkan bagian perjalanan mana yang kamu bayar di setiap Incoterm.',
+    'Dapatkan daftar dokumen, hal yang perlu diwaspadai, dan checklist per tahap. Ganti Incoterm, semuanya ikut berubah.',
+    'Cost estimator menunjukkan biaya yang kamu tanggung dan sisa dari penjualan, sebelum kamu kasih harga.',
+    'Sudah dapat order? Semua data terbawa. Seluruh order cukup di satu halaman.',
+    'Upload setiap dokumen begitu datang. ShipSafe mengeceknya dengan dokumen lain dan menandai masalah sebelum bank menemukannya.',
+    'Saat buyer mengirim L/C, masukkan saja. ShipSafe membacanya dan memperbarui daftarmu.'],
+    caps: [['Pilih pintumu', 'Menjajaki pasar, atau mengirim order'], ['Jajaki pasar mana pun', 'Produk · asal · tujuan · Incoterm'], ['Lihat kebutuhan rutenya', 'Dokumen · peringatan · checklist'],
+      ['Perkirakan biayamu', 'Bagianmu, per Incoterm dan kontainer'], ['Order di satu halaman', 'Pilihan umum sudah terisi'], ['Setiap dokumen dicek', 'Begitu kamu upload'], ['Syarat buyer, dibacakan untukmu', 'L/C, email, atau screenshot']] },
   zh: { subs: [
-    '一份单据出错，集装箱就可能滞留港口——还要多付数百美元银行费用。',
-    '使用 ShipSafe，只需选择产品、原产国、目的国和贸易术语。无需猜测。',
-    '几秒钟内，您就能获得所有适用规则——直接来自官方来源。还有大多数出口商忽略的盲点。',
-    '上传贸易单据。ShipSafe 会对照信用证逐项核对，并在开船前标出银行会拒付的问题。',
-    '按贸易术语查看完整到岸成本和真实利润——在报价之前。',
-    '遇到问题？问 AI 贸易合规助手 Tara，获得清晰、有依据的答案。',
-    '在内置术语表中查找任何贸易术语或银行规则。',
-    '在一个地方跟踪每票货物——准备度、单据和截止日期一目了然。'],
-    caps: [['选择贸易路线', '产品 · 原产国 · 目的国 · 贸易术语'], ['获取合规清单', '来自官方来源的准确规则'], ['交叉核对单据', '赶在银行之前'],
-      ['了解到岸成本', '按贸易术语列出每项费用'], ['随时问 Tara', '您的 AI 贸易合规助手'], ['贸易术语表', 'Incoterms · UCP 600 · ISBP 745'], ['跟踪每票货物', '准备度和截止日期一览无余']] },
+    '出口意味着每份单据都要正确，每个环节都要一次通过。',
+    'ShipSafe 从一个问题开始：您是在考察市场，还是要发出订单？',
+    '在考察市场？选择产品、发货地和销售目的地。',
+    '路线图清楚显示在每种贸易术语下，哪段运输由您付费。',
+    '获取所需单据、注意事项和分阶段清单。切换贸易术语，一切随之更新。',
+    '成本估算会在您报价前显示您要支付的费用，以及销售后还剩多少。',
+    '拿到订单了？所有信息自动带入。整个订单一页搞定。',
+    '单据一到就上传。ShipSafe 会与您的其他单据核对，并赶在银行之前标出问题。',
+    '买家发来信用证时，直接上传。ShipSafe 会读取并更新您的清单。'],
+    caps: [['选择您的入口', '考察市场，或发出订单'], ['考察任何市场', '产品 · 原产地 · 目的地 · 贸易术语'], ['了解路线所需', '单据 · 注意事项 · 清单'],
+      ['估算您的成本', '按贸易术语和集装箱计算'], ['订单一页搞定', '常用选项已预选'], ['每份单据都核查', '上传即核查'], ['买家要求，替您读取', '信用证、邮件或截图']] },
   es: { subs: [
-    'Un documento erróneo puede retener tu contenedor en el puerto — y costarte cientos en comisiones bancarias.',
-    'Con ShipSafe, solo elige tu producto, origen, destino e Incoterm. Sin adivinar.',
-    'En segundos obtienes cada norma aplicable — directo de fuentes oficiales. Más los puntos ciegos que casi todos pasan por alto.',
-    'Sube tus documentos comerciales. ShipSafe revisa cada campo contra tu carta de crédito y marca lo que el banco rechazaría — antes de zarpar.',
-    'Ve tu costo total puesto en destino por Incoterm — y tu margen real — antes de cotizar.',
-    '¿Una duda? Pregúntale a Tara, tu asistente de cumplimiento con IA, y recibe una respuesta clara y con fuentes.',
-    'Consulta cualquier Incoterm o regla bancaria en el glosario integrado.',
-    'Sigue cada envío en un solo lugar — preparación, documentos y plazos de un vistazo.'],
-    caps: [['Elige tu corredor', 'Producto · origen · destino · Incoterm'], ['Obtén tu checklist', 'Reglas exactas de fuentes oficiales'], ['Coteja tus documentos', 'Antes que tu banco'],
-      ['Conoce tu costo total', 'Cada cargo, por Incoterm'], ['Pregúntale a Tara', 'Tu asistente de cumplimiento con IA'], ['Glosario comercial', 'Incoterms · UCP 600 · ISBP 745'], ['Sigue cada envío', 'Preparación y plazos en una vista']] },
+    'Exportar significa tener cada documento correcto, en cada etapa, a la primera.',
+    'ShipSafe empieza con una pregunta: ¿estás explorando un mercado o enviando un pedido?',
+    '¿Explorando? Elige tu producto, desde dónde envías y a dónde vendes.',
+    'La ruta muestra qué parte del trayecto pagas con cada Incoterm.',
+    'Obtén los documentos, las alertas y un checklist por etapa. Cambia el Incoterm y todo se actualiza.',
+    'El estimador de costos muestra lo que pagas y lo que te queda de la venta, antes de cotizar.',
+    '¿Tienes el pedido? Todo se traslada. Tu pedido completo cabe en una página.',
+    'Sube cada documento al recibirlo. ShipSafe lo coteja con tus otros papeles y marca los problemas antes que el banco.',
+    'Cuando tu comprador envíe su carta de crédito, súbela. ShipSafe la lee y actualiza tu lista.'],
+    caps: [['Elige tu puerta', 'Explorar un mercado o enviar un pedido'], ['Explora cualquier mercado', 'Producto · origen · destino · Incoterm'], ['Mira lo que pide la ruta', 'Documentos · alertas · checklist'],
+      ['Estima tus costos', 'Tu parte, por Incoterm y contenedor'], ['Tu pedido en una página', 'Opciones habituales preseleccionadas'], ['Cada documento revisado', 'En cuanto lo subes'], ['Requisitos del comprador, leídos por ti', 'Carta de crédito, email o captura']] },
 };
 const LANG = new URLSearchParams(location.search).get('lang');
 if (L10N[LANG]) {
@@ -430,214 +486,182 @@ if (L10N[LANG]) {
   if (LANG === 'zh') document.documentElement.lang = 'zh-CN';
 }
 
+// cost model (same as the prototype): 40ft/20ft, CIF, Netherlands
+function costs(val, small) {
+  const ins = Math.round(val * 1.1 * .003 / 10) * 10;
+  return [['Packing & export documents', 250, 1], ['Trucking to port', small ? 280 : 350, 1], ['Origin port & export customs', small ? 220 : 300, 1],
+    [`Sea freight (${small ? '20ft' : '40ft'})`, small ? 1110 : 1850, 1], ['Cargo insurance', ins, 1], ['Destination port charges', small ? 300 : 400, 0]];
+}
+
+const stR = () => $('#stage').getBoundingClientRect();
+const at = (el, fx = .5, fy = .5) => { if (typeof el === 'string') el = $(el); const s = stR(), r = el.getBoundingClientRect(); return [r.left - s.left + r.width * fx, r.top - s.top + r.height * fy]; };
+
+// cursor groups: [time, target (selector | [x,y]), click?]
+const CUR = [
+  [7.4, 12.0, () => [[7.5, [1300, 980]], [8.8, at('#dB', .5, .55)], [10.0, at('#dA', .5, .55), 1], [11.8, at('#dA', .5, .55)]]],
+  [13.0, 23.2, () => [[13.1, [1400, 980]], [13.6, at('#f1', .3), 1], [14.85, at('#dd', .4, .25), 1], [15.75, at('#f3', .4), 1], [16.55, at('#dd', .4, .62), 1],
+    [17.55, at('.inco[data-k="FOB"]'), 1], [18.75, at('.inco[data-k="CIF"]'), 1], [19.85, at('.inco[data-k="FOB"]'), 1], [21.5, at('#go3', .55), 1], [23.0, at('#go3', .55)]]],
+  [25.6, 33.8, () => [[25.7, [1500, 980]], [26.8, at($$('#chk .ck .bx')[0]), 1], [27.4, at($$('#chk .ck .bx')[1]), 1], [29.9, at('#sCIF'), 1], [31.6, at('#nCost', .5)], [33.6, at('#nCost', .5)]]],
+  [35.0, 42.8, () => [[35.1, [1500, 980]], [35.35, at('#money', .3), 1], [39.4, at('#b20'), 1], [40.8, at('#oLeftBox', .5)], [42.6, at('#oLeftBox', .5)]]],
+  [46.6, 51.2, () => [[46.7, [1500, 980]], [48.2, at('#pCIF')], [49.4, at('#go6', .5), 1], [51.0, at('#go6', .5)]]],
+  [52.8, 62.0, () => [[52.9, [1500, 980]], [53.6, at('#u1'), 1], [56.4, at('#u2'), 1], [59.2, at('#m2', .3, .7)], [61.8, at('#m2', .3, .7)]]],
+  [65.6, 70.0, () => [[65.7, [1500, 980]], [67.4, at('#go8', .5), 1], [68.6, [1600, 760]], [69.8, [1600, 760]]]],
+];
+
 function renderAt(t) {
   for (const [sel, a, b] of SCENES) $(sel).style.opacity = win(t, a, b, .5);
-
-  // chrome
-  $('#logo').style.opacity = 1 - seg(t, 67, 67.6);
-  $('#illus').style.opacity = win(t, 7, 67, .5);
-  const step = CAPTIONS.filter(c => t >= c[0] - .5).length * (t < 67.2 ? 1 : 0);
+  $('#logo').style.opacity = 1 - seg(t, 70.2, 70.8);
+  $('#illus').style.opacity = win(t, 7, 70.2, .5);
+  const step = CAPTIONS.filter(c => t >= c[0] - .5).length * (t < 70.4 ? 1 : 0);
   $$('#steps i').forEach((el, i) => el.classList.toggle('on', i < step));
   $('#steps').style.opacity = step ? 1 : 0;
-  const cap = CAPTIONS.find(c => t >= c[0] - .5 && t <= c[1]);
-  const capEl = $('#caption');
-  if (cap) {
-    $('#capN').textContent = cap[2]; $('#capT').textContent = cap[3]; $('#capS').textContent = cap[4];
-    capEl.dataset.base = 'translateX(-50%)'; rise(capEl, win(t, cap[0], cap[1], .4), 24);
-  } else capEl.style.opacity = 0;
-  const sub = SUBS.find(x => t >= x[0] - .3 && t <= x[1] + .2); const subEl = $('#sub');
-  if (sub) { subEl.textContent = sub[2]; subEl.dataset.base = ''; rise(subEl, win(t, sub[0] - .3, sub[1] + .2, .35), 12); }
-  else subEl.style.opacity = 0;
+  const cap = CAPTIONS.find(c => t >= c[0] - .5 && t <= c[1]), capEl = $('#caption');
+  if (cap) { $('#capN').textContent = cap[2]; $('#capT').textContent = cap[3]; $('#capS').textContent = cap[4]; capEl.dataset.base = 'translateX(-50%)'; rise(capEl, win(t, cap[0], cap[1], .4), 24); }
+  else capEl.style.opacity = 0;
+  const sub = SUBS.find(x => t >= x[0] - .3 && t <= x[1] + .2), subEl = $('#sub');
+  if (sub) { subEl.textContent = sub[2]; rise(subEl, win(t, sub[0] - .3, sub[1] + .2, .35), 12); } else subEl.style.opacity = 0;
 
-  // scene 1
-  rise($('#s1 .l1'), seg(t, .3, 1.1));
-  rise($('#s1 .l2'), seg(t, 1.2, 2));
-  $$('#journey .chip').forEach((c, i) => rise(c, seg(t, 2.2 + i * .18, 2.7 + i * .18), 30));
-  const rej = $('#rej'); const bad = t > 3.9;
-  rej.classList.toggle('bad', bad);
-  rej.style.transform = `scale(${bad ? 1 + .08 * Math.sin(seg(t, 3.9, 4.5) * Math.PI) : 1})`;
-  rise($('#cost'), seg(t, 4.3, 5));
+  // S1
+  rise($('#eyebrow'), seg(t, .2, .8), 20);
+  rise($('#l1'), seg(t, .5, 1.2)); rise($('#l2'), seg(t, 1.1, 1.8)); rise($('#l3'), seg(t, 1.7, 2.4));
+  $$('#journey > *').forEach((c, i) => rise(c, seg(t, 2.6 + i * .1, 3.1 + i * .1), 24));
+  $$('#journey .jc').forEach((c, i) => c.classList.toggle('on', t > 3.8 + i * .45));
 
-  // scene 2: pick each field from a dropdown
-  const PICKS = [
-    { f: '#f1', open: 7.6, pick: 8.3, hi: 1, grp: 'Furniture & Wood', opts: ['Wooden bedroom furniture · 9403.50', 'Wooden dining furniture · 9403.60', 'Rattan chairs · 9401.52'] },
-    { f: '#f2', open: 8.9, pick: 9.4, hi: 0, opts: ['🇮🇩 Indonesia', '🇻🇳 Vietnam', '🇲🇾 Malaysia'] },
-    { f: '#f3', open: 10.0, pick: 10.5, hi: 1, opts: ['🇳🇱 Netherlands', '🇩🇪 Germany', '🇫🇷 France'] },
-    { f: '#f4', open: 11.0, pick: 11.4, hi: 0, opts: ['FOB', 'CIF', 'CFR', 'EXW'] },
-  ];
-  const ph = ['Search product or HS code', 'Select origin', 'Select destination', 'Select terms'];
-  rise($('#form'), seg(t, 6.5, 7.1), 30);
-  const stageR = $('#stage').getBoundingClientRect();
-  const rectOf = el => { const r = el.getBoundingClientRect(); return { x: r.left - stageR.left, y: r.top - stageR.top, w: r.width, h: r.height }; };
-  const dd = $('#dd'); let ddShown = false;
-  const keys = [[7.0, 1300, 900]];
-  PICKS.forEach((pk, i) => {
-    const el = $(pk.f), r = rectOf(el);
-    const optY = r.y + r.h + 8 + 8 + (pk.grp ? 34 : 0) + 31 + 62 * pk.hi;
-    keys.push([pk.open - .1, r.x + r.w * .55, r.y + r.h / 2], [pk.pick - .1, r.x + r.w * .45, optY]);
-    const open = t >= pk.open && t < pk.pick + .1;
-    el.classList.toggle('act', open);
-    el.innerHTML = t >= pk.pick ? pk.opts[pk.hi] : `<span class="ph">${ph[i]}</span>`;
-    if (open) {
-      ddShown = true;
-      dd.style.left = r.x + 'px'; dd.style.top = (r.y + r.h + 8) + 'px'; dd.style.width = r.w + 'px';
-      const hiOn = t >= pk.pick - .35;
-      dd.innerHTML = (pk.grp ? `<div class="grp">${pk.grp}</div>` : '') + pk.opts.map((o, k) => `<div class="${hiOn && k === pk.hi ? 'hi' : ''}">${o}</div>`).join('');
-      const op = seg(t, pk.open, pk.open + .12);
-      dd.style.opacity = op; dd.style.transform = `translateY(${(1 - op) * -8}px)`;
-    }
-  });
-  dd.style.display = ddShown ? 'block' : 'none';
-  const go = rectOf($('#go'));
-  keys.push([12.05, go.x + go.w * .55, go.y + go.h / 2], [13.5, go.x + go.w * .55, go.y + go.h / 2]);
-  // cursor: eased interpolation between keyframes
-  let cx = keys[0][1], cy = keys[0][2];
-  for (let k = 0; k < keys.length - 1; k++) {
-    const [ta, xa, ya] = keys[k], [tb, xb, yb] = keys[k + 1];
-    if (t >= ta && t <= tb) { const e = inOut(seg(t, ta + (tb - ta) * .15, tb)); cx = xa + (xb - xa) * e; cy = ya + (yb - ya) * e; break; }
-    if (t > tb) { cx = xb; cy = yb; }
-  }
-  const cur = $('#cursor'); cur.style.left = (cx - 6) + 'px'; cur.style.top = (cy - 4) + 'px';
-  cur.style.opacity = seg(t, 6.9, 7.2) * (1 - seg(t, 13.2, 13.5));
-  // click ripple at each click
-  const clicks = [...PICKS.flatMap(p => [p.open, p.pick]), 12.2];
-  const ck = $('#click'); const last = clicks.filter(c => t >= c && t < c + .4).pop();
-  if (last !== undefined) { const q = seg(t, last, last + .4); ck.style.display = 'block'; ck.style.left = cx + 'px'; ck.style.top = cy + 'px'; ck.style.opacity = 1 - q; ck.style.transform = `scale(${.4 + q})`; }
-  else ck.style.display = 'none';
-  $('#pill').style.display = 'none';
-  const press = Math.sin(seg(t, 12.2, 12.5) * Math.PI);
-  $('#go').style.transform = `scale(${1 - press * .04})`;
-  $('#go').style.boxShadow = t > 12.2 ? `0 0 0 ${8 + 10 * seg(t, 12.2, 12.8)}px rgba(102,180,76,${.35 * (1 - seg(t, 12.2, 12.8))})` : 'none';
-  const srch = $('#searching'); srch.dataset.base = 'translateX(-50%)'; rise(srch, seg(t, 12.5, 12.9), 16);
-  $$('#searching .src').forEach((s, i) => { s.style.opacity = seg(t, 12.7 + i * .2, 12.9 + i * .2); });
+  // S2
+  rise($('#s2 .q'), seg(t, 6.6, 7.1), 24); rise($('#s2 .qs'), seg(t, 6.8, 7.3), 16);
+  rise($('#dA'), seg(t, 7.0, 7.6), 40); rise($('#dB'), seg(t, 7.2, 7.8), 40);
+  $('#dA').classList.toggle('sel', t > 10.1);
+  $('#dA').style.transform += ` scale(${1 + .03 * Math.sin(seg(t, 10.1, 10.5) * Math.PI)})`;
 
-  // scene 3
-  rise($('#check'), seg(t, 14.1, 14.7), 30);
-  const items = $$('#check .it');
-  items.forEach((it, i) => { rise(it, seg(t, 14.6 + i * .3, 15 + i * .3), 20); it.classList.toggle('on', t > 17.2 + i * .75); });
-  const done = items.filter(it => it.classList.contains('on')).length;
-  const pr = clamp((t - 17.2) / (.75 * 5) + .2 / 5 * 0);
-  const pctV = Math.round(Math.min(done / 5, pr) * 100);
-  $('#bar').style.width = pctV + '%'; $('#pct').textContent = pctV + '% ready';
-  rise($('#blind'), seg(t, 18.6, 19.2), 30);
-  rise($('#pay'), seg(t, 20.6, 21.2), 30);
-  rise($('#srcs'), seg(t, 22, 22.5), 16);
+  // S3 explore
+  rise($('#rt3'), seg(t, 12.6, 13.2), 30);
+  rise($('#fields'), seg(t, 12.9, 13.5), 24); rise($('#incos'), seg(t, 13.1, 13.7), 24); rise($('#go3'), seg(t, 13.3, 13.9), 24);
+  const f1 = $('#f1'), q = typed('1801', seg(t, 13.75, 14.3)), picked1 = t >= 14.9;
+  f1.classList.toggle('act', t >= 13.6 && t < 15);
+  f1.innerHTML = picked1 ? '🍫&nbsp; Cocoa beans · <span class="mono" style="font-size:22px;margin-left:6px">1801.00</span>'
+    : `<span class="srch">🔎</span>${q || (t >= 13.6 ? '' : '<span class="ph">Search product or HS code</span>')}${t >= 13.6 ? '<span class="caret"></span>' : ''}`;
+  $('#n1').classList.toggle('done', picked1); $('#n1').textContent = picked1 ? '✓' : '1';
+  const pb = $('#pb3'); pb.className = 'pbadge' + (picked1 ? '' : ' q');
+  pb.innerHTML = picked1 ? '🍫 Cocoa beans<small>HS 1801.00</small>' : 'What are you selling?';
+  pb.style.transform = `translateX(-50%) scale(${1 + .08 * Math.sin(seg(t, 14.9, 15.3) * Math.PI)})`;
+  const picked3 = t >= 16.6, f3 = $('#f3');
+  f3.classList.toggle('act', t >= 15.8 && t < 16.7);
+  f3.innerHTML = picked3 ? '🇳🇱&nbsp; Netherlands' : '<span class="ph">Select destination</span>';
+  $('#n3').classList.toggle('done', picked3); $('#n3').textContent = picked3 ? '✓' : '3';
+  $('#dest3').innerHTML = picked3 ? '<div class="fl">🇳🇱</div><b>Netherlands</b><span>Rotterdam</span>' : '<div class="fl q">?</div><b>To</b><span>&nbsp;</span>';
+  $('#dest3').style.transform = `scale(${1 + .08 * Math.sin(seg(t, 16.6, 17) * Math.PI)})`;
+  // dropdown
+  const dd = $('#dd'), s = stR();
+  const showDD = (el, opts, hi, a, b) => { if (t < a || t >= b) return false; const r = el.getBoundingClientRect();
+    dd.style.left = (r.left - s.left) + 'px'; dd.style.top = (r.bottom - s.top + 8) + 'px'; dd.style.width = r.width + 'px';
+    dd.innerHTML = opts.map((o, k) => `<div class="${k === hi && t > b - .45 ? 'hi' : ''}">${o}</div>`).join(''); const op = seg(t, a, a + .12); dd.style.opacity = op; return true; };
+  const ddOn = showDD(f1, ['<span>🍫 Cocoa beans</span><small>HS 1801.00</small>', '<span>🍫 Cocoa butter</span><small>HS 1804.00</small>', '<span>🍫 Cocoa powder</span><small>HS 1805.00</small>'], 0, 14.3, 14.95)
+    || showDD(f3, ['🇩🇪&nbsp; Germany', '🇳🇱&nbsp; Netherlands', '🇫🇷&nbsp; France', '🇬🇧&nbsp; United Kingdom'], 1, 15.85, 16.65);
+  dd.style.display = ddOn ? 'block' : 'none';
+  // incoterm picks → legs + handover marker
+  const INC = { FOB: [[1, 1, 0, 0], 40], CIF: [[1, 1, 1, 0], 84] };
+  const term = t >= 19.95 ? 'FOB' : t >= 18.85 ? 'CIF' : t >= 17.65 ? 'FOB' : null;
+  $$('#incos .inco').forEach(c => c.classList.toggle('on', c.dataset.k === term));
+  $$('#legs3 .leg').forEach((l, i) => l.classList.toggle('me', !!term && INC[term][0][i] === 1));
+  const ho = $('#hand3'); ho.style.opacity = term ? 1 : 0;
+  const hx = t < 18.85 ? 40 : t < 19.95 ? lerp(40, 84, inOut(seg(t, 18.85, 19.3))) : lerp(84, 40, inOut(seg(t, 19.95, 20.4)));
+  ho.style.left = hx + '%';
+  $('#rlab3').textContent = 'YOUR ROUTE · ' + (1 + picked1 + picked3 + !!term) + ' OF 4 SET';
+  $('#ship3').style.left = (t > 17.7 ? 6 + 88 * (0.5 - 0.5 * Math.cos(seg(t, 17.7, 23.7) * Math.PI * 2)) : 6) + '%';
+  const press3 = Math.sin(seg(t, 21.6, 21.9) * Math.PI); $('#go3').style.transform += ` scale(${1 - press3 * .05})`;
+  $('#go3').style.boxShadow = t > 21.6 ? `0 0 0 ${8 + 12 * seg(t, 21.6, 22.3)}px rgba(31,111,184,${.35 * (1 - seg(t, 21.6, 22.3))})` : 'none';
 
-  // scene 4
-  $$('#docs .doc').forEach((d, i) => { d.dataset.base = ''; rise(d, seg(t, 25.4 + i * .2, 25.9 + i * .2), 0); d.style.transform = `translateX(${(1 - ease(seg(t, 25.4 + i * .2, 25.9 + i * .2))) * -60}px)`; });
-  const sp = seg(t, 26.6, 28.6); const scan = $('#scan');
-  scan.style.top = (sp * 600) + 'px'; scan.style.opacity = t > 26.5 && t < 28.7 ? 1 : 0;
-  rise($('#result'), seg(t, 28.7, 29.2), 30);
-  rise($('#i1'), seg(t, 29.2, 29.7), 20);
-  rise($('#i2'), seg(t, 30.6, 31.1), 20);
-  rise($('#i3'), seg(t, 31.9, 32.4), 20);
-  const pulse = t > 29.7 && t < 34 ? .5 + .5 * Math.sin((t - 29.7) * 5) : 0;
-  $('#i1').style.boxShadow = `0 0 0 ${pulse * 6}px rgba(224,92,82,.25)`;
-  rise($('#saved'), seg(t, 33.4, 34), 20);
+  // S4 results
+  rise($('#hd4'), seg(t, 24.4, 24.9), 20); rise($('#rt4'), seg(t, 24.6, 25.1), 20); rise($('#stats'), seg(t, 24.8, 25.3), 24);
+  rise($('#chk'), seg(t, 25.1, 25.7), 30); rise($('#side4'), seg(t, 25.4, 26), 30);
+  const cif = t >= 30.0, sw = seg(t, 30.0, 30.9);
+  $('#sFOB').classList.toggle('on', !cif); $('#sCIF').classList.toggle('on', cif);
+  $$('#legs4 .leg').forEach((l, i) => l.classList.toggle('me', i < 2 || (cif && i === 2)));
+  $('#hand4').style.left = lerp(40, 84, inOut(sw)) + '%';
+  $('#nDocs').textContent = cif ? 6 : Math.round(5 * ease(seg(t, 25, 26)));
+  $('#nCost').textContent = money(cif ? lerp(900, 2910, ease(sw)) : 900 * ease(seg(t, 25, 26.2)));
+  $('#nCostL').textContent = `your share of costs (${cif ? 'CIF' : 'FOB'})`;
+  $('#nCost').style.color = cif && t < 31.6 ? '#1F6FB8' : '';
+  $$('#chk .ck').forEach((c, i) => { rise(c, seg(t, 25.5 + i * .12, 25.9 + i * .12), 12); });
+  $$('#chk .ck')[0].classList.toggle('on', t > 26.85); $$('#chk .ck')[1].classList.toggle('on', t > 27.45);
+  $('#bookTx').textContent = cif ? 'Book the vessel yourself' : 'Get the booking from your buyer\'s forwarder';
+  $('#bookWho').textContent = cif ? 'You' : 'Buyer';
+  $('#ckBook').style.background = cif && t < 32 ? '#EEF5FD' : '';
+  const ins = $('#insDoc'); ins.style.display = cif ? 'flex' : 'none'; ins.style.opacity = seg(t, 30.3, 30.7);
 
+  // S5 cost estimator
+  rise($('#est'), seg(t, 34.4, 35), 30);
+  const val = 60000, typedV = typed('60,000', seg(t, 35.5, 36.5));
+  $('#valTx').innerHTML = (t < 35.4 ? '<span style="color:rgba(11,31,68,.35)">48,000</span>' : typedV) + (t >= 35.4 && t < 36.9 ? '<span class="caret"></span>' : '');
+  $('#money').classList.toggle('act', t >= 35.4 && t < 36.9);
+  const small = t >= 39.5; $('#b20').classList.toggle('on', small); $('#b40').classList.toggle('on', !small);
+  const c40 = costs(val, false), c20 = costs(val, true), k = seg(t, 39.5, 40.3), pIn = ease(seg(t, 36.8, 38));
+  const rows = c40.map((r, i) => [r[0].replace('40ft', small ? '20ft' : '40ft'), lerp(r[1], c20[i][1], ease(k)), r[2]]);
+  const mine = rows.filter(r => r[2]).reduce((a, r) => a + r[1], 0), tot = rows.reduce((a, r) => a + r[1], 0);
+  $('#oPay').textContent = money(mine * pIn); $('#oPct').textContent = (mine / val * 100 * pIn).toFixed(1) + '%';
+  $('#oLeft').textContent = money((val - mine) * pIn);
+  $('#oLeftBox').style.boxShadow = t > 40.5 ? `0 0 0 ${6 * Math.sin(seg(t, 40.5, 41.3) * Math.PI)}px rgba(47,158,68,.25)` : 'none';
+  $('#cbar').innerHTML = rows.map(r => `<i style="width:${r[1] / tot * 100 * pIn}%;background:${r[2] ? '#2F9E44' : '#B9CDE2'}"></i>`).join('');
+  $('#crows').innerHTML = rows.concat([['Import duty & taxes', 'n/a', 0]]).map((r, i) => `<div class="crow ${r[2] ? '' : 'by'}" style="opacity:${seg(t, 37 + i * .15, 37.4 + i * .15)}">${r[0]}<span class="who2 ${r[2] ? 'me' : 'by'}">${r[2] ? 'You' : 'Buyer'}</span><span class="v">${typeof r[1] === 'number' ? money(r[1]) : r[1]}</span></div>`).join('');
 
-  // global cursor for scenes 3–5: [time, element|[x,y], click?]
-  {
-    const st = $('#stage').getBoundingClientRect();
-    const at = (el, fx = .5, fy = .5) => { const r = el.getBoundingClientRect(); return [r.left - st.left + r.width * fx, r.top - st.top + r.height * fy]; };
-    const cks = $$('#check .it .ck');
-    const keys = [];
-    if (t >= 16 && t < 23) {
-      keys.push([16.3, [1500, 960], 0]);
-      cks.forEach((c, i) => keys.push([17.2 + i * .75 - .08, at(c), 1]));
-      keys.push([21.4, at($('#pay'), .3, .6), 0], [22.6, at($('#pay'), .3, .6), 0]);
-    } else if (t >= 28.6 && t < 34.6) {
-      keys.push([28.7, [1400, 980], 0], [29.65, at($('#i1'), .55, .35), 1], [30.95, at($('#i2'), .5, .4), 1], [32.6, at($('#i3'), .4, .5), 0], [34.4, at($('#i3'), .4, .5), 0]);
-    } else if (t >= 38.6 && t < 43.6) {
-      keys.push([38.7, [1500, 960], 0], [39.6, at($('#costTot'), .5, .55), 1], [40.9, at($('#profit'), .78, .45), 1], [43.4, at($('#profit'), .78, .45), 0]);
-    }
-    const cur = $('#gcur'), ring = $('#gclick');
-    if (keys.length) {
-      let x = keys[0][1][0], y = keys[0][1][1];
-      for (let k = 0; k < keys.length - 1; k++) {
-        const [ta, pa] = keys[k], [tb, pb] = keys[k + 1];
-        if (t >= ta && t <= tb) { const e = inOut(seg(t, ta + (tb - ta) * .2, tb)); x = pa[0] + (pb[0] - pa[0]) * e; y = pa[1] + (pb[1] - pa[1]) * e; break; }
-        if (t > tb) { x = pb[0]; y = pb[1]; }
-      }
-      const first = keys[0][0], last = keys[keys.length - 1][0];
-      cur.style.opacity = seg(t, first - .2, first + .1) * (1 - seg(t, last - .3, last));
-      cur.style.left = (x - 6) + 'px'; cur.style.top = (y - 4) + 'px';
-      const c = keys.filter(k => k[2] && t >= k[0] + .08 && t < k[0] + .5).pop();
-      if (c) { const q = seg(t, c[0] + .08, c[0] + .5); ring.style.display = 'block'; ring.style.left = x + 'px'; ring.style.top = y + 'px'; ring.style.opacity = 1 - q; ring.style.transform = `scale(${.4 + q})`; }
-      else ring.style.display = 'none';
-    } else { cur.style.opacity = 0; ring.style.display = 'none'; }
-  }
+  // S6 one-page order
+  rise($('#ord'), seg(t, 43.2, 43.8), 30);
+  rise($('#pre'), seg(t, 43.8, 44.2), 12);
+  ['#os1', '#os2', '#os3'].forEach((s, i) => rise($(s), seg(t, 44.0 + i * .3, 44.4 + i * .3), 18));
+  ['#bx1', '#bx2', '#bx3', '#pCIF'].forEach((s, i) => $(s).classList.toggle('flash', t > 45.2 + i * .35 && t < 46.9 + i * .1));
+  rise($('#go6'), seg(t, 44.9, 45.3), 12);
+  const press6 = Math.sin(seg(t, 49.5, 49.8) * Math.PI); $('#go6').style.transform += ` scale(${1 - press6 * .05})`;
+  $('#go6').style.boxShadow = t > 49.5 ? `0 0 0 ${8 + 12 * seg(t, 49.5, 50.2)}px rgba(31,111,184,${.35 * (1 - seg(t, 49.5, 50.2))})` : 'none';
 
-  // scene 5: cost
-  rise($('#cost'), seg(t, 36.8, 37.4), 30);
-  $$('#cost .crow').forEach((r, i) => rise(r, seg(t, 37.4 + i * .3, 37.8 + i * .3), 16));
-  $('#costTot').textContent = '$' + Math.round(1404 * ease(seg(t, 37.6, 39.6))).toLocaleString('en-US');
-  rise($('#profit'), seg(t, 40, 40.6), 30);
-  rise($('#tip'), seg(t, 41.6, 42.2), 30);
+  // S7 checklist + checks
+  rise($('#top7'), seg(t, 51.6, 52.1), 24);
+  $$('#list7 .todo').forEach((r, i) => rise(r, seg(t, 51.9 + i * .15, 52.3 + i * .15), 16));
+  const chkU = (n, a) => { const u = $('#u' + n), m = $('#m' + n), st = $('#st' + n);
+    const phase = t < a ? 0 : t < a + .9 ? 1 : 2;
+    u.textContent = ['Upload', 'Checking…', 'Replace'][phase]; u.classList.toggle('ghost', phase === 2);
+    m.style.display = phase === 2 ? 'block' : 'none'; m.style.opacity = seg(t, a + .9, a + 1.3);
+    st.className = 'sti' + (phase === 2 ? (n === 1 ? ' ok' : ' w') : ''); st.textContent = phase === 2 ? (n === 1 ? '✓' : '!') : ''; };
+  chkU(1, 53.7); chkU(2, 56.5);
+  const ready = t >= 54.6 ? 1 : 0; $('#rdy').textContent = ready + ' of 7';
+  $('#rgf').setAttribute('stroke-dashoffset', 251 * (1 - (ready / 7) * ease(seg(t, 54.6, 55.2))));
+  $('#m2').style.boxShadow = t > 59.3 && t < 61.5 ? `0 0 0 ${4 * Math.sin(seg(t, 59.3, 60) * Math.PI)}px rgba(168,110,0,.3)` : 'none';
 
-  // scene 6: Tara
-  rise($('#tara'), seg(t, 45.2, 45.8), 30);
-  rise($('#q1'), seg(t, 46, 46.4), 16);
-  const typing = $('#typing'); const showTyping = t > 46.7 && t < 48.2;
-  typing.style.display = showTyping ? 'flex' : 'none';
-  $$('#typing i').forEach((d, i) => { d.style.opacity = .3 + .7 * Math.abs(Math.sin((t * 4) - i * .6)); });
-  const ans = '<b>No CE mark</b> — plain wooden chairs aren\'t covered by CE directives. But they must meet the <b>EU General Product Safety Regulation (EU) 2023/988</b>, and the timber falls under <b>EUDR</b>. Keep a test report for formaldehyde emissions.';
-  const a1 = $('#a1'); const ap = seg(t, 48.2, 51.6);
-  a1.style.display = t >= 48.2 ? 'block' : 'none';
-  // reveal by visible characters while keeping tags intact
-  const plain = ans.replace(/<[^>]+>/g, ''); let keep = Math.round(plain.length * ap), out = '', n = 0;
-  for (const part of ans.split(/(<[^>]+>)/)) { if (part.startsWith('<')) { out += part; continue; } const take = part.slice(0, Math.max(0, keep - n)); out += take; n += part.length; }
-  a1.innerHTML = out;
+  // S8 buyer L/C
+  rise($('#lc'), seg(t, 62.6, 63.1), 30);
+  const sc = $('#scan'); sc.style.top = (seg(t, 63.2, 64.8) * 640) + 'px'; sc.style.opacity = t > 63.1 && t < 64.9 ? 1 : 0;
+  rise($('#found'), seg(t, 64.7, 65.2), 30);
+  $$('#found .fr').forEach((r, i) => rise(r, seg(t, 65.0 + i * .18, 65.4 + i * .18), 14));
+  rise($('#go8'), seg(t, 66.2, 66.6), 12);
+  const done8 = t >= 67.5; $('#go8').classList.toggle('done', done8);
+  $('#go8').textContent = done8 ? '✓ Checklist updated · 2 added, 1 to re-check' : 'Looks right, update my list';
+  $('#go8').style.transform += ` scale(${1 - .05 * Math.sin(seg(t, 67.5, 67.8) * Math.PI)})`;
 
-  // scene 7: glossary
-  rise($('#glos'), seg(t, 53.4, 54), 30);
-  const q = typed('FOB', seg(t, 54.1, 54.7));
-  $('#gq').innerHTML = (q || '<span style="color:rgba(11,31,68,0.45)">Search terms…</span>') + (t < 55 ? '<span class="caret"></span>' : '');
-  $$('#glos .gi').forEach((g, i) => rise(g, seg(t, 54.9 + i * .35, 55.3 + i * .35), 16));
+  // cursor
+  const cur = $('#cur'), ring = $('#ring'); const g = CUR.find(c => t >= c[0] - .3 && t <= c[1]);
+  if (g) {
+    const keys = g[2](); let x = keys[0][1][0], y = keys[0][1][1];
+    for (let i = 0; i < keys.length - 1; i++) { const [ta, pa] = keys[i], [tb, pb2] = keys[i + 1];
+      if (t >= ta && t <= tb) { const e = inOut(seg(t, ta + (tb - ta) * .2, tb)); x = pa[0] + (pb2[0] - pa[0]) * e; y = pa[1] + (pb2[1] - pa[1]) * e; break; }
+      if (t > tb) { x = pb2[0]; y = pb2[1]; } }
+    cur.style.opacity = seg(t, g[0] - .3, g[0]) * (1 - seg(t, g[1] - .3, g[1]));
+    cur.style.left = (x - 6) + 'px'; cur.style.top = (y - 4) + 'px';
+    const c = keys.filter(k => k[2] && t >= k[0] + .05 && t < k[0] + .5).pop();
+    if (c) { const qq = seg(t, c[0] + .05, c[0] + .5); ring.style.display = 'block'; ring.style.left = x + 'px'; ring.style.top = y + 'px'; ring.style.opacity = 1 - qq; ring.style.transform = `scale(${.4 + qq})`; }
+    else ring.style.display = 'none';
+  } else { cur.style.opacity = 0; ring.style.display = 'none'; }
 
-  // scene 8: dashboard
-  rise($('#dash .dhd'), seg(t, 59.4, 59.9), 20);
-  rise($('#dash .dsum'), seg(t, 59.7, 60.2), 20);
-  $$('#dash .ship').forEach((c, i) => {
-    rise(c, seg(t, 60.3 + i * .35, 60.8 + i * .35), 24);
-    const gf = c.querySelector('.gf'); const v = +gf.dataset.v * ease(seg(t, 60.8 + i * .35, 62.2 + i * .35));
-    gf.setAttribute('stroke-dashoffset', 251 * (1 - v / 100)); c.querySelector('.gauge text').textContent = Math.round(v) + '%';
-    c.querySelector('.dl').style.opacity = seg(t, 62.6 + i * .3, 63 + i * .3);
-  });
-
-  // scene 9: outro
-  const bl = $('#bigLogo'); const lp = ease(seg(t, O + 36.8, O + 37.6));
+  // S9 outro
+  const bl = $('#bigLogo'), lp = ease(seg(t, 70.6, 71.4));
   bl.style.opacity = lp; bl.style.transform = `translateX(-50%) scale(${.85 + .15 * lp})`;
-  $$('#slogan span').forEach((s, i) => rise(s, seg(t, O + 37.8 + i * .45, O + 38.3 + i * .45), 30));
-  rise($('#tagline'), seg(t, O + 39.6, O + 40.2), 20);
-  const cta = $('#cta'); cta.dataset.base = 'translateX(-50%)'; rise(cta, seg(t, O + 40.4, O + 41), 20);
+  $$('#slogan span').forEach((s, i) => rise(s, seg(t, 71.5 + i * .45, 72 + i * .45), 30));
+  rise($('#tagline'), seg(t, 73.1, 73.6), 20);
+  const cta = $('#cta'); cta.dataset.base = 'translateX(-50%)'; rise(cta, seg(t, 73.7, 74.2), 20);
 }
 window.renderAt = renderAt;
 window.DURATION = DURATION;
+// click times, for the soundtrack
+window.CLICKS = [10.05, 13.65, 14.9, 15.8, 16.6, 17.6, 18.8, 19.9, 21.55, 26.85, 27.45, 29.95, 35.4, 39.45, 49.45, 53.65, 56.45, 67.45];
 
-// Cuts (?cut=short): play selected source ranges [from, to, speed] back to back, dipping to navy at each join
-const CUTS = {
-  short: [[0.2, 5.4, 1], [6.9, 13.2, 1.6], [14.1, 22.6, 1.6], [25.3, 34.3, 1.5], [36.8, 42.4, 1.6], [59.3, 64.4, 1.4], [67.4, 71.8, 1]],
-  // ~40 s for live presenting: docs and costs at real speed
-  pitch: [[0.2, 5.4, 1], [6.9, 13.2, 1], [14.6, 22.6, 1.2], [25.3, 35.6, 1], [36.8, 44.4, 1], [59.3, 63.6, 1.1], [67.4, 71.8, 1.15]],
-};
-const cut = CUTS[new URLSearchParams(location.search).get('cut')];
-if (cut) {
-  let o = 0;
-  const segs = cut.map(([a, b, sp]) => { const d = (b - a) / sp, s = { a, b, sp, o, d }; o += d; return s; });
-  window.SEGMENTS = segs;
-  window.DURATION = o;
-  const base = renderAt;
-  window.renderAt = t => {
-    const s = segs.find(x => t < x.o + x.d) || segs[segs.length - 1];
-    base(s.a + (t - s.o) * s.sp);
-    $('#dip').style.opacity = Math.max(0, ...segs.slice(1).map(x => 1 - Math.abs(t - x.o) / .25));
-    $('#steps').style.display = 'none';
-    if ($('#capN').textContent === '07') $('#capN').textContent = '05';
-  };
-}
-
-// Preview mode: play in real time unless the renderer drives it (?render)
 if (!location.search.includes('render')) {
   const t0 = performance.now();
   const loop = () => { window.renderAt(((performance.now() - t0) / 1000) % window.DURATION); requestAnimationFrame(loop); };
