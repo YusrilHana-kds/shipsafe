@@ -251,6 +251,30 @@ pre{white-space:pre-wrap;font:inherit;font-size:13.5px;background:var(--chip);bo
 .note{color:var(--muted);font-size:12.5px;padding:0 0 24px}.note .wrap{display:block}
 html.embed .solo{display:none}html.embed body{background:#fff}html.embed .demo{max-width:none;padding:0}
 html.embed .app{border:none;border-radius:0;box-shadow:none;margin:0;min-height:100vh}html.embed .note{padding:10px 18px 14px}
+/* start screen: dark booth-style intro */
+.onstart .appbar,.onstart .note{display:none}
+.onstart .app{background:radial-gradient(ellipse 80% 60% at 50% 30%,#1C4A8F 0%,#0F2D63 45%,#0A1D44 100%);border-color:#0A1D44}
+.onstart .screen{padding:0}
+.intro{min-height:min(680px,100vh);display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px 24px 32px;color:#F3F6FB}
+html.embed .intro{min-height:100vh}
+.in-brand{display:flex;flex-direction:column;align-items:center;gap:10px}
+.in-brand img{height:clamp(44px,7vw,64px);width:auto}
+.in-brand span{font-size:clamp(15px,1.8vw,19px);color:rgba(243,246,251,.85);font-weight:500}
+.in-main{margin-top:auto;padding-top:48px;display:flex;flex-direction:column;align-items:center;width:100%}
+.in-h{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(36px,6vw,64px);letter-spacing:-.045em;line-height:1.05;text-wrap:balance}
+.in-h em{font-style:normal;color:#7CC463}
+.in-sub{margin:16px auto 30px;max-width:620px;font-size:clamp(15px,1.7vw,18px);line-height:1.55;color:rgba(243,246,251,.72);text-wrap:balance}
+.in-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:620px}
+.in-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:20px 16px;border-radius:16px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.14);color:#F3F6FB;transition:border-color .15s,background .15s,transform .15s}
+.in-card:hover,.in-card:focus-visible{border-color:#7CC463;background:rgba(124,196,99,.1);transform:translateY(-2px);outline:none}
+.in-card.hot{border-color:rgba(124,196,99,.7)}
+.in-card .ic{font-size:28px;margin-bottom:4px}
+.in-card small{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7CC463}
+.in-card b{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.02em}
+.in-card span:last-child{font-size:13.5px;color:rgba(243,246,251,.65)}
+.in-hint{margin-top:22px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7CC463}
+.in-fine{margin-top:14px;font-size:12.5px;color:rgba(243,246,251,.55)}
+@media(max-width:560px){.in-cards{grid-template-columns:1fr}.intro{padding:36px 16px 24px}}
 @media(max-width:760px){.doors,.top3,.ways{grid-template-columns:1fr}.screen{padding:26px 18px}.chip.big{min-width:0;width:100%}}
 </style>
 </head>
@@ -303,23 +327,25 @@ function bar(t,back){ $('#bar').innerHTML=`<b>${t}</b>${S.screen!=='start'?'<spa
 let lastView='';
 function render(){
   const view=S.screen+(S.a.done?'+':''); if(view!==lastView){ if(lastView) window.scrollTo(0,0); lastView=view; }
+  document.body.classList.toggle('onstart',S.screen==='start');
   const f={start,a:explore,b1:wizard,ship:shipment}[S.screen]; $('#scr').innerHTML=`<div class="screen">${f()}</div>`; bind();
 }
 
 // ── start: which door ──
 function start(){
   bar('Welcome to ShipSafe');
-  return `<div class="persona"><div class="av">R</div><div>
-      <div class="pn">Meet Rina</div><div class="pr">Owner, Rina Jati Furniture · Jepara, Indonesia</div>
-      <p>Rina runs a teak furniture workshop with 14 craftsmen. A buyer in Hamburg wants a full container of dining sets. It's her first order to Europe, and she can't afford a held container or a rejected payment.</p>
-      <div class="facts"><span>🪑 Teak dining sets</span><span>🇩🇪 Buyer in Hamburg</span><span>📦 1 × 40ft container</span><span>💰 $48,000 order</span></div></div></div>
-  <div class="q">Where is Rina right now?</div><div class="qsub">Walk through it as Rina. Pick the moment she's in, and switch anytime.</div>
-  <div class="doors">
-    <button class="door" data-go="a"><div class="em">🧭</div><span class="when">Before the deal</span><b>She's exploring the market</b><span>The buyer asked for a quote. Rina wants to know what Germany needs, and what it will cost her, before she names a price.</span>
-      <ul><li>Documents usually needed</li><li>Things to watch out for</li><li>Cost estimator</li></ul><span class="go">Explore as Rina →</span></button>
-    <button class="door main" data-go="b1"><div class="em">📦</div><span class="when">After the deal</span><b>She has an order to ship <span class="tag">MOST USED</span></b><span>Contract signed, letter of credit on the way. Rina needs every document right before the ship sails.</span>
-      <ul><li>Her checklist on one page</li><li>Each document checked on upload</li><li>Reminders before every cut-off</li></ul><span class="go">Ship Rina's order →</span></button>
-  </div>`;
+  return `<div class="intro">
+    <div class="in-brand"><img src="/logo-dark.png" alt="ShipSafe"><span>Export-ready. Every shipment.</span></div>
+    <div class="in-main">
+      <h1 class="in-h">Be Rina for <em>two minutes.</em></h1>
+      <p class="in-sub">Rina makes teak furniture in Jepara, Indonesia. A buyer in Hamburg wants a $48,000 container, her first order to Europe. Where is she right now? Pick one.</p>
+      <div class="in-cards">
+        <button class="in-card" data-go="a"><span class="ic">🧭</span><small>Before the deal</small><b>Exploring the market</b><span>What Germany needs, and what it will cost</span></button>
+        <button class="in-card hot" data-go="b1"><span class="ic">📦</span><small>After the deal</small><b>Shipping an order</b><span>Checklist, document checks, deadlines</span></button>
+      </div>
+      <div class="in-hint">2 moments · tap one to start</div>
+      <p class="in-fine">This is a simulation with sample data. Documents and costs are shortened for the demo.</p>
+    </div></div>`;
 }
 
 // ── door A: explore a market (route builder → results) ──
